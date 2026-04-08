@@ -1,0 +1,38 @@
+{
+  "paper_id": "SERIES-NNN-slug",
+  "claims": [
+    {
+      "claim_id": "def-1",
+      "label": "Definition 1",
+      "type": "definition",
+      "statement": "Replace with the exact statement of the definition as it appears in the paper.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": [],
+      "evidence_location": "Section 1.1",
+      "notes": null
+    },
+    {
+      "claim_id": "thm-1",
+      "label": "Theorem 1",
+      "type": "theorem",
+      "statement": "Replace with the exact statement of the theorem as it appears in the paper.",
+      "status": "proved",
+      "proof_sketch": "Brief sketch of the proof approach, or null if not applicable.",
+      "dependencies": ["def-1"],
+      "evidence_location": "Section 2, Theorem 1",
+      "notes": null
+    },
+    {
+      "claim_id": "prop-1",
+      "label": "Proposition 1",
+      "type": "proposition",
+      "statement": "Replace with the exact statement of the proposition.",
+      "status": "proved",
+      "proof_sketch": null,
+      "dependencies": ["thm-1"],
+      "evidence_location": "Section 3.1",
+      "notes": null
+    }
+  ]
+}

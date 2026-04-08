@@ -1,0 +1,40 @@
+{
+  "paper_id": "SERIES-NNN-slug",
+  "title": "Full Title of the Paper: Subtitle If Applicable",
+  "slug": "slug",
+  "version": "1.0.0",
+  "status": "draft",
+  "publication_date": null,
+  "last_updated": "YYYY-MM-DD",
+  "authors": [
+    {
+      "name": "Author Full Name",
+      "affiliation": "RQM Technologies",
+      "orcid": null,
+      "email": null,
+      "corresponding": true
+    }
+  ],
+  "abstract": "Replace with the full abstract text of the paper. The abstract should accurately summarize the paper's contributions, methods, and results. Do not paraphrase or invent content — use the abstract exactly as it appears in the paper.",
+  "keywords": [
+    "quaternionic quantum computing",
+    "add additional keywords"
+  ],
+  "series": "qqc",
+  "series_number": 1,
+  "depends_on": [],
+  "canonical_url": null,
+  "pdf_url": null,
+  "html_url": null,
+  "jats_url": null,
+  "doi": null,
+  "journal": null,
+  "volume": null,
+  "issue": null,
+  "pages": null,
+  "citations": [],
+  "related_artifacts": [],
+  "license": "CC-BY-4.0",
+  "funding": [],
+  "notes": null
+}

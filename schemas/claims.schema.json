@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://rqm-technologies.com/schemas/claims.schema.json",
+  "title": "Paper Claims",
+  "description": "Schema for claims.json companion files — structured list of theorems, definitions, propositions, and results",
+  "type": "object",
+  "required": ["paper_id", "claims"],
+  "additionalProperties": false,
+  "properties": {
+    "paper_id": {
+      "type": "string",
+      "description": "Stable paper identifier matching the paper this claims file belongs to",
+      "pattern": "^[a-z]+-[0-9]{3}-[a-z0-9-]+$"
+    },
+    "claims": {
+      "type": "array",
+      "description": "Ordered list of claims made in this paper",
+      "items": {
+        "type": "object",
+        "required": ["claim_id", "label", "type", "statement", "status"],
+        "additionalProperties": false,
+        "properties": {
+          "claim_id": {
+            "type": "string",
+            "description": "Unique identifier within this paper, e.g. 'def-1', 'thm-2'",
+            "pattern": "^[a-z]+-[0-9]+$"
+          },
+          "label": {
+            "type": "string",
+            "description": "Short human-readable label, e.g. 'Definition 1', 'Theorem 3.2'",
+            "minLength": 1
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of claim",
+            "enum": [
+              "definition",
+              "theorem",
+              "proposition",
+              "lemma",
+              "corollary",
+              "conjecture",
+              "remark",
+              "example",
+              "empirical_result",
+              "interpretive_claim",
+              "axiom"
+            ]
+          },
+          "statement": {
+            "type": "string",
+            "description": "Full text of the claim as it appears in the paper",
+            "minLength": 10
+          },
+          "status": {
+            "type": "string",
+            "description": "Verification status of this claim",
+            "enum": ["proved", "conjectured", "assumed", "empirical", "informal", "retracted"]
+          },
+          "proof_sketch": {
+            "type": ["string", "null"],
+            "description": "Optional brief sketch of the proof or justification"
+          },
+          "dependencies": {
+            "type": "array",
+            "description": "claim_ids this claim depends on (within this paper or as paper_id:claim_id)",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "evidence_location": {
+            "type": ["string", "null"],
+            "description": "Section, page, or equation reference within the paper, e.g. 'Section 3.2, Eq. (7)'"
+          },
+          "notes": {
+            "type": ["string", "null"],
+            "description": "Optional notes about this claim, limitations, or open questions"
+          }
+        }
+      }
+    }
+  }
+}

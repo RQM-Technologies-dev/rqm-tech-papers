@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://rqm-technologies.com/schemas/glossary.schema.json",
+  "title": "Paper Glossary",
+  "description": "Schema for glossary.json companion files — domain-specific term definitions",
+  "type": "object",
+  "required": ["paper_id", "glossary"],
+  "additionalProperties": false,
+  "properties": {
+    "paper_id": {
+      "type": "string",
+      "description": "Stable paper identifier",
+      "pattern": "^[a-z]+-[0-9]{3}-[a-z0-9-]+$"
+    },
+    "glossary": {
+      "type": "array",
+      "description": "Alphabetically ordered list of terms defined or used in this paper",
+      "items": {
+        "type": "object",
+        "required": ["term", "definition"],
+        "additionalProperties": false,
+        "properties": {
+          "term": {
+            "type": "string",
+            "description": "The term being defined",
+            "minLength": 1
+          },
+          "definition": {
+            "type": "string",
+            "description": "Clear, precise definition of the term as used in this paper",
+            "minLength": 10
+          },
+          "aliases": {
+            "type": "array",
+            "description": "Alternative names or abbreviations for this term",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "paper_specific": {
+            "type": "boolean",
+            "description": "Whether this definition is specific to this paper or series versus standard in the field",
+            "default": false
+          },
+          "related_terms": {
+            "type": "array",
+            "description": "Other terms in this glossary that are closely related",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "see_also": {
+            "type": "array",
+            "description": "External references (claim_ids, section references, or external URLs) for further reading",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          }
+        }
+      }
+    }
+  }
+}

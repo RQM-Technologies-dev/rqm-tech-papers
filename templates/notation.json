@@ -1,0 +1,38 @@
+{
+  "paper_id": "SERIES-NNN-slug",
+  "notation": [
+    {
+      "symbol": "\\mathbb{H}",
+      "name": "quaternion algebra",
+      "latex": "\\mathbb{H}",
+      "meaning": "The algebra of quaternions over the real numbers.",
+      "domain": "quaternion algebra",
+      "type": "algebra",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 1.1",
+      "related_symbols": ["q", "\\hat{q}"]
+    },
+    {
+      "symbol": "q",
+      "name": "quaternion element",
+      "latex": "q",
+      "meaning": "A quaternion q = a + bi + cj + dk where a,b,c,d are real.",
+      "domain": "quaternion algebra",
+      "type": "scalar",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 1.1",
+      "related_symbols": ["\\mathbb{H}"]
+    },
+    {
+      "symbol": "\\hat{H}",
+      "name": "quaternionic Hamiltonian operator",
+      "latex": "\\hat{H}",
+      "meaning": "Quaternionic Hamiltonian operator acting on the quaternionic Hilbert space.",
+      "domain": "quaternionic quantum mechanics",
+      "type": "operator",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 2",
+      "related_symbols": ["\\mathcal{H}_\\mathbb{H}"]
+    }
+  ]
+}
