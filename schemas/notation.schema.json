@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://rqm-technologies.com/schemas/notation.schema.json",
+  "title": "Paper Notation",
+  "description": "Schema for notation.json companion files — symbol and notation tables for AI parsing",
+  "type": "object",
+  "required": ["paper_id", "notation"],
+  "additionalProperties": false,
+  "properties": {
+    "paper_id": {
+      "type": "string",
+      "description": "Stable paper identifier",
+      "pattern": "^[a-z]+-[0-9]{3}-[a-z0-9-]+$"
+    },
+    "notation": {
+      "type": "array",
+      "description": "List of symbols and notation used in this paper",
+      "items": {
+        "type": "object",
+        "required": ["symbol", "name", "meaning", "domain"],
+        "additionalProperties": false,
+        "properties": {
+          "symbol": {
+            "type": "string",
+            "description": "The symbol as it appears in the paper, e.g. '\\psi', 'H', '\\mathbb{H}'",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "Human-readable name for this symbol, e.g. 'quaternionic wave function'",
+            "minLength": 1
+          },
+          "latex": {
+            "type": ["string", "null"],
+            "description": "LaTeX representation if different from symbol"
+          },
+          "meaning": {
+            "type": "string",
+            "description": "Full description of what this symbol represents in context",
+            "minLength": 5
+          },
+          "domain": {
+            "type": "string",
+            "description": "Mathematical or physical domain, e.g. 'quaternion algebra', 'Hilbert space', 'SU(2)'",
+            "minLength": 1
+          },
+          "type": {
+            "type": ["string", "null"],
+            "description": "Type of mathematical object: scalar, vector, operator, set, space, map, etc.",
+            "enum": ["scalar", "vector", "matrix", "operator", "set", "space", "map", "group", "algebra", "function", "constant", "index", "other", null]
+          },
+          "standard_or_project_specific": {
+            "type": "string",
+            "description": "Whether this notation is standard in the field or specific to this paper/project",
+            "enum": ["standard", "project_specific", "variant"]
+          },
+          "first_use": {
+            "type": ["string", "null"],
+            "description": "Section or equation where this symbol is first defined or introduced"
+          },
+          "related_symbols": {
+            "type": "array",
+            "description": "Other symbols in this file that are closely related",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          }
+        }
+      }
+    }
+  }
+}

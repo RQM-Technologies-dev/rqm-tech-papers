@@ -1,0 +1,206 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://rqm-technologies.com/schemas/metadata.schema.json",
+  "title": "Paper Metadata",
+  "description": "Schema for metadata.json companion files in RQM Tech Papers",
+  "type": "object",
+  "required": [
+    "paper_id",
+    "title",
+    "slug",
+    "version",
+    "status",
+    "authors",
+    "abstract",
+    "keywords",
+    "series",
+    "series_number",
+    "license"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "paper_id": {
+      "type": "string",
+      "description": "Stable paper identifier in format {series}-{number}-{slug}",
+      "pattern": "^[a-z]+-[0-9]{3}-[a-z0-9-]+$",
+      "examples": ["qqc-001-foundations"]
+    },
+    "title": {
+      "type": "string",
+      "description": "Full title of the paper",
+      "minLength": 10
+    },
+    "slug": {
+      "type": "string",
+      "description": "Short kebab-case slug matching the paper ID suffix",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "version": {
+      "type": "string",
+      "description": "Semantic version of this paper revision",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "examples": ["1.0.0", "1.1.0", "2.0.0"]
+    },
+    "status": {
+      "type": "string",
+      "description": "Current publication status",
+      "enum": ["draft", "preprint", "submitted", "published", "retracted", "superseded"]
+    },
+    "publication_date": {
+      "type": ["string", "null"],
+      "description": "ISO 8601 date of first publication or preprint posting",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "last_updated": {
+      "type": ["string", "null"],
+      "description": "ISO 8601 date of most recent revision",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "authors": {
+      "type": "array",
+      "description": "Ordered list of authors",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Full name of the author"
+          },
+          "affiliation": {
+            "type": ["string", "null"],
+            "description": "Institutional affiliation"
+          },
+          "orcid": {
+            "type": ["string", "null"],
+            "description": "ORCID identifier",
+            "pattern": "^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9X]{4}$"
+          },
+          "email": {
+            "type": ["string", "null"],
+            "description": "Contact email"
+          },
+          "corresponding": {
+            "type": "boolean",
+            "description": "Whether this author is the corresponding author",
+            "default": false
+          }
+        }
+      }
+    },
+    "abstract": {
+      "type": "string",
+      "description": "Full abstract text",
+      "minLength": 50
+    },
+    "keywords": {
+      "type": "array",
+      "description": "Keywords for indexing and search",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "series": {
+      "type": "string",
+      "description": "Series name or identifier",
+      "examples": ["qqc", "Quaternionic Quantum Computing"]
+    },
+    "series_number": {
+      "type": "integer",
+      "description": "Zero-based or one-based sequential number within the series",
+      "minimum": 1
+    },
+    "depends_on": {
+      "type": "array",
+      "description": "List of paper_ids this paper depends on or cites heavily",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z]+-[0-9]{3}-[a-z0-9-]+$"
+      },
+      "default": []
+    },
+    "canonical_url": {
+      "type": ["string", "null"],
+      "description": "Canonical public URL for this paper",
+      "format": "uri"
+    },
+    "pdf_url": {
+      "type": ["string", "null"],
+      "description": "Direct URL to the PDF",
+      "format": "uri"
+    },
+    "html_url": {
+      "type": ["string", "null"],
+      "description": "Direct URL to the HTML version",
+      "format": "uri"
+    },
+    "jats_url": {
+      "type": ["string", "null"],
+      "description": "Direct URL to the JATS XML file",
+      "format": "uri"
+    },
+    "doi": {
+      "type": ["string", "null"],
+      "description": "Digital Object Identifier if assigned",
+      "pattern": "^10\\.[0-9]{4,}/"
+    },
+    "journal": {
+      "type": ["string", "null"],
+      "description": "Journal name if published"
+    },
+    "volume": {
+      "type": ["string", "integer", "null"],
+      "description": "Journal volume if published"
+    },
+    "issue": {
+      "type": ["string", "integer", "null"],
+      "description": "Journal issue if published"
+    },
+    "pages": {
+      "type": ["string", "null"],
+      "description": "Page range if published, e.g. '1-24'"
+    },
+    "citations": {
+      "type": "array",
+      "description": "BibTeX citation keys cited in this paper",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "related_artifacts": {
+      "type": "array",
+      "description": "Paths or URLs to associated code, notebooks, or data",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "license": {
+      "type": "string",
+      "description": "SPDX license identifier or full license name",
+      "examples": ["CC-BY-4.0", "CC-BY-NC-4.0", "All rights reserved"]
+    },
+    "funding": {
+      "type": "array",
+      "description": "Funding sources",
+      "items": {
+        "type": "object",
+        "required": ["funder"],
+        "properties": {
+          "funder": { "type": "string" },
+          "grant_id": { "type": ["string", "null"] }
+        }
+      },
+      "default": []
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Any additional notes about this paper or its status"
+    }
+  }
+}

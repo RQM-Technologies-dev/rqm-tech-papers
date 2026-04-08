@@ -1,3 +1,14 @@
+# ── rqm-tech-papers specific ──────────────────────────────────────────────────
+# Do not ignore index/ — those are committed generated outputs
+# Ignore any local scratch or temp exports
+*.DS_Store
+Thumbs.db
+*.swp
+*.swo
+tmp/
+scratch/
+
+# ── Python ────────────────────────────────────────────────────────────────────
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

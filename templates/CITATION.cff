@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+type: software
+title: "REPLACE WITH PAPER TITLE"
+version: "1.0.0"
+date-released: "YYYY-MM-DD"
+abstract: "REPLACE WITH ABSTRACT"
+authors:
+  - family-names: "FAMILY NAME"
+    given-names: "GIVEN NAME"
+    affiliation: "RQM Technologies"
+    orcid: "https://orcid.org/XXXX-XXXX-XXXX-XXXX"
+repository-code: "https://github.com/RQM-Technologies-dev/rqm-tech-papers"
+url: "https://CANONICAL_URL/papers/SERIES-NNN-slug/"
+license: CC-BY-4.0
+keywords:
+  - quaternionic quantum computing
+  - REPLACE WITH ADDITIONAL KEYWORDS
+preferred-citation:
+  type: article
+  title: "REPLACE WITH PAPER TITLE"
+  authors:
+    - family-names: "FAMILY NAME"
+      given-names: "GIVEN NAME"
+      affiliation: "RQM Technologies"
+  journal: "REPLACE WITH JOURNAL NAME OR PREPRINT SERVER"
+  year: YYYY
+  doi: "10.XXXX/XXXXXX"

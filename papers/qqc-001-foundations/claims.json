@@ -1,0 +1,93 @@
+{
+  "paper_id": "qqc-001-foundations",
+  "claims": [
+    {
+      "claim_id": "def-1",
+      "label": "Definition 1 (Quaternion Algebra)",
+      "type": "definition",
+      "statement": "The quaternion algebra \\mathbb{H} is the four-dimensional associative algebra over \\mathbb{R} with basis \\{1, \\mathbf{i}, \\mathbf{j}, \\mathbf{k}\\} satisfying \\mathbf{i}^2 = \\mathbf{j}^2 = \\mathbf{k}^2 = \\mathbf{i}\\mathbf{j}\\mathbf{k} = -1.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": [],
+      "evidence_location": "Section 2.1, Definition 1",
+      "notes": "This is the standard Hamilton quaternion algebra. The basis multiplication table is: ij=k, jk=i, ki=j, ji=-k, kj=-i, ik=-j."
+    },
+    {
+      "claim_id": "def-2",
+      "label": "Definition 2 (Quaternionic Qubit)",
+      "type": "definition",
+      "statement": "A quaternionic qubit is a unit quaternion q \\in \\mathbb{H} with |q| = 1, representing a point on the 3-sphere S^3 \\subset \\mathbb{R}^4. The quaternionic qubit space is identified with SU(2) via the map q = a + b\\mathbf{i} + c\\mathbf{j} + d\\mathbf{k} \\mapsto \\begin{pmatrix} a+di & b+ci \\\\ -b+ci & a-di \\end{pmatrix}.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": ["def-1"],
+      "evidence_location": "Section 2.2, Definition 2",
+      "notes": "This definition establishes the geometric interpretation of the qubit as a unit quaternion."
+    },
+    {
+      "claim_id": "thm-1",
+      "label": "Theorem 1 (Quaternion–SU(2) Isomorphism)",
+      "type": "theorem",
+      "statement": "The group of unit quaternions \\mathrm{Sp}(1) = \\{q \\in \\mathbb{H} : |q| = 1\\} is isomorphic to SU(2) as a Lie group.",
+      "status": "proved",
+      "proof_sketch": "The isomorphism is given explicitly by the map \\phi: q = a + b\\mathbf{i} + c\\mathbf{j} + d\\mathbf{k} \\mapsto \\begin{pmatrix} a+di & b+ci \\\\ -b+ci & a-di \\end{pmatrix}. One verifies that \\phi preserves multiplication and that the image lies in SU(2) since det(\\phi(q)) = a^2 + b^2 + c^2 + d^2 = |q|^2 = 1.",
+      "dependencies": ["def-1", "def-2"],
+      "evidence_location": "Section 3.1, Theorem 1",
+      "notes": null
+    },
+    {
+      "claim_id": "thm-2",
+      "label": "Theorem 2 (Double Cover of SO(3))",
+      "type": "theorem",
+      "statement": "The unit quaternion group SU(2) \\cong \\mathrm{Sp}(1) is a double cover of SO(3): there exists a surjective Lie group homomorphism \\pi: \\mathrm{Sp}(1) \\to SO(3) with kernel \\{+1, -1\\}.",
+      "status": "proved",
+      "proof_sketch": "The homomorphism is given by the adjoint action of Sp(1) on the imaginary quaternions \\mathbb{R}^3 \\subset \\mathbb{H}: for a unit quaternion q and a pure quaternion v, define \\pi(q)(v) = q v q^{-1}. This is an orientation-preserving isometry of \\mathbb{R}^3, hence an element of SO(3). The kernel is the set of q such that qvq^{-1} = v for all pure quaternions v, which is {±1}.",
+      "dependencies": ["thm-1"],
+      "evidence_location": "Section 3.2, Theorem 2",
+      "notes": "This theorem has direct implications for phase accumulation: a 4\\pi rotation in SO(3) corresponds to a single 2\\pi loop in Sp(1), which is the geometric origin of spinor phase."
+    },
+    {
+      "claim_id": "prop-1",
+      "label": "Proposition 1 (Quaternionic X, Y, Z Gates)",
+      "type": "proposition",
+      "statement": "The standard Pauli gates X, Y, Z on a quaternionic qubit are represented by right-multiplication by \\mathbf{i}, \\mathbf{j}, \\mathbf{k} respectively (up to global phase), corresponding to \\pi-rotations about the x-, y-, z-axes of the Bloch sphere.",
+      "status": "proved",
+      "proof_sketch": "Under the isomorphism \\phi of Theorem 1, right-multiplication by \\mathbf{i} maps to the Pauli matrix \\sigma_x (up to a factor of i), and similarly for \\mathbf{j}, \\mathbf{k}. This follows from direct matrix computation.",
+      "dependencies": ["thm-1", "def-2"],
+      "evidence_location": "Section 4.1, Proposition 1",
+      "notes": null
+    },
+    {
+      "claim_id": "prop-2",
+      "label": "Proposition 2 (Non-commutativity of Quaternionic Gates)",
+      "type": "proposition",
+      "statement": "For any two non-collinear rotation axes \\hat{n}_1, \\hat{n}_2 \\in S^2, the corresponding unit quaternion gates q_1, q_2 satisfy q_1 q_2 \\neq q_2 q_1 in general.",
+      "status": "proved",
+      "proof_sketch": "This follows directly from the non-commutativity of \\mathbb{H}: since q_1 and q_2 correspond to rotations about non-parallel axes, their SU(2) images do not commute, which is equivalent to the non-commutativity of quaternion multiplication.",
+      "dependencies": ["def-1", "thm-1"],
+      "evidence_location": "Section 4.2, Proposition 2",
+      "notes": "This non-commutativity is a feature: it is precisely the non-commutativity exploited for universal quantum computation."
+    },
+    {
+      "claim_id": "conj-1",
+      "label": "Conjecture 1 (Quaternionic Multi-qubit Universality)",
+      "type": "conjecture",
+      "statement": "A quaternionic quantum computing model that restricts entangling operations to quaternionic tensor products achieves universal quantum computation on a class of problems strictly larger than classical computation but potentially smaller than the full quantum circuit model.",
+      "status": "conjectured",
+      "proof_sketch": null,
+      "dependencies": ["prop-1", "prop-2"],
+      "evidence_location": "Section 6, Conjecture 1",
+      "notes": "This conjecture will be investigated in subsequent papers in the series. The precise definition of quaternionic tensor product and its computational power remains open."
+    },
+    {
+      "claim_id": "res-1",
+      "label": "Result 1 (Bloch Sphere Parametrization)",
+      "type": "empirical_result",
+      "statement": "Numerical experiments confirm that the quaternionic parametrization of the Bloch sphere via unit quaternions q = cos(\\theta/2) + \\sin(\\theta/2)(n_x\\mathbf{i} + n_y\\mathbf{j} + n_z\\mathbf{k}) correctly reproduces all standard single-qubit gate operations to machine precision.",
+      "status": "empirical",
+      "proof_sketch": null,
+      "dependencies": ["def-2", "prop-1"],
+      "evidence_location": "Section 5, Result 1; artifacts/notebooks/bloch_sphere_visualization.ipynb",
+      "notes": "Validated against the standard matrix representation using numpy and the custom quaternion_gates.py library."
+    }
+  ]
+}
