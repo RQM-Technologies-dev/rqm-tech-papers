@@ -36,7 +36,7 @@
             <div class="paper-link-group">
               <span class="paper-link-label">Reader formats:</span>
               <div class="paper-links paper-links-primary">
-                <a href="papers/qqc-001-foundations/">HTML</a>
+                <a href="papers/qqc-001-foundations/paper.html">HTML</a>
                 <a href="papers/qqc-001-foundations/paper.pdf">PDF</a>
               </div>
             </div>
@@ -181,7 +181,7 @@
       function renderPaperCard(paper) {
         const readerLinks = [
           optionalLink(
-            paper._path || paper._html,
+            paper._html || paper._path,
             "HTML"
           ),
           optionalLink(paper._pdf, "PDF")
