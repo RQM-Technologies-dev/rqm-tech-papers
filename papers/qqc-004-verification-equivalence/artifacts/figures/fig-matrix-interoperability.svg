@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="310" viewBox="0 0 940 310" role="img" aria-labelledby="title desc">
+  <title id="title">Quaternionic and matrix-based verification checks</title>
+  <desc id="desc">Diagram showing canonical quaternion equality as the authoritative verification criterion and phase-aware matrix diagnostics as an interoperability layer.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+      <polygon points="0,0 10,4 0,8" fill="#2f4b73"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="940" height="310" fill="#ffffff"/>
+  <rect x="35" y="58" width="240" height="190" rx="18" ry="18" fill="#eef5ff" stroke="#2f4b73" stroke-width="2"/>
+  <text x="155" y="93" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" fill="#1e3450">Canonical quaternion check</text>
+  <text x="155" y="126" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#1a1a1a">Can(q_orig) = Can(q_opt)</text>
+  <text x="155" y="158" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#444">authoritative exact criterion</text>
+  <text x="155" y="181" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#444">global-phase aware by construction</text>
+  <text x="155" y="204" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#444">deterministic across tool runs</text>
+
+  <rect x="348" y="58" width="248" height="190" rx="18" ry="18" fill="#f8f8f8" stroke="#505050" stroke-width="2"/>
+  <text x="472" y="93" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" fill="#303030">Matrix interoperability layer</text>
+  <text x="472" y="126" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#1a1a1a">U = ¦(q_orig), V = ¦(q_opt)</text>
+  <text x="472" y="158" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#444">phase-aware residual on U V</text>
+  <text x="472" y="181" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#444">trace overlap and process fidelity</text>
+  <text x="472" y="204" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#444">compatible with matrix toolchains</text>
+
+  <rect x="669" y="58" width="236" height="190" rx="18" ry="18" fill="#edf9f0" stroke="#2f6f43" stroke-width="2"/>
+  <text x="787" y="93" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" fill="#245236">Verifier output</text>
+  <text x="787" y="126" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#1a1a1a">pass / fail decision</text>
+  <text x="787" y="158" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#444">exact canonical match</text>
+  <text x="787" y="181" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#444">plus diagnostic context for audits</text>
+  <text x="787" y="204" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#444">safe for Studio, API, and partnerships</text>
+
+  <line x1="275" y1="153" x2="348" y2="153" stroke="#2f4b73" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="596" y1="153" x2="669" y2="153" stroke="#2f4b73" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <text x="470" y="283" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#555">The paper treats canonical quaternion equality as authoritative and matrix diagnostics as an interoperable secondary view.</text>
+</svg>

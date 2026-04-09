@@ -1,0 +1,136 @@
+{
+  "paper_id": "qqc-004-verification-equivalence",
+  "claims": [
+    {
+      "claim_id": "def-1",
+      "label": "Definition 3.1 (Authoritative canonical equivalence)",
+      "type": "definition",
+      "statement": "Two single-qubit segments are canonically equivalent when the canonical fused quaternions obtained after normalization and sign-canonicalization are equal.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": [
+        "qqc-002-canonical-ir:def-6",
+        "qqc-002-canonical-ir:def-7"
+      ],
+      "evidence_location": "Section 3",
+      "notes": "This is the authoritative correctness criterion used by the paper."
+    },
+    {
+      "claim_id": "def-2",
+      "label": "Definition 3.2 (Global-phase-aware matrix equivalence)",
+      "type": "definition",
+      "statement": "Two single-qubit segment representatives U and V in SU(2) are equivalent modulo global phase when U dagger V equals a scalar phase times the identity, or equivalently when their underlying U(2) actions agree up to global phase.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": [
+        "qqc-001-foundations:prop-3",
+        "qqc-001-foundations:prop-5"
+      ],
+      "evidence_location": "Section 3",
+      "notes": "This is the matrix-language interoperability criterion aligned with the quaternionic one."
+    },
+    {
+      "claim_id": "prop-3",
+      "label": "Proposition 4.1 (Canonical quaternion equality is sufficient and necessary)",
+      "type": "proposition",
+      "statement": "Under the fixed quaternion-SU(2) convention and canonical sign rule, two single-qubit segments represent the same action modulo global phase if and only if their canonical fused quaternions are equal.",
+      "status": "proved",
+      "proof_sketch": "The fused quaternion is unique up to the sign ambiguity inherited from SU(2), and the canonicalization map selects exactly one representative from each sign class. Equality of canonical representatives is therefore equivalent to equality of the represented gate action modulo global phase.",
+      "dependencies": [
+        "qqc-001-foundations:prop-5",
+        "qqc-002-canonical-ir:prop-8",
+        "qqc-003-gate-fusion:prop-5"
+      ],
+      "evidence_location": "Section 4",
+      "notes": "This proposition resolves the trust question for quaternionic optimization directly in the native representation."
+    },
+    {
+      "claim_id": "prop-4",
+      "label": "Proposition 4.2 (Canonicalization invariants)",
+      "type": "proposition",
+      "statement": "The canonicalization procedure preserves unit-norm representability, sign-class membership, and the represented single-qubit action modulo global phase while selecting one deterministic representative from each sign pair.",
+      "status": "proved",
+      "proof_sketch": "Normalization rescales to the unit sphere, sign-canonicalization chooses between q and -q only, and neither operation changes the represented SU(2) action modulo global phase.",
+      "dependencies": [
+        "qqc-002-canonical-ir:def-6",
+        "qqc-002-canonical-ir:def-7",
+        "qqc-002-canonical-ir:prop-8"
+      ],
+      "evidence_location": "Section 4",
+      "notes": "These are the core invariants used in the verifier."
+    },
+    {
+      "claim_id": "def-5",
+      "label": "Definition 5.1 (Verification procedure)",
+      "type": "definition",
+      "statement": "The verification procedure for an optimized single-qubit segment consists of segment extraction, canonical quaternion fusion on both original and candidate outputs, canonical equality checking, and optional matrix diagnostics such as phase-aware residual, trace overlap, and process fidelity.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": [
+        "def-1",
+        "def-2"
+      ],
+      "evidence_location": "Section 5",
+      "notes": "This is the operational trust workflow advocated by the paper."
+    },
+    {
+      "claim_id": "prop-6",
+      "label": "Proposition 5.2 (Matrix diagnostics are interoperable but secondary)",
+      "type": "proposition",
+      "statement": "Phase-aware matrix residual, trace overlap, and process fidelity provide useful diagnostics for interoperability with matrix-based toolchains, but canonical quaternion equality remains the authoritative exact-equivalence check for the present compilation layer.",
+      "status": "proved",
+      "proof_sketch": "The diagnostics are continuous matrix summaries of the same represented action, but only canonical quaternion equality is exact and deterministic under the fixed sign convention. The matrix diagnostics are therefore informative summaries rather than the primary native proof object.",
+      "dependencies": [
+        "def-1",
+        "def-2",
+        "def-5"
+      ],
+      "evidence_location": "Section 5",
+      "notes": "This proposition defines the role of matrix diagnostics in the trust stack."
+    },
+    {
+      "claim_id": "prop-7",
+      "label": "Proposition 6.1 (Validation of optimized segments)",
+      "type": "proposition",
+      "statement": "A local single-qubit optimization is valid when the optimized segment and the original segment have equal canonical fused quaternions; matrix diagnostics may be reported in addition but do not override the canonical equivalence result.",
+      "status": "proved",
+      "proof_sketch": "This is a direct consequence of canonical equivalence being sufficient and necessary for equality of represented single-qubit action modulo global phase.",
+      "dependencies": [
+        "prop-3",
+        "def-5"
+      ],
+      "evidence_location": "Section 6",
+      "notes": "This is the trust decision rule the paper recommends for toolchains."
+    },
+    {
+      "claim_id": "emp-8",
+      "label": "Empirical Result 8.1 (Reference verifier behavior)",
+      "type": "empirical_result",
+      "statement": "On the shipped seven-case reference verification corpus, all four positive equivalence cases pass and all three negative cases are rejected under the canonical quaternion check, with matrix diagnostics consistent with those outcomes.",
+      "status": "empirical",
+      "proof_sketch": "Measured by the included verifier script verify_canonical_equivalence.py, with outputs recorded in verification_results.json.",
+      "dependencies": [
+        "def-5",
+        "prop-7"
+      ],
+      "evidence_location": "Section 8; artifacts/code/verification_results.json",
+      "notes": "This is a measured consistency result on the shipped verification corpus only."
+    },
+    {
+      "claim_id": "int-9",
+      "label": "Interpretive Claim 9.1 (Trust layer for quaternionic compilation)",
+      "type": "interpretive_claim",
+      "statement": "RQM Technologies uses canonical quaternion equality together with secondary matrix diagnostics as the trust layer for quaternionic compilation because that combination yields deterministic native verification and interoperable external reporting without changing the underlying semantics.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": [
+        "prop-3",
+        "prop-6",
+        "prop-7",
+        "emp-8"
+      ],
+      "evidence_location": "Section 9",
+      "notes": "This is an organizational trust claim, not a new mathematical theorem."
+    }
+  ]
+}

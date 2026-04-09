@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="320" viewBox="0 0 960 320" role="img" aria-labelledby="title desc">
+  <title id="title">Positive and negative verification cases</title>
+  <desc id="desc">Table-style comparison of positive verification examples that pass canonical equivalence and negative examples that are correctly rejected.</desc>
+  <rect x="0" y="0" width="960" height="320" fill="#ffffff"/>
+  <text x="480" y="36" text-anchor="middle" font-family="Georgia, serif" font-size="26" fill="#1a1a1a">Reference verification cases</text>
+
+  <rect x="40" y="62" width="400" height="220" rx="14" ry="14" fill="#f3fbf5" stroke="#2d7d46" stroke-width="2"/>
+  <text x="240" y="93" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#1f5c33">Positive expected-equivalence cases</text>
+  <line x1="60" y1="108" x2="420" y2="108" stroke="#2d7d46" stroke-width="1.5"/>
+  <text x="72" y="132" font-family="Arial, sans-serif" font-size="16" fill="#24442f">Rx(pi/2); Rx(pi/2)  vs  X</text>
+  <text x="72" y="160" font-family="Arial, sans-serif" font-size="16" fill="#24442f">Rz(pi/4); Rz(pi/4) vs  S</text>
+  <text x="72" y="188" font-family="Arial, sans-serif" font-size="16" fill="#24442f">T; Tdg  vs  identity</text>
+  <text x="72" y="216" font-family="Arial, sans-serif" font-size="16" fill="#24442f">generic fused u1q  vs  same stored u1q</text>
+  <text x="72" y="252" font-family="Arial, sans-serif" font-size="15" fill="#2d7d46">canonical match = true, residual ~ 0, process fidelity = 1</text>
+
+  <rect x="520" y="62" width="400" height="220" rx="14" ry="14" fill="#fff6f6" stroke="#b44a4a" stroke-width="2"/>
+  <text x="720" y="93" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#8f2c2c">Negative expected-inequivalence cases</text>
+  <line x1="540" y1="108" x2="900" y2="108" stroke="#b44a4a" stroke-width="1.5"/>
+  <text x="552" y="132" font-family="Arial, sans-serif" font-size="16" fill="#5a2a2a">X  vs  Y</text>
+  <text x="552" y="160" font-family="Arial, sans-serif" font-size="16" fill="#5a2a2a">Rz(pi/3)  vs  Rx(pi/3)</text>
+  <text x="552" y="188" font-family="Arial, sans-serif" font-size="16" fill="#5a2a2a">generic u1q  vs  perturbed generic u1q</text>
+  <text x="552" y="224" font-family="Arial, sans-serif" font-size="15" fill="#b44a4a">canonical match = false, residual &gt; 0, fidelity &lt; 1</text>
+  <text x="552" y="248" font-family="Arial, sans-serif" font-size="15" fill="#b44a4a">near misses can still have high fidelity yet fail exact equivalence</text>
+
+  <text x="480" y="302" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#555">The trust layer combines an exact canonical check with interoperable matrix diagnostics, so both exact matches and near misses are explained clearly.</text>
+</svg>
