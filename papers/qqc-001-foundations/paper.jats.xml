@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.3 20210610//EN"
   "https://jats.nlm.nih.gov/archiving/1.3/JATS-archivearticle1-3.dtd">
-<article xmlns:xlink="http://www.w3.org/1999/xlink"
-         article-type="research-article"
-         dtd-version="1.3">
-
+<article xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="1.3">
   <front>
     <journal-meta>
       <journal-id journal-id-type="publisher-id">rqm-tech-papers</journal-id>
@@ -13,146 +10,150 @@
       </journal-title-group>
       <publisher>
         <publisher-name>RQM Technologies</publisher-name>
-        <publisher-loc>
-          <uri>https://rqm-technologies.com</uri>
-        </publisher-loc>
       </publisher>
     </journal-meta>
 
     <article-meta>
       <article-id pub-id-type="publisher-id">qqc-001-foundations</article-id>
-
       <title-group>
         <article-title>Foundations of Quaternionic Quantum Computing: Qubits, Spinors, and SU(2) Geometry</article-title>
       </title-group>
 
       <contrib-group>
         <contrib contrib-type="author" corresp="yes">
-          <name>
-            <surname>Research Team</surname>
-            <given-names>RQM Technologies</given-names>
-          </name>
+          <collab>RQM Technologies Research Team</collab>
           <aff>RQM Technologies</aff>
           <email>research@rqm-technologies.com</email>
         </contrib>
       </contrib-group>
 
-      <pub-date pub-type="epub" iso-8601-date="2025-01-15">
-        <day>15</day>
-        <month>01</month>
-        <year>2025</year>
-      </pub-date>
-
-      <volume>1</volume>
-      <issue>1</issue>
-      <fpage>1</fpage>
-      <lpage>32</lpage>
-
       <abstract>
-        <p>We develop the foundational framework for quaternionic quantum computing, establishing rigorous connections between quaternion algebra, spinor representations, and the geometry of SU(2). We show that the quaternionic qubit&#x2014;a unit quaternion in the Bloch sphere interpretation&#x2014;provides a natural geometric encoding of two-level quantum systems, and that quaternion multiplication corresponds directly to SU(2) rotations on the Bloch sphere. We derive the quaternionic analogues of standard quantum gates, prove that any SU(2) gate can be expressed as a unit quaternion, and demonstrate that the double-cover relationship between SU(2) and SO(3) has direct implications for phase accumulation in quaternionic circuits. We further examine the quaternionic Hilbert space structure and discuss how non-commutativity of quaternion multiplication constrains the design of multi-qubit systems. This paper establishes the mathematical foundation for the subsequent papers in the RQM quaternionic quantum computing series.</p>
+        <p>This paper assembles a conservative mathematical foundation for the use of quaternions in single-qubit quantum computing. The goal is not to replace standard quantum mechanics, but to organize familiar structures in a way that makes their geometry more explicit. We distinguish carefully between normalized state vectors in C^2 ~ R^4, the unit sphere S^3 inside that space, pure states modulo global phase, the projective space CP^1 ~ S^2, the single-qubit gate group U(2), and SU(2) representatives obtained after removing global phase. Within that framework, we exhibit an explicit isomorphism between the unit quaternions and SU(2), explain why unit quaternions are therefore a natural model for single-qubit gates modulo global phase, and show how quaternion multiplication exposes the axis-angle and composition structure of rotations. Standard facts are separated from the organizational choices adopted in the RQM Technologies series. The paper is restricted to single-qubit structure and makes no claim about new physics, multi-qubit quaternionic state evolution, or computational advantage.</p>
       </abstract>
 
       <kwd-group kwd-group-type="author">
-        <kwd>quaternionic quantum computing</kwd>
-        <kwd>quaternion algebra</kwd>
-        <kwd>qubits</kwd>
+        <kwd>qubit geometry</kwd>
         <kwd>spinors</kwd>
-        <kwd>SU(2) geometry</kwd>
+        <kwd>SU(2)</kwd>
+        <kwd>unit quaternions</kwd>
         <kwd>Bloch sphere</kwd>
-        <kwd>quantum gates</kwd>
-        <kwd>non-commutative algebra</kwd>
+        <kwd>single-qubit gates</kwd>
       </kwd-group>
 
       <permissions>
-        <copyright-statement>&#x00A9; 2025 RQM Technologies</copyright-statement>
-        <copyright-year>2025</copyright-year>
-        <copyright-holder>RQM Technologies</copyright-holder>
-        <license license-type="open-access"
-                 xlink:href="https://creativecommons.org/licenses/by/4.0/">
-          <license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited.</license-p>
+        <license license-type="open-access" xlink:href="https://creativecommons.org/licenses/by/4.0/">
+          <license-p>This draft is distributed under the terms of the Creative Commons Attribution 4.0 International License.</license-p>
         </license>
       </permissions>
 
-      <related-object
-        object-type="data-set"
-        xlink:href="artifacts/notebooks/bloch_sphere_visualization.ipynb"
-        content-type="notebook">Bloch sphere visualization notebook</related-object>
+      <custom-meta-group>
+        <custom-meta>
+          <meta-name>version</meta-name>
+          <meta-value>0.1.0</meta-value>
+        </custom-meta>
+        <custom-meta>
+          <meta-name>status</meta-name>
+          <meta-value>draft</meta-value>
+        </custom-meta>
+        <custom-meta>
+          <meta-name>last_updated</meta-name>
+          <meta-value>2026-04-09</meta-value>
+        </custom-meta>
+      </custom-meta-group>
 
-      <related-object
-        object-type="software"
-        xlink:href="artifacts/code/quaternion_gates.py"
-        content-type="source-code">Quaternion gates implementation</related-object>
+      <related-object object-type="source" content-type="latex" xlink:href="main.tex">LaTeX source</related-object>
+      <related-object object-type="data-set" content-type="figure" xlink:href="artifacts/figures/fig-spinor-quotient.svg">Spinor quotient figure</related-object>
+      <related-object object-type="data-set" content-type="figure" xlink:href="artifacts/figures/fig-su2-quaternion.svg">Quaternion SU(2) correspondence figure</related-object>
+      <related-object object-type="data-set" content-type="figure" xlink:href="artifacts/figures/fig-axis-angle.svg">Axis-angle composition figure</related-object>
     </article-meta>
   </front>
 
   <body>
     <sec id="sec-introduction">
       <title>1. Introduction</title>
-      <p>Quantum computing conventionally formulates quantum states as vectors in a complex Hilbert space, with unitary evolution described by complex matrix groups. However, the underlying geometry of single-qubit systems is more naturally captured by the quaternion algebra <inline-formula><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi mathvariant="double-struck">H</mml:mi></mml:math></inline-formula>, whose unit elements form the group Sp(1) isomorphic to SU(2).</p>
-      <p>This paper develops the foundational theory of quaternionic quantum computing, providing precise mathematical definitions and key theorems connecting quaternion algebra, spinor representations, and Bloch sphere geometry. The goal is to establish a rigorous foundation for the RQM quaternionic quantum computing paper series.</p>
+      <p>Single-qubit quantum mechanics is standardly presented in matrix language, but quaternionic notation can make its rotation geometry more explicit without changing the theory. The purpose of this paper is to organize a conservative foundation for that statement and to distinguish carefully between state spaces, projective state spaces, gate groups, and quaternionic models of those gate groups.</p>
+      <p>The paper is restricted to single-qubit structure. It does not propose new physics and does not claim a replacement of ordinary quantum mechanics.</p>
     </sec>
 
-    <sec id="sec-quaternion-algebra">
-      <title>2. Quaternion Algebra</title>
-
-      <sec id="sec-definition">
-        <title>2.1 Definition and Basic Properties</title>
-        <p><bold>Definition 1 (Quaternion Algebra).</bold> The quaternion algebra <inline-formula><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi mathvariant="double-struck">H</mml:mi></mml:math></inline-formula> is the four-dimensional associative algebra over <inline-formula><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi mathvariant="double-struck">R</mml:mi></mml:math></inline-formula> with basis <inline-formula><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mo>{</mml:mo><mml:mn>1</mml:mn><mml:mo>,</mml:mo><mml:mi mathvariant="bold">i</mml:mi><mml:mo>,</mml:mo><mml:mi mathvariant="bold">j</mml:mi><mml:mo>,</mml:mo><mml:mi mathvariant="bold">k</mml:mi><mml:mo>}</mml:mo></mml:math></inline-formula> satisfying <inline-formula><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msup><mml:mi mathvariant="bold">i</mml:mi><mml:mn>2</mml:mn></mml:msup><mml:mo>=</mml:mo><mml:msup><mml:mi mathvariant="bold">j</mml:mi><mml:mn>2</mml:mn></mml:msup><mml:mo>=</mml:mo><mml:msup><mml:mi mathvariant="bold">k</mml:mi><mml:mn>2</mml:mn></mml:msup><mml:mo>=</mml:mo><mml:mi mathvariant="bold">i</mml:mi><mml:mi mathvariant="bold">j</mml:mi><mml:mi mathvariant="bold">k</mml:mi><mml:mo>=</mml:mo><mml:mo>-</mml:mo><mml:mn>1</mml:mn></mml:math></inline-formula>.</p>
+    <sec id="sec-preliminaries">
+      <title>2. Mathematical preliminaries</title>
+      <sec id="sec-spinors">
+        <title>2.1 Qubits as normalized vectors in C^2</title>
+        <p>A normalized single-qubit state vector has the form (alpha, beta)^T in C^2 with |alpha|^2 + |beta|^2 = 1. Under C^2 ~ R^4, the normalized vectors form S^3.</p>
       </sec>
-
-      <sec id="sec-qubit">
-        <title>2.2 The Quaternionic Qubit</title>
-        <p><bold>Definition 2 (Quaternionic Qubit).</bold> A quaternionic qubit is a unit quaternion <inline-formula><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>q</mml:mi><mml:mo>&#x2208;</mml:mo><mml:mi mathvariant="double-struck">H</mml:mi></mml:math></inline-formula> with <inline-formula><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mo>|</mml:mo><mml:mi>q</mml:mi><mml:mo>|</mml:mo><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:math></inline-formula>, representing a point on the 3-sphere <inline-formula><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msup><mml:mi>S</mml:mi><mml:mn>3</mml:mn></mml:msup></mml:math></inline-formula>.</p>
+      <sec id="sec-projective">
+        <title>2.2 Pure states and the Bloch sphere</title>
+        <p>Pure states are rays in C^2, or equivalently points of CP^1. The Bloch-sphere map identifies CP^1 with S^2, so the Bloch sphere is a quotient of S^3 by global phase rather than another name for S^3 itself.</p>
+      </sec>
+      <sec id="sec-gates">
+        <title>2.3 Single-qubit gates in U(2)</title>
+        <p>Single-qubit gates live in U(2). After removing overall phase, each such gate admits a representative in SU(2), unique up to sign.</p>
+      </sec>
+      <sec id="sec-quaternions">
+        <title>2.4 Unit quaternions</title>
+        <p>The quaternion algebra H has basis 1, i, j, k with i^2 = j^2 = k^2 = ijk = -1. The unit quaternions form Sp(1), a Lie group whose underlying manifold is S^3.</p>
       </sec>
     </sec>
 
-    <sec id="sec-su2">
-      <title>3. SU(2) Geometry</title>
+    <sec id="sec-su2-quaternions">
+      <title>3. SU(2) and the unit-quaternion model</title>
+      <p>The paper fixes an explicit standard identification Phi from H to 2 x 2 complex matrices so that the quaternion basis units align with the Pauli x, y, and z generators.</p>
+      <p>Under this identification, the unit quaternions are isomorphic to SU(2), and sequential single-qubit gate composition corresponds to quaternion multiplication.</p>
+    </sec>
 
-      <sec id="sec-isomorphism">
-        <title>3.1 The Quaternion&#x2013;SU(2) Isomorphism</title>
-        <p><bold>Theorem 1 (Quaternion&#x2013;SU(2) Isomorphism).</bold> The group of unit quaternions Sp(1) is isomorphic to SU(2) as a Lie group via the map <inline-formula><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>&#x03D5;</mml:mi><mml:mo>(</mml:mo><mml:mi>a</mml:mi><mml:mo>+</mml:mo><mml:mi>b</mml:mi><mml:mi mathvariant="bold">i</mml:mi><mml:mo>+</mml:mo><mml:mi>c</mml:mi><mml:mi mathvariant="bold">j</mml:mi><mml:mo>+</mml:mo><mml:mi>d</mml:mi><mml:mi mathvariant="bold">k</mml:mi><mml:mo>)</mml:mo><mml:mo>=</mml:mo><mml:mrow><mml:mo>(</mml:mo><mml:mtable><mml:mtr><mml:mtd><mml:mi>a</mml:mi><mml:mo>+</mml:mo><mml:mi>d</mml:mi><mml:mi>i</mml:mi></mml:mtd><mml:mtd><mml:mi>b</mml:mi><mml:mo>+</mml:mo><mml:mi>c</mml:mi><mml:mi>i</mml:mi></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mo>-</mml:mo><mml:mi>b</mml:mi><mml:mo>+</mml:mo><mml:mi>c</mml:mi><mml:mi>i</mml:mi></mml:mtd><mml:mtd><mml:mi>a</mml:mi><mml:mo>-</mml:mo><mml:mi>d</mml:mi><mml:mi>i</mml:mi></mml:mtd></mml:mtr></mml:mtable><mml:mo>)</mml:mo></mml:mrow></mml:math></inline-formula>.</p>
+    <sec id="sec-geometry">
+      <title>4. Quaternionic geometry and rotation structure</title>
+      <sec id="sec-axis-angle">
+        <title>4.1 Axis-angle form</title>
+        <p>The standard axis-angle expression for SU(2) maps directly to the standard axis-angle form of a unit quaternion. This makes coordinate-axis rotations especially transparent.</p>
       </sec>
-
+      <sec id="sec-composition">
+        <title>4.2 Composition law</title>
+        <p>Writing a quaternion as scalar part plus pure part exposes dot and cross products directly in the multiplication law. The cross-product term is the geometric source of the noncommutativity of sequential rotations.</p>
+      </sec>
       <sec id="sec-double-cover">
-        <title>3.2 Double Cover of SO(3)</title>
-        <p><bold>Theorem 2 (Double Cover of SO(3)).</bold> There exists a surjective Lie group homomorphism <inline-formula><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>&#x03C0;</mml:mi><mml:mo>:</mml:mo><mml:mi>Sp</mml:mi><mml:mo>(</mml:mo><mml:mn>1</mml:mn><mml:mo>)</mml:mo><mml:mo>&#x2192;</mml:mo><mml:mi>SO</mml:mi><mml:mo>(</mml:mo><mml:mn>3</mml:mn><mml:mo>)</mml:mo></mml:math></inline-formula> with kernel <inline-formula><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mo>{</mml:mo><mml:mo>+</mml:mo><mml:mn>1</mml:mn><mml:mo>,</mml:mo><mml:mo>-</mml:mo><mml:mn>1</mml:mn><mml:mo>}</mml:mo></mml:math></inline-formula>.</p>
+        <title>4.3 The double cover SU(2) to SO(3)</title>
+        <p>Conjugation of pure quaternions defines a surjective homomorphism from Sp(1) to SO(3) with kernel {+1, -1}. This is the familiar double cover SU(2) -> SO(3).</p>
       </sec>
     </sec>
 
-    <sec id="sec-gates">
-      <title>4. Quaternionic Quantum Gates</title>
-      <p>Under the isomorphism of Theorem 1, single-qubit quantum gates correspond to unit quaternions. The standard Pauli gates are represented by the basis quaternion units.</p>
+    <sec id="sec-framing">
+      <title>5. Standard mathematics and RQM framing</title>
+      <p>The paper marks as standard the facts about normalized spinors, CP^1, S^2, U(2), SU(2), unit quaternions, and the double cover of SO(3). The project-specific contribution is only an organizational one: to use the quaternion model as a primary expository language for single-qubit gate geometry and to state the distinctions among these spaces explicitly.</p>
+    </sec>
+
+    <sec id="sec-limitations">
+      <title>6. Scope, limitations, and non-claims</title>
+      <p>This paper does not claim new physics, hardware advantage, or a multi-qubit quaternionic state formalism. It treats only the representation of single-qubit structure.</p>
     </sec>
 
     <sec id="sec-conclusion">
-      <title>6. Conclusion and Outlook</title>
-      <p>We have established the foundational mathematical framework for quaternionic quantum computing, demonstrating the precise correspondence between unit quaternions, SU(2) rotations, and single-qubit quantum gates. The non-commutativity of quaternion multiplication is shown to be directly relevant to the design of quantum circuits. Future papers in this series will build on these foundations to develop multi-qubit systems, quaternionic error correction, and applications to quantum simulation.</p>
+      <title>7. Conclusion</title>
+      <p>Unit quaternions belong naturally in single-qubit quantum computing because they provide an exact model of SU(2), the determinant-one representative group of single-qubit gates after overall phase has been removed. Their value in this context is geometric and organizational rather than revisionary.</p>
     </sec>
   </body>
 
   <back>
     <ref-list>
       <title>References</title>
-      <ref id="ref-hamilton1844">
-        <mixed-citation publication-type="journal">
-          Hamilton, W.R. <article-title>On Quaternions; or on a new System of Imaginaries in Algebra</article-title>.
-          <source>Philosophical Magazine</source>. <year>1844</year>; <volume>25</volume>:<fpage>489</fpage>&#x2013;<lpage>495</lpage>.
-        </mixed-citation>
-      </ref>
       <ref id="ref-adler1995">
-        <mixed-citation publication-type="book">
-          Adler, S.L. <source>Quaternionic Quantum Mechanics and Quantum Fields</source>.
-          Oxford University Press; <year>1995</year>. ISBN 978-0195066432.
-        </mixed-citation>
+        <mixed-citation publication-type="book">Adler, Stephen L. <source>Quaternionic Quantum Mechanics and Quantum Fields</source>. Oxford University Press; <year>1995</year>.</mixed-citation>
+      </ref>
+      <ref id="ref-bloch1946">
+        <mixed-citation publication-type="journal">Bloch, Felix. <article-title>Nuclear Induction</article-title>. <source>Physical Review</source>. <year>1946</year>; <volume>70</volume>(<issue>7-8</issue>):<fpage>460</fpage>-<lpage>474</lpage>. doi:<pub-id pub-id-type="doi">10.1103/PhysRev.70.460</pub-id></mixed-citation>
+      </ref>
+      <ref id="ref-hall2015">
+        <mixed-citation publication-type="book">Hall, Brian C. <source>Lie Groups, Lie Algebras, and Representations: An Elementary Introduction</source>. 2nd ed. Springer; <year>2015</year>.</mixed-citation>
+      </ref>
+      <ref id="ref-kuipers1999">
+        <mixed-citation publication-type="book">Kuipers, Jack B. <source>Quaternions and Rotation Sequences: A Primer with Applications to Orbits, Aerospace, and Virtual Reality</source>. Princeton University Press; <year>1999</year>.</mixed-citation>
       </ref>
       <ref id="ref-nielsen2010">
-        <mixed-citation publication-type="book">
-          Nielsen, M.A. and Chuang, I.L. <source>Quantum Computation and Quantum Information</source>.
-          Cambridge University Press; 10th Anniversary edition, <year>2010</year>. ISBN 978-1107002173.
-        </mixed-citation>
+        <mixed-citation publication-type="book">Nielsen, Michael A.; Chuang, Isaac L. <source>Quantum Computation and Quantum Information</source>. 10th Anniversary Edition. Cambridge University Press; <year>2010</year>.</mixed-citation>
+      </ref>
+      <ref id="ref-penrose1984">
+        <mixed-citation publication-type="book">Penrose, Roger; Rindler, Wolfgang. <source>Spinors and Space-Time. Volume 1: Two-Spinor Calculus and Relativistic Fields</source>. Cambridge University Press; <year>1984</year>.</mixed-citation>
       </ref>
     </ref-list>
   </back>
-
 </article>

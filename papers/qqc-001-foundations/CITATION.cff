@@ -1,31 +1,26 @@
 cff-version: 1.2.0
-message: "If you use this work, please cite it as below."
+message: "If you use this paper package, please cite the draft below."
 type: article
 title: "Foundations of Quaternionic Quantum Computing: Qubits, Spinors, and SU(2) Geometry"
-version: "1.0.0"
-date-released: "2025-01-15"
-abstract: "We develop the foundational framework for quaternionic quantum computing, establishing rigorous connections between quaternion algebra, spinor representations, and the geometry of SU(2). We show that the quaternionic qubit—a unit quaternion in the Bloch sphere interpretation—provides a natural geometric encoding of two-level quantum systems, and that quaternion multiplication corresponds directly to SU(2) rotations on the Bloch sphere."
+version: "0.1.0"
+abstract: "This paper assembles a conservative mathematical foundation for the use of quaternions in single-qubit quantum computing. The goal is not to replace standard quantum mechanics, but to organize familiar structures in a way that makes their geometry more explicit."
 authors:
   - name: "RQM Technologies Research Team"
     affiliation: "RQM Technologies"
-repository-code: "https://github.com/RQM-Technologies-dev/rqm-tech-papers"
-url: "https://papers.rqm-technologies.com/papers/qqc-001-foundations/"
 license: CC-BY-4.0
 keywords:
-  - quaternionic quantum computing
-  - quaternion algebra
-  - qubits
+  - qubit geometry
   - spinors
-  - SU(2) geometry
+  - SU(2)
+  - unit quaternions
   - Bloch sphere
-  - quantum gates
-  - non-commutative algebra
+  - single-qubit gates
 preferred-citation:
   type: article
   title: "Foundations of Quaternionic Quantum Computing: Qubits, Spinors, and SU(2) Geometry"
   authors:
     - name: "RQM Technologies Research Team"
       affiliation: "RQM Technologies"
-  year: 2025
-  url: "https://papers.rqm-technologies.com/papers/qqc-001-foundations/"
-  notes: "DOI to be assigned upon journal publication."
+  year: 2026
+  version: "0.1.0"
+  notes: "Draft paper package in the RQM Quaternionic Quantum Computing Series; no DOI assigned."

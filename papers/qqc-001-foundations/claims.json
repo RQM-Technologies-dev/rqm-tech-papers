@@ -2,92 +2,103 @@
   "paper_id": "qqc-001-foundations",
   "claims": [
     {
-      "claim_id": "def-1",
-      "label": "Definition 1 (Quaternion Algebra)",
-      "type": "definition",
-      "statement": "The quaternion algebra \\mathbb{H} is the four-dimensional associative algebra over \\mathbb{R} with basis \\{1, \\mathbf{i}, \\mathbf{j}, \\mathbf{k}\\} satisfying \\mathbf{i}^2 = \\mathbf{j}^2 = \\mathbf{k}^2 = \\mathbf{i}\\mathbf{j}\\mathbf{k} = -1.",
-      "status": "informal",
-      "proof_sketch": null,
-      "dependencies": [],
-      "evidence_location": "Section 2.1, Definition 1",
-      "notes": "This is the standard Hamilton quaternion algebra. The basis multiplication table is: ij=k, jk=i, ki=j, ji=-k, kj=-i, ik=-j."
-    },
-    {
-      "claim_id": "def-2",
-      "label": "Definition 2 (Quaternionic Qubit)",
-      "type": "definition",
-      "statement": "A quaternionic qubit is a unit quaternion q \\in \\mathbb{H} with |q| = 1, representing a point on the 3-sphere S^3 \\subset \\mathbb{R}^4. The quaternionic qubit space is identified with SU(2) via the map q = a + b\\mathbf{i} + c\\mathbf{j} + d\\mathbf{k} \\mapsto \\begin{pmatrix} a+di & b+ci \\\\ -b+ci & a-di \\end{pmatrix}.",
-      "status": "informal",
-      "proof_sketch": null,
-      "dependencies": ["def-1"],
-      "evidence_location": "Section 2.2, Definition 2",
-      "notes": "This definition establishes the geometric interpretation of the qubit as a unit quaternion."
-    },
-    {
-      "claim_id": "thm-1",
-      "label": "Theorem 1 (Quaternion–SU(2) Isomorphism)",
-      "type": "theorem",
-      "statement": "The group of unit quaternions \\mathrm{Sp}(1) = \\{q \\in \\mathbb{H} : |q| = 1\\} is isomorphic to SU(2) as a Lie group.",
-      "status": "proved",
-      "proof_sketch": "The isomorphism is given explicitly by the map \\phi: q = a + b\\mathbf{i} + c\\mathbf{j} + d\\mathbf{k} \\mapsto \\begin{pmatrix} a+di & b+ci \\\\ -b+ci & a-di \\end{pmatrix}. One verifies that \\phi preserves multiplication and that the image lies in SU(2) since det(\\phi(q)) = a^2 + b^2 + c^2 + d^2 = |q|^2 = 1.",
-      "dependencies": ["def-1", "def-2"],
-      "evidence_location": "Section 3.1, Theorem 1",
-      "notes": null
-    },
-    {
-      "claim_id": "thm-2",
-      "label": "Theorem 2 (Double Cover of SO(3))",
-      "type": "theorem",
-      "statement": "The unit quaternion group SU(2) \\cong \\mathrm{Sp}(1) is a double cover of SO(3): there exists a surjective Lie group homomorphism \\pi: \\mathrm{Sp}(1) \\to SO(3) with kernel \\{+1, -1\\}.",
-      "status": "proved",
-      "proof_sketch": "The homomorphism is given by the adjoint action of Sp(1) on the imaginary quaternions \\mathbb{R}^3 \\subset \\mathbb{H}: for a unit quaternion q and a pure quaternion v, define \\pi(q)(v) = q v q^{-1}. This is an orientation-preserving isometry of \\mathbb{R}^3, hence an element of SO(3). The kernel is the set of q such that qvq^{-1} = v for all pure quaternions v, which is {±1}.",
-      "dependencies": ["thm-1"],
-      "evidence_location": "Section 3.2, Theorem 2",
-      "notes": "This theorem has direct implications for phase accumulation: a 4\\pi rotation in SO(3) corresponds to a single 2\\pi loop in Sp(1), which is the geometric origin of spinor phase."
-    },
-    {
       "claim_id": "prop-1",
-      "label": "Proposition 1 (Quaternionic X, Y, Z Gates)",
+      "label": "Proposition 2.1 (Normalized spinors form S^3)",
       "type": "proposition",
-      "statement": "The standard Pauli gates X, Y, Z on a quaternionic qubit are represented by right-multiplication by \\mathbf{i}, \\mathbf{j}, \\mathbf{k} respectively (up to global phase), corresponding to \\pi-rotations about the x-, y-, z-axes of the Bloch sphere.",
+      "statement": "The set of normalized vectors (alpha, beta) in C^2 satisfying |alpha|^2 + |beta|^2 = 1 is the unit sphere S^3 inside R^4 under the identification C^2 ≅ R^4.",
       "status": "proved",
-      "proof_sketch": "Under the isomorphism \\phi of Theorem 1, right-multiplication by \\mathbf{i} maps to the Pauli matrix \\sigma_x (up to a factor of i), and similarly for \\mathbf{j}, \\mathbf{k}. This follows from direct matrix computation.",
-      "dependencies": ["thm-1", "def-2"],
-      "evidence_location": "Section 4.1, Proposition 1",
-      "notes": null
+      "proof_sketch": "Write alpha = a + ib and beta = c + id. The normalization condition becomes a^2 + b^2 + c^2 + d^2 = 1, which is exactly the defining equation of S^3.",
+      "dependencies": [],
+      "evidence_location": "Section 2.1",
+      "notes": "Standard mathematical fact about normalized two-component spinors."
     },
     {
       "claim_id": "prop-2",
-      "label": "Proposition 2 (Non-commutativity of Quaternionic Gates)",
+      "label": "Proposition 2.2 (Pure states are CP^1 ≅ S^2)",
       "type": "proposition",
-      "statement": "For any two non-collinear rotation axes \\hat{n}_1, \\hat{n}_2 \\in S^2, the corresponding unit quaternion gates q_1, q_2 satisfy q_1 q_2 \\neq q_2 q_1 in general.",
+      "statement": "The pure-state space of a single qubit is the projective space CP^1, obtained from normalized spinors by quotienting global phase, and CP^1 is diffeomorphic to S^2 via the Bloch-sphere map.",
       "status": "proved",
-      "proof_sketch": "This follows directly from the non-commutativity of \\mathbb{H}: since q_1 and q_2 correspond to rotations about non-parallel axes, their SU(2) images do not commute, which is equivalent to the non-commutativity of quaternion multiplication.",
-      "dependencies": ["def-1", "thm-1"],
-      "evidence_location": "Section 4.2, Proposition 2",
-      "notes": "This non-commutativity is a feature: it is precisely the non-commutativity exploited for universal quantum computation."
+      "proof_sketch": "The circle action (alpha, beta) -> (e^{i chi} alpha, e^{i chi} beta) preserves normalization and defines the projective quotient. The Bloch map is phase-invariant and has image on the unit 2-sphere.",
+      "dependencies": ["prop-1"],
+      "evidence_location": "Section 2.2",
+      "notes": "Standard fact; the paper uses it to keep S^3 distinct from the Bloch sphere."
     },
     {
-      "claim_id": "conj-1",
-      "label": "Conjecture 1 (Quaternionic Multi-qubit Universality)",
-      "type": "conjecture",
-      "statement": "A quaternionic quantum computing model that restricts entangling operations to quaternionic tensor products achieves universal quantum computation on a class of problems strictly larger than classical computation but potentially smaller than the full quantum circuit model.",
-      "status": "conjectured",
-      "proof_sketch": null,
-      "dependencies": ["prop-1", "prop-2"],
-      "evidence_location": "Section 6, Conjecture 1",
-      "notes": "This conjecture will be investigated in subsequent papers in the series. The precise definition of quaternionic tensor product and its computational power remains open."
+      "claim_id": "prop-3",
+      "label": "Proposition 2.3 (Single-qubit gates and SU(2) representatives)",
+      "type": "proposition",
+      "statement": "Every single-qubit gate U in U(2) can be written as U = e^{i chi} V with V in SU(2), and the representative V is unique up to sign.",
+      "status": "proved",
+      "proof_sketch": "Choose chi so that e^{2 i chi} = det(U). Then V = e^{-i chi} U has determinant 1. A second such representative differs by a phase whose square is 1, hence by ±1.",
+      "dependencies": [],
+      "evidence_location": "Section 2.3",
+      "notes": "This is the key bridge from physical gates in U(2) to quaternionic modeling through SU(2)."
     },
     {
-      "claim_id": "res-1",
-      "label": "Result 1 (Bloch Sphere Parametrization)",
-      "type": "empirical_result",
-      "statement": "Numerical experiments confirm that the quaternionic parametrization of the Bloch sphere via unit quaternions q = cos(\\theta/2) + \\sin(\\theta/2)(n_x\\mathbf{i} + n_y\\mathbf{j} + n_z\\mathbf{k}) correctly reproduces all standard single-qubit gate operations to machine precision.",
-      "status": "empirical",
+      "claim_id": "def-4",
+      "label": "Definition 3.1 (Chosen quaternion-SU(2) map)",
+      "type": "definition",
+      "statement": "The paper uses the explicit identification Phi(a + b i + c j + d k) = [[a - d i, -c - b i], [c - b i, a + d i]], equivalently Phi(q) = a I - i (b sigma_x + c sigma_y + d sigma_z).",
+      "status": "informal",
       "proof_sketch": null,
-      "dependencies": ["def-2", "prop-1"],
-      "evidence_location": "Section 5, Result 1; artifacts/notebooks/bloch_sphere_visualization.ipynb",
-      "notes": "Validated against the standard matrix representation using numpy and the custom quaternion_gates.py library."
+      "dependencies": [],
+      "evidence_location": "Section 3.1, Eq. (1)",
+      "notes": "This is a standard variant chosen because the quaternion basis units align with the x, y, z Pauli axes."
+    },
+    {
+      "claim_id": "prop-5",
+      "label": "Proposition 3.1 (Unit quaternions are isomorphic to SU(2))",
+      "type": "proposition",
+      "statement": "The restriction of Phi to the unit quaternions Sp(1) = {q in H : |q| = 1} is a Lie-group isomorphism from Sp(1) onto SU(2).",
+      "status": "proved",
+      "proof_sketch": "Under Phi, the quaternion units satisfy the same multiplication rules as -i sigma_x, -i sigma_y, and -i sigma_z. The determinant of Phi(q) is |q|^2, so unit quaternions map into SU(2), and every SU(2) matrix of the standard form has a unique quaternion preimage.",
+      "dependencies": ["def-4"],
+      "evidence_location": "Section 3.1",
+      "notes": "Standard Lie-group fact."
+    },
+    {
+      "claim_id": "cor-6",
+      "label": "Corollary 3.2 (Sequential gate composition is quaternion multiplication)",
+      "type": "corollary",
+      "statement": "If q1 and q2 in Sp(1) represent single-qubit gates through Phi, then applying the first gate and then the second corresponds to the product q2 q1.",
+      "status": "proved",
+      "proof_sketch": "This is the homomorphism property Phi(q2 q1) = Phi(q2) Phi(q1).",
+      "dependencies": ["prop-5"],
+      "evidence_location": "Section 3.1",
+      "notes": "Standard consequence of the chosen identification."
+    },
+    {
+      "claim_id": "prop-7",
+      "label": "Proposition 4.1 (Double cover of SO(3))",
+      "type": "proposition",
+      "statement": "Conjugation of pure quaternions by unit quaternions defines a surjective homomorphism rho: Sp(1) -> SO(3) with kernel {+1, -1}; equivalently SU(2) is a double cover of SO(3).",
+      "status": "proved",
+      "proof_sketch": "The action q v q^{-1} preserves the pure-quaternion subspace and Euclidean norm, hence gives an element of SO(3). Every spatial rotation has an axis-angle lift to a unit quaternion, and only ±1 act trivially on all pure quaternions.",
+      "dependencies": ["prop-5"],
+      "evidence_location": "Section 4.3",
+      "notes": "Standard rotation-theoretic fact."
+    },
+    {
+      "claim_id": "rem-8",
+      "label": "Remark 2.4 (Two distinct roles of S^3)",
+      "type": "remark",
+      "statement": "The manifold S^3 appears both as the space of normalized spinor representatives in C^2 and as the manifold underlying the Lie group of unit quaternions, but these are different mathematical roles and should not be conflated with the Bloch sphere S^2.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": ["prop-1", "prop-2", "prop-5"],
+      "evidence_location": "Section 2.4 and Section 3.2",
+      "notes": "Clarifying statement emphasized by the paper."
+    },
+    {
+      "claim_id": "int-9",
+      "label": "Interpretive Claim 5.2 (RQM framing choice)",
+      "type": "interpretive_claim",
+      "statement": "RQM Technologies chooses to organize standard single-qubit gate geometry by treating the quaternion model of SU(2) as a primary expository language, while explicitly preserving the standard distinctions among state vectors, projective states, gate representatives, and physical rotations.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": ["prop-2", "prop-3", "prop-5", "prop-7", "rem-8"],
+      "evidence_location": "Section 5.2",
+      "notes": "This is an organizational claim about presentation, not a claim of new mathematics or new physics."
     }
   ]
 }

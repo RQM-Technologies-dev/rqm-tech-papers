@@ -1,30 +1,11 @@
 # Notebooks — qqc-001-foundations
 
-This directory contains Jupyter notebooks supporting
-**Foundations of Quaternionic Quantum Computing: Qubits, Spinors, and SU(2) Geometry**.
+This paper package does not currently include executable notebooks.
 
-## Notebooks
+The present paper is a mathematical foundations draft focused on standard single-qubit geometry, so no numerical experiment is required for the core claims. Future companion notebooks, if added, should be limited to expository visualization tasks such as:
 
-| File | Description | Status |
-|------|-------------|--------|
-| `bloch_sphere_visualization.ipynb` | Interactive Bloch sphere visualization using quaternion parametrization; validates Result 1 | Pending |
+- plotting the Hopf-fibration-style relation between normalized spinors in \(S^3\) and Bloch vectors in \(S^2\),
+- checking the matrix/quaternion correspondence for selected single-qubit rotations, and
+- illustrating axis-angle composition.
 
-## Requirements
-
-Notebooks require Python 3.9+ and the following packages:
-- `numpy`
-- `matplotlib`
-- `scipy`
-
-Install with:
-```bash
-pip install numpy matplotlib scipy
-```
-
-## Running notebooks
-
-```bash
-jupyter notebook bloch_sphere_visualization.ipynb
-```
-
-Results should reproduce the numerical validation in Section 5 (Result 1) of the paper.
+Any future notebook should state clearly that it is pedagogical support rather than primary evidence for the paper's propositions.

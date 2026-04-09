@@ -1,19 +1,14 @@
 # Figures — qqc-001-foundations
 
-This directory contains all figures referenced in the paper
+This directory contains the figures used in
 **Foundations of Quaternionic Quantum Computing: Qubits, Spinors, and SU(2) Geometry**.
 
-## Planned figures
+## Included figures
 
-| File | Description | Status |
-|------|-------------|--------|
-| `fig-bloch-sphere.svg` | Bloch sphere with quaternionic axes labelled | Pending |
-| `fig-su2-cover.svg` | Diagram of the Sp(1) → SO(3) double cover | Pending |
-| `fig-gate-table.svg` | Visual representation of quaternionic gate table | Pending |
+| File | Description |
+|------|-------------|
+| `fig-spinor-quotient.svg` | Schematic of normalized spinors in `S^3`, quotient by global phase, and the Bloch sphere `S^2` |
+| `fig-su2-quaternion.svg` | Correspondence between `SU(2)`, unit quaternions, and the projective rotation action on the Bloch sphere |
+| `fig-axis-angle.svg` | Axis-angle form and composition picture for single-qubit rotations |
 
-## Naming convention
-
-- Use lowercase kebab-case filenames: `fig-short-description.ext`
-- Prefer SVG for diagrams and vector art
-- Use PNG for raster figures at ≥300 DPI
-- Reference figures in `paper.html` with relative paths: `artifacts/figures/filename.svg`
+All figures are simple vector schematics intended to support exposition, not to encode numerical data.
