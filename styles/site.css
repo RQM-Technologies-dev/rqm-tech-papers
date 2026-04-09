@@ -316,6 +316,40 @@ h3,
   font-weight: 700;
 }
 
+.paper-link-groups {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.15rem;
+}
+
+.paper-link-group {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.paper-link-label {
+  color: var(--text-strong);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.paper-link-note {
+  color: var(--muted);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.78rem;
+}
+
+.paper-links-secondary {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.paper-links-secondary a {
+  font-weight: 600;
+}
+
 .hero-actions,
 .quick-links,
 .paper-links,

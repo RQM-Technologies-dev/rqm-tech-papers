@@ -45,12 +45,25 @@
             Conservative foundation paper on normalized spinors, the Bloch sphere, SU(2), and the unit-quaternion model
             of single-qubit gates.
           </p>
-          <div class="paper-links">
-            <a href="papers/qqc-001-foundations/">HTML</a>
-            <a href="papers/qqc-001-foundations/paper.pdf">PDF</a>
-            <a href="papers/qqc-001-foundations/metadata.json">Metadata</a>
-            <a href="papers/qqc-001-foundations/references.bib">BibTeX</a>
-            <a href="papers/qqc-001-foundations/main.tex">LaTeX</a>
+          <div class="paper-link-groups">
+            <div class="paper-link-group">
+              <span class="paper-link-label">Reader formats:</span>
+              <div class="paper-links paper-links-primary">
+                <a href="papers/qqc-001-foundations/">HTML</a>
+                <a href="papers/qqc-001-foundations/paper.pdf">PDF</a>
+              </div>
+            </div>
+            <div class="paper-link-group paper-link-group-secondary">
+              <div class="paper-link-caption">Structured companion files (for AI/indexing)</div>
+              <div class="paper-links paper-links-secondary">
+                <a href="papers/qqc-001-foundations/metadata.json">Metadata</a>
+                <a href="papers/qqc-001-foundations/claims.json">Claims</a>
+                <a href="papers/qqc-001-foundations/notation.json">Notation</a>
+                <a href="papers/qqc-001-foundations/glossary.json">Glossary</a>
+                <a href="papers/qqc-001-foundations/paper.jats.xml">JATS XML</a>
+                <a href="papers/qqc-001-foundations/references.bib">BibTeX</a>
+              </div>
+            </div>
           </div>
         </article>
       </div>
@@ -179,12 +192,14 @@
       }
 
       function renderPaperCard(paper) {
-        const links = [
+        const readerLinks = [
           optionalLink(
             paper._path || paper._html,
             "HTML"
           ),
-          optionalLink(paper._pdf, "PDF"),
+          optionalLink(paper._pdf, "PDF")
+        ].filter(Boolean).join("");
+        const structuredLinks = [
           optionalLink(paper._metadata, "Metadata"),
           optionalLink(paper._claims, "Claims"),
           optionalLink(paper._notation, "Notation"),
@@ -198,7 +213,18 @@
             '<h3 class="paper-title">' + escapeHtml(paper.title || paper.paper_id || "Untitled paper") + "</h3>" +
             '<div class="paper-authors">' + escapeHtml(authorLine(paper.authors)) + "</div>" +
             '<p class="paper-summary">' + escapeHtml(summarize(paper.abstract)) + "</p>" +
-            '<div class="paper-links">' + links + "</div>" +
+            '<div class="paper-link-groups">' +
+              '<div class="paper-link-group">' +
+                '<span class="paper-link-label">Reader formats:</span>' +
+                '<div class="paper-links paper-links-primary">' + readerLinks + "</div>" +
+              '</div>' +
+              (structuredLinks
+                ? '<div class="paper-link-group paper-link-group-secondary">' +
+                    '<div class="paper-link-caption">Structured companion files (for AI/indexing)</div>' +
+                    '<div class="paper-links paper-links-secondary">' + structuredLinks + "</div>" +
+                  '</div>'
+                : '') +
+            "</div>" +
           "</article>"
         );
       }
