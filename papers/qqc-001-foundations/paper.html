@@ -284,12 +284,12 @@ c-bi & a+di
 <table><thead><tr><th>Symbol</th><th>Meaning</th><th>Role</th></tr></thead><tbody><tr><td>\(\ket{\psi}\)</td><td>normalized state vector in \(\C^2\)</td><td>state representative</td></tr><tr><td>\(S^3\)</td><td>unit sphere in \(\C^2\cong\R^4\)</td><td>normalized spinors</td></tr><tr><td>\(\CP^1\)</td><td>projective pure-state space</td><td>pure states modulo phase</td></tr><tr><td>\(S^2\)</td><td>Bloch sphere</td><td>pure states / Bloch vectors</td></tr><tr><td>\(U\)</td><td>element of \(\U(2)\)</td><td>single-qubit gate</td></tr><tr><td>\(V\)</td><td>representative in \(\SU(2)\)</td><td>gate modulo global phase</td></tr><tr><td>\(q\)</td><td>unit quaternion</td><td>model of \(V\in\SU(2)\)</td></tr><tr><td>\(\Phi\)</td><td>quaternion--matrix identification</td><td>convention chosen here</td></tr></tbody></table>
 <h2>Appendix B. Schematic figures</h2>
 <figure>
-      <img src="artifacts/figures/fig-spinor-quotient.svg" alt="Schematic showing normalized spinors on S3, quotient by global phase, and the resulting Bloch sphere S2." />
-      <figcaption>Normalized spinors form S<sup>3</sup>, but physical pure states appear only after quotienting by global phase. The quotient is CP<sup>1</sup> &cong; S<sup>2</sup>.</figcaption>
+      <img src="artifacts/figures/fig-spinor-quotient.svg" alt="Expanded schematic separating C2 as R4, the normalized-spinor sphere S3, the U(1) phase orbit through a state, the quotient CP1, and the Bloch-sphere model S2." />
+      <figcaption>The state-space picture has several layers: qubit amplitudes live in C<sup>2</sup> &cong; R<sup>4</sup>, normalization restricts to S<sup>3</sup>, a U(1) phase orbit identifies vectors differing only by global phase, and the quotient gives CP<sup>1</sup>, represented geometrically by the Bloch sphere S<sup>2</sup>.</figcaption>
     </figure>
 <figure>
-      <img src="artifacts/figures/fig-su2-quaternion.svg" alt="Schematic linking U(2), SU(2), and the unit quaternions through removal of global phase and an explicit isomorphism." />
-      <figcaption>Single-qubit gates live in U(2); after removing global phase they may be represented in SU(2), which is modeled exactly by the unit quaternions.</figcaption>
+      <img src="artifacts/figures/fig-su2-quaternion.svg" alt="Expanded schematic separating U(2) gates, phase-equivalent action classes, chosen SU(2) representatives, unit quaternions, and the induced SO(3) rotation action on the Bloch sphere." />
+      <figcaption>The gate-side picture also has layers: physical single-qubit gates begin in U(2), overall phase is discarded when passing to action classes, one may choose an SU(2) representative, that representative is modeled by a unit quaternion through the fixed map Phi, and the resulting action descends to an SO(3) rotation of Bloch vectors.</figcaption>
     </figure>
 <figure>
       <img src="artifacts/figures/fig-axis-angle.svg" alt="Axis-angle and composition schematic showing quaternion basis axes and the scalar-vector product formula with a cross-product term." />
