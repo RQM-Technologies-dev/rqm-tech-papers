@@ -22,6 +22,7 @@ import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import quote
 
 # ── Configuration ─────────────────────────────────────────────────────────────
 
@@ -61,6 +62,23 @@ def get_paper_dirs(papers_dir: Path) -> list[Path]:
     )
 
 
+def resolve_pdf_link(paper_dir: Path, metadata: dict) -> str:
+    """Resolve the preferred PDF link for a paper package."""
+    configured_pdf_url = metadata.get("pdf_url")
+    if isinstance(configured_pdf_url, str) and configured_pdf_url.strip():
+        return configured_pdf_url.strip()
+
+    # Prefer a titled PDF artifact when present (e.g., "Paper Title.pdf")
+    # so reader links open the real paper rather than a placeholder stub.
+    titled_pdfs = sorted(
+        path for path in paper_dir.glob("*.pdf") if path.name != "paper.pdf"
+    )
+    if titled_pdfs:
+        return f"papers/{paper_dir.name}/{quote(titled_pdfs[0].name)}"
+
+    return f"papers/{paper_dir.name}/paper.pdf"
+
+
 # ── Index generators ──────────────────────────────────────────────────────────
 
 
@@ -80,7 +98,7 @@ def generate_papers_index(paper_dirs: list[Path]) -> dict:
         entry["_path"] = f"papers/{paper_dir.name}/"
         entry["_package_index"] = f"papers/{paper_dir.name}/"
         entry["_html"] = f"papers/{paper_dir.name}/paper.html"
-        entry["_pdf"] = f"papers/{paper_dir.name}/paper.pdf"
+        entry["_pdf"] = resolve_pdf_link(paper_dir, metadata)
         entry["_metadata"] = f"papers/{paper_dir.name}/metadata.json"
         entry["_claims"] = f"papers/{paper_dir.name}/claims.json"
         entry["_notation"] = f"papers/{paper_dir.name}/notation.json"
