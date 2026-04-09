@@ -5,8 +5,10 @@ title: "Quaternionic Gate Fusion on S^3: Geometry-Native Optimization for Single
 version: "0.1.0"
 abstract: "This paper studies a local optimization pass for single-qubit circuit segments based on the canonical quaternionic intermediate representation introduced in qqc-002-canonical-ir."
 authors:
-  - name: "RQM Technologies Research Team"
+  - family-names: "Van Geem"
+    given-names: "John G."
     affiliation: "RQM Technologies"
+    orcid: "https://orcid.org/0009-0002-4003-8452"
 license: CC-BY-4.0
 keywords:
   - quaternionic gate fusion
@@ -19,8 +21,10 @@ preferred-citation:
   type: article
   title: "Quaternionic Gate Fusion on S^3: Geometry-Native Optimization for Single-Qubit Circuit Segments"
   authors:
-    - name: "RQM Technologies Research Team"
+    - family-names: "Van Geem"
+      given-names: "John G."
       affiliation: "RQM Technologies"
+      orcid: "https://orcid.org/0009-0002-4003-8452"
   year: 2026
   version: "0.1.0"
   notes: "Draft paper package in the RQM Quaternionic Quantum Computing Series; no DOI assigned."
