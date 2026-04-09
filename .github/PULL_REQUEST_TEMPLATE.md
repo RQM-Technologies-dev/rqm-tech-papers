@@ -22,6 +22,7 @@
 For each paper folder added or modified, confirm the following:
 
 ### Required files
+- [ ] `index.html` — package landing page present and complete
 - [ ] `paper.html` — present and complete
 - [ ] `paper.pdf` — present (real PDF or clearly marked placeholder stub)
 - [ ] `metadata.json` — complete and validated

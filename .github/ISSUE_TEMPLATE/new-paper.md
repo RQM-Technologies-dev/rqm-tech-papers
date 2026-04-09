@@ -36,6 +36,7 @@ assignees: ''
 Before opening a PR, confirm all items below are ready:
 
 - [ ] `paper.html` authored and complete
+- [ ] `index.html` package page present and complete
 - [ ] `paper.pdf` present (real PDF or placeholder stub)
 - [ ] `metadata.json` filled with accurate data (no invented fields)
 - [ ] `paper.jats.xml` generated

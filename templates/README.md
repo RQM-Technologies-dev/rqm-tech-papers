@@ -7,7 +7,8 @@ This folder is a semantic paper package for:
 ## Source of truth
 
 - Authoritative paper text source: `main.tex`
-- `paper.html` is the browsable publication page and should mirror the authored source.
+- `index.html` is the clean package landing page for `/papers/SERIES-NNN-slug/`.
+- `paper.html` is the full browsable paper page and should mirror the authored source.
 - If you choose a different authored source, update this README explicitly before publishing.
 
 ## Local build
@@ -29,4 +30,5 @@ Copy or rename the generated PDF to `paper.pdf` for the publication package.
 ## Notes
 
 - Keep the companion files aligned with the actual text of the paper.
+- Keep `index.html` and `paper.html` visually and semantically aligned.
 - Use `artifacts/figures/`, `artifacts/notebooks/`, and `artifacts/code/` for supporting materials.

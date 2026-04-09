@@ -27,6 +27,7 @@ PAPERS_DIR = REPO_ROOT / "papers"
 SCHEMAS_DIR = REPO_ROOT / "schemas"
 
 REQUIRED_FILES = [
+    "index.html",
     "paper.html",
     "paper.pdf",
     "metadata.json",

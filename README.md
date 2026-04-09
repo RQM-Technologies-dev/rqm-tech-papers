@@ -57,6 +57,7 @@ rqm-tech-papers/
 │
 ├── papers/                           # One folder per paper
 │   └── qqc-001-foundations/          # Example paper
+│       ├── index.html                # Clean package landing page at /papers/{id}/
 │       ├── paper.html
 │       ├── paper.pdf                 # Drop real PDF here; placeholder included
 │       ├── metadata.json
@@ -81,6 +82,7 @@ rqm-tech-papers/
 │   ├── references.bib
 │   ├── CITATION.cff
 │   ├── paper.jats.xml
+│   ├── index.html                    # Starter clean route page for /papers/{id}/
 │   ├── paper.html
 │   └── artifacts/
 │       ├── figures/
@@ -129,6 +131,7 @@ Every paper folder **must** contain all of the following:
 
 | File | Purpose |
 |------|---------|
+| `index.html` | Clean package landing page served at `/papers/{paper-id}/` |
 | `paper.html` | Browsable publication page; should mirror the authored source |
 | `paper.pdf` | Required; use placeholder stub until final PDF is ready |
 | `metadata.json` | Structured metadata (validated against schema) |
@@ -143,6 +146,7 @@ Every paper folder **must** contain all of the following:
 Validation will fail if any required file is missing. See `scripts/validate_papers.py`.
 
 Each paper folder should also include a short `README.md` that declares the current source of truth for the paper text. For `papers/qqc-001-foundations/`, that source is `main.tex`.
+The package's `index.html` should provide the clean route entry point, while `paper.html` remains the full publication document.
 
 ## How to Add a New Paper
 
@@ -155,7 +159,8 @@ Each paper folder should also include a short `README.md` that declares the curr
 2. **Declare the paper's source of truth in `README.md`.**
    - Use `main.tex` if the paper is authored in LaTeX/Overleaf.
    - If you author elsewhere, say so explicitly in the paper README.
-   - `paper.html` is the browsable publication surface, not automatically the authored source.
+   - `index.html` is the clean package entry point.
+   - `paper.html` is the full browsable publication surface, not automatically the authored source.
 
 3. **Edit `metadata.json`** — fill in all required fields using real data. Never invent or approximate metadata.
    - If a DOI, canonical URL, ORCID, venue, or page range is not yet known, leave it absent or `null`.
@@ -163,11 +168,13 @@ Each paper folder should also include a short `README.md` that declares the curr
 
 4. **Author the paper text in the declared source file** — by default this is `main.tex`.
 
-5. **Prepare `paper.html`** — publish a clean browsable HTML version that matches the authored source.
+5. **Prepare `index.html`** — create the clean package route page at `/papers/{paper-id}/`.
 
-6. **Add `paper.pdf`** — either the final PDF or a placeholder stub (see `papers/qqc-001-foundations/paper.pdf`).
+6. **Prepare `paper.html`** — publish a clean browsable HTML version that matches the authored source.
 
-7. **Populate companion files:**
+7. **Add `paper.pdf`** — either the final PDF or a placeholder stub (see `papers/qqc-001-foundations/paper.pdf`).
+
+8. **Populate companion files:**
    - `claims.json` — list every theorem, definition, proposition, and empirical result
    - `notation.json` — list every symbol used, with domain and meaning
    - `glossary.json` — define all domain-specific terms
@@ -175,17 +182,17 @@ Each paper folder should also include a short `README.md` that declares the curr
    - `paper.jats.xml` — JATS XML export
    - `CITATION.cff` — citation metadata
 
-8. **Validate:**
+9. **Validate:**
    ```bash
    python3 scripts/validate_papers.py
    ```
 
-9. **Regenerate indexes:**
+10. **Regenerate indexes:**
    ```bash
    python3 scripts/generate_index.py
    ```
 
-10. **Open a PR** using the paper PR template (`.github/PULL_REQUEST_TEMPLATE.md`).
+11. **Open a PR** using the paper PR template (`.github/PULL_REQUEST_TEMPLATE.md`).
 
 ## Validation
 
@@ -227,24 +234,17 @@ An AI agent can scan the entire series by fetching `index/papers.json` without n
 The repo is designed for deployment to Vercel as a static site:
 
 - `index.html` at the repo root serves as the landing page for human readers
-- All paper files live at predictable paths: `/papers/{paper-id}/paper.html`
+- Each paper package exposes a clean route at `/papers/{paper-id}/`
+- The full publication document remains available at `/papers/{paper-id}/paper.html`
 - No build step is required for basic deployment
-- Add a `vercel.json` at the root to configure rewrites if needed
+- `vercel.json` can enforce clean URLs and route `/papers/{paper-id}` to `/papers/{paper-id}/`
 - The `index/` directory serves as the API layer for agents
-
-Example `vercel.json` (not included, add when deploying):
-```json
-{
-  "cleanUrls": true,
-  "trailingSlash": false
-}
-```
 
 ## Human Readers vs AI Agents
 
 | Audience | Entry point |
 |----------|-------------|
-| Human readers | `index.html`, then `papers/{id}/paper.html` or `papers/{id}/paper.pdf` |
+| Human readers | `index.html`, then `papers/{id}/`, `papers/{id}/paper.html`, or `papers/{id}/paper.pdf` |
 | AI agents (full series scan) | `index/papers.json` |
 | AI agents (specific paper) | `papers/{id}/metadata.json` |
 | Citation tools | `papers/{id}/CITATION.cff` |
