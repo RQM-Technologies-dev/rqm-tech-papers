@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="720" height="360" viewBox="0 0 720 360" role="img" aria-labelledby="title desc">
   <title id="title">Unit quaternions and SU(2) correspondence</title>
-  <desc id="desc">Schematic showing the explicit identification between a unit quaternion, its SU(2) matrix image, and the induced rotation on the Bloch sphere.</desc>
+  <desc id="desc">Schematic showing the explicit identification between a unit quaternion, its SU(2) matrix image, and the induced rotation action on three-dimensional space.</desc>
   <style>
     .label { font: 18px serif; fill: #111; }
     .small { font: 15px serif; fill: #222; }
@@ -17,24 +17,24 @@
   <rect class="box" x="30" y="70" width="200" height="170"/>
   <text class="title" x="60" y="105">Unit quaternion</text>
   <text class="label" x="60" y="145">q = a + b i + c j + d k</text>
-  <text class="small" x="60" y="178">a≤ + b≤ + c≤ + d≤ = 1</text>
-  <text class="small" x="60" y="208">Sp(1) E S≥ as a manifold</text>
+  <text class="small" x="60" y="178">a&#178; + b&#178; + c&#178; + d&#178; = 1</text>
+  <text class="small" x="60" y="208">Sp(1) &#8773; S&#179; as a manifold</text>
 
   <rect class="box" x="260" y="45" width="200" height="220"/>
   <text class="title" x="305" y="80">SU(2) matrix</text>
-  <text class="small" x="290" y="125">¶(q) = a I  i(b√ì + c√g + d√_z)</text>
-  <text class="small" x="300" y="165">[ a  d i   c  b i ]</text>
-  <text class="small" x="300" y="195">[ c  b i    a + d i ]</text>
-  <text class="small" x="300" y="230">det ¶(q) = 1</text>
+  <text class="small" x="278" y="125">Phi(q) = a I - i(b sigma_x + c sigma_y + d sigma_z)</text>
+  <text class="small" x="300" y="165">[ a - d i   -c - b i ]</text>
+  <text class="small" x="300" y="195">[ c - b i    a + d i ]</text>
+  <text class="small" x="300" y="230">det Phi(q) = 1</text>
 
   <rect class="box" x="490" y="70" width="200" height="170"/>
   <text class="title" x="530" y="105">Rotation data</text>
-  <text class="small" x="520" y="145">q v q{π on Im(H) E R≥</text>
-  <text class="small" x="520" y="175">¡ : Sp(1) í SO(3)</text>
-  <text class="small" x="520" y="205">kernel {±1}</text>
+  <text class="small" x="512" y="145">q v q^-1 on Im(H) &#8773; R&#179;</text>
+  <text class="small" x="520" y="175">rho : Sp(1) -&gt; SO(3)</text>
+  <text class="small" x="520" y="205">kernel {+/- 1}</text>
 
   <path class="arrow" d="M230 155 L260 155"/>
   <path class="arrow" d="M460 155 L490 155"/>
 
-  <text class="small" x="294" y="305">Single-qubit gates in U(2) may be represented in SU(2) after removing global phase.</text>
+  <text class="small" x="210" y="305">Single-qubit gates in U(2) may be represented in SU(2) after removing global phase.</text>
 </svg>

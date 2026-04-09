@@ -11,7 +11,7 @@
   <ellipse cx="170" cy="150" rx="120" ry="95" fill="#eef5ff" stroke="#2f5fa7" stroke-width="2"/>
   <text x="170" y="120" text-anchor="middle" font-family="Georgia, serif" font-size="24" fill="#1a1a1a">S³</text>
   <text x="170" y="150" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#1a1a1a">normalized spinors</text>
-  <text x="170" y="176" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#1a1a1a">in C² E Rt</text>
+  <text x="170" y="176" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#1a1a1a">in C&#178; &#8773; R&#8308;</text>
   <circle cx="170" cy="150" r="6" fill="#2f5fa7"/>
   <ellipse cx="170" cy="150" rx="70" ry="22" fill="none" stroke="#6e90c4" stroke-width="2" stroke-dasharray="6 4"/>
   <text x="170" y="212" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#444">U(1) phase fibers</text>
@@ -28,8 +28,8 @@
   <text x="650" y="118" text-anchor="middle" font-family="Georgia, serif" font-size="24" fill="#1a1a1a">S²</text>
   <text x="650" y="146" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#1a1a1a">Bloch sphere</text>
   <text x="650" y="171" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#1a1a1a">pure states</text>
-  <text x="650" y="197" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#1a1a1a">CP¹ E S²</text>
-  <text x="650" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#444">|0é</text>
-  <text x="650" y="265" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#444">|1é</text>
+  <text x="650" y="197" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#1a1a1a">CP&#185; &#8773; S&#178;</text>
+  <text x="650" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#444">|0&gt;</text>
+  <text x="650" y="265" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#444">|1&gt;</text>
   <text x="480" y="278" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#555">Standard distinction: S³ is the normalized-spinor sphere; S² is the projective pure-state sphere.</text>
 </svg>

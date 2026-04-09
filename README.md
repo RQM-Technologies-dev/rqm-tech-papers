@@ -2,7 +2,7 @@
 
 **AI-friendly semantic publishing system for quaternionic quantum computing research by RQM Technologies.**
 
-This repository is not a generic documentation repo. It is a structured, machine-readable publishing platform for a series of journal-ready technical papers. Every paper ships with both human-readable formats (HTML, PDF) and a full suite of machine-readable companion files, making the series scannable by AI agents, citable by researchers, and deployable as a static site.
+This repository is not a generic documentation repo. It is a structured, machine-readable publishing platform for a series of journal-ready technical papers. Every paper ships with both human-readable formats (HTML, PDF) and a full suite of machine-readable companion files, making the series scannable by AI agents, citable by researchers, and deployable as a static site with a browsable landing page at the root.
 
 ---
 
@@ -32,7 +32,7 @@ This repository is not a generic documentation repo. It is a structured, machine
 - Error correction and decoherence in quaternionic frameworks
 - Applications to quantum simulation and optimization
 
-Each paper in the series lives in its own self-contained folder under `papers/` and is published with a stable paper ID, a full set of machine-readable companion files, and a canonical URL.
+Each paper in the series lives in its own self-contained folder under `papers/` and is published with a stable paper ID, a full set of machine-readable companion files, and a canonical URL when one has been assigned.
 
 ## Why It Exists
 
@@ -50,6 +50,7 @@ Standard code repositories handle source files well but are poorly suited for ac
 rqm-tech-papers/
 ├── README.md                         # This file
 ├── PROJECT_RULES.md                  # Rules for contributors and AI agents
+├── index.html                        # Root landing page for the static site
 ├── LICENSE
 ├── .editorconfig
 ├── .gitignore
@@ -71,6 +72,8 @@ rqm-tech-papers/
 │           └── code/
 │
 ├── templates/                        # Reusable starter templates
+│   ├── README.md                     # Starter per-paper README/source-of-truth note
+│   ├── main.tex                      # Starter authored source for LaTeX/Overleaf workflows
 │   ├── metadata.json
 │   ├── claims.json
 │   ├── notation.json
@@ -78,7 +81,11 @@ rqm-tech-papers/
 │   ├── references.bib
 │   ├── CITATION.cff
 │   ├── paper.jats.xml
-│   └── paper.html
+│   ├── paper.html
+│   └── artifacts/
+│       ├── figures/
+│       ├── notebooks/
+│       └── code/
 │
 ├── schemas/                          # JSON schemas for validation
 │   ├── metadata.schema.json
@@ -122,7 +129,7 @@ Every paper folder **must** contain all of the following:
 
 | File | Purpose |
 |------|---------|
-| `paper.html` | Primary human-readable version |
+| `paper.html` | Browsable publication page; should mirror the authored source |
 | `paper.pdf` | Required; use placeholder stub until final PDF is ready |
 | `metadata.json` | Structured metadata (validated against schema) |
 | `paper.jats.xml` | JATS XML for journal submission and indexing |
@@ -135,20 +142,32 @@ Every paper folder **must** contain all of the following:
 
 Validation will fail if any required file is missing. See `scripts/validate_papers.py`.
 
+Each paper folder should also include a short `README.md` that declares the current source of truth for the paper text. For `papers/qqc-001-foundations/`, that source is `main.tex`.
+
 ## How to Add a New Paper
 
 1. **Copy the template folder:**
    ```bash
    cp -r templates/ papers/qqc-002-your-slug/
    ```
+   The copied folder includes a starter `README.md`, `main.tex`, and the expected `artifacts/` subdirectories.
 
-2. **Edit `metadata.json`** — fill in all required fields using real data. Never invent or approximate metadata.
+2. **Declare the paper's source of truth in `README.md`.**
+   - Use `main.tex` if the paper is authored in LaTeX/Overleaf.
+   - If you author elsewhere, say so explicitly in the paper README.
+   - `paper.html` is the browsable publication surface, not automatically the authored source.
 
-3. **Write `paper.html`** — the primary authored version of the paper.
+3. **Edit `metadata.json`** — fill in all required fields using real data. Never invent or approximate metadata.
+   - If a DOI, canonical URL, ORCID, venue, or page range is not yet known, leave it absent or `null`.
+   - Do not publish placeholder values that look real.
 
-4. **Add `paper.pdf`** — either the final PDF or a placeholder stub (see `papers/qqc-001-foundations/paper.pdf`).
+4. **Author the paper text in the declared source file** — by default this is `main.tex`.
 
-5. **Populate companion files:**
+5. **Prepare `paper.html`** — publish a clean browsable HTML version that matches the authored source.
+
+6. **Add `paper.pdf`** — either the final PDF or a placeholder stub (see `papers/qqc-001-foundations/paper.pdf`).
+
+7. **Populate companion files:**
    - `claims.json` — list every theorem, definition, proposition, and empirical result
    - `notation.json` — list every symbol used, with domain and meaning
    - `glossary.json` — define all domain-specific terms
@@ -156,17 +175,17 @@ Validation will fail if any required file is missing. See `scripts/validate_pape
    - `paper.jats.xml` — JATS XML export
    - `CITATION.cff` — citation metadata
 
-6. **Validate:**
+8. **Validate:**
    ```bash
    python scripts/validate_papers.py
    ```
 
-7. **Regenerate indexes:**
+9. **Regenerate indexes:**
    ```bash
    python scripts/generate_index.py
    ```
 
-8. **Open a PR** using the paper PR template (`.github/PULL_REQUEST_TEMPLATE.md`).
+10. **Open a PR** using the paper PR template (`.github/PULL_REQUEST_TEMPLATE.md`).
 
 ## Validation
 
@@ -207,6 +226,7 @@ An AI agent can scan the entire series by fetching `index/papers.json` without n
 
 The repo is designed for deployment to Vercel as a static site:
 
+- `index.html` at the repo root serves as the landing page for human readers
 - All paper files live at predictable paths: `/papers/{paper-id}/paper.html`
 - No build step is required for basic deployment
 - Add a `vercel.json` at the root to configure rewrites if needed
@@ -224,7 +244,7 @@ Example `vercel.json` (not included, add when deploying):
 
 | Audience | Entry point |
 |----------|-------------|
-| Human readers | `papers/{id}/paper.html` or `papers/{id}/paper.pdf` |
+| Human readers | `index.html`, then `papers/{id}/paper.html` or `papers/{id}/paper.pdf` |
 | AI agents (full series scan) | `index/papers.json` |
 | AI agents (specific paper) | `papers/{id}/metadata.json` |
 | Citation tools | `papers/{id}/CITATION.cff` |
