@@ -55,7 +55,7 @@ orcid: 0009-0002-4003-8452}
 \begin{abstract}
 This paper defines a canonical quaternionic intermediate representation for
 single-qubit circuit segments. Building on the fixed quaternion--$\SU(2)$
-correspondence established in \texttt{qqc-001-foundations}, it treats the
+correspondence established in \emph{Foundations of Quaternionic Quantum Computing}, it treats the
 physically relevant action of a single-qubit gate modulo global phase by first
 choosing an $\SU(2)$ representative and then representing that representative
 by a unit quaternion
@@ -85,7 +85,7 @@ no multi-qubit IR, optimization guarantee, or hardware claim is made.
 
 \section{Introduction}
 
-The first paper in this series, \texttt{qqc-001-foundations}, established a
+The first paper in this series, \emph{Foundations of Quaternionic Quantum Computing}, established a
 conservative mathematical point: after removal of overall phase, a single-qubit
 gate admits a representative in $\SU(2)$, and under a fixed standard
 convention that representative is modeled exactly by a unit quaternion. The
@@ -126,12 +126,12 @@ only as boundaries that terminate single-qubit segments. No claim is made about
 multi-qubit quaternionic ontologies, backend execution, or performance
 advantage.
 
-\section{Background and dependency on paper 1}
+\section{Background and dependency on Foundations of Quaternionic Quantum Computing}
 
 \subsection{Gates, phase, and the fixed convention}
 
 We carry forward without modification the convention fixed in
-\texttt{qqc-001-foundations}. Single-qubit gates live fundamentally in
+\emph{Foundations of Quaternionic Quantum Computing}. Single-qubit gates live fundamentally in
 $\U(2)$. Physical pure-state action is unchanged if a gate is multiplied by an
 overall phase. The IR defined here therefore models single-qubit gate action
 \emph{modulo global phase}.
@@ -146,13 +146,13 @@ The representative $V$ is unique up to multiplication by $-1$.
 
 \begin{proof}
 This is the same determinant-removal argument used in
-\texttt{qqc-001-foundations}. Choose $\chi$ such that
+\emph{Foundations of Quaternionic Quantum Computing}. Choose $\chi$ such that
 $e^{2i\chi}=\det U$. Then $V=e^{-i\chi}U$ has determinant $1$, so $V\in\SU(2)$.
 Any second determinant-one representative differs from $V$ by a phase whose
 square is $1$, hence by $\pm 1$.
 \end{proof}
 
-The quaternion convention is also inherited from paper 1:
+The quaternion convention is also inherited from \emph{Foundations of Quaternionic Quantum Computing}:
 \begin{equation}
 \Phi(a+b\ii+c\jj+d\kk)=
 \begin{pmatrix}
@@ -178,7 +178,7 @@ is a Lie-group isomorphism from $\mathrm{Sp}(1)$ onto $\SU(2)$.
 \end{proposition}
 
 \begin{proof}
-This is the standard result established in paper 1. The key points are that
+This is the standard result established in \emph{Foundations of Quaternionic Quantum Computing}. The key points are that
 $\Phi$ preserves the quaternion multiplication rules and that
 $\det \Phi(q)=\abs{q}^2$.
 \end{proof}
@@ -423,7 +423,7 @@ q_{\mathrm{seg}}=\canon(q_m q_{m-1}\cdots q_1).
 \end{proposition}
 
 \begin{proof}
-By the convention carried forward from paper 1,
+By the convention carried forward from \emph{Foundations of Quaternionic Quantum Computing},
 \[
 \Phi(q_m q_{m-1}\cdots q_1)
 =
