@@ -49,6 +49,7 @@
             <a href="papers/qqc-001-foundations/">HTML</a>
             <a href="papers/qqc-001-foundations/paper.pdf">PDF</a>
             <a href="papers/qqc-001-foundations/metadata.json">Metadata</a>
+            <a href="papers/qqc-001-foundations/references.bib">BibTeX</a>
             <a href="papers/qqc-001-foundations/main.tex">LaTeX</a>
           </div>
         </article>
@@ -188,7 +189,8 @@
           optionalLink(paper._claims, "Claims"),
           optionalLink(paper._notation, "Notation"),
           optionalLink(paper._glossary, "Glossary"),
-          optionalLink(paper._jats, "JATS XML")
+          optionalLink(paper._jats, "JATS XML"),
+          optionalLink(paper._bib, "BibTeX")
         ].filter(Boolean).join("");
 
         return (
