@@ -14,7 +14,8 @@
   <div class="page">
     <header class="hero">
       <div class="eyebrow">RQM Technologies technical papers</div>
-      <h1>Quaternionic quantum computing, published as a browsable static series.</h1>
+      <h1>Quaternionic Quantum Computing</h1>
+      <p class="hero-subtitle">published as a browsable static series.</p>
       <p class="hero-copy">
         This repository is the publishing home for RQM Technologies technical papers. Each paper package includes
         a human-readable HTML and PDF surface plus machine-readable metadata, claims, notation, glossary, references,
@@ -38,11 +39,6 @@
       </div>
       <div id="paper-list" class="grid paper-grid">
         <article class="card paper-card">
-          <div class="paper-meta">
-            <span class="chip">qqc-001-foundations</span>
-            <span class="chip">draft</span>
-            <span class="chip">v0.1.0</span>
-          </div>
           <h3 class="paper-title">Foundations of Quaternionic Quantum Computing: Qubits, Spinors, and SU(2) Geometry</h3>
           <div class="paper-authors">RQM Technologies Research Team</div>
           <p class="paper-summary">
@@ -182,12 +178,6 @@
       }
 
       function renderPaperCard(paper) {
-        const meta = [
-          paper.paper_id,
-          paper.status,
-          paper.version ? "v" + paper.version : ""
-        ].filter(Boolean);
-
         const links = [
           optionalLink(
             paper._path || paper._html,
@@ -203,9 +193,6 @@
 
         return (
           '<article class="card paper-card">' +
-            '<div class="paper-meta">' +
-              meta.map((item) => '<span class="chip">' + escapeHtml(item) + "</span>").join("") +
-            "</div>" +
             '<h3 class="paper-title">' + escapeHtml(paper.title || paper.paper_id || "Untitled paper") + "</h3>" +
             '<div class="paper-authors">' + escapeHtml(authorLine(paper.authors)) + "</div>" +
             '<p class="paper-summary">' + escapeHtml(summarize(paper.abstract)) + "</p>" +
