@@ -109,9 +109,9 @@ does not define verification of entangling-gate internals, does not claim a
 universal proof framework for all quantum optimizations, and does not claim that
 one diagnostic alone is sufficient for every integration setting.
 
-\section{Background and dependency on papers 1--3}
+\section{Background dependency on Quaternionic Quantum Computing}
 
-Paper 1 fixed the quaternion--$\SU(2)$ convention:
+First we fix the quaternion--$\SU(2)$ convention:
 \begin{equation}
 \Phi(a+b\ii+c\jj+d\kk)
 =
@@ -127,7 +127,7 @@ Under this map, the unit quaternions model $\SU(2)$ exactly, and every
 single-qubit gate action modulo global phase is represented by a sign class
 $\set{q,-q}$ of unit quaternions.
 
-Paper 2 defined the canonical IR object
+Second we define the canonical IR object
 \[
 \uoneq(w,x,y,z)
 \]
@@ -139,7 +139,7 @@ where $\normalize$ restores unit norm and $\sgncanon$ chooses the preferred
 representative by the rule $w>0$, with an explicit deterministic tie-break on
 the equator $w=0$.
 
-Paper 3 defined the local fusion operator for single-qubit segments
+Third we define the local fusion operator for single-qubit segments
 \[
 \Fuse(\mathrm{seg})=\canon(q_n\cdots q_1)
 \]
