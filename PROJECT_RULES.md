@@ -1,225 +1,185 @@
 # PROJECT_RULES.md
 
-Rules and guidelines for all contributors and AI coding agents working in this repository.
+Repository governance for `rqm-tech-papers`. These rules apply to all human contributors and all AI coding agents.
 
 ---
 
-## Purpose
+## 1) Repository identity and scope
 
-This repository is a **technical paper publishing platform** for RQM Technologies' series on quaternionic quantum computing. It is **not** a blog, wiki, or general documentation repo.
+This repository is a **structured technical publishing system** for RQM Technologies' quaternionic quantum computing paper series.
 
-Every action taken in this repo must serve one of three purposes:
+It exists to publish **semantic technical paper packages** that support:
 
-1. Publishing a new technical paper with full companion files
-2. Maintaining or correcting an existing paper
-3. Improving the publishing infrastructure (templates, schemas, scripts)
+- human-readable presentation
+- machine-readable metadata
+- long-term stable organization
+- static-site deployment
+- future scholarly distribution
 
-If your change does not serve one of these purposes, do not make it.
-
----
-
-## Absolute Rules
-
-These rules are non-negotiable and must never be broken by any contributor or AI agent:
-
-### 1. Never invent scholarly metadata
-
-Do not fabricate, approximate, or infer:
-
-- Author names or affiliations
-- Publication dates
-- DOIs, ISBNs, or identifiers
-- Journal names, volume numbers, or page numbers
-- Abstract text
-- Keywords
-- Citation data for referenced works
-
-If a metadata field is not known, leave it as `null` or an empty string. Do not fill it with plausible-sounding guesses.
-
-### 2. Never rename or move paper folders after publication
-
-Paper IDs and folder paths are **permanent** once a paper reaches `preprint` or `published` status. Renaming a folder breaks canonical URLs and invalidates citations.
-
-If a paper must be retracted or replaced, add a `retracted` or `superseded` status to `metadata.json` and publish a correction notice. Do not delete or rename the folder.
-
-### 3. Never auto-fill claims, notation, glossary, or references
-
-The files `claims.json`, `notation.json`, `glossary.json`, and `references.bib` must be authored by a human expert or derived directly from the paper text. Do not generate their content by inference or language model completion without explicit human review and sign-off.
-
-### 4. Never make PDFs optional
-
-Every paper folder must have a `paper.pdf` file. If the final PDF is not yet available, include a clearly marked placeholder stub. The placeholder must state the paper ID and the word "PLACEHOLDER" in its content. The PDF must be replaced with a real publication-ready PDF before the paper reaches `published` status.
-
-### 5. Validation must pass before merge
-
-Every PR that adds or modifies a paper folder must pass the validation script:
-
-```bash
-python scripts/validate_papers.py
-```
-
-PRs that fail validation must not be merged.
-
-### 6. Never break the index without regenerating it
-
-After any change to paper content or companion files, regenerate the site-wide indexes:
-
-```bash
-python scripts/generate_index.py
-```
-
-Commit the updated `index/` files as part of the same PR.
+This is **not** a generic docs repository, not a blog platform, and not a marketing site.  
+Changes must serve paper publication, paper maintenance, or publishing infrastructure.
 
 ---
 
-## File Requirements
+## 2) Required per-paper artifacts (mandatory)
 
-### Required files per paper folder
+Each paper folder must contain all of the following:
 
-All of the following are mandatory. Validation fails if any are missing:
+- `paper.html`
+- `paper.pdf`
+- `metadata.json`
+- `paper.jats.xml`
+- `claims.json`
+- `notation.json`
+- `references.bib`
+- `glossary.json`
+- `CITATION.cff`
+- `artifacts/`
 
-| File | Description |
-|------|-------------|
-| `paper.html` | Primary human-readable paper |
-| `paper.pdf` | Final PDF or placeholder stub |
-| `metadata.json` | Structured metadata, validated against `schemas/metadata.schema.json` |
-| `paper.jats.xml` | JATS XML export for journal submission |
-| `claims.json` | Structured claims, validated against `schemas/claims.schema.json` |
-| `notation.json` | Symbol table, validated against `schemas/notation.schema.json` |
-| `glossary.json` | Term definitions, validated against `schemas/glossary.schema.json` |
-| `references.bib` | BibTeX references |
-| `CITATION.cff` | Citation File Format metadata |
-| `artifacts/` | Directory (may be empty but must exist) |
+Inside `artifacts/`, strongly prefer:
 
-### Recommended artifact structure
+- `figures/`
+- `notebooks/`
+- `code/`
+- `data/` (when relevant)
 
-```
-artifacts/
-├── figures/        # All figures referenced in the paper
-├── notebooks/      # Jupyter or other computational notebooks
-├── code/           # Source code for reproduced results
-└── data/           # Datasets if applicable
-```
+These files are required publication companions, not optional extras.
 
 ---
 
-## Naming Conventions
+## 3) Canonical structure rules
 
-### Paper IDs
-
-Format: `{series}-{number}-{slug}`
-
-- `series` — lowercase alphabetic prefix (e.g., `qqc` for Quaternionic Quantum Computing)
-- `number` — zero-padded three-digit integer (e.g., `001`, `002`)
-- `slug` — short kebab-case descriptor, max 32 characters, no spaces or special characters
-
-Examples: `qqc-001-foundations`, `qqc-002-gate-algebras`, `qqc-003-error-correction`
-
-### File names
-
-- Use lowercase only
-- Use hyphens, not underscores, for multi-word names (exception: `CITATION.cff` is standard)
-- Never include version numbers in file names (versioning lives in `metadata.json`)
-
-### JSON fields
-
-- Use `snake_case` for all JSON field names
-- Never use camelCase in JSON metadata or schema files
+1. **One paper per folder.**
+2. Folder names must be stable and durable: use a paper ID plus slug (for example: `qqc-001-foundations`).
+3. Existing paper paths are canonical and must remain stable.
+4. Do not move or rename existing paper folders without an explicit migration plan, redirects strategy, and index updates.
+5. Paper folders must be self-contained publication packages.
+6. Keep concerns separated:
+   - paper content in `papers/<paper-id-slug>/`
+   - schemas in `schemas/`
+   - generation/validation logic in `scripts/`
+   - generated indexes in `index/`
 
 ---
 
-## HTML as First-Class Output
+## 4) Metadata integrity rules (strict)
 
-`paper.html` is the primary output of the publishing system. It must:
+Contributors and agents must preserve factual integrity:
 
-- Be a complete, self-contained HTML document
-- Include all figures inline or as relative references to `artifacts/figures/`
-- Render correctly in a browser without a build step
-- Include all metadata in `<meta>` tags for SEO and AI parsing
-- Reference the paper's canonical URL in a `<link rel="canonical">` tag
+- Never invent bibliographic facts.
+- Never guess publication dates, DOI values, journal names, author lists, or publication status.
+- Never auto-fill claims, glossary terms, notation, or references unless grounded in source material.
+- Keep metadata synchronized with actual paper content.
+- Treat `metadata.json` as the authoritative structured record **only for confirmed facts**.
 
----
+Required quality constraints:
 
-## Machine-Readable Files Are Mandatory
+- Claim entries in `claims.json` must include explicit claim-type labeling.
+- `notation.json` must clearly distinguish standard notation from project-specific notation.
+- `glossary.json` entries must be precise and non-promotional; avoid vague or inflated wording.
+- `references.bib` must contain real, properly formatted references only.
 
-The companion files (`metadata.json`, `claims.json`, `notation.json`, `glossary.json`, `paper.jats.xml`) are **not optional extras**. They are first-class outputs required for:
-
-- AI agent parsing of the paper series
-- Journal and indexing submission (JATS XML)
-- Citation tooling (CITATION.cff)
-- Site-wide index generation
-
-Do not skip, stub out, or leave these files incomplete in a paper that reaches `published` status.
+If a field cannot be verified, leave it unset or explicitly marked unknown per schema and workflow conventions. Do not fabricate completeness.
 
 ---
 
-## Versioning
+## 5) Content governance rules
 
-- Papers use semantic versioning: `{major}.{minor}.{patch}` (e.g., `1.0.0`)
-- The version in `metadata.json` must match the version stated in `paper.html` and `paper.jats.xml`
-- Patch versions (`1.0.x`) are for typo corrections and minor fixes
-- Minor versions (`1.x.0`) are for content additions that do not change conclusions
-- Major versions (`x.0.0`) are for substantive revisions that change results or claims
-- A new major version should be reviewed as carefully as a new paper
+- `paper.html` is first-class output, not a derivative afterthought.
+- `paper.pdf` is required for publication readiness.
+- `paper.jats.xml` is required for archival and scholarly distribution workflows.
+- Machine-readable companions (`metadata.json`, `claims.json`, `notation.json`, `glossary.json`, `CITATION.cff`) are mandatory.
+- Prefer explicit front matter and structured metadata over buried prose.
+- Papers should separate:
+  - definitions
+  - formal results
+  - empirical claims
+  - conjectures
+  - interpretive claims
 
----
+Repository default preferences:
 
-## Status Lifecycle
-
-Papers move through these statuses:
-
-```
-draft → preprint → submitted → published
-                             ↘ retracted (from any status)
-                             ↘ superseded (from any status)
-```
-
-- `draft` — internal only, not publicly indexed
-- `preprint` — publicly available but not peer-reviewed
-- `submitted` — submitted to a journal, pending review
-- `published` — peer-reviewed and published
-- `retracted` — removed from the record; folder preserved, status updated
-- `superseded` — replaced by a later paper in the series
+- explicit structure
+- stable paths
+- minimal ambiguity
+- reproducible companion artifacts
 
 ---
 
-## What AI Agents Must Not Do
+## 6) AI agent behavior rules
 
-The following actions are explicitly prohibited for AI coding agents working in this repo:
+All AI agents must:
 
-1. Do not generate or modify `paper.html` or `paper.pdf` content without a human-authored source
-2. Do not invent claims, theorems, or mathematical results
-3. Do not add authors, affiliations, or institutional data that were not provided
-4. Do not change a paper's status from `draft` to `preprint` or higher without explicit human instruction
-5. Do not delete paper folders or any files within them
-6. Do not modify `metadata.json` fields that encode publication facts (DOI, journal, dates) without explicit instruction
-7. Do not reorder or renumber existing papers in the series
-8. Do not generate `references.bib` entries for works not cited in the paper
+- Preserve repository structure unless change is explicitly justified.
+- Avoid introducing heavy frameworks or infrastructure without a clear need.
+- Avoid replacing explicit versioned files with hidden automation.
+- Fail loudly when required files are missing.
+- Prefer validation and schema enforcement over silent assumptions.
+- Avoid "smart" inference that fabricates metadata or scholarly structure.
+- Keep generated or transformed output reviewable and auditable in git.
+- Avoid altering canonical URLs or canonical paths lightly.
+- Avoid mixing marketing copy into technical paper assets.
 
-AI agents **may**:
+Agents must explicitly distinguish work across these layers:
 
-- Update template files
-- Improve schema definitions
-- Fix validation scripts
-- Add issue or PR templates
-- Regenerate index files from existing paper data
-- Fix typos in non-metadata text (e.g., README, PROJECT_RULES)
-- Add artifact READMEs in paper folders
+- repository-level infrastructure
+- per-paper content packages
+- generated indexes
+- deployment configuration
 
 ---
 
-## PR and Review Standards
+## 7) Validation and quality gates
 
-Every PR must:
+Before merge, every modified paper package must pass quality gates:
 
-1. Include a completed PR checklist (see `.github/PULL_REQUEST_TEMPLATE.md`)
-2. Pass `python scripts/validate_papers.py` with no errors
-3. Include updated `index/` files if paper content changed
-4. Not modify existing published paper content without a documented reason
-5. Be reviewed by at least one human before merge for any paper reaching `preprint` or higher
+1. Required files exist in each affected paper folder.
+2. JSON companion files validate against repository schemas.
+3. Site-wide indexes are regenerated whenever paper metadata changes.
+4. Broken links or missing required artifacts are treated as failures.
+5. `paper.html` and structured metadata remain synchronized.
+
+Adopt a checklist-driven PR process; incomplete validation is a merge blocker.
 
 ---
 
-## Questions and Disputes
+## 8) Deployment and publishing assumptions
 
-If these rules conflict with each other or with a legitimate need, open a GitHub issue using the appropriate template before making changes. Do not resolve ambiguity by guessing.
+This repository must remain compatible with static deployment (including Vercel) and scholarly discovery workflows.
+
+Deployment decisions must preserve:
+
+- stable public URLs
+- direct paper-level accessibility
+- machine discoverability by scholarly tools and AI systems
+- clean indexability of each paper package
+
+No deployment optimization should undermine path stability or paper-level access.
+
+---
+
+## 9) Prohibited changes (do not do this)
+
+- Do not convert this repository into a blog or general CMS-driven content platform.
+- Do not hide canonical paper data behind a database or opaque service layer.
+- Do not make `paper.pdf` optional.
+- Do not delete required companion files.
+- Do not invent metadata for convenience.
+- Do not scatter paper assets outside their paper folder without a documented reason.
+- Do not introduce fragile or opaque path structures.
+- Do not mix unfinished speculative claims into formal claim files without explicit labeling.
+
+---
+
+## 10) Contributor workflow (required)
+
+For new papers and substantive updates:
+
+1. Start from repository templates.
+2. Fill metadata using verified, source-grounded facts only.
+3. Add or update all required companion artifacts.
+4. Run repository validation.
+5. Regenerate indexes when metadata/content changes affect discovery.
+6. Review path stability, link integrity, and publication completeness before opening or merging a PR.
+
+When uncertain, stop and request clarification rather than inferring scholarly facts.
