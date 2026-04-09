@@ -4,198 +4,300 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Foundations of Quaternionic Quantum Computing: Qubits, Spinors, and SU(2) Geometry</title>
-  <meta name="description" content="Conservative foundation paper on qubits, normalized spinors, SU(2), S^3, the Bloch sphere, and the unit-quaternion model of single-qubit gates." />
+  <meta name="description" content="This paper assembles a conservative mathematical foundation for the use of quaternions in single-qubit quantum computing. The goal is not to replace standard quantum mechanics, but to organize familiar structures in a way that makes their geometry more explicit. We distinguish carefully between normalized state vectors in C^2 ≅ R^4, the unit sphere S^3 inside that space, pure states modulo global phase, the projective space CP^1 ≅ S^2, the single-qubit gate group U(2), and SU(2) representatives obtained after removing global phase. Within that framework, we exhibit an explicit isomorphism between the unit quaternions and SU(2), explain why unit quaternions are therefore a natural model for single-qubit gates modulo global phase, and show how quaternion multiplication exposes the axis-angle and composition structure of rotations. Standard facts are separated from the organizational choices adopted in the RQM Technologies series. The paper is restricted to single-qubit structure and makes no claim about new physics, multi-qubit quaternionic state evolution, or computational advantage." />
   <meta name="author" content="John G. Van Geem" />
   <meta name="keywords" content="qubit geometry, spinors, SU(2), unit quaternions, Bloch sphere, single-qubit gates" />
   <meta name="citation_title" content="Foundations of Quaternionic Quantum Computing: Qubits, Spinors, and SU(2) Geometry" />
   <meta name="citation_author" content="John G. Van Geem" />
   <meta name="citation_pdf_url" content="paper.pdf" />
-  <link rel="canonical" href="./" />
   <link rel="alternate" type="application/json" href="metadata.json" title="Paper metadata" />
   <link rel="alternate" type="application/xml" href="paper.jats.xml" title="JATS XML" />
   <link rel="stylesheet" href="../../styles/site.css" />
+  <script>
+window.MathJax = {
+  "tex": {
+    "inlineMath": [
+      [
+        "\\(",
+        "\\)"
+      ]
+    ],
+    "displayMath": [
+      [
+        "\\[",
+        "\\]"
+      ]
+    ],
+    "macros": {
+      "R": "\\mathbb{R}",
+      "C": "\\mathbb{C}",
+      "HH": "\\mathbb{H}",
+      "CP": "\\mathbb{CP}",
+      "SU": "\\mathrm{SU}",
+      "U": "\\mathrm{U}",
+      "SO": "\\mathrm{SO}",
+      "Sp": "\\mathrm{Sp}",
+      "ii": "\\mathbf{i}",
+      "jj": "\\mathbf{j}",
+      "kk": "\\mathbf{k}",
+      "transpose": "\\mathsf{T}",
+      "adjoint": "^\\dagger",
+      "inv": "^{-1}",
+      "tr": "\\operatorname{tr}",
+      "Id": "I",
+      "norm": [
+        "\\left\\lVert #1 \\right\\rVert",
+        1
+      ],
+      "abs": [
+        "\\left\\lvert #1 \\right\\rvert",
+        1
+      ],
+      "set": [
+        "\\left\\{ #1 \\right\\}",
+        1
+      ],
+      "ket": [
+        "\\lvert #1 \\rangle",
+        1
+      ],
+      "bra": [
+        "\\langle #1 \\rvert",
+        1
+      ],
+      "inner": [
+        "\\langle #1, #2 \\rangle",
+        2
+      ],
+      "bloch": [
+        "\\bm{#1}",
+        1
+      ],
+      "qvec": "\\mathbf{u}"
+    },
+    "processEscapes": true
+  },
+  "options": {
+    "skipHtmlTags": [
+      "script",
+      "noscript",
+      "style",
+      "textarea",
+      "pre",
+      "code"
+    ]
+  }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </head>
 <body class="paper-page">
   <div class="page-shell">
-  <header class="paper-shell">
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="../../index.html">Home</a>
-      <span>/</span>
-      <a href="./">qqc-001-foundations</a>
-      <span>/</span>
-      <span aria-current="page">paper.html</span>
-    </nav>
-    <div class="badge">RQM Quaternionic Quantum Computing Series · Paper 1</div>
-    <h1>Foundations of Quaternionic Quantum Computing: Qubits, Spinors, and SU(2) Geometry</h1>
-    <p class="byline">
-      John G. Van Geem<br />
-      RQM Technologies<br />
-      orcid: 0009-0002-4003-8452
-    </p>
+    <header class="paper-shell">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="../../index.html">Home</a>
+        <span>/</span>
+        <a href="/papers/qqc-001-foundations/">qqc-001-foundations</a>
+        <span>/</span>
+        <span aria-current="page">paper.html</span>
+      </nav>
+      <div class="badge">RQM Quaternionic Quantum Computing Series · Paper 1</div>
+      <h1><strong>Foundations of Quaternionic Quantum Computing:</strong><br />
+Qubits, Spinors, and \(\SU(2)\) Geometry</h1>
+      <p class="byline">John G. Van Geem<br />
+RQM Technologies<br />
+orcid: 0009-0002-4003-8452</p>
 
-    <div class="abstract">
-      <strong>Abstract</strong>
-      <p>This paper assembles a conservative mathematical foundation for the use of quaternions in single-qubit quantum computing. The goal is not to replace standard quantum mechanics, but to organize familiar structures in a way that makes their geometry more explicit. We distinguish carefully between normalized state vectors in C<sup>2</sup> &cong; R<sup>4</sup>, the unit sphere S<sup>3</sup> inside that space, pure states modulo global phase, the projective space CP<sup>1</sup> &cong; S<sup>2</sup>, the single-qubit gate group U(2), and SU(2) representatives obtained after removing global phase. Within that framework, we exhibit an explicit isomorphism between the unit quaternions and SU(2), explain why unit quaternions are therefore a natural model for single-qubit gates modulo global phase, and show how quaternion multiplication exposes the axis-angle and composition structure of rotations. Standard facts are separated from the organizational choices adopted in the RQM Technologies series. The paper is restricted to single-qubit structure and makes no claim about new physics, multi-qubit quaternionic state evolution, or computational advantage.</p>
-    </div>
+      <div class="abstract">
+        <strong>Abstract</strong>
+        <p>This paper assembles a conservative mathematical foundation for the use of quaternions in single-qubit quantum computing. The goal is not to replace standard quantum mechanics, but to organize familiar structures in a way that makes their geometry more explicit. We distinguish carefully between normalized state vectors in \(\C^2 \cong \R^4\), the unit sphere \(S^3\) inside that space, pure states modulo global phase, the projective space \(\CP^1 \cong S^2\), the single-qubit gate group \(\U(2)\), and \(\SU(2)\) representatives obtained after removing global phase. Within that framework, we exhibit an explicit isomorphism between the unit quaternions and \(\SU(2)\), explain why unit quaternions are therefore a natural model for single-qubit gates modulo global phase, and show how quaternion multiplication exposes the axis--angle and composition structure of rotations. Standard facts are separated from the organizational choices adopted in the RQM Technologies series. The paper is restricted to single-qubit structure and makes no claim about new physics, multi-qubit quaternionic state evolution, or computational advantage.</p>
+      </div>
 
-    <div class="meta">
-      <div><strong>Paper ID:</strong> qqc-001-foundations · <strong>Version:</strong> 0.1.0 · <strong>Status:</strong> draft · <strong>Last updated:</strong> 2026-04-09</div>
-      <div><strong>Keywords:</strong> qubit geometry; spinors; SU(2); unit quaternions; Bloch sphere; single-qubit gates</div>
-      <div><strong>Companion files:</strong> <a href="main.tex">main.tex</a>, <a href="paper.pdf">paper.pdf</a>, <a href="metadata.json">metadata.json</a>, <a href="paper.jats.xml">paper.jats.xml</a>, <a href="claims.json">claims.json</a>, <a href="notation.json">notation.json</a>, <a href="glossary.json">glossary.json</a>, <a href="references.bib">references.bib</a>, <a href="CITATION.cff">CITATION.cff</a></div>
-    </div>
-  </header>
+      <div class="meta">
+        <div><strong>Paper ID:</strong> qqc-001-foundations · <strong>Version:</strong> 0.1.0 · <strong>Status:</strong> draft · <strong>Last updated:</strong> 2026-04-09</div>
+        
+        <div><strong>Keywords:</strong> qubit geometry; spinors; SU(2); unit quaternions; Bloch sphere; single-qubit gates</div>
+        <div><strong>Companion files:</strong> <a href="/papers/qqc-001-foundations/">package index</a>, <a href="/papers/qqc-001-foundations/main.tex">main.tex</a>, <a href="/papers/qqc-001-foundations/paper.pdf">paper.pdf</a>, <a href="/papers/qqc-001-foundations/metadata.json">metadata.json</a>, <a href="/papers/qqc-001-foundations/paper.jats.xml">paper.jats.xml</a>, <a href="/papers/qqc-001-foundations/claims.json">claims.json</a>, <a href="/papers/qqc-001-foundations/notation.json">notation.json</a>, <a href="/papers/qqc-001-foundations/glossary.json">glossary.json</a>, <a href="/papers/qqc-001-foundations/references.bib">references.bib</a>, <a href="/papers/qqc-001-foundations/CITATION.cff">CITATION.cff</a></div>
+      </div>
+    </header>
 
-  <main class="paper-shell">
-    <h2>1. Introduction</h2>
-    <p>Single-qubit quantum mechanics is usually taught in matrix language: states are vectors in C<sup>2</sup>, observables are Hermitian matrices, and gates are unitary matrices. That formulation is complete and standard. The present paper addresses a narrower question of representation. For single-qubit structure, quaternionic notation can expose geometry that matrix notation already contains but often leaves implicit.</p>
-    <p>The paper therefore does not propose a replacement for standard quantum mechanics. Its aim is instead to organize a set of familiar facts with unusually explicit distinctions: normalized vectors in C<sup>2</sup>; the unit 3-sphere in that space; pure states modulo global phase; the Bloch sphere; single-qubit gates in U(2); SU(2) representatives after removing overall phase; and the unit quaternions as a model of SU(2).</p>
-    <p>The organizing idea is classical. A normalized two-component spinor is a point on S<sup>3</sup>; SU(2) is also diffeomorphic to S<sup>3</sup>; and the unit quaternions form a Lie group isomorphic to SU(2). That shared geometry does not mean these objects should be identified indiscriminately. A principal task of the paper is to keep their roles separate while showing how they fit together.</p>
-
-    <h2>2. Mathematical preliminaries</h2>
-
-    <h3>2.1 Qubits as normalized vectors in C<sup>2</sup></h3>
-    <p>A normalized single-qubit state is represented by a spinor <span class="math">|ψ⟩ = (α, β)<sup>T</sup></span> with <span class="math">|α|<sup>2</sup> + |β|<sup>2</sup> = 1</span>. Writing <span class="math">α = a + ib</span> and <span class="math">β = c + id</span> identifies C<sup>2</sup> with R<sup>4</sup>.</p>
-    <div class="env proposition">
-      <strong>Proposition 2.1.</strong>
-      The set of normalized vectors in C<sup>2</sup> is the unit sphere S<sup>3</sup> inside R<sup>4</sup>.
-    </div>
-    <p>Indeed, the normalization condition becomes <span class="math">a<sup>2</sup> + b<sup>2</sup> + c<sup>2</sup> + d<sup>2</sup> = 1</span>, which is precisely the defining equation of S<sup>3</sup>.</p>
-
-    <figure>
-      <img src="artifacts/figures/fig-spinor-quotient.svg" alt="Schematic showing normalized spinors on S3, quotient by global phase, and the resulting Bloch sphere S2." />
-      <figcaption>Normalized spinors form S<sup>3</sup>, but physical pure states appear only after quotienting by global phase. The quotient is CP<sup>1</sup> &cong; S<sup>2</sup>.</figcaption>
+    <main class="paper-shell">
+      <h2>1. Introduction</h2>
+<p>Single-qubit quantum mechanics is usually presented in matrix language: states are vectors in \(\C^2\), observables are Hermitian matrices, and gates are unitary matrices. That formulation is complete and standard. The issue addressed here is not a defect in quantum mechanics itself, but a question of representation. In particular, some geometric features of single-qubit dynamics are more transparent when one passes from raw \(2 \times 2\) complex matrices to the equivalent language of unit quaternions.</p>
+<p>The connection is classical. A normalized two-component spinor is a point on the unit sphere in \(\C^2 \cong \R^4\), hence on \(S^3\). The group \(\SU(2)\) is also diffeomorphic to \(S^3\). Unit quaternions form another model of the same manifold and, more strongly, a Lie-group model of \(\SU(2)\) <a href="#ref-hall2015">[3]</a>, <a href="#ref-kuipers1999">[4]</a>, <a href="#ref-penrose1984">[6]</a>. For single-qubit gates this is not an exotic reformulation: it is standard mathematics attached to the well-known double cover \(\SU(2)\to\SO(3)\).</p>
+<p>The main value of the quaternionic presentation is geometric bookkeeping. In matrix form, one can certainly write</p>
+<div class="display">\[U = \cos(\theta/2)\Id - i \sin(\theta/2)\,(\hat{\bloch{n}}\cdot\bm{\sigma}),\]</div>
+<p>but the composition law remains hidden inside matrix multiplication. In quaternion form, the same gate is written as</p>
+<div class="display">\[q = \cos(\theta/2) + \sin(\theta/2)\,(n_x \ii + n_y \jj + n_z \kk),\]</div>
+<p>and the product law immediately exhibits dot and cross products. This makes the rotation structure of single-qubit gates unusually explicit.</p>
+<p>The scope of this paper is deliberately narrow. It treats only the mathematics needed to explain why quaternions belong naturally in <em>single-qubit</em> quantum computing. It does not argue for quaternionic Hilbert spaces as a new physical theory, and it does not claim any hardware or complexity-theoretic advantage. The purpose is foundational exposition: to present standard structures with clear distinctions, and to identify exactly which interpretive or organizational choices belong to RQM Technologies rather than to established mathematics.</p>
+<h2>2. Mathematical preliminaries</h2>
+<h3>2.1 Qubits as normalized vectors in \(\C^2\)</h3>
+<p>A pure single-qubit state is represented by a nonzero vector</p>
+<div class="display">\[\ket{\psi}=\begin{pmatrix}\alpha \\ \beta\end{pmatrix}\in \C^2,\]</div>
+<p>with the physical state unchanged under multiplication by a nonzero complex scalar. After normalization one may assume</p>
+<div class="display">\[\abs{\alpha}^2+\abs{\beta}^2=1.\]</div>
+<p>The normalized representatives are often called normalized spinors.</p>
+<p>Writing</p>
+<div class="display">\[\alpha=a+ib,\qquad \beta=c+id,\qquad a,b,c,d\in\R,\]</div>
+<p>identifies \(\C^2\) with \(\R^4\).</p>
+<div class="env proposition"><strong>Proposition 2.1. Normalized spinors form \(S^3\).</strong><p>The set</p>
+<div class="display">\[\set{(\alpha,\beta)\in\C^2:\abs{\alpha}^2+\abs{\beta}^2=1}\]</div>
+<p>is the unit sphere \(S^3\subset \R^4\) under the identification \(\C^2\cong\R^4\).</p></div>
+<div class="proof"><p>Under \(\alpha=a+ib\) and \(\beta=c+id\), the normalization condition becomes</p>
+<div class="display">\[a^2+b^2+c^2+d^2=1,\]</div>
+<p>which is exactly the defining equation of the unit \(3\)-sphere in \(\R^4\).</p></div>
+<div class="env remark"><strong>Remark 2.2.</strong><p>This \(S^3\) is a space of <em>normalized representatives</em>. It is not yet the physical pure-state space, because global phase has not been quotiented out.</p></div>
+<h3>2.2 Pure states, global phase, and the Bloch sphere</h3>
+<p>Two normalized vectors \(\ket{\psi}\) and \(e^{i\chi}\ket{\psi}\) represent the same pure state. The pure-state space is therefore the projective quotient</p>
+<div class="display">\[\CP^1 = \big(\C^2\setminus\set{0}\big)/\C^\times,\]</div>
+<p>or, after normalization, the quotient of \(S^3\) by the circle action</p>
+<div class="display">\[(\alpha,\beta)\mapsto(e^{i\chi}\alpha,e^{i\chi}\beta).\]</div>
+<div class="env proposition"><strong>Proposition 2.3. Pure single-qubit states are \(\CP^1\cong S^2\).</strong><p>The pure-state space of a single qubit is \(\CP^1\), and \(\CP^1\) is diffeomorphic to \(S^2\). Under this identification the Bloch vector of</p>
+<div class="display">\[\ket{\psi}=\begin{pmatrix}\alpha \\ \beta\end{pmatrix}\]</div>
+<p>is</p>
+<div class="display">\[\bloch{r}(\psi)=
+\bigl(2\operatorname{Re}(\alpha^\ast\beta),\,
+2\operatorname{Im}(\alpha^\ast\beta),\,
+\abs{\alpha}^2-\abs{\beta}^2\bigr)\in S^2.\]</div></div>
+<div class="proof"><p>The quotient description of \(\CP^1\) is standard. For normalized \(\ket{\psi}\), a direct calculation shows</p>
+<div class="display">\[\norm{\bloch{r}(\psi)}^2
+=4\abs{\alpha^\ast\beta}^2+\bigl(\abs{\alpha}^2-\abs{\beta}^2\bigr)^2
+=\bigl(\abs{\alpha}^2+\abs{\beta}^2\bigr)^2=1.\]</div>
+<p>The map \(\ket{\psi}\mapsto\bloch{r}(\psi)\) is invariant under \(\ket{\psi}\mapsto e^{i\chi}\ket{\psi}\), so it descends to the projective quotient and yields the usual identification of \(\CP^1\) with the Bloch sphere \(S^2\) <a href="#ref-bloch1946">[2]</a>, <a href="#ref-nielsen2010">[5]</a>.</p></div>
+<div class="env remark"><strong>Remark 2.4.</strong><p>The Bloch sphere is therefore a quotient of the state sphere \(S^3\). It is <em>not</em> the same object as \(S^3\), and conflating the two obscures the role of global phase.</p></div>
+<h3>2.3 Single-qubit gates in \(\U(2)\) and representatives in \(\SU(2)\)</h3>
+<p>Single-qubit gates are unitary operators on \(\C^2\), hence elements of \(\U(2)\). Because a global phase on the state vector is physically irrelevant, two gates that differ by an overall phase act identically on pure states.</p>
+<div class="env proposition"><strong>Proposition 2.5. Removing global phase from a single-qubit gate.</strong><p>For every \(U\in\U(2)\) there exist \(\chi\in\R\) and \(V\in\SU(2)\) such that</p>
+<div class="display">\[U=e^{i\chi}V.\]</div>
+<p>The representative \(V\) is unique up to multiplication by \(-1\).</p></div>
+<div class="proof"><p>Since \(\det U\in \U(1)\), choose \(\chi\) such that \(e^{2i\chi}=\det U\), and define \(V=e^{-i\chi}U\). Then</p>
+<div class="display">\[\det V=e^{-2i\chi}\det U=1,\]</div>
+<p>so \(V\in\SU(2)\). If also \(U=e^{i\chi'}V'\) with \(V'\in\SU(2)\), then</p>
+<div class="display">\[V' = e^{i(\chi-\chi')}V.\]</div>
+<p>Taking determinants gives \(e^{2i(\chi-\chi')}=1\), hence \(e^{i(\chi-\chi')}=\pm 1\) and \(V'=\pm V\).</p></div>
+<p>Thus physically distinct single-qubit gate actions are represented projectively by</p>
+<div class="display">\[\U(2)/\U(1)\cong \SU(2)/\set{\pm\Id}\cong \SO(3),\]</div>
+<p>while it is often convenient to work with a chosen representative in \(\SU(2)\) before passing to the projective quotient.</p>
+<h3>2.4 Unit quaternions</h3>
+<div class="env definition"><strong>Definition 2.6.</strong><p>The quaternion algebra \(\HH\) is the real associative algebra with basis \(\set{1,\ii,\jj,\kk}\) and multiplication rules</p>
+<div class="display">\[\ii^2=\jj^2=\kk^2=\ii\jj\kk=-1.\]</div>
+<p>Every quaternion has the form</p>
+<div class="display">\[q=a+b\ii+c\jj+d\kk,\qquad a,b,c,d\in\R.\]</div>
+<p>Its conjugate is \(\overline{q}=a-b\ii-c\jj-d\kk\), and its norm is</p>
+<div class="display">\[\abs{q}=\sqrt{q\overline{q}}=\sqrt{a^2+b^2+c^2+d^2}.\]</div></div>
+<p>The unit quaternions are</p>
+<div class="display">\[\Sp(1)=\set{q\in\HH:\abs{q}=1}.\]</div>
+<p>As a manifold, \(\Sp(1)\) is again \(S^3\).</p>
+<div class="env remark"><strong>Remark 2.7.</strong><p>At this point two appearances of \(S^3\) coexist:</p>
+<ol type="i"><li><p>normalized spinors in \(\C^2\), and</p></li><li><p>unit quaternions, equivalently \(\Sp(1)\).</p></li></ol>
+<p>They are diffeomorphic manifolds, but they play different semantic roles: the first is a space of normalized vectors, while the second is a group of transformations. The distinction matters throughout the paper.</p></div>
+<h2>3. The \(\SU(2)\)--unit-quaternion correspondence</h2>
+<h3>3.1 An explicit map</h3>
+<p>There are several equivalent conventions for identifying \(\HH\) with a real subalgebra of \(2\times2\) complex matrices. In this paper we choose the convention</p>
+<div class="display" id="eq:phi">\[\Phi(a+b\ii+c\jj+d\kk)
+=
+\begin{pmatrix}
+a-di & -c-bi\\
+c-bi & a+di
+\end{pmatrix}.\]</div>
+<p>Equivalently,</p>
+<div class="display">\[\Phi(q)=a\Id-i\bigl(b\sigma_x+c\sigma_y+d\sigma_z\bigr),\]</div>
+<p>where \(\sigma_x,\sigma_y,\sigma_z\) are the Pauli matrices. This convention is convenient because the quaternion basis units align directly with the \(x\)-, \(y\)-, and \(z\)-rotation axes:</p>
+<div class="display">\[\Phi(\ii)=-i\sigma_x,\qquad \Phi(\jj)=-i\sigma_y,\qquad \Phi(\kk)=-i\sigma_z.\]</div>
+<div class="env proposition"><strong>Proposition 3.1. Unit quaternions are isomorphic to \(\SU(2)\).</strong><p>The restriction of \(\Phi\) to \(\Sp(1)\) is a Lie-group isomorphism</p>
+<div class="display">\[\Phi:\Sp(1)\xrightarrow{\sim}\SU(2).\]</div></div>
+<div class="proof"><p>The assignment is determined by</p>
+<div class="display">\[\ii\mapsto -i\sigma_x,\qquad
+\jj\mapsto -i\sigma_y,\qquad
+\kk\mapsto -i\sigma_z.\]</div>
+<p>These matrices satisfy the same multiplication rules as \(\ii,\jj,\kk\):</p>
+<div class="display">\[(-i\sigma_x)^2=(-i\sigma_y)^2=(-i\sigma_z)^2=-\Id,\]</div>
+<p>and</p>
+<div class="display">\[(-i\sigma_x)(-i\sigma_y)=-i\sigma_z,\]</div>
+<p>with cyclic permutations. Hence \(\Phi\) is an algebra homomorphism and therefore a group homomorphism on invertible elements.</p>
+<p>For \(q=a+b\ii+c\jj+d\kk\), direct calculation gives</p>
+<div class="display">\[\det \Phi(q)=a^2+b^2+c^2+d^2=\abs{q}^2.\]</div>
+<p>If \(\abs{q}=1\), then \(\det\Phi(q)=1\) and \(\Phi(q)\adjoint\Phi(q)=\Id\), so \(\Phi(q)\in\SU(2)\). Conversely, any matrix in \(\SU(2)\) has the form</p>
+<div class="display">\[\begin{pmatrix}
+\alpha & \beta\\
+-\beta^\ast & \alpha^\ast
+\end{pmatrix},
+\qquad \abs{\alpha}^2+\abs{\beta}^2=1,\]</div>
+<p>and writing \(\alpha=a-di\), \(\beta=-c-bi\) recovers a unique unit quaternion \(a+b\ii+c\jj+d\kk\). Smoothness of \(\Phi\) and \(\Phi^{-1}\) is immediate from the coordinate formula.</p></div>
+<div class="env proposition"><strong>Corollary 3.2. Composition corresponds to quaternion multiplication.</strong><p>If \(q_1,q_2\in\Sp(1)\) represent single-qubit gates through (<a href="#eq:phi">eq:phi</a>), then sequential application of the gates corresponds to quaternion multiplication:</p>
+<div class="display">\[\Phi(q_2q_1)=\Phi(q_2)\Phi(q_1).\]</div></div>
+<div class="proof"><p>This is the homomorphism property of \(\Phi\).</p></div>
+<h3>3.2 Why this is the right language for gates modulo global phase</h3>
+<p>By the previous section, every physical single-qubit gate class may be represented by an element of \(\SU(2)\), unique up to sign, and \(\SU(2)\) is modeled exactly by the unit quaternions. It follows that unit quaternions are a natural representation of single-qubit gates <em>after</em> global phase has been factored out at the level of \(\U(2)\).</p>
+<div class="env remark"><strong>Remark 3.3.</strong><p>This statement must be kept precise. Gates live fundamentally in \(\U(2)\). The quaternion model does not replace \(\U(2)\); rather, it provides a convenient model of the \(\SU(2)\) representative chosen after removing overall phase. The remaining identification \(q\sim -q\) corresponds to the fact that \(\pm V\in\SU(2)\) induce the same rotation on the Bloch sphere.</p></div>
+<h2>4. Quaternionic geometry and rotation structure</h2>
+<h3>4.1 Axis--angle form</h3>
+<p>Every \(V\in\SU(2)\) can be written as</p>
+<div class="display" id="eq:axis-angle-su2">\[V=\cos(\theta/2)\Id-i\sin(\theta/2)(\hat{\bloch{n}}\cdot\bm{\sigma}),\]</div>
+<p>where \(\hat{\bloch{n}}=(n_x,n_y,n_z)\in S^2\) and \(\theta\in\R\). Under (<a href="#eq:phi">eq:phi</a>), the corresponding quaternion is</p>
+<div class="display" id="eq:axis-angle-quaternion">\[q=\cos(\theta/2)+\sin(\theta/2)(n_x\ii+n_y\jj+n_z\kk).\]</div>
+<p>This is the standard axis--angle form of a unit quaternion <a href="#ref-kuipers1999">[4]</a>, <a href="#ref-hall2015">[3]</a>.</p>
+<p>The familiar Pauli rotations are immediate:</p>
+<div class="display">\[R_x(\theta)\leftrightarrow \cos(\theta/2)+\sin(\theta/2)\ii,\]</div>
+<div class="display">\[R_y(\theta)\leftrightarrow \cos(\theta/2)+\sin(\theta/2)\jj,\]</div>
+<div class="display">\[R_z(\theta)\leftrightarrow \cos(\theta/2)+\sin(\theta/2)\kk.\]</div>
+<p>In particular, \(\pi\)-rotations correspond, up to global phase, to the basis units \(\ii,\jj,\kk\).</p>
+<h3>4.2 Composition as scalar--vector algebra</h3>
+<p>Write a quaternion as \(q=a+\qvec\), where \(a\in\R\) and \(\qvec=b\ii+c\jj+d\kk\) is its pure part, identified with a vector in \(\R^3\). Then quaternion multiplication becomes</p>
+<div class="display" id="eq:scalar-vector">\[(a_1+\qvec_1)(a_2+\qvec_2)
+=
+\bigl(a_1a_2-\qvec_1\cdot\qvec_2\bigr)
+\;+\;
+\bigl(a_1\qvec_2+a_2\qvec_1+\qvec_1\times\qvec_2\bigr).\]</div>
+<p>Equation (<a href="#eq:scalar-vector">eq:scalar-vector</a>) makes three features transparent:</p>
+<ol type="a"><li><p>the scalar part records the dot product of the pure parts;</p></li><li><p>the pure part contains the cross product responsible for noncommutativity; and</p></li><li><p>sequential gate composition is visibly a rotation-composition law, not merely an abstract matrix product.</p></li></ol>
+<p>This is one sense in which quaternionic notation clarifies geometry that matrix notation can hide. The matrix formulation already contains the same information, but it is encoded less directly.</p>
+<h3>4.3 The double cover \(\SU(2)\to\SO(3)\)</h3>
+<p>The action of a unit quaternion on a pure quaternion \(v=x\ii+y\jj+z\kk\) by conjugation,</p>
+<div class="display">\[v\longmapsto qvq^{-1},\]</div>
+<p>preserves the pure-quaternion subspace and its Euclidean norm. Identifying pure quaternions with \(\R^3\) therefore gives a homomorphism</p>
+<div class="display">\[\rho:\Sp(1)\to\SO(3).\]</div>
+<div class="env proposition"><strong>Proposition 4.1. Unit quaternions double-cover \(\SO(3)\).</strong><p>The map \(\rho\) is surjective and has kernel \(\set{\pm1}\). Consequently,</p>
+<div class="display">\[\Sp(1)/\set{\pm1}\cong \SO(3).\]</div>
+<p>Via \(\Phi\), the same statement is the familiar double cover \(\SU(2)\to\SO(3)\).</p></div>
+<div class="proof"><p>The conjugation action preserves multiplication and the norm on pure quaternions, hence lands in \(\SO(3)\). Standard rotation theory shows that every element of \(\SO(3)\) admits an axis--angle lift of the form (<a href="#eq:axis-angle-quaternion">eq:axis-angle-quaternion</a>), establishing surjectivity. If \(qvq^{-1}=v\) for every pure quaternion \(v\), then \(q\) commutes with all pure quaternions, which forces \(q\in\R\). Since \(q\) is unitary, \(q=\pm1\).</p></div>
+<div class="env remark"><strong>Remark 4.2.</strong><p>The sign ambiguity here should not be confused with global phase for state vectors, although the two are related. A \(2\pi\) rotation in \(\SO(3)\) lifts to a path in \(\SU(2)\) from \(\Id\) to \(-\Id\), so spinors return to the same physical pure state only projectively. This is standard spin-\(1/2\) geometry <a href="#ref-penrose1984">[6]</a>.</p></div>
+<h2>5. What is standard mathematics, and what is RQM framing?</h2>
+<h3>5.1 Standard facts used in this paper</h3>
+<p>The following statements are standard and not specific to RQM Technologies:</p>
+<ol type="1"><li><p>normalized vectors in \(\C^2\) form \(S^3\);</p></li><li><p>pure single-qubit states are projective classes, giving \(\CP^1\cong S^2\);</p></li><li><p>single-qubit gates live in \(\U(2)\);</p></li><li><p>after removal of overall phase, gates admit representatives in \(\SU(2)\);</p></li><li><p>the unit quaternions form a Lie group isomorphic to \(\SU(2)\);</p></li><li><p>\(\SU(2)\) is a double cover of \(\SO(3)\); and</p></li><li><p>axis--angle rotations can be written equivalently in Pauli-matrix form or quaternion form.</p></li></ol>
+<p>These are standard results from quantum mechanics, Lie theory, and quaternionic rotation theory <a href="#ref-nielsen2010">[5]</a>, <a href="#ref-hall2015">[3]</a>, <a href="#ref-kuipers1999">[4]</a>, <a href="#ref-penrose1984">[6]</a>.</p>
+<h3>5.2 RQM Technologies framing choices</h3>
+<p>The project-specific content of this paper is modest and organizational:</p>
+<ol type="a"><li><p><strong>Primary expository emphasis.</strong> The paper chooses the quaternion model as the preferred language for describing <em>single-qubit gate geometry</em>.</p></li><li><p><strong>Convention choice.</strong> The explicit map \(\Phi\) in (<a href="#eq:phi">eq:phi</a>) is selected so that \(\ii,\jj,\kk\) align with the \(x,y,z\) Pauli axes. This is one standard convention among several equivalent ones.</p></li><li><p><strong>Series organization.</strong> The paper serves as a terminology and notation baseline for later papers in the series.</p></li></ol>
+<p>These are framing choices, not new physical claims. They do not alter the content of standard single-qubit quantum mechanics.</p>
+<h2>6. Scope, limitations, and non-claims</h2>
+<p>This paper is intentionally limited. In particular, it makes the following non-claims explicit:</p>
+<ol type="1"><li><p>It does <em>not</em> claim that standard complex-matrix methods are inadequate or invalid.</p></li><li><p>It does <em>not</em> claim a new physical theory or a replacement of ordinary quantum mechanics.</p></li><li><p>It does <em>not</em> claim a hardware implementation advantage.</p></li><li><p>It does <em>not</em> claim a complexity-theoretic or algorithmic advantage.</p></li><li><p>It does <em>not</em> develop a multi-qubit quaternionic state formalism.</p></li><li><p>It does <em>not</em> treat quaternionic Hilbert-space quantum mechanics in the sense studied by <a href="#ref-adler1995">[1]</a>; that subject is distinct from the present gate-level representation question.</p></li></ol>
+<p>The paper should therefore be read as a clarifying foundation for single-qubit language only.</p>
+<h2>7. Conclusion</h2>
+<p>For a single qubit, the relevant geometry links together several standard structures:</p>
+<ul><li><p>normalized spinors in \(\C^2\), forming \(S^3\);</p></li><li><p>pure states modulo global phase, forming \(\CP^1\cong S^2\);</p></li><li><p>single-qubit gates in \(\U(2)\), with \(\SU(2)\) representatives after removing global phase; and</p></li><li><p>unit quaternions as an explicit Lie-group model of \(\SU(2)\).</p></li></ul>
+<p>The quaternion model is therefore natural not because it changes the theory, but because it presents the existing rotation structure of single-qubit gates in a compact geometric form. In that sense, quaternions belong naturally in single-qubit quantum computing as a representation language for \(\SU(2)\) and its relation to the Bloch sphere.</p>
+<h2>Appendix A. Notation used repeatedly</h2>
+<table><thead><tr><th>Symbol</th><th>Meaning</th><th>Role</th></tr></thead><tbody><tr><td>\(\ket{\psi}\)</td><td>normalized state vector in \(\C^2\)</td><td>state representative</td></tr><tr><td>\(S^3\)</td><td>unit sphere in \(\C^2\cong\R^4\)</td><td>normalized spinors</td></tr><tr><td>\(\CP^1\)</td><td>projective pure-state space</td><td>pure states modulo phase</td></tr><tr><td>\(S^2\)</td><td>Bloch sphere</td><td>pure states / Bloch vectors</td></tr><tr><td>\(U\)</td><td>element of \(\U(2)\)</td><td>single-qubit gate</td></tr><tr><td>\(V\)</td><td>representative in \(\SU(2)\)</td><td>gate modulo global phase</td></tr><tr><td>\(q\)</td><td>unit quaternion</td><td>model of \(V\in\SU(2)\)</td></tr><tr><td>\(\Phi\)</td><td>quaternion--matrix identification</td><td>convention chosen here</td></tr></tbody></table>
+<h2>Appendix B. Schematic figures</h2>
+<figure>
+      <img src="artifacts/figures/fig-spinor-quotient.svg" alt="Expanded schematic separating C2 as R4, the normalized-spinor sphere S3, the U(1) phase orbit through a state, the quotient CP1, and the Bloch-sphere model S2." />
+      <figcaption>The state-space picture has several layers: qubit amplitudes live in C<sup>2</sup> &cong; R<sup>4</sup>, normalization restricts to S<sup>3</sup>, a U(1) phase orbit identifies vectors differing only by global phase, and the quotient gives CP<sup>1</sup>, represented geometrically by the Bloch sphere S<sup>2</sup>.</figcaption>
     </figure>
-
-    <h3>2.2 Pure states, global phase, and the Bloch sphere</h3>
-    <p>Two normalized vectors <span class="math">|ψ⟩</span> and <span class="math">e<sup>iχ</sup>|ψ⟩</span> represent the same pure state. The pure-state space is therefore the projective quotient CP<sup>1</sup>. For a normalized spinor, the Bloch vector is</p>
-    <span class="display">r(ψ) = (2 Re(α*β), 2 Im(α*β), |α|<sup>2</sup> − |β|<sup>2</sup>) ∈ S<sup>2</sup>.</span>
-    <div class="env proposition">
-      <strong>Proposition 2.2.</strong>
-      The pure-state space of a single qubit is CP<sup>1</sup>, and CP<sup>1</sup> is diffeomorphic to S<sup>2</sup>, the Bloch sphere.
-    </div>
-    <div class="env remark">
-      <strong>Remark.</strong>
-      The Bloch sphere is not S<sup>3</sup>. It is the quotient of the normalized-spinor sphere by global phase.
-    </div>
-
-    <h3>2.3 Single-qubit gates in U(2)</h3>
-    <p>Single-qubit gates live in U(2). Since an overall phase on a gate is physically irrelevant at the level of pure states, one often chooses a representative in SU(2).</p>
-    <div class="env proposition">
-      <strong>Proposition 2.3.</strong>
-      Every <span class="math">U ∈ U(2)</span> can be written as <span class="math">U = e<sup>iχ</sup>V</span> with <span class="math">V ∈ SU(2)</span>, and <span class="math">V</span> is unique up to sign.
-    </div>
-    <p>This does not mean gates “are” SU(2). The more precise statement is that physically relevant single-qubit gate classes admit SU(2) representatives after overall phase has been removed from U(2).</p>
-
-    <h3>2.4 Unit quaternions</h3>
-    <p>The quaternion algebra H has basis <span class="math">1, i, j, k</span> with <span class="math">i<sup>2</sup> = j<sup>2</sup> = k<sup>2</sup> = ijk = −1</span>. A quaternion is <span class="math">q = a + bi + cj + dk</span>. Its conjugate is <span class="math">q̄ = a − bi − cj − dk</span>, and its norm is <span class="math">|q| = (a<sup>2</sup> + b<sup>2</sup> + c<sup>2</sup> + d<sup>2</sup>)<sup>1/2</sup></span>.</p>
-    <p>The unit quaternions form the group <span class="math">Sp(1) = {q ∈ H : |q| = 1}</span>, which is also a copy of S<sup>3</sup> as a manifold.</p>
-    <div class="env remark">
-      <strong>Remark.</strong>
-      S<sup>3</sup> now appears twice: once as the sphere of normalized spinors in C<sup>2</sup>, and once as the manifold underlying the unit-quaternion group. These are related but different mathematical roles.
-    </div>
-
-    <h2>3. SU(2) and the unit-quaternion model</h2>
-    <p>The paper uses the explicit identification</p>
-    <span class="display">Φ(a + bi + cj + dk) = [[a − di, −c − bi], [c − bi, a + di]].</span>
-    <p>Equivalently, <span class="math">Φ(q) = aI − i(bσ<sub>x</sub> + cσ<sub>y</sub> + dσ<sub>z</sub>)</span>. This convention is standard, but it is also a choice: it aligns the quaternion basis units directly with the x-, y-, and z-axis Pauli generators.</p>
-
-    <figure>
-      <img src="artifacts/figures/fig-su2-quaternion.svg" alt="Schematic linking U(2), SU(2), and the unit quaternions through removal of global phase and an explicit isomorphism." />
-      <figcaption>Single-qubit gates live in U(2); after removing global phase they may be represented in SU(2), which is modeled exactly by the unit quaternions.</figcaption>
+<figure>
+      <img src="artifacts/figures/fig-su2-quaternion.svg" alt="Expanded schematic separating U(2) gates, phase-equivalent action classes, chosen SU(2) representatives, unit quaternions, and the induced SO(3) rotation action on the Bloch sphere." />
+      <figcaption>The gate-side picture also has layers: physical single-qubit gates begin in U(2), overall phase is discarded when passing to action classes, one may choose an SU(2) representative, that representative is modeled by a unit quaternion through the fixed map Phi, and the resulting action descends to an SO(3) rotation of Bloch vectors.</figcaption>
     </figure>
-
-    <div class="env proposition">
-      <strong>Proposition 3.1.</strong>
-      The restriction of Φ to the unit quaternions is a Lie-group isomorphism <span class="math">Sp(1) ≅ SU(2)</span>.
-    </div>
-    <p>The proof is straightforward: Φ respects the quaternion multiplication rules, the determinant of Φ(q) is <span class="math">|q|<sup>2</sup></span>, and every matrix in SU(2) has the standard form <span class="math">[[α, β], [−β*, α*]]</span>, which yields a unique quaternion preimage.</p>
-    <div class="env proposition">
-      <strong>Corollary 3.2.</strong>
-      Sequential single-qubit gate composition corresponds to quaternion multiplication under the chosen identification.
-    </div>
-    <p>The important precision point is that this is a model for SU(2) representatives of single-qubit gates, not a denial that the full gate group is U(2).</p>
-
-    <h2>4. Quaternionic geometry and rotation structure</h2>
-
-    <h3>4.1 Axis-angle form</h3>
-    <p>Every element of SU(2) can be written as</p>
-    <span class="display">V = cos(θ/2) I − i sin(θ/2) (n̂ · σ).</span>
-    <p>Under Φ, the corresponding quaternion is</p>
-    <span class="display">q = cos(θ/2) + sin(θ/2) (n<sub>x</sub> i + n<sub>y</sub> j + n<sub>z</sub> k).</span>
-    <p>In particular, π-rotations about the coordinate axes correspond, up to global phase, to the basis units <span class="math">i</span>, <span class="math">j</span>, and <span class="math">k</span>.</p>
-
-    <h3>4.2 Composition law</h3>
-    <p>Writing <span class="math">q = a + u</span> with scalar part <span class="math">a</span> and pure part <span class="math">u ∈ R<sup>3</sup></span>, quaternion multiplication takes the form</p>
-    <span class="display">(a<sub>1</sub> + u<sub>1</sub>)(a<sub>2</sub> + u<sub>2</sub>) = (a<sub>1</sub>a<sub>2</sub> − u<sub>1</sub>·u<sub>2</sub>) + (a<sub>1</sub>u<sub>2</sub> + a<sub>2</sub>u<sub>1</sub> + u<sub>1</sub>×u<sub>2</sub>).</span>
-    <p>This formula makes the geometry unusually explicit. The scalar part records a dot product, the pure part contains a cross product, and the noncommutativity of sequential rotations is visible at a glance rather than being hidden inside matrix multiplication.</p>
-
-    <figure>
+<figure>
       <img src="artifacts/figures/fig-axis-angle.svg" alt="Axis-angle and composition schematic showing quaternion basis axes and the scalar-vector product formula with a cross-product term." />
       <figcaption>Quaternion multiplication exposes the rotation-composition structure directly through scalar, dot-product, and cross-product terms.</figcaption>
     </figure>
 
-    <h3>4.3 The double cover SU(2) → SO(3)</h3>
-    <p>Conjugation of pure quaternions by a unit quaternion, <span class="math">v ↦ qvq<sup>−1</sup></span>, preserves the pure-quaternion subspace and Euclidean norm. This gives a homomorphism <span class="math">ρ: Sp(1) → SO(3)</span>.</p>
-    <div class="env proposition">
-      <strong>Proposition 4.1.</strong>
-      The map ρ is surjective and has kernel {+1, −1}. Equivalently, SU(2) is a double cover of SO(3).
-    </div>
-    <p>This is the standard group-theoretic source of the familiar spinorial fact that a 2π spatial rotation lifts to a path from <span class="math">I</span> to <span class="math">−I</span> in SU(2).</p>
-
-    <h2>5. Standard mathematics vs. RQM Technologies framing</h2>
-    <h3>5.1 Standard mathematics used here</h3>
-    <p>The following are standard facts rather than project-specific claims: normalized spinors form S<sup>3</sup>; pure states are CP<sup>1</sup> &cong; S<sup>2</sup>; gates live in U(2); modulo overall phase they admit SU(2) representatives; unit quaternions form a Lie-group model of SU(2); and SU(2) double-covers SO(3).</p>
-
-    <h3>5.2 RQM framing choices</h3>
-    <p>The project-specific element of this paper is modest. RQM Technologies chooses to use the quaternion model as a primary expository language for single-qubit gate geometry, and it fixes a specific standard convention for the quaternion-matrix correspondence so that the quaternion basis units align with the Pauli axes. These are organizational choices, not claims of new mathematics or new physics.</p>
-
-    <h2>6. Scope, limitations, and non-claims</h2>
-    <ul>
-      <li>This paper does not claim a replacement of standard quantum mechanics.</li>
-      <li>It does not claim a hardware or algorithmic advantage.</li>
-      <li>It does not claim that matrix methods are inadequate.</li>
-      <li>It does not develop a multi-qubit quaternionic state formalism.</li>
-      <li>It does not address quaternionic Hilbert-space quantum mechanics in the sense studied by Adler.</li>
-    </ul>
-
-    <h2>7. Conclusion</h2>
-    <p>For a single qubit, quaternions belong naturally in the mathematics because unit quaternions provide an explicit model of SU(2), and SU(2) is the natural determinant-one representative group for single-qubit gates after global phase has been removed from U(2). The value of the quaternion language is therefore representational and geometric: it makes axis-angle structure and rotation composition easier to see, while leaving the underlying quantum theory unchanged.</p>
-
-    <h2>Appendix A. Structured companion summary</h2>
-    <table>
-      <thead>
-        <tr><th>Claim ID</th><th>Type</th><th>Statement summary</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>prop-1</td><td>proposition</td><td>Normalized spinors in C<sup>2</sup> form S<sup>3</sup>.</td></tr>
-        <tr><td>prop-2</td><td>proposition</td><td>Pure single-qubit states are CP<sup>1</sup> &cong; S<sup>2</sup>.</td></tr>
-        <tr><td>prop-3</td><td>proposition</td><td>Every U(2) gate factors into a global phase times an SU(2) element.</td></tr>
-        <tr><td>prop-5</td><td>proposition</td><td>Unit quaternions are isomorphic to SU(2).</td></tr>
-        <tr><td>cor-6</td><td>corollary</td><td>Gate composition corresponds to quaternion multiplication.</td></tr>
-        <tr><td>prop-7</td><td>proposition</td><td>SU(2) and Sp(1) double-cover SO(3).</td></tr>
-        <tr><td>int-9</td><td>interpretive claim</td><td>RQM framing uses the quaternion model as a primary expository language for single-qubit gate geometry.</td></tr>
-      </tbody>
-    </table>
-
-    <table>
-      <thead>
-        <tr><th>Symbol</th><th>Meaning</th><th>Status</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>|ψ⟩</td><td>Normalized state vector in C<sup>2</sup></td><td>standard</td></tr>
-        <tr><td>S<sup>3</sup></td><td>Unit sphere of normalized spinors; also manifold of unit quaternions</td><td>standard</td></tr>
-        <tr><td>CP<sup>1</sup></td><td>Projective pure-state space</td><td>standard</td></tr>
-        <tr><td>S<sup>2</sup></td><td>Bloch sphere</td><td>standard</td></tr>
-        <tr><td>U(2)</td><td>Full single-qubit gate group</td><td>standard</td></tr>
-        <tr><td>SU(2)</td><td>Determinant-one unitary representatives modulo global phase</td><td>standard</td></tr>
-        <tr><td>q</td><td>Quaternion or unit-quaternion gate representative</td><td>standard</td></tr>
-        <tr><td>Φ</td><td>Chosen quaternion-matrix identification</td><td>variant</td></tr>
-      </tbody>
-    </table>
-    <p class="small">For machine-readable versions of the complete claim, notation, and glossary records, see <a href="claims.json">claims.json</a>, <a href="notation.json">notation.json</a>, and <a href="glossary.json">glossary.json</a>.</p>
-
-    <h2>References</h2>
-    <ol class="refs">
+      <h2>References</h2>
+      <ol class="refs">
       <li>Adler, Stephen L. <em>Quaternionic Quantum Mechanics and Quantum Fields</em>. Oxford University Press, 1995.</li>
       <li>Bloch, Felix. “Nuclear Induction.” <em>Physical Review</em> 70(7–8):460–474, 1946. DOI: <a href="https://doi.org/10.1103/PhysRev.70.460">10.1103/PhysRev.70.460</a>.</li>
       <li>Hall, Brian C. <em>Lie Groups, Lie Algebras, and Representations: An Elementary Introduction</em>, 2nd ed. Springer, 2015.</li>
@@ -203,12 +305,12 @@
       <li>Nielsen, Michael A., and Isaac L. Chuang. <em>Quantum Computation and Quantum Information</em>, 10th Anniversary Edition. Cambridge University Press, 2010.</li>
       <li>Penrose, Roger, and Wolfgang Rindler. <em>Spinors and Space-Time. Volume 1: Two-Spinor Calculus and Relativistic Fields</em>. Cambridge University Press, 1984.</li>
     </ol>
-  </main>
+    </main>
 
-  <footer class="paper-shell">
-    <p>qqc-001-foundations · version 0.1.0 · draft · license: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p>
-    <p><a href="./">Package page</a> · <a href="main.tex">LaTeX source</a> · <a href="paper.pdf">PDF</a> · <a href="metadata.json">metadata</a> · <a href="paper.jats.xml">JATS XML</a></p>
-  </footer>
+    <footer class="paper-shell">
+      <p>qqc-001-foundations · version 0.1.0 · draft · license: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p>
+      <p><a href="/papers/qqc-001-foundations/">Package page</a> · <a href="/papers/qqc-001-foundations/main.tex">LaTeX source</a> · <a href="/papers/qqc-001-foundations/paper.pdf">PDF</a> · <a href="/papers/qqc-001-foundations/metadata.json">metadata</a> · <a href="/papers/qqc-001-foundations/paper.jats.xml">JATS XML</a></p>
+    </footer>
   </div>
 </body>
 </html>

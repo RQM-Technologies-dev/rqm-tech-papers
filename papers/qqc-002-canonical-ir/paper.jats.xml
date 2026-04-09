@@ -21,9 +21,12 @@
 
       <contrib-group>
         <contrib contrib-type="author" corresp="yes">
-          <collab>RQM Technologies Research Team</collab>
+          <name>
+            <surname>Van Geem</surname>
+            <given-names>John G.</given-names>
+          </name>
+          <contrib-id contrib-id-type="orcid">0009-0002-4003-8452</contrib-id>
           <aff>RQM Technologies</aff>
-          <email>research@rqm-technologies.com</email>
         </contrib>
       </contrib-group>
 

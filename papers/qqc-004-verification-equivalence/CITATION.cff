@@ -5,8 +5,10 @@ title: "Verification, Canonicalization, and Equivalence in Quaternionic Quantum 
 version: "0.1.0"
 abstract: "This paper defines the trust layer for quaternionic quantum compilation by specifying exact equivalence criteria, preserved invariants, validation procedures, and matrix-interoperable diagnostics for optimized single-qubit segments."
 authors:
-  - name: "RQM Technologies Research Team"
+  - given-names: "John G."
+    family-names: "Van Geem"
     affiliation: "RQM Technologies"
+    orcid: "https://orcid.org/0009-0002-4003-8452"
 license: CC-BY-4.0
 keywords:
   - quaternionic verification
@@ -19,8 +21,10 @@ preferred-citation:
   type: article
   title: "Verification, Canonicalization, and Equivalence in Quaternionic Quantum Compilation"
   authors:
-    - name: "RQM Technologies Research Team"
+    - given-names: "John G."
+      family-names: "Van Geem"
       affiliation: "RQM Technologies"
+      orcid: "https://orcid.org/0009-0002-4003-8452"
   year: 2026
   version: "0.1.0"
   notes: "Draft verification paper package in the RQM Quaternionic Quantum Computing Series; no DOI assigned."

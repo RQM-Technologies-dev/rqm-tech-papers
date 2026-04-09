@@ -457,24 +457,36 @@ $\Phi$ & quaternion--matrix identification & convention chosen here \\
 
 \begin{figure}[h]
 \centering
-\begin{tikzpicture}[node distance=1.8cm, >=Latex]
-  \node[draw, rounded corners, minimum width=3.5cm, minimum height=1.4cm, align=center, fill=blue!5] (spinor) {$\{\ket{\psi}\in\C^2:\norm{\psi}=1\}$\\[2pt]$=S^3\subset\R^4$};
-  \node[draw, rounded corners, minimum width=2.9cm, minimum height=1.2cm, right=3cm of spinor, align=center, fill=green!5] (projective) {pure states\\$\CP^1\cong S^2$};
-  \draw[->, thick] (spinor) -- node[above, align=center] {quotient by\\global phase $e^{i\chi}$} (projective);
+\begin{tikzpicture}[node distance=1.7cm and 2.0cm, >=Latex]
+  \node[draw, rounded corners, minimum width=3.5cm, minimum height=1.55cm, align=center, fill=gray!8] (ambient) {$\C^2 \cong \R^4$\\[2pt]all nonzero spinors\\[2pt]$\ket{\psi}=\begin{pmatrix}\alpha\\ \beta\end{pmatrix}$};
+  \node[draw, rounded corners, minimum width=3.8cm, minimum height=1.6cm, align=center, fill=blue!5, right=of ambient] (spinor) {normalized representatives\\[2pt]$\{\ket{\psi}\in\C^2:\norm{\psi}=1\}$\\[2pt]$=S^3$};
+  \node[draw, rounded corners, minimum width=3.7cm, minimum height=1.45cm, align=center, fill=yellow!10, below=of spinor] (orbit) {one phase orbit\\[2pt]$\{e^{i\chi}\ket{\psi}:\chi\in\R\}$\\[2pt]same physical pure state};
+  \node[draw, rounded corners, minimum width=3.9cm, minimum height=1.6cm, align=center, fill=green!5, right=of spinor] (projective) {projective state space\\[2pt]$S^3/U(1)=\CP^1$\\[2pt]pure states modulo phase};
+  \node[draw, rounded corners, minimum width=3.9cm, minimum height=1.45cm, align=center, fill=green!12, below=of projective] (bloch) {Bloch-sphere picture\\[2pt]$\mathbf{r}(\psi)\in S^2$\\[2pt]north pole $\ket{0}$, south pole $\ket{1}$};
+  \draw[->, thick] (ambient) -- node[above, align=center] {impose\\$\norm{\psi}=1$} (spinor);
+  \draw[->, thick] (spinor) -- node[above, align=center] {quotient by\\global phase $U(1)$} (projective);
+  \draw[->, thick] (spinor) -- node[right, align=center] {points on the same\\phase circle} (orbit);
+  \draw[->, thick] (projective) -- node[right, align=center] {identify pure states\\with Bloch vectors} (bloch);
+  \draw[->, dashed, thick] (orbit.east) -- node[below, align=center] {each orbit collapses\\to one point} (projective.south west);
 \end{tikzpicture}
-\caption{Normalized spinors form $S^3$, while pure states arise only after quotienting by global phase. The resulting space is $\CP^1\cong S^2$, the Bloch sphere.}
+\caption{The normalized-spinor picture breaks into distinct steps: start in $\C^2\cong\R^4$, restrict to the unit sphere $S^3$ of normalized representatives, group points into $U(1)$ phase orbits, and then pass to the projective pure-state space $\CP^1\cong S^2$, the Bloch sphere.}
 \end{figure}
 
 \begin{figure}[h]
 \centering
-\begin{tikzpicture}[node distance=2.0cm, >=Latex]
-  \node[draw, rounded corners, minimum width=2.9cm, minimum height=1.2cm, fill=orange!8] (u2) {$\U(2)$};
-  \node[draw, rounded corners, minimum width=3.1cm, minimum height=1.2cm, right=2.3cm of u2, fill=orange!8] (su2) {$\SU(2)$};
-  \node[draw, rounded corners, minimum width=3.5cm, minimum height=1.2cm, below=1.8cm of su2, fill=purple!8] (quat) {unit quaternions\\$\Sp(1)\cong S^3$};
-  \draw[->, thick] (u2) -- node[above, align=center] {remove overall\\phase} (su2);
-  \draw[<->, thick] (su2) -- node[right] {$\Phi$} (quat);
+\begin{tikzpicture}[node distance=1.7cm and 1.8cm, >=Latex]
+  \node[draw, rounded corners, minimum width=3.0cm, minimum height=1.45cm, align=center, fill=orange!8] (u2) {full gate\\[2pt]$U\in\U(2)$\\[2pt]includes overall phase};
+  \node[draw, rounded corners, minimum width=3.25cm, minimum height=1.45cm, align=center, fill=orange!4, right=of u2] (class) {physical gate class\\[2pt]$[U]\in\U(2)/\U(1)$\\[2pt]overall phase removed};
+  \node[draw, rounded corners, minimum width=3.3cm, minimum height=1.45cm, align=center, fill=orange!8, right=of class] (su2) {chosen representative\\[2pt]$V\in\SU(2)$\\[2pt]unique up to $\pm V$};
+  \node[draw, rounded corners, minimum width=3.3cm, minimum height=1.45cm, align=center, fill=purple!8, right=of su2] (quat) {unit quaternion\\[2pt]$q\in\Sp(1)$\\[2pt]$\Phi(q)=V$};
+  \node[draw, rounded corners, minimum width=3.6cm, minimum height=1.45cm, align=center, fill=purple!4, below=of quat] (so3) {rotation on Bloch vectors\\[2pt]$\rho(q)\in\SO(3)$\\[2pt]$q$ and $-q$ act identically};
+  \draw[->, thick] (u2) -- node[above, align=center] {quotient by\\overall phase} (class);
+  \draw[->, thick] (class) -- node[above, align=center] {choose a\\determinant-one rep.} (su2);
+  \draw[<->, thick] (su2) -- node[above] {$\Phi$} (quat);
+  \draw[->, thick] (quat) -- node[right, align=center] {conjugation on\\pure quaternions} (so3);
+  \draw[->, dashed, thick] (su2.south) |- node[left, align=center] {$\pm V$ give the\\same rotation} (so3.west);
 \end{tikzpicture}
-\caption{Single-qubit gates live in $\U(2)$. After removing global phase, one may choose representatives in $\SU(2)$, which are modeled exactly by unit quaternions.}
+\caption{The gate-representation chain also breaks into distinct layers: a physical single-qubit gate starts in $\U(2)$, passes to a phase-quotiented class, is represented by some $V\in\SU(2)$, is encoded by a unit quaternion $q\in\Sp(1)$ through $\Phi$, and finally induces a rotation in $\SO(3)$ on Bloch vectors.}
 \end{figure}
 
 \begin{figure}[h]

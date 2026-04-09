@@ -4,25 +4,73 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Verification, Canonicalization, and Equivalence in Quaternionic Quantum Compilation</title>
-  <meta
-    name="description"
-    content="Trust-layer draft defining canonical equivalence, preserved invariants, validation procedures, and matrix interoperability for quaternionic quantum compilation."
-  />
+  <meta name="description" content="This paper addresses the trust problem for quaternionic optimization in single-qubit quantum compilation. Building on qqc-001-foundations, qqc-002-canonical-ir, and qqc-003-gate-fusion, it defines verification criteria for quaternionic compilation outputs, including exact SU(2) equivalence modulo global phase, canonical sign conventions on the quotient q ~ -q, invariants preserved by translation and fusion, and reproducible output forms for deterministic comparison. The paper identifies canonical quaternion equality after normalization and sign-canonicalization as the authoritative equivalence check for single-qubit segment actions, then relates that check to interoperable matrix-based diagnostics such as phase-aware residuals, trace overlap, and process fidelity under the fixed quaternion-SU(2) correspondence. A shipped reference verifier evaluates positive and negative segment pairs, including named-gate recoveries, identity elimination, generic u1q outputs, wrong-axis substitutions, and perturbed near-matches. On the included seven-case corpus, all four positive cases pass and all three negative cases are rejected by the authoritative canonical check, while the auxiliary diagnostics provide interpretable matrix-space evidence for external toolchains. The paper is limited to single-qubit compilation segments and does not claim full-circuit verification completeness or universal compiler correctness." />
   <meta name="author" content="John G. Van Geem" />
-  <meta
-    name="keywords"
-    content="verification, canonical equivalence, quaternionic compilation, SU(2), process fidelity, trace diagnostics"
-  />
-  <meta
-    name="citation_title"
-    content="Verification, Canonicalization, and Equivalence in Quaternionic Quantum Compilation"
-  />
+  <meta name="keywords" content="quantum compilation verification, canonical equivalence, global-phase-aware equivalence, SU(2), unit quaternions, compiler validation" />
+  <meta name="citation_title" content="Verification, Canonicalization, and Equivalence in Quaternionic Quantum Compilation" />
   <meta name="citation_author" content="John G. Van Geem" />
   <meta name="citation_pdf_url" content="paper.pdf" />
-  <link rel="canonical" href="./" />
   <link rel="alternate" type="application/json" href="metadata.json" title="Paper metadata" />
   <link rel="alternate" type="application/xml" href="paper.jats.xml" title="JATS XML" />
   <link rel="stylesheet" href="../../styles/site.css" />
+  <script>
+window.MathJax = {
+  "tex": {
+    "inlineMath": [
+      [
+        "\\(",
+        "\\)"
+      ]
+    ],
+    "displayMath": [
+      [
+        "\\[",
+        "\\]"
+      ]
+    ],
+    "macros": {
+      "R": "\\mathbb{R}",
+      "C": "\\mathbb{C}",
+      "HH": "\\mathbb{H}",
+      "SU": "\\mathrm{SU}",
+      "U": "\\mathrm{U}",
+      "Id": "I",
+      "ii": "\\mathbf{i}",
+      "jj": "\\mathbf{j}",
+      "kk": "\\mathbf{k}",
+      "norm": [
+        "\\left\\lVert #1 \\right\\rVert",
+        1
+      ],
+      "set": [
+        "\\left\\{ #1 \\right\\}",
+        1
+      ],
+      "uoneq": "\\mathrm{u1q}",
+      "normalize": "\\operatorname{Norm}",
+      "sgncanon": "\\operatorname{SignCan}",
+      "canon": "\\operatorname{Can}",
+      "Verify": "\\operatorname{Verify}",
+      "MatrixEq": "\\operatorname{MatrixEq}",
+      "TraceDiag": "\\operatorname{TraceDiag}",
+      "ProcFid": "\\operatorname{ProcFid}",
+      "PhaseRes": "\\operatorname{PhaseRes}"
+    },
+    "processEscapes": true
+  },
+  "options": {
+    "skipHtmlTags": [
+      "script",
+      "noscript",
+      "style",
+      "textarea",
+      "pre",
+      "code"
+    ]
+  }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </head>
 <body class="paper-page">
   <div class="page-shell">
@@ -30,188 +78,157 @@
       <nav class="breadcrumb" aria-label="Breadcrumb">
         <a href="../../index.html">Home</a>
         <span>/</span>
-        <a href="./">qqc-004-verification-equivalence</a>
+        <a href="/papers/qqc-004-verification-equivalence/">qqc-004-verification-equivalence</a>
         <span>/</span>
         <span aria-current="page">paper.html</span>
       </nav>
       <div class="badge">RQM Quaternionic Quantum Computing Series · Paper 4</div>
-      <h1>Verification, Canonicalization, and Equivalence in Quaternionic Quantum Compilation</h1>
-      <p class="byline">
-        John G. Van Geem<br />
-        RQM Technologies<br />
-        orcid: 0009-0002-4003-8452
-      </p>
+      <h1><strong>Verification, Canonicalization, and Equivalence</strong><br />
+in Quaternionic Quantum Compilation</h1>
+      <p class="byline">John G. Van Geem<br />
+RQM Technologies<br />
+orcid: 0009-0002-4003-8452</p>
 
       <div class="abstract">
         <strong>Abstract</strong>
-        <p>This paper addresses the trust problem for quaternionic quantum compilation. Building on the quaternion--SU(2) convention of qqc-001-foundations, the canonical single-qubit IR of qqc-002-canonical-ir, and the local fusion pass of qqc-003-gate-fusion, it defines a verification layer for optimized single-qubit segments. The paper formalizes an authoritative equivalence criterion based on canonical quaternion equality after normalization and sign-canonicalization, and complements that criterion with matrix-based interoperability diagnostics under the fixed quaternion--SU(2) map. The resulting validation stack includes exact global-phase-aware equivalence, preserved invariants, phase-aware matrix residuals, trace-overlap diagnostics, and process-fidelity checks. A small shipped verification harness evaluates positive and negative example pairs, including named-gate recoveries, identity eliminations, axis-aware reconstructions, and perturbed generic primitives. On the shipped seven-case reference corpus, all four positive cases pass and all three negative cases are rejected by the authoritative canonical check, while the matrix diagnostics behave consistently with those outcomes. The purpose of the paper is not to replace matrix toolchains, but to make quaternionic optimization auditable, reproducible, and safe to integrate into compiler APIs and partner workflows.</p>
+        <p>This paper addresses the trust problem for quaternionic quantum compilation. The preceding papers in the series established a fixed quaternion--\(\SU(2)\) convention, a canonical single-qubit intermediate representation \(\uoneq(w,x,y,z)\), and a local fusion pass for single-qubit circuit segments. The present paper defines how optimized outputs are verified. The core proposal is an authoritative canonical equivalence criterion: two single-qubit segments are treated as equivalent when their canonical quaternionic representatives agree after normalization and sign-canonicalization on the quotient \(q\sim -q\) induced by global-phase removal. Around that criterion, the paper defines preserved invariants, validation procedures, and interoperability diagnostics with matrix-based toolchains. In particular, it introduces a phase-aware matrix residual, a trace-overlap diagnostic, and a process-fidelity-style check under the fixed quaternion--\(\SU(2)\) map. A small shipped verification harness evaluates both positive and negative cases. On 7 measured comparison cases, including exact named-gate recovery, exact identity elimination, generic-\uoneq verification, wrong-axis substitutions, and perturbed generic outputs, all 4 positive cases pass the authoritative canonical test and all 3 negative cases are rejected. The paper argues that quaternionic compilation can therefore be audited by deterministic canonical output forms while remaining interoperable with standard matrix-based verification workflows.</p>
       </div>
 
       <div class="meta">
         <div><strong>Paper ID:</strong> qqc-004-verification-equivalence · <strong>Version:</strong> 0.1.0 · <strong>Status:</strong> draft · <strong>Last updated:</strong> 2026-04-09</div>
-        <div><strong>Depends on:</strong> <a href="../qqc-001-foundations/">qqc-001-foundations</a>, <a href="../qqc-002-canonical-ir/">qqc-002-canonical-ir</a>, <a href="../qqc-003-gate-fusion/">qqc-003-gate-fusion</a></div>
-        <div><strong>Keywords:</strong> verification; canonical equivalence; quaternionic compilation; SU(2); process fidelity; trace diagnostics</div>
-        <div><strong>Companion files:</strong> <a href="./">package index</a>, <a href="main.tex">main.tex</a>, <a href="paper.pdf">paper.pdf</a>, <a href="metadata.json">metadata.json</a>, <a href="paper.jats.xml">paper.jats.xml</a>, <a href="claims.json">claims.json</a>, <a href="notation.json">notation.json</a>, <a href="glossary.json">glossary.json</a>, <a href="references.bib">references.bib</a>, <a href="CITATION.cff">CITATION.cff</a></div>
+        <div><strong>Depends on:</strong> <a href="/papers/qqc-001-foundations/">qqc-001-foundations</a>, <a href="/papers/qqc-002-canonical-ir/">qqc-002-canonical-ir</a>, <a href="/papers/qqc-003-gate-fusion/">qqc-003-gate-fusion</a></div>
+        <div><strong>Keywords:</strong> quantum compilation verification; canonical equivalence; global-phase-aware equivalence; SU(2); unit quaternions; compiler validation</div>
+        <div><strong>Companion files:</strong> <a href="/papers/qqc-004-verification-equivalence/">package index</a>, <a href="/papers/qqc-004-verification-equivalence/main.tex">main.tex</a>, <a href="/papers/qqc-004-verification-equivalence/paper.pdf">paper.pdf</a>, <a href="/papers/qqc-004-verification-equivalence/metadata.json">metadata.json</a>, <a href="/papers/qqc-004-verification-equivalence/paper.jats.xml">paper.jats.xml</a>, <a href="/papers/qqc-004-verification-equivalence/claims.json">claims.json</a>, <a href="/papers/qqc-004-verification-equivalence/notation.json">notation.json</a>, <a href="/papers/qqc-004-verification-equivalence/glossary.json">glossary.json</a>, <a href="/papers/qqc-004-verification-equivalence/references.bib">references.bib</a>, <a href="/papers/qqc-004-verification-equivalence/CITATION.cff">CITATION.cff</a></div>
       </div>
     </header>
 
     <main class="paper-shell">
       <h2>1. Introduction</h2>
-      <p>Once a compiler begins to optimize circuits, a practical question appears immediately: how is correctness certified? Papers 2 and 3 in this series introduced a canonical quaternionic single-qubit intermediate representation and a local fusion pass on top of it. Those papers define the optimization layer. The present paper defines the trust layer.</p>
-      <p>The main concern is not whether quaternionic compilation is mathematically elegant. It is whether an optimized output can be verified in a way that is deterministic, reproducible, and legible to both quaternion-native and matrix-native toolchains. This paper therefore focuses on canonical equivalence, preserved invariants, and validation procedures rather than on additional optimization heuristics.</p>
-      <p>The central design choice is to separate the <em>authoritative</em> equivalence criterion from supporting diagnostics. The authoritative criterion is canonical quaternion equality after normalization and sign-canonicalization. Supporting matrix diagnostics such as phase-aware residual, trace overlap, and process fidelity are then used as interoperability tools rather than as replacements for the canonical test.</p>
-
-      <h2>2. Background and dependency on papers 1–3</h2>
-      <p>Paper 1 fixed the quaternion--<span class="math">SU(2)</span> map <span class="math">Φ</span> and the passage from single-qubit gates in <span class="math">U(2)</span> to determinant-one representatives modulo global phase. Paper 2 defined the canonical single-qubit IR object <span class="math">u1q(w, x, y, z)</span> with normalization and deterministic sign-canonicalization. Paper 3 defined local quaternionic gate fusion for single-qubit segments and a layered reconstruction operator.</p>
-      <p>The present paper inherits all of those conventions without modification. In particular, the sign ambiguity <span class="math">q ~ -q</span> remains the only residual ambiguity in the quaternionic representation, and the canonicalization rule based on <span class="math">w &gt; 0</span> plus the equatorial tie-break remains the unique representative-selection mechanism.</p>
-
-      <figure>
-        <img src="artifacts/figures/fig-verification-pipeline.svg" alt="Verification stack showing optimized segment, canonical quaternion, matrix image, and diagnostics." />
-        <figcaption>The trust layer is stacked: authoritative canonical-quaternion equality first, then matrix diagnostics for interoperability and debugging.</figcaption>
-      </figure>
-
-      <h2>3. Equivalence and canonicalization criteria</h2>
-      <div class="env definition">
-        <strong>Definition 3.1.</strong>
-        Two optimized single-qubit segment outputs are <em>canonically equivalent</em> when their normalized and sign-canonicalized quaternion representatives are equal componentwise.
-      </div>
-      <div class="env definition">
-        <strong>Definition 3.2.</strong>
-        Two single-qubit segment outputs are <em>global-phase equivalent</em> when their corresponding <span class="math">SU(2)</span> representatives under <span class="math">Φ</span> differ only by the sign ambiguity induced by passage from <span class="math">U(2)</span> modulo global phase to canonical quaternion form.
-      </div>
-      <div class="env proposition">
-        <strong>Proposition 3.3.</strong>
-        Canonical quaternion equality implies exact equivalence of the represented single-qubit action modulo global phase under the fixed quaternion--<span class="math">SU(2)</span> convention.
-      </div>
-      <p>This follows directly from the fixed map <span class="math">Φ</span> and the deterministic representative rule of paper 2. Once both outputs are reduced to the same canonical quaternion, they represent the same determinant-one single-qubit action modulo the sign pair <span class="math">{q, -q}</span>.</p>
-      <div class="env proposition">
-        <strong>Proposition 3.4.</strong>
-        Under the fixed sign convention, the canonical representative of a single-qubit segment action is unique.
-      </div>
-      <p>This is the reproducibility property needed for trustworthy compiler output. If the same segment action is encountered again, the same canonical quaternion is produced regardless of the source syntax used to express it.</p>
-
-      <figure>
-        <img src="artifacts/figures/fig-canonical-hemisphere.svg" alt="Antipodal quaternion representatives on S3 with canonical hemisphere and equatorial tie-break." />
-        <figcaption>The sign convention removes the ambiguity between <span class="math">q</span> and <span class="math">-q</span>, turning reproducibility into a deterministic storage rule instead of a best-effort normalization heuristic.</figcaption>
-      </figure>
-
-      <h2>4. Invariants preserved by quaternionic compilation</h2>
-      <p>The trust layer is not only about an equality test. It is also about understanding what properties must remain invariant under optimization.</p>
-      <div class="env definition">
-        <strong>Definition 4.1.</strong>
-        The verification invariants for a single-qubit compiled segment are:
-      </div>
-      <ul>
-        <li>unit norm after normalization,</li>
-        <li>canonical sign choice under the paper-2 rule,</li>
-        <li>equivalence of the represented <span class="math">SU(2)</span> action modulo global phase,</li>
-        <li>stability of canonical output form under repeated verification, and</li>
-        <li>agreement between canonical and matrix diagnostics up to tolerance in numerical settings.</li>
-      </ul>
-      <div class="env proposition">
-        <strong>Proposition 4.2.</strong>
-        Quaternionic compilation preserves the represented single-qubit segment action modulo global phase whenever translation, multiplication, normalization, and canonicalization are applied according to the fixed convention of papers 1–3.
-      </div>
-      <p>This proposition is not a new optimization statement; it is the verification statement that the compilation pipeline preserves exactly the object it claims to preserve.</p>
-
-      <h2>5. Validation procedures for optimized segments</h2>
-      <p>The paper recommends a layered validation procedure:</p>
-      <ol>
-        <li>translate both original and optimized outputs into canonical quaternions,</li>
-        <li>apply the authoritative canonical equality test,</li>
-        <li>if desired, compute matrix-based diagnostics under <span class="math">Φ</span>, and</li>
-        <li>record canonical output form and diagnostics for reproducibility.</li>
-      </ol>
-      <div class="env definition">
-        <strong>Definition 5.1.</strong>
-        The <em>phase-aware residual</em> between two <span class="math">SU(2)</span> matrices <span class="math">U</span> and <span class="math">V</span> is the operator-norm-style residual obtained after aligning the relative phase of <span class="math">U†V</span> to its trace phase and then measuring departure from the identity.
-      </div>
-      <div class="env definition">
-        <strong>Definition 5.2.</strong>
-        The <em>process fidelity diagnostic</em> for two single-qubit representatives <span class="math">U</span> and <span class="math">V</span> is <span class="math">|Tr(U†V)|² / 4</span>.
-      </div>
-      <div class="env remark">
-        <strong>Remark.</strong>
-        These matrix diagnostics are supporting diagnostics, not the authoritative equivalence criterion. They are included because many partner toolchains already speak matrix language.
-      </div>
-
-      <figure>
-        <img src="artifacts/figures/fig-matrix-interoperability.svg" alt="Interoperability flow from canonical quaternion to SU(2) matrix with trace and fidelity diagnostics." />
-        <figcaption>Quaternion-native compilation can still interoperate with matrix-native toolchains by passing through the fixed map <span class="math">Φ</span> and then computing familiar diagnostics.</figcaption>
-      </figure>
-
-      <h2>6. Interoperability with matrix-based toolchains</h2>
-      <p>Adopting a quaternionic compiler layer does not require abandoning matrix-native workflows. Because the fixed map <span class="math">Φ</span> is explicit, every canonical quaternion can be exported as an <span class="math">SU(2)</span> matrix for external checking, logging, or partner integration.</p>
-      <div class="env proposition">
-        <strong>Proposition 6.1.</strong>
-        Canonical quaternion equality implies agreement of the corresponding <span class="math">SU(2)</span> matrices under the fixed map <span class="math">Φ</span>, while disagreement in canonical quaternion form implies either a true mismatch or a numerical perturbation that matrix diagnostics can expose quantitatively.
-      </div>
-      <p>This proposition is the bridge to existing toolchains. The canonical quaternion is the trusted primary artifact; the matrix image provides an auditable secondary view.</p>
-
-      <figure>
-        <img src="artifacts/figures/fig-verification-pipeline.svg" alt="Trust pipeline from original segment and optimized candidate through canonical equivalence and matrix diagnostics." />
-        <figcaption>The verification process compares original and optimized outputs through both a canonical quaternion layer and an interoperable matrix layer.</figcaption>
-      </figure>
-
-      <h2>7. Reference verification corpus and results</h2>
-      <p>The shipped verification harness evaluates seven reference comparisons: four positive cases expected to pass and three negative cases expected to fail. The positive cases include exact named-gate recovery, identity elimination, and a generic canonical <span class="math">u1q</span> output. The negative cases include wrong named-gate substitution, wrong-axis substitution, and a perturbed generic primitive.</p>
-      <table>
-        <thead>
-          <tr><th>Metric</th><th>Measured value</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Total verification cases</td><td>7</td></tr>
-          <tr><td>Positive cases</td><td>4</td></tr>
-          <tr><td>Negative cases</td><td>3</td></tr>
-          <tr><td>Positive cases passed by canonical check</td><td>4</td></tr>
-          <tr><td>Negative cases rejected by canonical check</td><td>3</td></tr>
-          <tr><td>All cases consistent with expectation</td><td>true</td></tr>
-        </tbody>
-      </table>
-      <p>On the positive cases, the canonical equality test succeeds and the matrix diagnostics report residuals near zero with process fidelity equal to one to numerical precision. On the negative cases, the canonical test rejects the pair, while the diagnostics expose the mismatch numerically: the wrong-axis and wrong-gate substitutions produce clear residuals and reduced overlap, and the perturbed generic primitive shows that very high process fidelity alone is not a substitute for canonical equivalence.</p>
-
-      <h3>7.1 Positive cases</h3>
-      <ul>
-        <li><code>Rx(pi/2) ; Rx(pi/2)</code> vs <code>X</code></li>
-        <li><code>Rz(pi/4) ; Rz(pi/4)</code> vs <code>S</code></li>
-        <li><code>H ; T ; Rz(pi/3)</code> vs exact canonical <code>u1q(...)</code></li>
-        <li><code>T ; T†</code> vs identity elimination</li>
-      </ul>
-
-      <h3>7.2 Negative cases</h3>
-      <ul>
-        <li><code>X</code> vs <code>Y</code></li>
-        <li><code>Rz(pi/3)</code> vs <code>Rx(pi/3)</code></li>
-        <li>exact generic <code>u1q(...)</code> vs a perturbed nearby tuple</li>
-      </ul>
-
-      <p>The final case is particularly important for trust: a candidate may achieve process fidelity very close to one while still failing canonical equivalence. This is why the paper treats fidelity as a diagnostic, not as the authoritative yes/no proof of exact compiled equivalence.</p>
-
-      <figure>
-        <img src="artifacts/figures/fig-positive-negative-cases.svg" alt="Summary figure of positive and negative verification cases and their diagnostic outcomes." />
-        <figcaption>The shipped verification corpus contains both success and failure cases so the trust layer demonstrates rejection behavior as well as acceptance behavior.</figcaption>
-      </figure>
-
-      <h2>8. Standard mathematics vs. RQM Technologies framing</h2>
-      <h3>8.1 Standard ingredients</h3>
-      <p>The standard ingredients are the passage from <span class="math">U(2)</span> to <span class="math">SU(2)</span> modulo global phase, the unit-quaternion model of <span class="math">SU(2)</span>, the sign ambiguity <span class="math">q ~ -q</span>, and familiar matrix diagnostics such as trace overlap and process fidelity.</p>
-      <h3>8.2 Project-specific trust-layer choices</h3>
-      <p>The project-specific contribution is the verification architecture: canonical quaternion equality as the authoritative equivalence check, deterministic canonical output forms for reproducibility, an explicit list of preserved invariants, and a matrix-based interoperability layer for external toolchains and partner review.</p>
-
-      <h2>9. Scope, limitations, and non-claims</h2>
-      <ul>
-        <li>This paper does not define a full formal verification system for arbitrary multi-qubit circuits.</li>
-        <li>It does not replace matrix-native diagnostics; it positions them as supporting tools.</li>
-        <li>It does not claim that process fidelity alone proves exact compiled equivalence.</li>
-        <li>It does not prove correctness of arbitrary hardware execution.</li>
-        <li>It does not optimize circuits; it validates optimized single-qubit segments produced elsewhere in the series.</li>
-      </ul>
-
-      <h2>10. Conclusion</h2>
-      <p>The trust problem in quaternionic compilation is solved here by separating exact proof from supporting diagnostics. Exact proof is supplied by canonical quaternion equality under the fixed normalization and sign conventions. Supporting diagnostics are supplied by the matrix image under <span class="math">Φ</span>, including phase-aware residuals, trace overlap, and process fidelity. Together these give a trust layer that is deterministic, reproducible, auditable, and interoperable with matrix-based toolchains.</p>
-
-      <h2>Appendix A. Verification artifact note</h2>
-      <p>The results reported here are generated by the shipped script <a href="artifacts/code/verify_canonical_equivalence.py">artifacts/code/verify_canonical_equivalence.py</a>, which writes <a href="artifacts/code/verification_results.json">verification_results.json</a>. The verifier uses only the Python standard library and the fixed quaternion convention inherited from papers 1–3.</p>
+<p>Optimization invites a trust question. Once a compiler replaces one gate list by another, how does one know that the transformation is correct? For quaternionic compilation the question is especially predictable, because the optimization language is not the familiar matrix syntax of most toolchains. Papers 2 and 3 in this series showed that single-qubit segments admit a deterministic quaternionic internal form and that adjacent one-qubit runs can be fused by quaternion multiplication. The present paper asks the verification question that follows immediately from those results.</p>
+<p>The answer proposed here has two layers. The first layer is <em>authoritative</em> inside the quaternionic compiler: compare canonical representatives. If two optimized segments canonicalize to the same quaternionic payload, then they are equivalent modulo global phase under the fixed convention of the series. The second layer is <em>interoperable</em>: expose matrix-based diagnostics that can be checked by standard toolchains, such as phase-aware residuals, trace overlap, and process fidelity under the same \(\SU(2)\) representative.</p>
+<p>The point is not to replace matrix-based verification. The point is to make quaternionic compilation auditable in its own native representation while remaining transparent to partner systems, SDKs, and review workflows that still speak in matrices. This paper therefore treats verification as part of the compiler method itself.</p>
+<p>Its scope is deliberately narrow. It concerns single-qubit segments only. It does not define verification of entangling-gate internals, does not claim a universal proof framework for all quantum optimizations, and does not claim that one diagnostic alone is sufficient for every integration setting.</p>
+<h2>2. Background and dependency on papers 1--3</h2>
+<p>Paper 1 fixed the quaternion--\(\SU(2)\) convention:</p>
+<div class="display" id="eq:phi">\[\Phi(a+b\ii+c\jj+d\kk)
+=
+\begin{pmatrix}
+a-di & -c-bi \\
+c-bi & a+di
+\end{pmatrix}
+=
+a\Id-i(b\sigma_x+c\sigma_y+d\sigma_z).\]</div>
+<p>Under this map, the unit quaternions model \(\SU(2)\) exactly, and every single-qubit gate action modulo global phase is represented by a sign class \(\set{q,-q}\) of unit quaternions.</p>
+<p>Paper 2 defined the canonical IR object</p>
+<div class="display">\[\uoneq(w,x,y,z)\]</div>
+<p>with the canonicalization rule</p>
+<div class="display">\[\canon=\sgncanon\circ\normalize,\]</div>
+<p>where \(\normalize\) restores unit norm and \(\sgncanon\) chooses the preferred representative by the rule \(w>0\), with an explicit deterministic tie-break on the equator \(w=0\).</p>
+<p>Paper 3 defined the local fusion operator for single-qubit segments</p>
+<div class="display">\[\Fuse(\mathrm{seg})=\canon(q_n\cdots q_1)\]</div>
+<p>and used canonical quaternion equality as the authoritative equivalence criterion for fused outputs. The present paper turns that criterion into a formal verification layer.</p>
+<h2>3. Problem setup: the trust layer</h2>
+<div class="env definition"><strong>Definition 3.1. Single-qubit segment.</strong><p>A <em>single-qubit segment</em> on wire \(a\) is a maximal consecutive run of gates that act only on wire \(a\), bounded by the beginning or end of the circuit, or by a boundary operation outside the present single-qubit model for that wire, including entangling gates, measurement, reset, barrier, or classical-control boundaries.</p></div>
+<div class="env definition"><strong>Definition 3.2. Verification problem.</strong><p>Given an original single-qubit segment \(\mathrm{seg}\) and a candidate optimized segment \(\mathrm{seg}'\), the verification problem is to determine whether \(\mathrm{seg}\) and \(\mathrm{seg}'\) represent the same single-qubit action modulo global phase under the fixed quaternion--\(\SU(2)\) convention.</p></div>
+<div class="env remark"><strong>Remark 3.3.</strong><p>This paper treats verification as a relation between <em>segment actions</em>, not between textual syntaxes. Two segments may use different named-gate spellings, different reconstruction policies, or a generic \(\uoneq\) primitive, yet still be equivalent at the represented-action level.</p></div>
+<h2>4. Canonical equivalence and preserved invariants</h2>
+<h3>4.1 Authoritative canonical criterion</h3>
+<div class="env definition"><strong>Definition 4.1. Canonical segment representative.</strong><p>Let \(\mathrm{seg}=(g_1,\dots,g_n)\) be a single-qubit segment in application order, and let \(q_1,\dots,q_n\) be the translated unit-quaternion representatives of those gates. The canonical segment representative is</p>
+<div class="display">\[Q(\mathrm{seg})=\canon(q_n\cdots q_1).\]</div></div>
+<div class="env definition"><strong>Definition 4.2. Authoritative equivalence.</strong><p>Two single-qubit segments \(\mathrm{seg}\) and \(\mathrm{seg}'\) are <em>canonically equivalent</em>, written</p>
+<div class="display">\[\Verify(\mathrm{seg},\mathrm{seg}'),\]</div>
+<p>if</p>
+<div class="display">\[Q(\mathrm{seg})=Q(\mathrm{seg}').\]</div></div>
+<div class="env proposition"><strong>Proposition 4.3. Canonical equivalence is exact segment equivalence modulo global phase.</strong><p>For single-qubit segments, \(\Verify(\mathrm{seg},\mathrm{seg}')\) holds if and only if \(\mathrm{seg}\) and \(\mathrm{seg}'\) represent the same \(\SU(2)\) action up to the global-phase quotient inherited from \(\U(2)\).</p></div>
+<div class="proof"><p>By paper 1, single-qubit actions modulo global phase correspond exactly to sign classes \(\set{q,-q}\) of unit quaternions under the fixed map (<a href="#eq:phi">eq:phi</a>). By paper 2, \(\canon\) chooses exactly one representative from each sign class. Hence two segments produce the same canonical representative if and only if they produce the same sign class, which is exactly the same single-qubit action modulo global phase.</p></div>
+<h3>4.2 Preserved invariants</h3>
+<div class="env definition"><strong>Definition 4.4. Quaternionic compilation invariants.</strong><p>For a valid optimized replacement of a single-qubit segment, the following invariants are preserved:</p>
+<ol type="a"><li><p>unit norm after normalization;</p></li><li><p>canonical sign choice under the fixed hemisphere rule;</p></li><li><p>represented \(\SU(2)\) action modulo global phase; and</p></li><li><p>reproducible canonical output form.</p></li></ol></div>
+<div class="env remark"><strong>Remark 4.5.</strong><p>The final item is operationally important. Even when multiple frontend or presentation-level reconstructions are available, the canonical quaternionic payload is unique. This is what makes optimized outputs reproducible across runs and comparable across implementations.</p></div>
+<div class="env proposition"><strong>Proposition 4.6. Canonical output form is deterministic.</strong><p>If two compilation runs produce valid optimized representations of the same single-qubit segment action under the fixed convention, then their canonical quaternionic payloads are identical.</p></div>
+<div class="proof"><p>Both outputs represent the same sign class \(\set{q,-q}\) in the unit quaternions. The canonicalization map of paper 2 chooses exactly one representative from that class. Therefore the payload is unique.</p></div>
+<h2>5. Validation procedures</h2>
+<h3>5.1 Primary validation procedure</h3>
+<div class="env definition"><strong>Definition 5.1. Canonical validation procedure.</strong><p>To validate a candidate optimized segment \(\mathrm{seg}'\) against an original segment \(\mathrm{seg}\):</p>
+<ol type="1"><li><p>translate each segment into the fixed quaternionic representation;</p></li><li><p>multiply in application order to obtain raw segment products;</p></li><li><p>normalize and sign-canonicalize both products; and</p></li><li><p>compare the resulting canonical representatives for equality.</p></li></ol></div>
+<div class="env remark"><strong>Remark 5.2.</strong><p>This procedure is the authoritative one for the present series. It is exact in the mathematical model and becomes an implementation check after explicit tolerance rules are layered on top.</p></div>
+<h3>5.2 Tolerance-aware numerical variant</h3>
+<div class="env definition"><strong>Definition 5.3. Tolerance-aware canonical check.</strong><p>In floating-point settings, treat two canonical representatives as equal when their coordinatewise difference is below a declared tolerance after normalization and sign-canonicalization.</p></div>
+<div class="env remark"><strong>Remark 5.4.</strong><p>The tolerance belongs to the implementation policy, not to the exact equivalence relation. The exact mathematical criterion remains equality of canonical representatives.</p></div>
+<h2>6. Interoperability with matrix-based toolchains</h2>
+<p>Trust often requires compatibility with existing verification culture. For this reason the paper introduces diagnostics that can be computed from the same segment pair after applying the fixed map (<a href="#eq:phi">eq:phi</a>).</p>
+<div class="env definition"><strong>Definition 6.1. Phase-aware matrix equivalence.</strong><p>Let \(U,V\in\SU(2)\) be the matrix representatives of two single-qubit segments. Define</p>
+<div class="display">\[\MatrixEq(U,V)\]</div>
+<p>to hold when \(U^\dagger V\) is equal to a scalar phase times the identity.</p></div>
+<div class="env definition"><strong>Definition 6.2. Trace overlap and process fidelity.</strong><p>For \(U,V\in\SU(2)\) define the trace-overlap diagnostic</p>
+<div class="display">\[\TraceDiag(U,V)=\left|\mathrm{Tr}(U^\dagger V)\right|\]</div>
+<p>and the process-fidelity-style quantity</p>
+<div class="display">\[\ProcFid(U,V)=\frac{\left|\mathrm{Tr}(U^\dagger V)\right|^2}{4}.\]</div></div>
+<div class="env definition"><strong>Definition 6.3. Phase-aware residual.</strong><p>Let \(\lambda=\mathrm{Tr}(U^\dagger V)/|\mathrm{Tr}(U^\dagger V)|\) when the trace is nonzero. Define the phase-aware residual</p>
+<div class="display">\[\PhaseRes(U,V)\]</div>
+<p>as the maximum-entry norm of \(U^\dagger V-\lambda \Id\).</p></div>
+<div class="env proposition"><strong>Proposition 6.4. Canonical equality implies perfect matrix diagnostics.</strong><p>If \(\Verify(\mathrm{seg},\mathrm{seg}')\) holds exactly, then for the corresponding matrix representatives \(U\) and \(V\) one has</p>
+<div class="display">\[\MatrixEq(U,V),
+\qquad
+\ProcFid(U,V)=1,
+\qquad
+\TraceDiag(U,V)=2,
+\qquad
+\PhaseRes(U,V)=0.\]</div></div>
+<div class="proof"><p>Canonical equality implies the same unit quaternion representative. Under (<a href="#eq:phi">eq:phi</a>), the two segments therefore produce the same \(\SU(2)\) matrix, so \(U^\dagger V=\Id\). The stated diagnostics follow immediately.</p></div>
+<div class="env remark"><strong>Remark 6.5.</strong><p>The converse must be handled with care numerically. Near-equality in trace or fidelity can diagnose closeness, but the authoritative exact yes/no criterion in this paper remains canonical quaternion equality after canonicalization.</p></div>
+<h2>7. Worked examples</h2>
+<div class="env definition"><strong>Example 7.1. Exact named-gate recovery.</strong><p>Compare</p>
+<div class="display">\[R_x(\pi/2);R_x(\pi/2)
+\qquad\text{and}\qquad
+X.\]</div>
+<p>Both sides canonicalize to the quaternion \((0,1,0,0)\). Hence \(\Verify(\mathrm{seg},\mathrm{seg}')\) holds exactly.</p></div>
+<div class="env definition"><strong>Example 7.2. Identity elimination.</strong><p>Compare</p>
+<div class="display">\[T;T^\dagger
+\qquad\text{and}\qquad
+\emptyset.\]</div>
+<p>Both sides canonicalize to \((1,0,0,0)\), so the empty output is verified as a correct identity elimination.</p></div>
+<div class="env definition"><strong>Example 7.3. Generic primitive verification.</strong><p>Let the original segment be</p>
+<div class="display">\[H;T;R_z(\pi/3),\]</div>
+<p>and let the optimized candidate be the generic primitive</p>
+<div class="display">\[\uoneq(0.560985526797,-0.430459334577,-0.560985526797,-0.430459334577).\]</div>
+<p>The two canonical quaternionic payloads agree, so the generic primitive is verified exactly even though it is not a named gate.</p></div>
+<div class="env definition"><strong>Example 7.4. Negative wrong-axis case.</strong><p>Compare</p>
+<div class="display">\[R_z(\pi/3)
+\qquad\text{and}\qquad
+R_x(\pi/3).\]</div>
+<p>The canonical representatives differ, so the authoritative canonical check fails. The matrix diagnostics also reflect non-equivalence:</p>
+<div class="display">\[\ProcFid=0.5625,\qquad \PhaseRes=0.5.\]</div></div>
+<h2>8. Reference verification corpus and measured diagnostics</h2>
+<p>The paper package includes the executable verifier <code>artifacts/code/verify_canonical_equivalence.py</code>, which generates the measured results stored in <code>artifacts/code/verification_results.json</code>. The shipped reference corpus contains 7 comparison cases:</p>
+<ul><li><p>4 positive equivalence cases; and</p></li><li><p>3 negative non-equivalence cases.</p></li></ul>
+<p>The measured aggregate outcome is:</p>
+<ul><li><p>all 4 positive cases pass the authoritative canonical check;</p></li><li><p>all 3 negative cases are rejected by the authoritative canonical check; and</p></li><li><p>all 7 cases are consistent with the expected verdict.</p></li></ul>
+<p>Table <a href="#tab:verification-results">tab:verification-results</a> summarizes the reference corpus.</p>
+<figure id="tab:verification-results"><table><thead><tr><th>Case type</th><th>Cases</th><th>Expected equivalent</th><th>Passed/rejected</th><th>Consistent</th></tr></thead><tbody><tr><td>Positive exact cases</td><td>4</td><td>yes</td><td>4 passed</td><td>yes</td></tr><tr><td>Negative distinct cases</td><td>3</td><td>no</td><td>3 rejected</td><td>yes</td></tr><tr><td>Total</td><td>7</td><td>mixed</td><td>7 correct</td><td>yes</td></tr></tbody></table><figcaption>Measured verification results on the shipped reference corpus.</figcaption></figure>
+<p>The individual diagnostic patterns are also informative:</p>
+<ol type="1"><li><p>positive exact cases produce canonical equality, process fidelity \(1\), and near-zero phase-aware residuals;</p></li><li><p>structurally wrong substitutions such as \(X\) versus \(Y\) produce zero trace overlap and zero process fidelity; and</p></li><li><p>small perturbations of a generic \(\uoneq\) primitive can exhibit fidelity close to \(1\) while still failing the authoritative canonical equality test.</p></li></ol>
+<div class="env remark"><strong>Remark 8.1.</strong><p>The third point is operationally important. Fidelity-like diagnostics are useful for interoperability and debugging, but they are not by themselves a substitute for exact canonical equivalence when the compiler intends an exact optimization.</p></div>
+<h2>9. Standard mathematics vs.\ RQM Technologies framing</h2>
+<h3>9.1 Standard ingredients</h3>
+<p>The following ingredients are standard:</p>
+<ol type="1"><li><p>single-qubit gate actions modulo global phase are modeled by \(\SU(2)\) representatives;</p></li><li><p>unit quaternions model \(\SU(2)\) under the fixed convention of paper 1;</p></li><li><p>the ambiguity in that model is exactly \(q\sim -q\); and</p></li><li><p>matrix overlap, trace diagnostics, and fidelity-style checks are standard verification tools.</p></li></ol>
+<h3>9.2 Project-specific contribution</h3>
+<p>The project-specific contribution of this paper is the trust layer:</p>
+<ol type="a"><li><p>canonical quaternion equality as the authoritative exact verification rule;</p></li><li><p>fixed sign conventions and reproducible canonical output forms;</p></li><li><p>explicit preserved invariants for quaternionic compilation; and</p></li><li><p>a paired matrix-interoperability layer for integration with existing toolchains.</p></li></ol>
+<h2>10. Scope, limitations, and non-claims</h2>
+<p>This paper does <em>not</em>:</p>
+<ol type="1"><li><p>define verification of entangling-gate internals;</p></li><li><p>provide a universal proof system for all quantum compiler passes;</p></li><li><p>claim that trace or fidelity diagnostics alone are sufficient for every integration context;</p></li><li><p>prove anything about hardware execution correctness; or</p></li><li><p>replace existing matrix-based verification practice.</p></li></ol>
+<p>It defines a trust layer for single-qubit quaternionic compilation: canonical equivalence, preserved invariants, validation procedures, and interoperable diagnostics.</p>
+<h2>11. Conclusion</h2>
+<p>Quaternionic compilation becomes safer to adopt once its outputs can be verified deterministically. The central proposal of this paper is therefore simple:</p>
+<ol type="1"><li><p>canonical quaternion equality is the authoritative exact equivalence criterion for single-qubit segments;</p></li><li><p>preserved invariants make optimized outputs reproducible; and</p></li><li><p>matrix-based diagnostics provide interoperability with standard toolchains.</p></li></ol>
+<p>In that sense, this paper supplies the trust layer for the earlier representation and optimization papers. It does not change the compiler method; it makes that method auditable.</p>
+<h2>Appendix A. Recommended validation pipeline</h2>
+<p>For an exact local optimization on a single-qubit segment, the recommended verification procedure is:</p>
+<ol type="1"><li><p>compute canonical quaternionic representatives for original and optimized segments;</p></li><li><p>compare them for authoritative exact equality;</p></li><li><p>if needed for interoperability, compute the matrix representatives under (<a href="#eq:phi">eq:phi</a>);</p></li><li><p>record phase-aware residual, trace overlap, and process fidelity for audit logs.</p></li></ol>
+<h2>Appendix B. Companion code and figures</h2>
+<p>The executable verifier and its measured output are included in <code>artifacts/code/verify_canonical_equivalence.py</code> and <code>artifacts/code/verification_results.json</code>. Publication-oriented SVG figures are included in <code>artifacts/figures/</code>.</p>
 
       <h2>References</h2>
       <ol class="refs">
@@ -225,7 +242,7 @@
 
     <footer class="paper-shell">
       <p>qqc-004-verification-equivalence · version 0.1.0 · draft · license: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p>
-      <p><a href="./">Package page</a> · <a href="main.tex">LaTeX source</a> · <a href="paper.pdf">PDF</a> · <a href="metadata.json">metadata</a> · <a href="paper.jats.xml">JATS XML</a></p>
+      <p><a href="/papers/qqc-004-verification-equivalence/">Package page</a> · <a href="/papers/qqc-004-verification-equivalence/main.tex">LaTeX source</a> · <a href="/papers/qqc-004-verification-equivalence/paper.pdf">PDF</a> · <a href="/papers/qqc-004-verification-equivalence/metadata.json">metadata</a> · <a href="/papers/qqc-004-verification-equivalence/paper.jats.xml">JATS XML</a></p>
     </footer>
   </div>
 </body>

@@ -1,35 +1,76 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="960" height="300" viewBox="0 0 960 300" role="img" aria-labelledby="title desc">
-  <title id="title">Normalized spinors, projective quotient, and Bloch sphere</title>
-  <desc id="desc">A schematic showing normalized spinors as points on S3 inside C2 isomorphic to R4, quotient by global phase U1, and pure states on CP1 isomorphic to the Bloch sphere S2.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="420" viewBox="0 0 1120 420" role="img" aria-labelledby="title desc">
+  <title id="title">Normalized spinors, phase fibers, projective quotient, and Bloch sphere</title>
+  <desc id="desc">A four-stage schematic separating the ambient space C2 isomorphic to R4, the normalized spinor sphere S3, the U(1) phase orbit quotient to CP1, and the Bloch-sphere identification with S2.</desc>
   <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
-      <polygon points="0,0 10,4 0,8" fill="#333"/>
+    <marker id="arrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto">
+      <polygon points="0,0 12,5 0,10" fill="#314c63"/>
     </marker>
   </defs>
-  <rect x="0" y="0" width="960" height="300" fill="#ffffff"/>
-  <ellipse cx="170" cy="150" rx="120" ry="95" fill="#eef5ff" stroke="#2f5fa7" stroke-width="2"/>
-  <text x="170" y="120" text-anchor="middle" font-family="Georgia, serif" font-size="24" fill="#1a1a1a">S³</text>
-  <text x="170" y="150" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#1a1a1a">normalized spinors</text>
-  <text x="170" y="176" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#1a1a1a">in C&#178; &#8773; R&#8308;</text>
-  <circle cx="170" cy="150" r="6" fill="#2f5fa7"/>
-  <ellipse cx="170" cy="150" rx="70" ry="22" fill="none" stroke="#6e90c4" stroke-width="2" stroke-dasharray="6 4"/>
-  <text x="170" y="212" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#444">U(1) phase fibers</text>
-  <line x1="300" y1="150" x2="430" y2="150" stroke="#333" stroke-width="2.5" marker-end="url(#arrow)"/>
-  <text x="365" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#333">quotient by global phase</text>
-  <text x="365" y="158" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#333">S³ / U(1)</text>
-  <text x="365" y="181" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#333">= CP¹</text>
-  <circle cx="650" cy="150" r="92" fill="#f8f8f8" stroke="#3d3d3d" stroke-width="2"/>
-  <ellipse cx="650" cy="150" rx="92" ry="28" fill="none" stroke="#999" stroke-width="1.8"/>
-  <line x1="650" y1="58" x2="650" y2="242" stroke="#999" stroke-width="1.8"/>
-  <line x1="558" y1="150" x2="742" y2="150" stroke="#999" stroke-width="1.8"/>
-  <circle cx="650" cy="58" r="4.5" fill="#111"/>
-  <circle cx="650" cy="242" r="4.5" fill="#111"/>
-  <text x="650" y="118" text-anchor="middle" font-family="Georgia, serif" font-size="24" fill="#1a1a1a">S²</text>
-  <text x="650" y="146" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#1a1a1a">Bloch sphere</text>
-  <text x="650" y="171" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#1a1a1a">pure states</text>
-  <text x="650" y="197" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#1a1a1a">CP&#185; &#8773; S&#178;</text>
-  <text x="650" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#444">|0&gt;</text>
-  <text x="650" y="265" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#444">|1&gt;</text>
-  <text x="480" y="278" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#555">Standard distinction: S³ is the normalized-spinor sphere; S² is the projective pure-state sphere.</text>
+  <style>
+    .panel { fill: #fbfcfe; stroke: #3b566d; stroke-width: 2; rx: 16; ry: 16; }
+    .soft { fill: #eef5ff; stroke: #54799b; stroke-width: 2; }
+    .accent { fill: #f4f9f4; stroke: #5d8b67; stroke-width: 2; }
+    .label { font-family: Georgia, serif; fill: #15222d; }
+    .title { font-size: 24px; font-weight: 700; }
+    .body { font-size: 18px; }
+    .small { font-family: Arial, sans-serif; font-size: 15px; fill: #425563; }
+    .arrow { stroke: #314c63; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+    .orbit { fill: none; stroke: #799fc3; stroke-width: 2; stroke-dasharray: 7 5; }
+    .axis { stroke: #7d8b96; stroke-width: 1.8; }
+    .dot { fill: #274b7a; }
+  </style>
+
+  <rect x="0" y="0" width="1120" height="420" fill="#ffffff"/>
+
+  <rect class="panel" x="30" y="40" width="220" height="260"/>
+  <text class="label title" x="140" y="82" text-anchor="middle">Ambient state space</text>
+  <text class="label body" x="140" y="128" text-anchor="middle">spinors in C²</text>
+  <text class="label body" x="140" y="156" text-anchor="middle">? R?</text>
+  <text class="small" x="140" y="200" text-anchor="middle">raw state representatives</text>
+  <text class="small" x="140" y="224" text-anchor="middle">before normalization or phase quotient</text>
+  <text class="small" x="140" y="262" text-anchor="middle">coordinates (a,b,c,d)</text>
+
+  <path class="arrow" d="M250 170 L320 170"/>
+  <text class="small" x="285" y="152" text-anchor="middle">impose</text>
+  <text class="small" x="285" y="174" text-anchor="middle">??? = 1</text>
+
+  <rect class="soft panel" x="330" y="40" width="250" height="260"/>
+  <ellipse cx="455" cy="174" rx="82" ry="58" fill="#eaf2fd" stroke="#3a6fa3" stroke-width="2"/>
+  <ellipse class="orbit" cx="455" cy="174" rx="44" ry="14"/>
+  <circle class="dot" cx="455" cy="174" r="5"/>
+  <text class="label title" x="455" y="82" text-anchor="middle">Normalized representatives</text>
+  <text class="label body" x="455" y="110" text-anchor="middle">S³ ? C² ? R?</text>
+  <text class="small" x="455" y="246" text-anchor="middle">each point is a normalized spinor</text>
+  <text class="small" x="455" y="268" text-anchor="middle">phase circle through ? shown schematically</text>
+
+  <path class="arrow" d="M580 170 L675 170"/>
+  <text class="small" x="628" y="148" text-anchor="middle">identify</text>
+  <text class="small" x="628" y="170" text-anchor="middle">? ~ e^{i?} ?</text>
+  <text class="small" x="628" y="192" text-anchor="middle">quotient by U(1)</text>
+
+  <rect class="accent panel" x="685" y="40" width="190" height="260"/>
+  <text class="label title" x="780" y="82" text-anchor="middle">Projective pure state</text>
+  <text class="label body" x="780" y="116" text-anchor="middle">CP¹ = S³ / U(1)</text>
+  <rect x="728" y="144" width="104" height="46" rx="12" ry="12" fill="#ffffff" stroke="#5d8b67" stroke-width="2"/>
+  <text class="label body" x="780" y="173" text-anchor="middle">[?]</text>
+  <text class="small" x="780" y="222" text-anchor="middle">one ray / one physical pure state</text>
+  <text class="small" x="780" y="246" text-anchor="middle">global phase removed</text>
+
+  <path class="arrow" d="M875 170 L955 170"/>
+  <text class="small" x="915" y="152" text-anchor="middle">standard identification</text>
+  <text class="small" x="915" y="174" text-anchor="middle">with Bloch vector r(?)</text>
+
+  <rect class="panel" x="965" y="40" width="125" height="260"/>
+  <circle cx="1028" cy="176" r="54" fill="#fafafa" stroke="#444f58" stroke-width="2"/>
+  <ellipse cx="1028" cy="176" rx="54" ry="16" fill="none" stroke="#95a0a8" stroke-width="1.5"/>
+  <line class="axis" x1="1028" y1="122" x2="1028" y2="230"/>
+  <line class="axis" x1="974" y1="176" x2="1082" y2="176"/>
+  <circle cx="1028" cy="122" r="3.5" fill="#222"/>
+  <circle cx="1028" cy="230" r="3.5" fill="#222"/>
+  <text class="label title" x="1028" y="82" text-anchor="middle">Bloch sphere</text>
+  <text class="label body" x="1028" y="106" text-anchor="middle">S²</text>
+  <text class="small" x="1028" y="255" text-anchor="middle">projective pure-state space</text>
+
+  <text class="small" x="560" y="362" text-anchor="middle">Key distinction: S³ is the sphere of normalized state representatives, while S² is the quotient space of physical pure states after removing global phase.</text>
 </svg>

@@ -5,8 +5,10 @@ title: "Foundations of Quaternionic Quantum Computing: Qubits, Spinors, and SU(2
 version: "0.1.0"
 abstract: "This paper assembles a conservative mathematical foundation for the use of quaternions in single-qubit quantum computing. The goal is not to replace standard quantum mechanics, but to organize familiar structures in a way that makes their geometry more explicit."
 authors:
-  - name: "RQM Technologies Research Team"
+  - family-names: "Van Geem"
+    given-names: "John G."
     affiliation: "RQM Technologies"
+    orcid: "https://orcid.org/0009-0002-4003-8452"
 license: CC-BY-4.0
 keywords:
   - qubit geometry
@@ -19,8 +21,10 @@ preferred-citation:
   type: article
   title: "Foundations of Quaternionic Quantum Computing: Qubits, Spinors, and SU(2) Geometry"
   authors:
-    - name: "RQM Technologies Research Team"
+    - family-names: "Van Geem"
+      given-names: "John G."
       affiliation: "RQM Technologies"
+      orcid: "https://orcid.org/0009-0002-4003-8452"
   year: 2026
   version: "0.1.0"
   notes: "Draft paper package in the RQM Quaternionic Quantum Computing Series; no DOI assigned."

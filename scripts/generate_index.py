@@ -86,6 +86,7 @@ def generate_papers_index(paper_dirs: list[Path]) -> dict:
         entry["_notation"] = f"papers/{paper_dir.name}/notation.json"
         entry["_glossary"] = f"papers/{paper_dir.name}/glossary.json"
         entry["_jats"] = f"papers/{paper_dir.name}/paper.jats.xml"
+        entry["_bib"] = f"papers/{paper_dir.name}/references.bib"
         papers.append(entry)
 
     return {
