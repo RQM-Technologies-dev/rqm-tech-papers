@@ -58,21 +58,22 @@ a:hover {
 .site-shell,
 .page-shell,
 body.paper-shell .paper-page {
-  max-width: 960px;
-  margin: 1rem auto 2rem;
-  padding: 0 1.6rem 3rem;
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0 clamp(1rem, 4vw, 3rem) 3rem;
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-top: 5px solid var(--accent);
+  border: 0;
 }
 
 .page-shell,
 body.paper-shell .paper-page {
-  max-width: 900px;
+  max-width: none;
 }
 
 .site-shell-wide {
-  max-width: 960px;
+  max-width: none;
 }
 
 h1,
@@ -92,6 +93,14 @@ h1,
 .site-hero-title {
   font-size: clamp(1.9rem, 3.4vw, 2.45rem);
   line-height: 1.18;
+}
+
+.hero-subtitle,
+.site-hero-subtitle {
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 400;
 }
 
 body.paper-page h1,
@@ -432,8 +441,8 @@ body.paper-shell footer,
 body.paper-shell .paper-page > header,
 body.paper-shell .paper-page > main,
 body.paper-shell .paper-page > footer {
-  max-width: 760px;
-  margin: 0 auto;
+  max-width: none;
+  margin: 0;
 }
 
 .paper-nav,
@@ -669,7 +678,6 @@ th {
   .site-shell,
   .page-shell,
   body.paper-shell .paper-page {
-    margin-top: 0;
     padding: 0 1rem 2.5rem;
   }
 
