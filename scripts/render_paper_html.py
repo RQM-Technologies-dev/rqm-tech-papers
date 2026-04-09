@@ -653,11 +653,16 @@ def trim_back_matter(body: str) -> str:
 
 
 def build_mathjax_config(macros: dict[str, object]) -> str:
+    macro_map = dict(macros)
+    # The LaTeX sources rely on the bm package (\bm{...}) for bold symbols.
+    # MathJax does not provide \bm by default, so inject a compatible fallback.
+    macro_map.setdefault("bm", [r"\boldsymbol{#1}", 1])
+
     config = {
         "tex": {
             "inlineMath": [["\\(", "\\)"]],
             "displayMath": [["\\[", "\\]"]],
-            "macros": macros,
+            "macros": macro_map,
             "processEscapes": True,
         },
         "options": {"skipHtmlTags": ["script", "noscript", "style", "textarea", "pre", "code"]},
