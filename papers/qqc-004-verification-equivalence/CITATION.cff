@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this paper package, please cite the draft below."
+type: article
+title: "Verification, Canonicalization, and Equivalence in Quaternionic Quantum Compilation"
+version: "0.1.0"
+abstract: "This paper defines the trust layer for quaternionic quantum compilation by specifying exact equivalence criteria, preserved invariants, validation procedures, and matrix-interoperable diagnostics for optimized single-qubit segments."
+authors:
+  - name: "RQM Technologies Research Team"
+    affiliation: "RQM Technologies"
+license: CC-BY-4.0
+keywords:
+  - quaternionic verification
+  - canonical equivalence
+  - single-qubit compilation
+  - global phase
+  - SU(2)
+  - validation diagnostics
+preferred-citation:
+  type: article
+  title: "Verification, Canonicalization, and Equivalence in Quaternionic Quantum Compilation"
+  authors:
+    - name: "RQM Technologies Research Team"
+      affiliation: "RQM Technologies"
+  year: 2026
+  version: "0.1.0"
+  notes: "Draft verification paper package in the RQM Quaternionic Quantum Computing Series; no DOI assigned."

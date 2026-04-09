@@ -7,6 +7,8 @@ This folder is a semantic paper package for:
 ### Source of truth
 
 - `main.tex` is the Overleaf-friendly source of truth for the paper text.
+- `index.html` is the clean package landing page at `/papers/qqc-001-foundations/`.
+- `paper.html` is the full browsable paper page and should stay synchronized with the authored source.
 
 ### Local build
 

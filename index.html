@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RQM Technologies Technical Papers</title>
+  <meta
+    name="description"
+    content="Browsable landing page for the RQM Technologies quaternionic quantum computing paper series, with links to paper packages and machine-readable indexes."
+  />
+  <link rel="stylesheet" href="styles/site.css" />
+</head>
+<body class="site-home">
+  <div class="page">
+    <header class="hero">
+      <div class="eyebrow">RQM Technologies technical papers</div>
+      <h1>Quaternionic quantum computing, published as a browsable static series.</h1>
+      <p class="hero-copy">
+        This repository is the publishing home for RQM Technologies technical papers. Each paper package includes
+        a human-readable HTML and PDF surface plus machine-readable metadata, claims, notation, glossary, references,
+        and JATS XML for downstream indexing.
+      </p>
+      <div class="hero-actions">
+        <a class="button" href="papers/qqc-001-foundations/">Read the current paper</a>
+        <a class="button secondary" href="index/papers.json">Browse machine-readable index</a>
+      </div>
+    </header>
+
+    <section class="section" aria-labelledby="papers-heading">
+      <div class="section-header">
+        <div>
+          <h2 id="papers-heading">Published paper packages</h2>
+          <p class="section-copy">
+            The cards below are populated from <code>index/papers.json</code> so the landing page stays aligned with the
+            repository's machine-readable index.
+          </p>
+        </div>
+      </div>
+      <div id="paper-list" class="grid paper-grid">
+        <article class="card paper-card">
+          <div class="paper-meta">
+            <span class="chip">qqc-001-foundations</span>
+            <span class="chip">draft</span>
+            <span class="chip">v0.1.0</span>
+          </div>
+          <h3 class="paper-title">Foundations of Quaternionic Quantum Computing: Qubits, Spinors, and SU(2) Geometry</h3>
+          <div class="paper-authors">RQM Technologies Research Team</div>
+          <p class="paper-summary">
+            Conservative foundation paper on normalized spinors, the Bloch sphere, SU(2), and the unit-quaternion model
+            of single-qubit gates.
+          </p>
+          <div class="paper-links">
+            <a href="papers/qqc-001-foundations/">HTML</a>
+            <a href="papers/qqc-001-foundations/paper.pdf">PDF</a>
+            <a href="papers/qqc-001-foundations/metadata.json">Metadata</a>
+            <a href="papers/qqc-001-foundations/main.tex">LaTeX</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="index-heading">
+      <div class="section-header">
+        <div>
+          <h2 id="index-heading">Machine-readable access</h2>
+          <p class="section-copy">
+            AI agents and downstream tools can scan the whole series from the generated indexes without parsing PDFs.
+          </p>
+        </div>
+      </div>
+      <div class="grid index-grid">
+        <article class="card">
+          <h3>Paper index</h3>
+          <p class="muted">Series-wide metadata for every paper package.</p>
+          <div class="quick-links">
+            <a href="index/papers.json">index/papers.json</a>
+          </div>
+        </article>
+        <article class="card">
+          <h3>Claims index</h3>
+          <p class="muted">Structured theorems, definitions, and results across the series.</p>
+          <div class="quick-links">
+            <a href="index/claims.json">index/claims.json</a>
+          </div>
+        </article>
+        <article class="card">
+          <h3>Notation index</h3>
+          <p class="muted">Machine-readable symbols and notation mappings.</p>
+          <div class="quick-links">
+            <a href="index/notation.json">index/notation.json</a>
+          </div>
+        </article>
+        <article class="card">
+          <h3>Glossary index</h3>
+          <p class="muted">Series-wide terminology definitions for AI retrieval and readers.</p>
+          <div class="quick-links">
+            <a href="index/glossary.json">index/glossary.json</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="package-heading">
+      <div class="section-header">
+        <div>
+          <h2 id="package-heading">What a paper package includes</h2>
+          <p class="section-copy">
+            Each paper directory is organized for both publication and machine consumption.
+          </p>
+        </div>
+      </div>
+      <div class="grid info-grid">
+        <article class="card">
+          <h3>For human readers</h3>
+          <ul class="list">
+            <li><code>index.html</code> as the clean package route and <code>paper.html</code> as the full paper page</li>
+            <li><code>paper.pdf</code> as the printable paper artifact</li>
+            <li>figures and supporting artifacts inside <code>artifacts/</code></li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>For AI and indexing</h3>
+          <ul class="list">
+            <li><code>metadata.json</code> for structured discovery</li>
+            <li><code>claims.json</code>, <code>notation.json</code>, and <code>glossary.json</code></li>
+            <li><code>paper.jats.xml</code> and <code>CITATION.cff</code> for exchange formats</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>For authors</h3>
+          <ul class="list">
+            <li><code>README.md</code> declaring the source of truth</li>
+            <li><code>main.tex</code> for LaTeX and Overleaf workflows when applicable</li>
+            <li>starter scaffolding available under <code>templates/</code></li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="package-links">
+        <a href="README.md">Repository README</a>
+        <a href="PROJECT_RULES.md">Project rules</a>
+        <a href="LICENSE">License</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const target = document.getElementById("paper-list");
+
+      function escapeHtml(value) {
+        return String(value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function summarize(text) {
+        const normalized = (text || "").trim();
+        if (!normalized) {
+          return "No abstract is available yet.";
+        }
+        return normalized.length > 280 ? normalized.slice(0, 277) + "..." : normalized;
+      }
+
+      function authorLine(authors) {
+        if (!Array.isArray(authors) || authors.length === 0) {
+          return "Author record pending";
+        }
+        return authors.map((author) => author.name).filter(Boolean).join(", ");
+      }
+
+      function optionalLink(href, label) {
+        if (!href) {
+          return "";
+        }
+        return '<a href="' + escapeHtml(href) + '">' + escapeHtml(label) + "</a>";
+      }
+
+      function renderPaperCard(paper) {
+        const meta = [
+          paper.paper_id,
+          paper.status,
+          paper.version ? "v" + paper.version : ""
+        ].filter(Boolean);
+
+        const links = [
+          optionalLink(
+            paper._path || paper._html,
+            "HTML"
+          ),
+          optionalLink(paper._pdf, "PDF"),
+          optionalLink(paper._metadata, "Metadata"),
+          optionalLink(paper._claims, "Claims"),
+          optionalLink(paper._notation, "Notation"),
+          optionalLink(paper._glossary, "Glossary"),
+          optionalLink(paper._jats, "JATS XML")
+        ].filter(Boolean).join("");
+
+        return (
+          '<article class="card paper-card">' +
+            '<div class="paper-meta">' +
+              meta.map((item) => '<span class="chip">' + escapeHtml(item) + "</span>").join("") +
+            "</div>" +
+            '<h3 class="paper-title">' + escapeHtml(paper.title || paper.paper_id || "Untitled paper") + "</h3>" +
+            '<div class="paper-authors">' + escapeHtml(authorLine(paper.authors)) + "</div>" +
+            '<p class="paper-summary">' + escapeHtml(summarize(paper.abstract)) + "</p>" +
+            '<div class="paper-links">' + links + "</div>" +
+          "</article>"
+        );
+      }
+
+      fetch("index/papers.json")
+        .then(function (response) {
+          if (!response.ok) {
+            throw new Error("Could not load paper index.");
+          }
+          return response.json();
+        })
+        .then(function (data) {
+          if (!data || !Array.isArray(data.papers) || data.papers.length === 0) {
+            target.innerHTML = '<p class="empty-state">No paper packages have been indexed yet.</p>';
+            return;
+          }
+          target.innerHTML = data.papers.map(renderPaperCard).join("");
+        })
+        .catch(function () {
+          /* Keep the static fallback card if the index cannot be fetched. */
+        });
+    }());
+  </script>
+</body>
+</html>

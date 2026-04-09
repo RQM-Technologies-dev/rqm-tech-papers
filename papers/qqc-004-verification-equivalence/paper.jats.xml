@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.3 20210610//EN"
+  "https://jats.nlm.nih.gov/archiving/1.3/JATS-archivearticle1-3.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="1.3">
+  <front>
+    <journal-meta>
+      <journal-id journal-id-type="publisher-id">rqm-tech-papers</journal-id>
+      <journal-title-group>
+        <journal-title>RQM Technologies Technical Papers</journal-title>
+      </journal-title-group>
+      <publisher>
+        <publisher-name>RQM Technologies</publisher-name>
+      </publisher>
+    </journal-meta>
+
+    <article-meta>
+      <article-id pub-id-type="publisher-id">qqc-004-verification-equivalence</article-id>
+      <title-group>
+        <article-title>Verification, Canonicalization, and Equivalence in Quaternionic Quantum Compilation</article-title>
+      </title-group>
+
+      <contrib-group>
+        <contrib contrib-type="author" corresp="yes">
+          <collab>RQM Technologies Research Team</collab>
+          <aff>RQM Technologies</aff>
+          <email>research@rqm-technologies.com</email>
+        </contrib>
+      </contrib-group>
+
+      <abstract>
+        <p>This paper addresses the trust problem for quaternionic quantum compilation. Building on qqc-001-foundations, qqc-002-canonical-ir, and qqc-003-gate-fusion, it defines a verification layer for single-qubit circuit segments represented modulo global phase by canonical unit quaternions. The paper distinguishes an authoritative equivalence criterion from supporting interoperability diagnostics. The authoritative criterion is equality of canonical quaternion representatives after normalization and sign-canonicalization. Supporting checks include matrix equivalence up to global phase under the fixed quaternion-SU(2) map, phase-aware residuals, trace overlap, and process-fidelity diagnostics. The paper also identifies compilation invariants preserved by quaternionic optimization, including represented SU(2) action modulo global phase, canonical sign convention, unit-norm consistency, deterministic output form, and segment-boundary preservation. A small executable verification harness shipped with the paper package evaluates both positive and negative comparison cases, including named-gate, axis-aligned, identity, and generic u1q outputs. On the shipped reference corpus, all positive cases pass and all negative cases are rejected under the authoritative canonical-quaternion check, while the matrix-based diagnostics remain numerically consistent with those outcomes. The paper is intentionally conservative: it does not claim full compiler verification, entangling-gate verification, or formal proof of arbitrary multi-qubit compilation pipelines.</p>
+      </abstract>
+
+      <kwd-group kwd-group-type="author">
+        <kwd>verification</kwd>
+        <kwd>canonical equivalence</kwd>
+        <kwd>single-qubit compilation</kwd>
+        <kwd>unit quaternions</kwd>
+        <kwd>SU(2)</kwd>
+        <kwd>compiler diagnostics</kwd>
+      </kwd-group>
+
+      <permissions>
+        <license license-type="open-access" xlink:href="https://creativecommons.org/licenses/by/4.0/">
+          <license-p>This draft is distributed under the terms of the Creative Commons Attribution 4.0 International License.</license-p>
+        </license>
+      </permissions>
+
+      <custom-meta-group>
+        <custom-meta>
+          <meta-name>version</meta-name>
+          <meta-value>0.1.0</meta-value>
+        </custom-meta>
+        <custom-meta>
+          <meta-name>status</meta-name>
+          <meta-value>draft</meta-value>
+        </custom-meta>
+        <custom-meta>
+          <meta-name>last_updated</meta-name>
+          <meta-value>2026-04-09</meta-value>
+        </custom-meta>
+        <custom-meta>
+          <meta-name>depends_on</meta-name>
+          <meta-value>qqc-001-foundations, qqc-002-canonical-ir, qqc-003-gate-fusion</meta-value>
+        </custom-meta>
+      </custom-meta-group>
+
+      <related-object object-type="source" content-type="latex" xlink:href="main.tex">LaTeX source</related-object>
+      <related-object object-type="data-set" content-type="code" xlink:href="artifacts/code/verify_canonical_equivalence.py">Reference verification harness</related-object>
+      <related-object object-type="data-set" content-type="json" xlink:href="artifacts/code/verification_results.json">Measured verification results</related-object>
+      <related-object object-type="data-set" content-type="figure" xlink:href="artifacts/figures/fig-verification-pipeline.svg">Verification pipeline figure</related-object>
+      <related-object object-type="data-set" content-type="figure" xlink:href="artifacts/figures/fig-canonical-hemisphere.svg">Canonical hemisphere figure</related-object>
+      <related-object object-type="data-set" content-type="figure" xlink:href="artifacts/figures/fig-matrix-interoperability.svg">Matrix interoperability figure</related-object>
+      <related-object object-type="data-set" content-type="figure" xlink:href="artifacts/figures/fig-positive-negative-cases.svg">Positive and negative verification examples</related-object>
+    </article-meta>
+  </front>
+
+  <body>
+    <sec id="sec-introduction">
+      <title>1. Introduction</title>
+      <p>This paper addresses the trust problem for quaternionic optimization by defining explicit verification procedures for optimized single-qubit segments. The goal is not to restate the optimization method, but to explain how a user can know whether an optimization result is correct.</p>
+      <p>The paper separates an authoritative canonical-quaternion equivalence criterion from supporting matrix-based diagnostics intended for interoperability with conventional toolchains.</p>
+    </sec>
+
+    <sec id="sec-background">
+      <title>2. Background and dependency on papers 1 through 3</title>
+      <p>Paper 1 fixed the quaternion-SU(2) convention, paper 2 defined the canonical single-qubit IR, and paper 3 defined a local quaternionic gate-fusion pass. The present paper treats the output of those flows as the object to be verified.</p>
+    </sec>
+
+    <sec id="sec-equivalence">
+      <title>3. Equivalence criteria and canonical forms</title>
+      <p>The authoritative criterion is canonical quaternion equality after normalization and sign-canonicalization. Matrix equivalence up to global phase is treated as a supporting diagnostic and interoperability check rather than as the stored canonical form.</p>
+    </sec>
+
+    <sec id="sec-invariants">
+      <title>4. Compilation invariants</title>
+      <p>The paper identifies invariants such as preserved single-qubit SU(2) action modulo global phase, unit norm after normalization, deterministic sign choice, reproducible canonical output, and preservation of segment boundaries.</p>
+    </sec>
+
+    <sec id="sec-validation">
+      <title>5. Validation procedures</title>
+      <p>Validation is defined in layers: canonical quaternion equality; phase-aware matrix residual under Phi; trace overlap; and process-fidelity style diagnostics. The first is authoritative; the others support debugging and interoperability.</p>
+    </sec>
+
+    <sec id="sec-diagnostics">
+      <title>6. Interoperability with matrix-based toolchains</title>
+      <p>The fixed quaternion-SU(2) map Phi allows optimized quaternionic segments to be compared directly against matrix-based toolchains without changing the underlying semantic model. Matrix residual and process-fidelity diagnostics are interpreted carefully as support tools rather than replacement equivalence definitions.</p>
+    </sec>
+
+    <sec id="sec-results">
+      <title>7. Worked examples and reference verification results</title>
+      <p>The shipped verifier evaluates positive and negative comparison cases. Positive cases include exact named-gate recovery, identity elimination, and generic u1q verification. Negative cases include wrong-gate, wrong-axis, and perturbed-generic mismatches. All positive cases pass and all negative cases are rejected under the authoritative canonical-quaternion criterion.</p>
+    </sec>
+
+    <sec id="sec-framing">
+      <title>8. Standard mathematics vs RQM Technologies framing</title>
+      <p>The standard content concerns SU(2), unit quaternions, global-phase-aware equivalence, and matrix diagnostics. The project-specific contribution is the trust-layer framing: canonical output forms, preserved invariants, and a reproducible verification workflow for quaternionic compilation outputs.</p>
+    </sec>
+
+    <sec id="sec-limitations">
+      <title>9. Scope, limitations, and non-claims</title>
+      <p>This paper does not claim full formal verification of arbitrary quantum compilers, does not verify entangling-gate compilation, and does not replace all matrix-based tooling. It defines a practical trust layer for single-qubit segment compilation and optimization.</p>
+    </sec>
+
+    <sec id="sec-conclusion">
+      <title>10. Conclusion</title>
+      <p>The paper provides the verification and canonical-equivalence layer needed to make quaternionic optimization auditable. Canonical quaternion equality supplies the authoritative correctness criterion, while matrix-based diagnostics provide interoperability and debugging support.</p>
+    </sec>
+  </body>
+
+  <back>
+    <ref-list>
+      <title>References</title>
+      <ref id="ref-cross2022">
+        <mixed-citation publication-type="journal">Cross, Andrew W.; Javadi-Abhari, Ali; Alexander, Thomas; de Beaudrap, Niel; Bishop, Lev S.; Heidel, Steven; Ryan, Colm A.; Sivarajah, Prasahnt; Smolin, John A.; Gambetta, Jay M.; Johnson, Blake R. <article-title>OpenQASM 3: A Broader and Deeper Quantum Assembly Language</article-title>. <source>ACM Transactions on Quantum Computing</source>. <year>2022</year>; <volume>3</volume>(<issue>3</issue>):<fpage>12</fpage>. doi:<pub-id pub-id-type="doi">10.1145/3505636</pub-id></mixed-citation>
+      </ref>
+      <ref id="ref-hall2015">
+        <mixed-citation publication-type="book">Hall, Brian C. <source>Lie Groups, Lie Algebras, and Representations: An Elementary Introduction</source>. 2nd ed. Springer; <year>2015</year>.</mixed-citation>
+      </ref>
+      <ref id="ref-kuipers1999">
+        <mixed-citation publication-type="book">Kuipers, Jack B. <source>Quaternions and Rotation Sequences: A Primer with Applications to Orbits, Aerospace, and Virtual Reality</source>. Princeton University Press; <year>1999</year>.</mixed-citation>
+      </ref>
+      <ref id="ref-nielsen2010">
+        <mixed-citation publication-type="book">Nielsen, Michael A.; Chuang, Isaac L. <source>Quantum Computation and Quantum Information</source>. 10th Anniversary Edition. Cambridge University Press; <year>2010</year>.</mixed-citation>
+      </ref>
+      <ref id="ref-smith2016">
+        <mixed-citation publication-type="journal">Smith, Robert S.; Curtis, Michael J.; Zeng, William J. <article-title>A Practical Quantum Instruction Set Architecture</article-title>. <source>arXiv preprint arXiv:1608.03355</source>. <year>2016</year>.</mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

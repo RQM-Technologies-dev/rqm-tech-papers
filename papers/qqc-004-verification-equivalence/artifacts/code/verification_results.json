@@ -1,0 +1,162 @@
+{
+  "paper_id": "qqc-004-verification-equivalence",
+  "authoritative_equivalence_check": "canonical quaternion equality after normalization and sign-canonicalization",
+  "matrix_interoperability_check": "phase-aware matrix residual and process fidelity under the fixed quaternion-SU(2) map",
+  "aggregate": {
+    "cases": 7,
+    "positive_cases": 4,
+    "negative_cases": 3,
+    "positives_passed": 4,
+    "negatives_rejected": 3,
+    "all_cases_consistent_with_expectation": true
+  },
+  "cases": [
+    {
+      "id": "positive-rx-vs-x",
+      "category": "positive exact named-gate recovery",
+      "expected_equivalent": true,
+      "canonical_match": true,
+      "phase_aware_residual": 2.220446049250313e-16,
+      "process_fidelity": 1.0,
+      "trace_overlap_abs": 2.0,
+      "original_quaternion": [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "candidate_quaternion": [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "id": "positive-rz-vs-s",
+      "category": "positive exact named-gate recovery",
+      "expected_equivalent": true,
+      "canonical_match": true,
+      "phase_aware_residual": 1.1102230246251565e-16,
+      "process_fidelity": 1.0,
+      "trace_overlap_abs": 2.0,
+      "original_quaternion": [
+        0.707106781187,
+        0.0,
+        0.0,
+        0.707106781187
+      ],
+      "candidate_quaternion": [
+        0.707106781187,
+        0.0,
+        0.0,
+        0.707106781187
+      ]
+    },
+    {
+      "id": "positive-generic-u1q",
+      "category": "positive generic primitive verification",
+      "expected_equivalent": true,
+      "canonical_match": true,
+      "phase_aware_residual": 7.588374373312945e-14,
+      "process_fidelity": 1.0000000000000004,
+      "trace_overlap_abs": 2.0000000000000004,
+      "original_quaternion": [
+        0.560985526797,
+        -0.430459334577,
+        -0.560985526797,
+        -0.430459334577
+      ],
+      "candidate_quaternion": [
+        0.560985526797,
+        -0.430459334577,
+        -0.560985526797,
+        -0.430459334577
+      ]
+    },
+    {
+      "id": "positive-identity",
+      "category": "positive identity elimination",
+      "expected_equivalent": true,
+      "canonical_match": true,
+      "phase_aware_residual": 0.0,
+      "process_fidelity": 1.0,
+      "trace_overlap_abs": 2.0,
+      "original_quaternion": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "candidate_quaternion": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "id": "negative-x-vs-y",
+      "category": "negative distinct named gates",
+      "expected_equivalent": false,
+      "canonical_match": false,
+      "phase_aware_residual": 1.4142135623730951,
+      "process_fidelity": 0.0,
+      "trace_overlap_abs": 0.0,
+      "original_quaternion": [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "candidate_quaternion": [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "id": "negative-rz-vs-rx",
+      "category": "negative wrong axis recovery",
+      "expected_equivalent": false,
+      "canonical_match": false,
+      "phase_aware_residual": 0.49999999999999994,
+      "process_fidelity": 0.5625000000000002,
+      "trace_overlap_abs": 1.5000000000000002,
+      "original_quaternion": [
+        0.866025403784,
+        0.0,
+        0.0,
+        0.5
+      ],
+      "candidate_quaternion": [
+        0.866025403784,
+        0.5,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "id": "negative-generic-perturbed",
+      "category": "negative perturbed generic primitive",
+      "expected_equivalent": false,
+      "canonical_match": false,
+      "phase_aware_residual": 0.007101345697666534,
+      "process_fidelity": 0.9999178303267829,
+      "trace_overlap_abs": 1.9999178286387498,
+      "original_quaternion": [
+        0.560985526797,
+        -0.430459334577,
+        -0.560985526797,
+        -0.430459334577
+      ],
+      "candidate_quaternion": [
+        0.563387632981,
+        -0.43230253548,
+        -0.563387632981,
+        -0.422259716083
+      ]
+    }
+  ]
+}

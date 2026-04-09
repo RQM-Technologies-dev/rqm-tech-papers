@@ -1,0 +1,180 @@
+{
+  "paper_id": "qqc-002-canonical-ir",
+  "claims": [
+    {
+      "claim_id": "def-1",
+      "label": "Definition 3.1 (Global-phase equivalence on U(2))",
+      "type": "definition",
+      "statement": "Two single-qubit gates U and V in U(2) are globally phase-equivalent, written U ~gp V, when there exists a real chi such that U = e^{i chi} V.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": [],
+      "evidence_location": "Section 3",
+      "notes": "This is the gate-level equivalence relation that motivates the IR scope."
+    },
+    {
+      "claim_id": "prop-2",
+      "label": "Proposition 2.1 (Single-qubit gates admit SU(2) representatives)",
+      "type": "proposition",
+      "statement": "For every single-qubit gate U in U(2), there exist a real chi and V in SU(2) such that U = e^{i chi} V, and V is unique up to multiplication by -1.",
+      "status": "proved",
+      "proof_sketch": "Remove determinant phase exactly as in qqc-001-foundations:prop-3. Uniqueness up to sign follows because any second determinant-one representative differs by a phase whose square is 1.",
+      "dependencies": [
+        "qqc-001-foundations:prop-3"
+      ],
+      "evidence_location": "Section 2.1",
+      "notes": "Standard mathematical fact carried forward from paper 1."
+    },
+    {
+      "claim_id": "prop-3",
+      "label": "Proposition 2.2 (Unit quaternions model SU(2))",
+      "type": "proposition",
+      "statement": "Under the fixed convention Phi(a + b i + c j + d k) = a I - i (b sigma_x + c sigma_y + d sigma_z), the unit quaternions are in Lie-group isomorphism with SU(2).",
+      "status": "proved",
+      "proof_sketch": "This is the quaternion-SU(2) correspondence established in qqc-001-foundations:prop-5.",
+      "dependencies": [
+        "qqc-001-foundations:def-4",
+        "qqc-001-foundations:prop-5"
+      ],
+      "evidence_location": "Section 2.1",
+      "notes": "The paper treats this as inherited background, not a new theorem."
+    },
+    {
+      "claim_id": "cor-4",
+      "label": "Corollary 2.3 (The only residual ambiguity is q ~ -q)",
+      "type": "corollary",
+      "statement": "If two unit quaternions represent the same single-qubit gate action modulo global phase under the fixed Phi convention, then they differ by sign: q' = q or q' = -q.",
+      "status": "proved",
+      "proof_sketch": "Combine the existence and sign-uniqueness of SU(2) representatives with the unit-quaternion model of SU(2).",
+      "dependencies": [
+        "prop-2",
+        "prop-3"
+      ],
+      "evidence_location": "Section 2.1",
+      "notes": "This is the exact quotient ambiguity handled by the IR."
+    },
+    {
+      "claim_id": "def-5",
+      "label": "Definition 3.2 (Quaternionic single-qubit IR element)",
+      "type": "definition",
+      "statement": "A quaternionic single-qubit IR element u1q(w, x, y, z) is a quadruple of real numbers with w^2 + x^2 + y^2 + z^2 = 1, interpreted as the unit quaternion q = w + x i + y j + z k and therefore as an SU(2) representative of a single-qubit gate action modulo global phase.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": [
+        "prop-3",
+        "cor-4"
+      ],
+      "evidence_location": "Section 3",
+      "notes": "This is the central IR definition of the paper."
+    },
+    {
+      "claim_id": "def-6",
+      "label": "Definition 4.1 (Normalization map)",
+      "type": "definition",
+      "statement": "For any nonzero quadruple q-tilde in R^4, the normalization map sends q-tilde to q-tilde / ||q-tilde||, producing a unit quaternion candidate before sign canonicalization.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": [],
+      "evidence_location": "Section 4.1",
+      "notes": "This addresses floating-point drift rather than exact mathematical ambiguity."
+    },
+    {
+      "claim_id": "def-7",
+      "label": "Definition 4.2 (Sign-canonicalization map)",
+      "type": "definition",
+      "statement": "For a unit quaternion q = (w, x, y, z), sign-canonicalization keeps q when w > 0, negates q when w < 0, and on the equator w = 0 chooses the sign for which the first nonzero component among (x, y, z) is positive.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": [
+        "cor-4"
+      ],
+      "evidence_location": "Section 4.2",
+      "notes": "The equatorial tie-break is a deterministic convention, not a physical claim."
+    },
+    {
+      "claim_id": "prop-8",
+      "label": "Proposition 4.4 (Canonicalization selects exactly one representative)",
+      "type": "proposition",
+      "statement": "Each sign-equivalence class {q, -q} of unit quaternions contains exactly one representative in the canonical hemisphere defined by w > 0 together with the equatorial first-nonzero-positive tie-break when w = 0.",
+      "status": "proved",
+      "proof_sketch": "If w is nonzero, exactly one of q or -q has positive real part. If w = 0, the first nonzero component of (x, y, z) changes sign under q -> -q, so exactly one sign satisfies the tie-break rule.",
+      "dependencies": [
+        "def-7"
+      ],
+      "evidence_location": "Section 4.2",
+      "notes": "This is the determinism guarantee of the IR."
+    },
+    {
+      "claim_id": "rem-9",
+      "label": "Remark 4.5 (Shortest-geodesic interpretation)",
+      "type": "remark",
+      "statement": "For q = cos(theta/2) + sin(theta/2)(n_x i + n_y j + n_z k), the canonical condition w >= 0 restricts theta to the closed interval [0, pi]; at w = 0 both signs have the same geodesic length and the tie-break serves only to resolve representation ambiguity.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": [
+        "def-7",
+        "prop-8"
+      ],
+      "evidence_location": "Section 4.2",
+      "notes": "This explains the phrase 'shortest-geodesic representative' in compiler-facing terms."
+    },
+    {
+      "claim_id": "prop-10",
+      "label": "Proposition 5.1 (Named gates translate into explicit canonical tuples)",
+      "type": "proposition",
+      "statement": "Under the fixed Phi convention, the identity, Pauli gates, H, S, S-dagger, T, T-dagger, and the rotation families Rx(theta), Ry(theta), and Rz(theta) translate into explicit canonical unit-quaternion tuples suitable for u1q storage.",
+      "status": "proved",
+      "proof_sketch": "The rotation families follow from axis-angle form. Pauli and phase-family gates are coordinate-axis rotations, and H is the pi-rotation about the axis (1, 0, 1) / sqrt(2) after removing an overall phase.",
+      "dependencies": [
+        "prop-3",
+        "prop-8"
+      ],
+      "evidence_location": "Section 5",
+      "notes": "The translation table is one of the main operational outputs of the paper."
+    },
+    {
+      "claim_id": "prop-11",
+      "label": "Proposition 6.2 (Composition of adjacent single-qubit gates)",
+      "type": "proposition",
+      "statement": "If g_1, ..., g_m are consecutive single-qubit gates on one wire in application order and q_1, ..., q_m are their unit-quaternion representatives, then the fused segment action is represented by Can(q_m q_{m-1} ... q_1).",
+      "status": "proved",
+      "proof_sketch": "Sequential application corresponds to matrix multiplication in SU(2), which corresponds under Phi to quaternion multiplication in the reverse textual order of application. Canonicalization then chooses the deterministic representative of the resulting sign class.",
+      "dependencies": [
+        "qqc-001-foundations:cor-6",
+        "def-6",
+        "def-7",
+        "prop-8"
+      ],
+      "evidence_location": "Section 6",
+      "notes": "This is the fusion rule that makes the IR compiler-friendly."
+    },
+    {
+      "claim_id": "def-12",
+      "label": "Definition 3.3 (Single-qubit segment)",
+      "type": "definition",
+      "statement": "A single-qubit segment on wire a is a maximal consecutive run of gates that act only on wire a, bounded by circuit endpoints or by an operation outside the single-qubit unitary model for that wire, in particular by an entangling gate touching that wire.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": [],
+      "evidence_location": "Section 3",
+      "notes": "This definition marks the intended scope boundary between the present IR and multi-qubit structure."
+    },
+    {
+      "claim_id": "int-13",
+      "label": "Interpretive Claim 8.1 (RQM IR framing choice)",
+      "type": "interpretive_claim",
+      "statement": "RQM Technologies adopts the canonical u1q quaternion tuple, the closed-hemisphere sign convention, and the segment-fusion viewpoint as a deterministic internal representation layer for single-qubit circuit structure, while explicitly preserving the standard matrix formulation and the limitation to single-qubit action modulo global phase.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": [
+        "def-5",
+        "prop-8",
+        "prop-10",
+        "prop-11",
+        "def-12"
+      ],
+      "evidence_location": "Section 8",
+      "notes": "This is an organizational design claim, not a new mathematical theorem."
+    }
+  ]
+}

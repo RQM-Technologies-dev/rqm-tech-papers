@@ -1,0 +1,664 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{corollary}[definition]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[definition]{Remark}
+\newtheorem{example}[definition]{Example}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\U}{\mathrm{U}}
+\newcommand{\Id}{I}
+\newcommand{\ii}{\mathbf{i}}
+\newcommand{\jj}{\mathbf{j}}
+\newcommand{\kk}{\mathbf{k}}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\uoneq}{\mathrm{u1q}}
+\newcommand{\normalize}{\operatorname{Norm}}
+\newcommand{\sgncanon}{\operatorname{SignCan}}
+\newcommand{\canon}{\operatorname{Can}}
+\newcommand{\Fuse}{\operatorname{Fuse}}
+\newcommand{\Recon}{\operatorname{Recon}}
+\newcommand{\Baseline}{\operatorname{Base}}
+\newcommand{\GateCount}{\operatorname{G}}
+\newcommand{\Depth}{\operatorname{D}}
+\newcommand{\Eq}{\operatorname{Eq}}
+
+\title{\textbf{Quaternionic Gate Fusion on $S^3$:}\\
+Geometry-Native Optimization for Single-Qubit Circuit Segments}
+
+\author{RQM Technologies Research Team\thanks{Organizational author record used for this draft. Correspondence: \texttt{research@rqm-technologies.com}.}\\
+RQM Technologies}
+
+\date{Version 0.1.0 \\ Draft dated 2026-04-09}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This paper studies a local optimization pass for single-qubit circuit segments
+using the canonical quaternionic intermediate representation defined in
+\texttt{qqc-002-canonical-ir}. A maximal run of adjacent single-qubit gates on
+one wire is translated into unit quaternions, multiplied in circuit order,
+re-normalized, and sign-canonicalized on the quotient $q\sim -q$ induced by
+global-phase removal. The result is a unique canonical fused representative in
+$S^3$ for the segment action modulo global phase. A layered reconstruction
+strategy then emits either no gate, an exact named gate, an exact axis-aligned
+rotation, or a generic single-qubit primitive when no simpler interpretable
+output is available. The paper proves exact equivalence preservation up to
+global phase, determinism of the fused representative under the fixed
+canonicalization rule, and minimality of the fully fused segment in the
+quaternionic IR itself. A small reference benchmark corpus shipped with the
+paper package is evaluated by an included plain-Python harness. On 13 measured
+segments containing 36 input single-qubit gates, the local fusion pass
+reconstructs to 11 output gates while preserving exact segment action under the
+authoritative canonical-quaternion equivalence check. Two segments eliminate to
+identity, and 8 of 13 outputs are recovered as either named gates or
+axis-aligned rotations. These measurements are limited to the included
+single-qubit reference corpus and are not presented as a claim of universal
+compiler superiority.
+\end{abstract}
+
+\noindent\textbf{Keywords:} quaternionic gate fusion; single-qubit optimization; compiler method; $\SU(2)$; unit quaternions; local circuit simplification
+
+\section{Introduction}
+
+Paper 1 in this series, \texttt{qqc-001-foundations}, established the fixed
+quaternion--$\SU(2)$ convention used throughout the repository. Paper 2,
+\texttt{qqc-002-canonical-ir}, defined a canonical single-qubit intermediate
+representation $\uoneq(w,x,y,z)$ together with deterministic normalization and
+sign-canonicalization rules. The present paper asks the next compiler-facing
+question: once the representation exists, what optimization rule does it induce?
+
+The answer is local and operational. If a circuit contains a maximal run of
+adjacent single-qubit gates on one wire, then those gates may be fused by
+quaternion multiplication. This is not an analogy or a heuristic. It is the
+group law of the representation chosen in papers 1 and 2. The optimizer maps
+the segment into quaternions, multiplies in circuit order, re-canonicalizes the
+product, and then reconstructs an interpretable output whenever possible.
+
+This paper is therefore not a manifesto about quaternions. It is a method paper
+about a local optimization pass. The pass is limited to single-qubit segments
+between barriers such as entangling gates, measurement, reset, or classical
+control boundaries. It does not optimize entangling gates, and it does not
+claim to solve full-circuit synthesis or compiler optimality.
+
+Three contributions are the focus:
+\begin{enumerate}[label=(\arabic*), leftmargin=1.5em]
+\item a formally specified fusion operator on single-qubit segments;
+\item a reconstruction layer that is exact when identity, named-gate, or
+axis-aligned forms are available, but otherwise falls back honestly to a
+generic one-qubit primitive; and
+\item a measured evaluation on a shipped reference corpus with a clearly stated
+syntax-preserving baseline.
+\end{enumerate}
+
+\section{Background and dependency on papers 1--2}
+
+\subsection{The inherited mathematical model}
+
+We adopt without change the convention fixed in paper 1:
+\begin{equation}
+\Phi(a+b\ii+c\jj+d\kk)
+=
+\begin{pmatrix}
+a-di & -c-bi \\
+c-bi & a+di
+\end{pmatrix}
+=
+a\Id-i(b\sigma_x+c\sigma_y+d\sigma_z).
+\label{eq:phi}
+\end{equation}
+Under this convention, unit quaternions model $\SU(2)$ exactly, and single-qubit
+gates in $\U(2)$ admit representatives in $\SU(2)$ after removal of global
+phase.
+
+\begin{proposition}[Single-qubit gate actions admit unit-quaternion representatives]
+For every single-qubit gate $U\in\U(2)$ there exists a unit quaternion
+$q\in\HH$ such that $\Phi(q)$ represents the same single-qubit action as $U$ on
+pure states modulo global phase. The representative $q$ is unique up to sign.
+\end{proposition}
+
+\begin{proof}
+By paper 1, every $U\in\U(2)$ admits a representative $V\in\SU(2)$ after
+removing determinant phase, and $V$ is unique up to sign. The restriction of
+$\Phi$ to the unit quaternions is an isomorphism onto $\SU(2)$, so $V$
+corresponds to a unique sign pair $\set{q,-q}$.
+\end{proof}
+
+\subsection{The inherited canonical IR}
+
+Paper 2 defined the canonical single-qubit IR object
+\[
+\uoneq(w,x,y,z),
+\]
+interpreted as the unit quaternion
+\[
+q=w+x\ii+y\jj+z\kk,\qquad w^2+x^2+y^2+z^2=1.
+\]
+It also fixed the canonicalization map
+\[
+\canon=\sgncanon\circ\normalize
+\]
+with primary rule $w>0$ and an equatorial tie-break when $w=0$.
+
+\begin{remark}
+The present paper depends conceptually on paper 2 for determinism. Quaternion
+multiplication alone would not choose a unique stored representative, because
+$q$ and $-q$ encode the same single-qubit action modulo global phase. Fusion
+therefore uses multiplication \emph{followed by} canonicalization, not raw
+multiplication alone.
+\end{remark}
+
+\section{Problem setup}
+
+\begin{definition}[Single-qubit segment]
+A \emph{single-qubit segment} on wire $a$ is a maximal consecutive run of gates
+that act only on wire $a$, bounded by the beginning or end of the circuit, or
+by a boundary operation that lies outside the present single-qubit model for
+that wire. Typical boundaries include entangling gates, measurement, reset, and
+classically controlled branching points.
+\end{definition}
+
+\begin{definition}[Target optimization problem]
+Given a single-qubit segment
+\[
+\mathrm{seg}=(g_1,g_2,\dots,g_n),
+\]
+find a replacement segment $\mathrm{seg}'$ such that:
+\begin{enumerate}[label=(\alph*), leftmargin=1.5em]
+\item $\mathrm{seg}'$ represents exactly the same single-qubit action as
+$\mathrm{seg}$ modulo global phase;
+\item $\mathrm{seg}'$ is deterministic under the fixed canonicalization
+convention; and
+\item $\GateCount(\mathrm{seg}')$ and $\Depth(\mathrm{seg}')$ are no larger than
+their baseline values for the original segment.
+\end{enumerate}
+\end{definition}
+
+\begin{remark}
+For a purely sequential single-qubit segment, gate count and segment-local depth
+coincide. In a larger circuit, however, this paper claims reduction only for the
+single-qubit run itself. Entangling depth is not changed by the present method.
+\end{remark}
+
+\begin{definition}[Authoritative equivalence criterion]
+For two single-qubit segments $\mathrm{seg}$ and $\mathrm{seg}'$, define
+\[
+\Eq(\mathrm{seg},\mathrm{seg}')
+\]
+to hold when their canonical fused quaternions agree exactly:
+\[
+\canon(q_n\cdots q_1)=\canon(q'_m\cdots q'_1),
+\]
+where the $q_i$ and $q'_j$ are the translated unit-quaternion representatives of
+the gates in application order.
+\end{definition}
+
+\section{Quaternionic fusion method}
+
+\subsection{Translation and multiplication order}
+
+Let
+\[
+\mathrm{seg}=(g_1,g_2,\dots,g_n)
+\]
+be a single-qubit segment written in circuit application order. For each gate
+$g_k$, let $q_k$ be its canonical unit-quaternion representative under the map
+of paper 2.
+
+\begin{definition}[Quaternionic fusion operator]
+Define the fused quaternionic payload of the segment by
+\[
+\Fuse(\mathrm{seg})=\canon(q_n q_{n-1}\cdots q_1).
+\label{eq:fuse}
+\]
+\end{definition}
+
+\begin{remark}[Order convention]
+Equation \eqref{eq:fuse} is intentionally right-to-left in the gate index. The
+first gate applied to the state is $g_1$, and under \eqref{eq:phi} one has
+\[
+\Phi(q_n q_{n-1}\cdots q_1)
+=
+\Phi(q_n)\Phi(q_{n-1})\cdots\Phi(q_1),
+\]
+which is the matrix product for sequential application in that order.
+\end{remark}
+
+\subsection{Normalization and sign-canonicalization}
+
+The fusion pass uses the canonicalization rule inherited from paper 2:
+\begin{enumerate}[label=(\arabic*), leftmargin=1.5em]
+\item translate each gate into a canonical unit quaternion;
+\item multiply in circuit order as in \eqref{eq:fuse};
+\item re-normalize if numerical drift has occurred; and
+\item apply sign-canonicalization with the primary rule $w>0$ and the
+equatorial tie-break when $w=0$.
+\end{enumerate}
+
+\begin{definition}[Baseline flow]
+The benchmark baseline used in this paper is the
+\emph{syntax-preserving baseline}
+\[
+\Baseline(\mathrm{seg})=\mathrm{seg},
+\]
+meaning that no fusion is performed and the gate list is left unchanged.
+\end{definition}
+
+\section{Axis-aware reconstruction}
+
+The fused quaternion is a complete canonical segment representative, but a
+compiler often benefits from an interpretable output layer.
+
+\begin{definition}[Axis-aware reconstruction]
+Given a canonical fused quaternion $q$, the reconstruction operator
+\[
+\Recon(q)
+\]
+applies the following layered rule:
+\begin{enumerate}[label=(\arabic*), leftmargin=1.5em]
+\item if $q=(1,0,0,0)$, emit no gate;
+\item if $q$ matches a stored exact canonical tuple for a named gate such as
+$X$, $Y$, $Z$, $H$, $S$, $S^\dagger$, $T$, or $T^\dagger$, emit that named gate;
+\item if exactly one of $(x,y,z)$ is nonzero, recover the corresponding exact
+axis-aligned rotation $R_x(\theta)$, $R_y(\theta)$, or $R_z(\theta)$;
+\item otherwise emit a generic canonical one-qubit primitive
+$\uoneq(w,x,y,z)$ or an equivalent internal opaque primitive.
+\end{enumerate}
+\end{definition}
+
+\begin{remark}
+The reconstruction layer is not the equivalence proof. Equivalence is certified
+by canonical quaternion equality. Reconstruction is a presentation and compiler
+interface layer on top of that exact representation.
+\end{remark}
+
+\begin{proposition}[Exact axis-aligned cases admit direct recovery]
+If the canonical fused quaternion has exactly one nonzero imaginary component,
+then it reconstructs exactly to an axis-aligned rotation family member
+$R_x(\theta)$, $R_y(\theta)$, or $R_z(\theta)$.
+\end{proposition}
+
+\begin{proof}
+If only one of $(x,y,z)$ is nonzero, then the quaternion already has
+axis--angle form about a coordinate axis:
+\[
+q=\cos(\theta/2)+\sin(\theta/2)\ii,
+\quad
+q=\cos(\theta/2)+\sin(\theta/2)\jj,
+\quad \text{or} \quad
+q=\cos(\theta/2)+\sin(\theta/2)\kk.
+\]
+Under \eqref{eq:phi}, these are exactly $R_x(\theta)$, $R_y(\theta)$, and
+$R_z(\theta)$.
+\end{proof}
+
+\begin{remark}[Named-gate recovery is not globally unique]
+The canonical fused quaternion is unique under the fixed convention. A
+human-readable named-gate decomposition generally is not. The present paper only
+claims uniqueness for the quaternionic representative and exact recovery for the
+special cases explicitly recognized by $\Recon$.
+\end{remark}
+
+\section{Theoretical properties}
+
+\begin{proposition}[Fusion preserves exact segment action up to global phase]
+For every single-qubit segment $\mathrm{seg}$,
+\[
+\Eq(\mathrm{seg},\Fuse(\mathrm{seg}))
+\]
+holds when $\Fuse(\mathrm{seg})$ is interpreted as its fused canonical
+representative.
+\end{proposition}
+
+\begin{proof}
+Let $q_1,\dots,q_n$ be the gate representatives in application order. Under
+\eqref{eq:phi}, the matrix product of the segment is
+\[
+\Phi(q_n)\cdots\Phi(q_1)=\Phi(q_n\cdots q_1).
+\]
+Canonicalization does not change the represented segment action modulo global
+phase, because it only normalizes and chooses the unique representative from the
+sign pair $\set{q,-q}$. Hence the fused canonical quaternion represents exactly
+the same single-qubit action as the original segment.
+\end{proof}
+
+\begin{proposition}[Determinism of the fused representative]
+For every nonempty single-qubit segment $\mathrm{seg}$, the value
+$\Fuse(\mathrm{seg})$ is uniquely determined by the segment action and the fixed
+canonicalization convention of paper 2.
+\end{proposition}
+
+\begin{proof}
+The translated product $q_n\cdots q_1$ is uniquely determined by the segment
+action up to the sign ambiguity inherited from $\SU(2)$. The map $\canon$
+chooses exactly one representative from each sign class. Therefore the fused
+representative is unique.
+\end{proof}
+
+\begin{corollary}[Segment replacement by one canonical payload]
+Every nonidentity single-qubit segment may be replaced by one canonical
+quaternionic payload without changing the represented segment action modulo
+global phase. Identity segments may be replaced by the empty segment.
+\end{corollary}
+
+\begin{proof}
+This follows immediately from the previous two propositions.
+\end{proof}
+
+\begin{proposition}[Minimality in the quaternionic IR]
+Within the quaternionic IR itself, the fully fused representation of a nonidentity
+single-qubit segment has minimal gate count equal to one.
+\end{proposition}
+
+\begin{proof}
+The quaternionic IR stores segment action as a single canonical payload
+$\uoneq(w,x,y,z)$. Any nonidentity segment action has at least one such payload,
+and no smaller nonempty representation exists inside that IR. Identity is the
+unique case in which the representation can be reduced to zero emitted gates.
+\end{proof}
+
+\section{Benchmark methodology}
+
+\subsection{Reference corpus}
+
+The benchmark corpus shipped with this paper package is deliberately modest. It
+is intended as a reference evaluation of the local fusion method rather than a
+claim of production-scale compiler performance. The included harness evaluates
+13 segments across five categories:
+\begin{enumerate}[label=(\arabic*), leftmargin=1.5em]
+\item textbook single-qubit chains;
+\item rotation-heavy segments;
+\item mixed named-gate segments;
+\item single-qubit runs extracted from small two-qubit circuits by entangling
+boundaries; and
+\item an ansatz-style single-wire segment.
+\end{enumerate}
+
+\subsection{Metrics}
+
+For each segment $\mathrm{seg}$, the harness records:
+\begin{align*}
+\GateCount_{\mathrm{orig}}(\mathrm{seg}) &= \text{original number of gates},\\
+\GateCount_{\mathrm{opt}}(\mathrm{seg}) &= \text{number of reconstructed output gates},\\
+\Depth_{\mathrm{orig}}(\mathrm{seg}) &= \text{original segment-local depth},\\
+\Depth_{\mathrm{opt}}(\mathrm{seg}) &= \text{optimized segment-local depth}.
+\end{align*}
+It also records:
+\begin{itemize}[leftmargin=1.5em]
+\item whether the reconstructed output is identity, named, axis-aligned, or
+generic;
+\item whether the reconstructed output passes the authoritative equivalence check
+after re-translation into canonical quaternion form; and
+\item whether the segment collapsed to one canonical representative before
+reconstruction.
+\end{itemize}
+
+\subsection{Baseline}
+
+The baseline is the syntax-preserving flow $\Baseline$. It performs no fusion and
+leaves the segment unchanged. The comparison is therefore intentionally modest:
+the paper measures what the local quaternionic pass does relative to doing
+nothing on those segments.
+
+\begin{remark}
+No comparison is claimed here against a major external compiler stack. The
+present goal is to study a local method and to ship a reproducible reference
+harness for it.
+\end{remark}
+
+\section{Worked examples and measured reference-corpus results}
+
+\subsection{Worked examples}
+
+\begin{example}[$R_x(\pi/2);R_x(\pi/2)$]
+The translated quaternions are
+\[
+q_1=q_2=\left(\frac{\sqrt2}{2},\frac{\sqrt2}{2},0,0\right).
+\]
+Hence
+\[
+\Fuse(\mathrm{seg})=\canon(q_2 q_1)=(0,1,0,0).
+\]
+Axis-aware recovery first identifies the $x$ axis, yielding $R_x(\pi)$, and the
+named-gate table can further recognize that canonical tuple as $X$. The segment
+changes from gate count and local depth $2$ to $1$.
+\end{example}
+
+\begin{example}[$R_z(\pi/4);R_z(\pi/4)$]
+The fused quaternion is
+\[
+\canon\!\left(
+\left(\cos\frac{\pi}{8},0,0,\sin\frac{\pi}{8}\right)^2
+\right)
+=
+\left(\frac{1}{\sqrt2},0,0,\frac{1}{\sqrt2}\right).
+\]
+This is axis-aligned about $z$ and is also recognized as the named gate $S$.
+Again the segment changes from $(2,2)$ in count and local depth to $(1,1)$.
+\end{example}
+
+\begin{example}[$H;Z;H$]
+Using the canonical representatives of paper 2,
+\[
+q_H=\left(0,\frac{1}{\sqrt2},0,\frac{1}{\sqrt2}\right),
+\qquad
+q_Z=(0,0,0,1).
+\]
+Fusion gives
+\[
+\Fuse(\mathrm{seg})=\canon(q_H q_Z q_H)=(0,1,0,0),
+\]
+which reconstructs to $X$. This is the expected similarity transformation, now
+expressed directly as a quaternionic local optimization.
+\end{example}
+
+\begin{example}[A segment between two entangling boundaries]
+Consider the wire-0 run
+\[
+T^\dagger;R_x(\pi/4)
+\]
+extracted from a larger two-qubit circuit between two CNOT barriers. Fusion
+gives
+\[
+\Fuse(\mathrm{seg})\approx
+(0.8535534,\,0.3535534,\,0.1464466,\,-0.3535534).
+\]
+This output is not axis-aligned and does not match the exact named-gate lookup
+table, so reconstruction emits a generic $\uoneq$ primitive. Even in this case,
+the local optimization still reduces the segment from two gates to one while
+preserving exact segment action modulo global phase.
+\end{example}
+
+\subsection{Measured reference-corpus results}
+
+The included benchmark harness in
+\texttt{artifacts/code/benchmark\_gate\_fusion.py} computes the measured results
+stored in \texttt{artifacts/code/benchmark\_results.json}. On the shipped
+reference corpus:
+\begin{itemize}[leftmargin=1.5em]
+\item 13 segments were evaluated;
+\item original gate count was $36$ and optimized gate count was $11$;
+\item original segment-local depth was $36$ and optimized segment-local depth
+was $11$;
+\item 2 segments collapsed to identity and emitted no gate;
+\item all 13 segments collapsed to a single canonical quaternionic
+representative before reconstruction; and
+\item all 13 equivalence checks passed.
+\end{itemize}
+
+These numbers correspond to a gate-count and segment-depth reduction of
+\[
+36-11=25,
+\]
+or approximately $69.4\%$ relative to the syntax-preserving baseline on this
+reference corpus.
+
+The measured reconstruction breakdown is:
+\begin{center}
+\begin{tabular}{@{}lr@{}}
+\toprule
+Reconstruction kind & Count \\
+\midrule
+named gate (including identity) & 6 \\
+axis-aligned rotation & 2 \\
+generic one-qubit primitive & 5 \\
+\bottomrule
+\end{tabular}
+\end{center}
+Thus 8 of 13 outputs (about $61.5\%$) are recoverable as named or exact
+axis-aligned forms, while the remaining 5 are emitted as generic canonical
+primitives.
+
+Category-level results are shown in Table~\ref{tab:category-results}.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Category & Segments & Original gates & Optimized gates & Reduction \\
+\midrule
+Textbook single-qubit chains & 3 & 7 & 3 & 4 \\
+Mixed named-gate segments & 3 & 9 & 2 & 7 \\
+Rotation-heavy segments & 4 & 11 & 3 & 8 \\
+Segments from two-qubit circuits & 2 & 4 & 2 & 2 \\
+Ansatz-style segments & 1 & 5 & 1 & 4 \\
+\midrule
+Total & 13 & 36 & 11 & 25 \\
+\bottomrule
+\end{tabular}
+\caption{Measured gate-count results on the shipped reference corpus under the
+syntax-preserving baseline. Because every benchmark item is a sequential
+single-qubit segment, the same totals also describe segment-local depth.}
+\label{tab:category-results}
+\end{table}
+
+\begin{remark}
+These measurements are intentionally narrow. They demonstrate that the local
+fusion rule is operational and measurable on a shipped corpus. They do not
+establish universal superiority over other compiler flows, and they do not
+address whole-circuit optimality.
+\end{remark}
+
+\section{Standard mathematics vs.\ RQM Technologies framing}
+
+\subsection{Standard ingredients}
+
+The following ingredients are standard:
+\begin{enumerate}[label=(\arabic*), leftmargin=1.5em]
+\item single-qubit gates live in $\U(2)$ and admit $\SU(2)$ representatives
+modulo global phase;
+\item unit quaternions model $\SU(2)$ under the fixed convention \eqref{eq:phi};
+\item sequential single-qubit gate composition corresponds to quaternion
+multiplication; and
+\item $q\sim -q$ is the residual ambiguity after removal of global phase.
+\end{enumerate}
+
+\subsection{Project-specific contribution}
+
+The project-specific contribution of this paper is the optimization method:
+\begin{enumerate}[label=(\alph*), leftmargin=1.5em]
+\item use the canonical $\uoneq$ representation of paper 2 as the working IR;
+\item define a local fusion pass by quaternion multiplication plus
+re-canonicalization;
+\item use a layered reconstruction rule for identity, named-gate, axis-aligned,
+and generic outputs; and
+\item evaluate the pass against a syntax-preserving baseline on a shipped
+reference corpus.
+\end{enumerate}
+
+These are compiler-method choices. They are not new mathematics, and they are
+not claims about hardware advantage or universal circuit optimality.
+
+\section{Scope, limitations, and non-claims}
+
+This paper does \emph{not}:
+\begin{enumerate}[label=(\arabic*), leftmargin=1.5em]
+\item optimize entangling gates;
+\item define a full quantum compiler;
+\item prove universal superiority over all baseline compilers;
+\item claim hardware speedups;
+\item claim overall circuit optimality; or
+\item solve the general single-qubit synthesis problem in arbitrary gate sets.
+\end{enumerate}
+
+It defines and studies a local optimization pass for single-qubit segments.
+
+\section{Conclusion}
+
+The quaternionic model is operationally useful because it turns adjacent
+single-qubit fusion into ordinary multiplication in a canonical representation.
+Once paper 2's deterministic $\uoneq$ representation is in place, paper 3's
+fusion rule follows naturally:
+\[
+\Fuse(\mathrm{seg})=\canon(q_n\cdots q_1).
+\]
+That rule preserves exact segment action modulo global phase, yields a unique
+canonical fused form, and supports an honest reconstruction layer that can emit
+identity, named gates, axis-aligned rotations, or generic primitives as needed.
+
+On the shipped reference corpus, the local pass reduces 36 input single-qubit
+gates to 11 reconstructed outputs while preserving exact equivalence under the
+authoritative canonical-quaternion check. This is not a claim of universal
+compiler optimality. It is a concrete result about one local method: a
+geometry-native optimization pass for single-qubit segments.
+
+\appendix
+
+\section{Quaternion product formula}
+
+For
+\[
+q_1=(w_1,x_1,y_1,z_1),\qquad q_2=(w_2,x_2,y_2,z_2),
+\]
+the product used by the fusion pass is
+\[
+q_2 q_1=
+\bigl(
+w_2 w_1 - x_2 x_1 - y_2 y_1 - z_2 z_1,\,
+w_2 x_1 + x_2 w_1 + y_2 z_1 - z_2 y_1,
+\]
+\[
+w_2 y_1 - x_2 z_1 + y_2 w_1 + z_2 x_1,\,
+w_2 z_1 + x_2 y_1 - y_2 x_1 + z_2 w_1
+\bigr).
+\]
+
+\section{Benchmark harness notes}
+
+The reference harness included with this paper package uses only the Python
+standard library. It translates each benchmark segment into quaternions, fuses
+it by \eqref{eq:fuse}, applies reconstruction, and verifies equivalence by
+re-translating the reconstructed output and comparing canonical quaternions.
+
+\section{Companion figures and code}
+
+Publication-oriented SVG figures are provided in
+\texttt{artifacts/figures/}. The benchmark harness and measured results are
+provided in \texttt{artifacts/code/benchmark\_gate\_fusion.py} and
+\texttt{artifacts/code/benchmark\_results.json}.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

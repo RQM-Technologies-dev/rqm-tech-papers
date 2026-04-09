@@ -1,0 +1,60 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{xcolor}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{theorem}[definition]{Theorem}
+\theoremstyle{remark}
+\newtheorem{remark}[definition]{Remark}
+
+\title{\textbf{REPLACE WITH PAPER TITLE}}
+\author{AUTHOR NAME\\RQM Technologies\\\texttt{author@example.com}}
+\date{Version 0.1.0 \\ Draft dated YYYY-MM-DD}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+REPLACE WITH THE FULL ABSTRACT. Copy the final abstract verbatim into
+\texttt{paper.html}, \texttt{metadata.json}, and \texttt{paper.jats.xml}.
+\end{abstract}
+
+\noindent\textbf{Authoring note:} This file is the default source of truth for new
+papers. If your workflow uses a different authored source, declare it explicitly
+in the paper folder's \texttt{README.md}.
+
+\section{Introduction}
+
+REPLACE WITH THE PAPER TEXT.
+
+\section{Main result}
+
+\begin{definition}
+REPLACE WITH A REPRESENTATIVE DEFINITION OR REMOVE THIS ENVIRONMENT.
+\end{definition}
+
+\begin{theorem}
+REPLACE WITH A REPRESENTATIVE THEOREM OR REMOVE THIS ENVIRONMENT.
+\end{theorem}
+
+\begin{proof}
+REPLACE WITH A REPRESENTATIVE PROOF OR REMOVE THIS ENVIRONMENT.
+\end{proof}
+
+\section{Conclusion}
+
+REPLACE WITH THE CONCLUSION.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

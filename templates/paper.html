@@ -3,129 +3,104 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PAPER TITLE — RQM Technologies</title>
+  <title>PAPER TITLE - RQM Technologies</title>
 
-  <!-- SEO and citation metadata -->
-  <meta name="description" content="ABSTRACT FIRST SENTENCE." />
+  <!-- Use only real metadata. Omit DOI/canonical tags until they exist. -->
+  <meta name="description" content="FIRST SENTENCE OF THE ABSTRACT." />
   <meta name="author" content="AUTHOR NAME" />
   <meta name="keywords" content="quaternionic quantum computing, KEYWORD2, KEYWORD3" />
   <meta name="citation_title" content="PAPER TITLE" />
   <meta name="citation_author" content="AUTHOR NAME" />
   <meta name="citation_publication_date" content="YYYY/MM/DD" />
-  <meta name="citation_doi" content="10.XXXX/XXXXXX" />
-  <meta name="citation_pdf_url" content="CANONICAL_URL/papers/SERIES-NNN-slug/paper.pdf" />
+  <meta name="citation_pdf_url" content="paper.pdf" />
+  <!-- Add citation_doi only when a real DOI has been assigned. -->
+  <!-- Add a canonical link only when a real canonical URL exists. -->
 
-  <!-- Canonical URL -->
-  <link rel="canonical" href="CANONICAL_URL/papers/SERIES-NNN-slug/" />
-
-  <!-- Machine-readable companion links -->
-  <link rel="alternate" type="application/json" href="metadata.json" title="Paper Metadata" />
+  <link rel="alternate" type="application/json" href="metadata.json" title="Paper metadata" />
   <link rel="alternate" type="application/xml" href="paper.jats.xml" title="JATS XML" />
-
-  <style>
-    *, *::before, *::after { box-sizing: border-box; }
-    body {
-      font-family: Georgia, "Times New Roman", serif;
-      line-height: 1.7;
-      color: #1a1a1a;
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem 4rem;
-      background: #fff;
-    }
-    h1 { font-size: 1.9rem; line-height: 1.3; margin-bottom: 0.5rem; }
-    h2 { font-size: 1.4rem; margin-top: 2.5rem; border-bottom: 1px solid #ddd; padding-bottom: 0.25rem; }
-    h3 { font-size: 1.1rem; margin-top: 1.8rem; }
-    .byline { color: #555; font-size: 0.95rem; margin-bottom: 1.5rem; }
-    .abstract { background: #f7f7f7; border-left: 4px solid #333; padding: 1rem 1.25rem; margin: 1.5rem 0; font-size: 0.97rem; }
-    .abstract strong { display: block; margin-bottom: 0.4rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }
-    .paper-meta { font-size: 0.85rem; color: #666; border-top: 1px solid #eee; padding-top: 0.75rem; margin-top: 2rem; }
-    .paper-meta a { color: #333; }
-    blockquote.theorem, blockquote.definition, blockquote.proposition {
-      margin: 1.5rem 0;
-      padding: 0.75rem 1.25rem;
-      border-left: 4px solid #333;
-      background: #fafafa;
-      font-style: italic;
-    }
-    blockquote.theorem strong, blockquote.definition strong, blockquote.proposition strong {
-      font-style: normal;
-      display: block;
-      margin-bottom: 0.35rem;
-    }
-    .proof { margin: 0.5rem 0 1.5rem 1.5rem; color: #333; }
-    .proof::before { content: "Proof. "; font-weight: bold; }
-    .proof::after { content: " \25A0"; }
-    code, pre { font-family: "Fira Code", "Courier New", monospace; background: #f4f4f4; border-radius: 3px; }
-    code { padding: 0.1em 0.3em; font-size: 0.9em; }
-    pre { padding: 1rem; overflow-x: auto; font-size: 0.85rem; }
-    a { color: #0066cc; }
-    .references { font-size: 0.9rem; }
-    .references li { margin-bottom: 0.5rem; }
-    @media (max-width: 600px) { body { padding: 1rem; } h1 { font-size: 1.5rem; } }
-  </style>
+  <link rel="stylesheet" href="../../styles/site.css" />
 </head>
-<body>
+<body class="paper-shell">
+  <div class="paper-page">
+    <header class="paper-header">
+      <div class="page-bar">
+        <a href="../../index.html">RQM Technologies Technical Papers</a>
+        <span>SERIES-NNN-slug</span>
+      </div>
 
-<header>
-  <p style="font-size:0.85rem; color:#666; margin-bottom:0.5rem;">
-    RQM Technologies Technical Papers &mdash; SERIES-NNN-slug &mdash; v1.0.0
-  </p>
-  <h1>PAPER TITLE: SUBTITLE</h1>
-  <p class="byline">
-    AUTHOR NAME<sup>1</sup><br />
-    <sup>1</sup>RQM Technologies<br />
-    <em>Correspondence:</em> author@example.com
-  </p>
+      <div class="hero-panel">
+        <div class="eyebrow">Series paper - browsable publication page</div>
+        <h1>PAPER TITLE: SUBTITLE</h1>
+        <p class="hero-copy">
+          Replace this summary line with a concise statement of the paper's contribution. The HTML page should remain aligned
+          with the declared authored source.
+        </p>
+        <p class="byline">
+          AUTHOR NAME<sup>1</sup><br />
+          <sup>1</sup>RQM Technologies<br />
+          <em>Correspondence:</em> author@example.com
+        </p>
+      </div>
 
-  <div class="abstract">
-    <strong>Abstract</strong>
-    <p>REPLACE WITH FULL ABSTRACT. Copy the abstract verbatim from the authored paper. Do not paraphrase or invent.</p>
+      <div class="paper-panel">
+        <strong>Abstract</strong>
+        <p>REPLACE WITH THE FULL ABSTRACT. Copy it verbatim from the authored source. Do not paraphrase or invent.</p>
+      </div>
+
+      <div class="paper-panel compact">
+        <strong>Paper metadata</strong>
+        <p><strong>Paper ID:</strong> SERIES-NNN-slug · <strong>Version:</strong> 1.0.0 · <strong>Status:</strong> Draft · <strong>Date:</strong> YYYY-MM-DD</p>
+        <p>
+          <strong>Companion files:</strong>
+          <a href="index.html">package index</a>,
+          <a href="paper.pdf">paper.pdf</a>,
+          <a href="metadata.json">metadata.json</a>,
+          <a href="paper.jats.xml">paper.jats.xml</a>,
+          <a href="claims.json">claims.json</a>,
+          <a href="notation.json">notation.json</a>,
+          <a href="glossary.json">glossary.json</a>,
+          <a href="references.bib">references.bib</a>,
+          <a href="CITATION.cff">CITATION.cff</a>
+        </p>
+      </div>
+
+      <div class="paper-panel compact">
+        <strong>Authoring note</strong>
+        <p>Declare the source of truth in the paper folder's <code>README.md</code>. If the paper is authored in LaTeX or Overleaf, keep <code>main.tex</code> authoritative and keep this HTML page synchronized with it.</p>
+      </div>
+    </header>
+
+    <main class="paper-main">
+      <h2 id="sec-1">1. Introduction</h2>
+      <p>REPLACE WITH PAPER CONTENT. This HTML file is the browsable publication page and should mirror the declared authored source.</p>
+
+      <h2 id="sec-2">2. Main Results</h2>
+
+      <blockquote class="paper-callout definition" id="def-1">
+        <strong>Definition 1.</strong>
+        REPLACE WITH DEFINITION TEXT.
+      </blockquote>
+
+      <blockquote class="paper-callout theorem" id="thm-1">
+        <strong>Theorem 1.</strong>
+        REPLACE WITH THEOREM STATEMENT.
+      </blockquote>
+      <div class="proof">
+        REPLACE WITH PROOF.
+      </div>
+
+      <h2 id="sec-references">References</h2>
+      <ol class="references">
+        <li id="ref-1">
+          AUTHOR. <em>Title</em>. Journal, Vol(Issue):Pages, YEAR.
+          Add DOI only when the cited work actually has one.
+        </li>
+      </ol>
+    </main>
+
+    <footer class="paper-footer">
+      <p>Before publication, remove any remaining placeholder text and add only metadata that is known to be true.</p>
+    </footer>
   </div>
-
-  <p class="paper-meta">
-    <strong>Paper ID:</strong> SERIES-NNN-slug &nbsp;|&nbsp;
-    <strong>Version:</strong> 1.0.0 &nbsp;|&nbsp;
-    <strong>Status:</strong> Draft &nbsp;|&nbsp;
-    <strong>Date:</strong> YYYY-MM-DD<br />
-    <strong>Companion files:</strong>
-    <a href="metadata.json">metadata.json</a>,
-    <a href="paper.pdf">PDF</a>,
-    <a href="paper.jats.xml">JATS XML</a>,
-    <a href="claims.json">claims</a>,
-    <a href="notation.json">notation</a>,
-    <a href="glossary.json">glossary</a>,
-    <a href="references.bib">BibTeX</a>,
-    <a href="CITATION.cff">CITATION.cff</a>
-  </p>
-</header>
-
-<main>
-
-  <h2 id="sec-1">1. Introduction</h2>
-  <p>REPLACE WITH PAPER CONTENT. Write the paper in full here. The HTML version is the primary authored document.</p>
-
-  <h2 id="sec-2">2. Main Results</h2>
-
-  <blockquote class="definition" id="def-1">
-    <strong>Definition 1.</strong>
-    REPLACE WITH DEFINITION TEXT.
-  </blockquote>
-
-  <blockquote class="theorem" id="thm-1">
-    <strong>Theorem 1.</strong>
-    REPLACE WITH THEOREM STATEMENT.
-  </blockquote>
-  <div class="proof">
-    REPLACE WITH PROOF.
-  </div>
-
-  <h2 id="sec-references">References</h2>
-  <ol class="references">
-    <li id="ref-1">AUTHOR. <em>Title</em>. Journal, Vol(Issue):Pages, YEAR. doi:10.XXXX/XXXXXX</li>
-  </ol>
-
-</main>
-
 </body>
 </html>

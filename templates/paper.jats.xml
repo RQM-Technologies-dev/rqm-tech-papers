@@ -11,7 +11,6 @@
       <journal-title-group>
         <journal-title>RQM Technologies Technical Papers</journal-title>
       </journal-title-group>
-      <issn pub-type="epub">XXXX-XXXX</issn>
       <publisher>
         <publisher-name>RQM Technologies</publisher-name>
       </publisher>
@@ -19,7 +18,7 @@
 
     <article-meta>
       <article-id pub-id-type="publisher-id">SERIES-NNN-slug</article-id>
-      <article-id pub-id-type="doi">10.XXXX/XXXXXX</article-id>
+      <!-- Add a DOI article-id only when a real DOI has been assigned. -->
 
       <title-group>
         <article-title>REPLACE WITH FULL TITLE</article-title>
@@ -43,10 +42,7 @@
         <year>YYYY</year>
       </pub-date>
 
-      <volume>1</volume>
-      <issue>1</issue>
-      <fpage>1</fpage>
-      <lpage>XX</lpage>
+      <!-- Add volume, issue, and page-range metadata only after publication details are real. -->
 
       <abstract>
         <p>REPLACE WITH FULL ABSTRACT TEXT. Do not paraphrase or invent. Use the abstract exactly as authored.</p>
@@ -81,7 +77,7 @@
           AUTHOR. <article-title>TITLE</article-title>.
           <source>JOURNAL</source>. <year>YEAR</year>;
           <volume>VOL</volume>(<issue>ISSUE</issue>):<fpage>START</fpage>-<lpage>END</lpage>.
-          doi:<pub-id pub-id-type="doi">10.XXXX/XXXXXX</pub-id>
+          <!-- Add a reference DOI only when the cited work actually has one. -->
         </mixed-citation>
       </ref>
     </ref-list>

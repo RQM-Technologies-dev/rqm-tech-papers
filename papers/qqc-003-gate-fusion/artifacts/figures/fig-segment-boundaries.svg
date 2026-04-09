@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="250" viewBox="0 0 920 250" role="img" aria-labelledby="title desc">
+  <title id="title">Segment extraction with entangling boundaries</title>
+  <desc id="desc">Two-wire circuit showing single-qubit runs extracted between entangling and measurement boundaries.</desc>
+  <style>
+    .wire { stroke: #303030; stroke-width: 3; }
+    .gate { fill: #eef4ff; stroke: #385f95; stroke-width: 2; rx: 10; ry: 10; }
+    .boundary { stroke: #b13e3e; stroke-width: 3; stroke-dasharray: 8 6; }
+    .label { font-family: Arial, sans-serif; font-size: 18px; fill: #222; }
+    .small { font-family: Arial, sans-serif; font-size: 15px; fill: #444; }
+    .seg { fill: rgba(71, 148, 89, 0.18); stroke: #479459; stroke-width: 2; rx: 12; ry: 12; }
+  </style>
+  <rect x="0" y="0" width="920" height="250" fill="#ffffff"/>
+  <line class="wire" x1="110" y1="90" x2="860" y2="90"/>
+  <line class="wire" x1="110" y1="165" x2="860" y2="165"/>
+  <text x="55" y="95" class="label">q0</text>
+  <text x="55" y="170" class="label">q1</text>
+
+  <rect class="seg" x="138" y="55" width="180" height="70"/>
+  <rect class="gate" x="170" y="62" width="56" height="56"/>
+  <text x="198" y="98" text-anchor="middle" class="label">H</text>
+  <rect class="gate" x="245" y="62" width="56" height="56"/>
+  <text x="273" y="98" text-anchor="middle" class="label">T</text>
+  <text x="228" y="42" text-anchor="middle" class="small">segment A on q0</text>
+
+  <line class="boundary" x1="355" y1="35" x2="355" y2="205"/>
+  <text x="355" y="24" text-anchor="middle" class="small">entangling boundary</text>
+
+  <rect class="gate" x="385" y="62" width="56" height="56"/>
+  <circle cx="413" cy="90" r="10" fill="#385f95"/>
+  <line x1="413" y1="90" x2="413" y2="165" stroke="#385f95" stroke-width="3"/>
+  <circle cx="413" cy="165" r="17" fill="none" stroke="#385f95" stroke-width="3"/>
+  <line x1="398" y1="165" x2="428" y2="165" stroke="#385f95" stroke-width="3"/>
+  <line x1="413" y1="150" x2="413" y2="180" stroke="#385f95" stroke-width="3"/>
+  <text x="466" y="98" class="small">CNOT</text>
+
+  <rect class="seg" x="500" y="55" width="216" height="70"/>
+  <rect class="gate" x="530" y="62" width="70" height="56"/>
+  <text x="565" y="98" text-anchor="middle" class="small">T </text>
+  <rect class="gate" x="620" y="62" width="70" height="56"/>
+  <text x="655" y="98" text-anchor="middle" class="small">Rx(À/4)</text>
+  <text x="608" y="42" text-anchor="middle" class="small">segment B on q0</text>
+
+  <line class="boundary" x1="760" y1="35" x2="760" y2="205"/>
+  <text x="760" y="24" text-anchor="middle" class="small">measurement / reset boundary</text>
+
+  <rect class="gate" x="785" y="137" width="56" height="56"/>
+  <text x="813" y="172" text-anchor="middle" class="small">M</text>
+
+  <rect class="seg" x="160" y="130" width="90" height="70"/>
+  <rect class="gate" x="177" y="137" width="56" height="56"/>
+  <text x="205" y="172" text-anchor="middle" class="label">S</text>
+  <text x="205" y="217" text-anchor="middle" class="small">segment on q1</text>
+
+  <text x="460" y="232" text-anchor="middle" class="small">The fusion pass acts only on highlighted one-wire runs; CNOT, measurement, reset, and other non-single-qubit boundaries terminate segments.</text>
+</svg>

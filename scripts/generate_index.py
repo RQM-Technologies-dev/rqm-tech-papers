@@ -9,7 +9,7 @@ Reads all paper folders under papers/ and generates:
   index/glossary.json  — All glossary terms across all papers
 
 Usage:
-    python scripts/generate_index.py [--output-dir OUTPUT_DIR]
+    python3 scripts/generate_index.py [--output-dir OUTPUT_DIR]
 
 Exit codes:
     0 — indexes generated successfully
@@ -78,6 +78,7 @@ def generate_papers_index(paper_dirs: list[Path]) -> dict:
         # Add relative paths for convenience
         entry = dict(metadata)
         entry["_path"] = f"papers/{paper_dir.name}/"
+        entry["_package_index"] = f"papers/{paper_dir.name}/"
         entry["_html"] = f"papers/{paper_dir.name}/paper.html"
         entry["_pdf"] = f"papers/{paper_dir.name}/paper.pdf"
         entry["_metadata"] = f"papers/{paper_dir.name}/metadata.json"

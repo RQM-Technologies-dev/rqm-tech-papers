@@ -36,6 +36,7 @@ assignees: ''
 Before opening a PR, confirm all items below are ready:
 
 - [ ] `paper.html` authored and complete
+- [ ] `index.html` package page present and complete
 - [ ] `paper.pdf` present (real PDF or placeholder stub)
 - [ ] `metadata.json` filled with accurate data (no invented fields)
 - [ ] `paper.jats.xml` generated
@@ -45,8 +46,8 @@ Before opening a PR, confirm all items below are ready:
 - [ ] `references.bib` complete
 - [ ] `CITATION.cff` complete
 - [ ] `artifacts/` directory created
-- [ ] `python scripts/validate_papers.py` passes
-- [ ] `python scripts/generate_index.py` run and index files updated
+- [ ] `python3 scripts/validate_papers.py` passes
+- [ ] `python3 scripts/generate_index.py` run and index files updated
 
 ### Notes
 <!-- Any additional context -->

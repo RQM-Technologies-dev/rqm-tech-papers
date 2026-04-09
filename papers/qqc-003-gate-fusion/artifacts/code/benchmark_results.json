@@ -1,0 +1,437 @@
+{
+  "paper_id": "qqc-003-gate-fusion",
+  "method": "Quaternionic local fusion with canonicalization and layered reconstruction",
+  "aggregate": {
+    "baseline": "syntax-preserving single-qubit segments with no fusion",
+    "equivalence_check": "canonical quaternion equality after normalization and sign-canonicalization",
+    "segments": 13,
+    "original_gate_count": 36,
+    "optimized_gate_count": 11,
+    "original_depth": 36,
+    "optimized_depth": 11,
+    "identity_outputs": 2,
+    "segments_collapsed_to_one_canonical_representative": 13,
+    "named_or_axis_recoveries": 8,
+    "gate_count_reduction": 25,
+    "depth_reduction": 25,
+    "gate_count_reduction_fraction": 0.694444,
+    "depth_reduction_fraction": 0.694444,
+    "named_or_axis_recovery_fraction": 0.615385,
+    "reconstruction_kinds": {
+      "named": 6,
+      "generic": 5,
+      "axis": 2
+    }
+  },
+  "category_summary": [
+    {
+      "category": "ansatz-style segments",
+      "segments": 1,
+      "original_gate_count": 5,
+      "optimized_gate_count": 1,
+      "gate_count_reduction": 4,
+      "compression_ratio": 0.2
+    },
+    {
+      "category": "mixed named-gate segments",
+      "segments": 3,
+      "original_gate_count": 9,
+      "optimized_gate_count": 2,
+      "gate_count_reduction": 7,
+      "compression_ratio": 0.222222
+    },
+    {
+      "category": "rotation-heavy segments",
+      "segments": 4,
+      "original_gate_count": 11,
+      "optimized_gate_count": 3,
+      "gate_count_reduction": 8,
+      "compression_ratio": 0.272727
+    },
+    {
+      "category": "segments from two-qubit circuits",
+      "segments": 2,
+      "original_gate_count": 4,
+      "optimized_gate_count": 2,
+      "gate_count_reduction": 2,
+      "compression_ratio": 0.5
+    },
+    {
+      "category": "textbook single-qubit chains",
+      "segments": 3,
+      "original_gate_count": 7,
+      "optimized_gate_count": 3,
+      "gate_count_reduction": 4,
+      "compression_ratio": 0.428571
+    }
+  ],
+  "segments": [
+    {
+      "id": "textbook-rx-pi",
+      "category": "textbook single-qubit chains",
+      "input_segment": [
+        "Rx(pi/2)",
+        "Rx(pi/2)"
+      ],
+      "source_note": "Two adjacent quarter-turns about x.",
+      "input_gate_count": 2,
+      "optimized_gate_count": 1,
+      "input_depth": 2,
+      "optimized_depth": 1,
+      "fused_quaternion": [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "reconstruction": {
+        "kind": "named",
+        "gate": "X"
+      },
+      "reconstruction_label": "X",
+      "equivalent_up_to_global_phase": true
+    },
+    {
+      "id": "textbook-rz-half",
+      "category": "textbook single-qubit chains",
+      "input_segment": [
+        "Rz(pi/4)",
+        "Rz(pi/4)"
+      ],
+      "source_note": "Two adjacent eighth-turns about z.",
+      "input_gate_count": 2,
+      "optimized_gate_count": 1,
+      "input_depth": 2,
+      "optimized_depth": 1,
+      "fused_quaternion": [
+        0.707106781187,
+        0.0,
+        0.0,
+        0.707106781187
+      ],
+      "reconstruction": {
+        "kind": "named",
+        "gate": "S"
+      },
+      "reconstruction_label": "S",
+      "equivalent_up_to_global_phase": true
+    },
+    {
+      "id": "textbook-hzh",
+      "category": "textbook single-qubit chains",
+      "input_segment": [
+        "H",
+        "Z",
+        "H"
+      ],
+      "source_note": "Conjugation identity often seen in textbooks.",
+      "input_gate_count": 3,
+      "optimized_gate_count": 1,
+      "input_depth": 3,
+      "optimized_depth": 1,
+      "fused_quaternion": [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "reconstruction": {
+        "kind": "named",
+        "gate": "X"
+      },
+      "reconstruction_label": "X",
+      "equivalent_up_to_global_phase": true
+    },
+    {
+      "id": "mixed-cancellation",
+      "category": "mixed named-gate segments",
+      "input_segment": [
+        "S",
+        "T",
+        "Tdg",
+        "Z"
+      ],
+      "source_note": "Named-gate chain with explicit cancellation.",
+      "input_gate_count": 4,
+      "optimized_gate_count": 1,
+      "input_depth": 4,
+      "optimized_depth": 1,
+      "fused_quaternion": [
+        0.707106781187,
+        -0.0,
+        -0.0,
+        -0.707106781187
+      ],
+      "reconstruction": {
+        "kind": "named",
+        "gate": "Sdg"
+      },
+      "reconstruction_label": "Sdg",
+      "equivalent_up_to_global_phase": true
+    },
+    {
+      "id": "rotation-heavy-1",
+      "category": "rotation-heavy segments",
+      "input_segment": [
+        "Rx(pi/5)",
+        "Ry(pi/7)",
+        "Rz(pi/9)",
+        "Rx(pi/11)"
+      ],
+      "source_note": "Generic mixed-axis rotation chain.",
+      "input_gate_count": 4,
+      "optimized_gate_count": 1,
+      "input_depth": 4,
+      "optimized_depth": 1,
+      "fused_quaternion": [
+        0.87865603802,
+        0.388947895244,
+        0.244799237281,
+        0.129446649488
+      ],
+      "reconstruction": {
+        "kind": "generic",
+        "gate": "u1q",
+        "tuple": [
+          0.87865603802,
+          0.388947895244,
+          0.244799237281,
+          0.129446649488
+        ]
+      },
+      "reconstruction_label": "u1q(0.878656, 0.388948, 0.244799, 0.129447)",
+      "equivalent_up_to_global_phase": true
+    },
+    {
+      "id": "rotation-heavy-2",
+      "category": "rotation-heavy segments",
+      "input_segment": [
+        "Rz(pi/3)",
+        "Rz(pi/6)",
+        "Rz(-pi/2)"
+      ],
+      "source_note": "Axis-aligned cancellation to identity.",
+      "input_gate_count": 3,
+      "optimized_gate_count": 0,
+      "input_depth": 3,
+      "optimized_depth": 0,
+      "fused_quaternion": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reconstruction": {
+        "kind": "named",
+        "gate": "I"
+      },
+      "reconstruction_label": "I",
+      "equivalent_up_to_global_phase": true
+    },
+    {
+      "id": "mixed-pipeline",
+      "category": "mixed named-gate segments",
+      "input_segment": [
+        "H",
+        "T",
+        "Rz(pi/3)"
+      ],
+      "source_note": "Mixed named and parametric segment carried over from paper 2.",
+      "input_gate_count": 3,
+      "optimized_gate_count": 1,
+      "input_depth": 3,
+      "optimized_depth": 1,
+      "fused_quaternion": [
+        0.560985526797,
+        -0.430459334577,
+        -0.560985526797,
+        -0.430459334577
+      ],
+      "reconstruction": {
+        "kind": "generic",
+        "gate": "u1q",
+        "tuple": [
+          0.560985526797,
+          -0.430459334577,
+          -0.560985526797,
+          -0.430459334577
+        ]
+      },
+      "reconstruction_label": "u1q(0.560986, -0.430459, -0.560986, -0.430459)",
+      "equivalent_up_to_global_phase": true
+    },
+    {
+      "id": "named-cancel",
+      "category": "mixed named-gate segments",
+      "input_segment": [
+        "T",
+        "Tdg"
+      ],
+      "source_note": "Minimal exact identity cancellation.",
+      "input_gate_count": 2,
+      "optimized_gate_count": 0,
+      "input_depth": 2,
+      "optimized_depth": 0,
+      "fused_quaternion": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reconstruction": {
+        "kind": "named",
+        "gate": "I"
+      },
+      "reconstruction_label": "I",
+      "equivalent_up_to_global_phase": true
+    },
+    {
+      "id": "cnot-left-segment",
+      "category": "segments from two-qubit circuits",
+      "input_segment": [
+        "H",
+        "T"
+      ],
+      "source_note": "Single-qubit run before an entangling boundary.",
+      "input_gate_count": 2,
+      "optimized_gate_count": 1,
+      "input_depth": 2,
+      "optimized_depth": 1,
+      "fused_quaternion": [
+        0.270598050073,
+        -0.653281482438,
+        -0.270598050073,
+        -0.653281482438
+      ],
+      "reconstruction": {
+        "kind": "generic",
+        "gate": "u1q",
+        "tuple": [
+          0.270598050073,
+          -0.653281482438,
+          -0.270598050073,
+          -0.653281482438
+        ]
+      },
+      "reconstruction_label": "u1q(0.270598, -0.653281, -0.270598, -0.653281)",
+      "equivalent_up_to_global_phase": true
+    },
+    {
+      "id": "cnot-right-segment",
+      "category": "segments from two-qubit circuits",
+      "input_segment": [
+        "Tdg",
+        "Rx(pi/4)"
+      ],
+      "source_note": "Single-qubit run after an entangling boundary.",
+      "input_gate_count": 2,
+      "optimized_gate_count": 1,
+      "input_depth": 2,
+      "optimized_depth": 1,
+      "fused_quaternion": [
+        0.853553390593,
+        0.353553390593,
+        0.146446609407,
+        -0.353553390593
+      ],
+      "reconstruction": {
+        "kind": "generic",
+        "gate": "u1q",
+        "tuple": [
+          0.853553390593,
+          0.353553390593,
+          0.146446609407,
+          -0.353553390593
+        ]
+      },
+      "reconstruction_label": "u1q(0.853553, 0.353553, 0.146447, -0.353553)",
+      "equivalent_up_to_global_phase": true
+    },
+    {
+      "id": "ansatz-wire",
+      "category": "ansatz-style segments",
+      "input_segment": [
+        "Rz(0.13)",
+        "Ry(0.27)",
+        "Rz(0.13)",
+        "Ry(-0.27)",
+        "Rz(-0.13)"
+      ],
+      "source_note": "Small variational-style single-wire segment.",
+      "input_gate_count": 5,
+      "optimized_gate_count": 1,
+      "input_depth": 5,
+      "optimized_depth": 1,
+      "fused_quaternion": [
+        0.997888243671,
+        -0.017179144405,
+        0.002245955265,
+        0.062601004985
+      ],
+      "reconstruction": {
+        "kind": "generic",
+        "gate": "u1q",
+        "tuple": [
+          0.997888243671,
+          -0.017179144405,
+          0.002245955265,
+          0.062601004985
+        ]
+      },
+      "reconstruction_label": "u1q(0.997888, -0.017179, 0.002246, 0.062601)",
+      "equivalent_up_to_global_phase": true
+    },
+    {
+      "id": "axis-z-recovery",
+      "category": "rotation-heavy segments",
+      "input_segment": [
+        "Rz(pi/5)",
+        "Rz(pi/10)"
+      ],
+      "source_note": "Exact non-named z-axis recovery case.",
+      "input_gate_count": 2,
+      "optimized_gate_count": 1,
+      "input_depth": 2,
+      "optimized_depth": 1,
+      "fused_quaternion": [
+        0.891006524188,
+        0.0,
+        0.0,
+        0.45399049974
+      ],
+      "reconstruction": {
+        "kind": "axis",
+        "gate": "Rz",
+        "theta": 0.9424777960769379
+      },
+      "reconstruction_label": "Rz(0.300000*pi)",
+      "equivalent_up_to_global_phase": true
+    },
+    {
+      "id": "axis-x-recovery",
+      "category": "rotation-heavy segments",
+      "input_segment": [
+        "Rx(pi/6)",
+        "Rx(pi/3)"
+      ],
+      "source_note": "Exact non-named x-axis recovery case.",
+      "input_gate_count": 2,
+      "optimized_gate_count": 1,
+      "input_depth": 2,
+      "optimized_depth": 1,
+      "fused_quaternion": [
+        0.707106781187,
+        0.707106781187,
+        0.0,
+        0.0
+      ],
+      "reconstruction": {
+        "kind": "axis",
+        "gate": "Rx",
+        "theta": 1.5707963267948966
+      },
+      "reconstruction_label": "Rx(0.500000*pi)",
+      "equivalent_up_to_global_phase": true
+    }
+  ]
+}

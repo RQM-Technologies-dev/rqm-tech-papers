@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="280" viewBox="0 0 960 280" role="img" aria-labelledby="title desc">
+  <title id="title">Single-qubit segment extraction between entangling boundaries</title>
+  <desc id="desc">A two-wire circuit schematic highlighting a consecutive single-qubit run on one wire between two entangling gates as the unit of canonical quaternion IR extraction.</desc>
+  <style>
+    .wire { stroke: #444; stroke-width: 3; }
+    .gate { fill: #eef4ff; stroke: #275aa8; stroke-width: 2; rx: 12; ry: 12; }
+    .entangle { fill: #fff7e6; stroke: #996c00; stroke-width: 2; rx: 12; ry: 12; }
+    .label { font: 18px Arial, sans-serif; fill: #1a1a1a; }
+    .small { font: 15px Arial, sans-serif; fill: #444; }
+    .segment { fill: rgba(31,95,191,0.08); stroke: #1f5fbf; stroke-width: 2; stroke-dasharray: 8 6; rx: 20; ry: 20; }
+  </style>
+  <rect x="0" y="0" width="960" height="280" fill="#ffffff"/>
+  <text x="60" y="85" class="label">q0</text>
+  <text x="60" y="195" class="label">q1</text>
+  <line x1="110" y1="80" x2="900" y2="80" class="wire"/>
+  <line x1="110" y1="190" x2="900" y2="190" class="wire"/>
+  <rect x="170" y="45" width="84" height="70" class="gate"/>
+  <text x="212" y="88" text-anchor="middle" class="label">H</text>
+  <rect x="300" y="35" width="310" height="90" class="segment"/>
+  <rect x="340" y="45" width="84" height="70" class="gate"/>
+  <text x="382" y="88" text-anchor="middle" class="label">T</text>
+  <rect x="468" y="45" width="84" height="70" class="gate"/>
+  <text x="510" y="88" text-anchor="middle" class="label">Rz(À/3)</text>
+  <rect x="660" y="45" width="84" height="70" class="gate"/>
+  <text x="702" y="88" text-anchor="middle" class="label">X</text>
+  <rect x="266" y="155" width="68" height="70" class="entangle"/>
+  <text x="300" y="198" text-anchor="middle" class="label">CX</text>
+  <rect x="620" y="155" width="68" height="70" class="entangle"/>
+  <text x="654" y="198" text-anchor="middle" class="label">CZ</text>
+  <circle cx="300" cy="80" r="9" fill="#996c00"/>
+  <line x1="300" y1="89" x2="300" y2="190" stroke="#996c00" stroke-width="2.5"/>
+  <circle cx="300" cy="190" r="16" fill="none" stroke="#996c00" stroke-width="2.5"/>
+  <line x1="289" y1="190" x2="311" y2="190" stroke="#996c00" stroke-width="2.5"/>
+  <line x1="300" y1="179" x2="300" y2="201" stroke="#996c00" stroke-width="2.5"/>
+  <circle cx="654" cy="80" r="9" fill="#996c00"/>
+  <line x1="654" y1="89" x2="654" y2="190" stroke="#996c00" stroke-width="2.5"/>
+  <circle cx="654" cy="190" r="9" fill="#996c00"/>
+  <text x="455" y="28" text-anchor="middle" class="small">single-qubit segment on q0 bounded by entangling gates</text>
+  <text x="455" y="248" text-anchor="middle" class="small">Only the highlighted run is fused into one canonical u1q element; entangling gates mark segment boundaries.</text>
+</svg>

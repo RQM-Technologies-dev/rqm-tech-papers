@@ -1,0 +1,34 @@
+{
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/papers/:paperId",
+      "destination": "/papers/:paperId/index.html"
+    },
+    {
+      "source": "/papers/:paperId/",
+      "destination": "/papers/:paperId/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/index/(.*)\\.json",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/papers/(.*)\\.json",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json; charset=utf-8"
+        }
+      ]
+    }
+  ]
+}

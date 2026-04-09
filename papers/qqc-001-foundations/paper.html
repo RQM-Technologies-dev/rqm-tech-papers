@@ -10,116 +10,21 @@
   <meta name="citation_title" content="Foundations of Quaternionic Quantum Computing: Qubits, Spinors, and SU(2) Geometry" />
   <meta name="citation_author" content="RQM Technologies Research Team" />
   <meta name="citation_pdf_url" content="paper.pdf" />
+  <link rel="canonical" href="./" />
   <link rel="alternate" type="application/json" href="metadata.json" title="Paper metadata" />
   <link rel="alternate" type="application/xml" href="paper.jats.xml" title="JATS XML" />
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      padding: 2rem 1.25rem 4rem;
-      background: #ffffff;
-      color: #1c1c1c;
-      font-family: Georgia, "Times New Roman", serif;
-      line-height: 1.72;
-    }
-    main, header, footer {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    h1 { font-size: 2rem; line-height: 1.25; margin-bottom: 0.5rem; }
-    h2 { font-size: 1.45rem; border-bottom: 1px solid #ddd; padding-bottom: 0.25rem; margin-top: 2.6rem; }
-    h3 { font-size: 1.1rem; margin-top: 1.8rem; }
-    p { margin: 0.85rem 0; }
-    a { color: #0b57a4; }
-    .badge {
-      display: inline-block;
-      font: 600 0.78rem/1.2 system-ui, sans-serif;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: #fff;
-      background: #20252d;
-      padding: 0.25rem 0.55rem;
-      border-radius: 4px;
-      margin-bottom: 1rem;
-    }
-    .byline, .meta, footer {
-      font-family: system-ui, sans-serif;
-      color: #4d4d4d;
-    }
-    .abstract {
-      background: #f7f7f7;
-      border-left: 4px solid #2d2d2d;
-      padding: 1rem 1.2rem;
-      margin: 1.5rem 0;
-    }
-    .abstract strong { display: block; margin-bottom: 0.35rem; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.82rem; }
-    .meta {
-      border: 1px solid #e4e4e4;
-      background: #fafafa;
-      border-radius: 4px;
-      padding: 0.9rem 1rem;
-      font-size: 0.88rem;
-      margin-bottom: 2rem;
-    }
-    .env {
-      margin: 1.3rem 0;
-      padding: 0.9rem 1rem;
-      border-left: 4px solid #545454;
-      background: #fbfbfb;
-    }
-    .env strong { display: block; margin-bottom: 0.3rem; font-family: system-ui, sans-serif; font-size: 0.9rem; }
-    .env.definition { border-left-color: #0b57a4; background: #f4f8ff; }
-    .env.proposition { border-left-color: #4a4a4a; }
-    .env.remark { border-left-color: #8b6f00; background: #fffdf5; }
-    .math {
-      font-style: italic;
-      white-space: nowrap;
-    }
-    .display {
-      display: block;
-      text-align: center;
-      margin: 1rem auto;
-      font-style: italic;
-    }
-    figure {
-      margin: 1.5rem 0 2rem;
-      text-align: center;
-    }
-    figure img {
-      max-width: 100%;
-      border: 1px solid #e4e4e4;
-      background: #fff;
-    }
-    figcaption {
-      margin-top: 0.5rem;
-      color: #555;
-      font-size: 0.92rem;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 1.2rem 0;
-      font-size: 0.94rem;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 0.55rem 0.7rem;
-      vertical-align: top;
-    }
-    th {
-      background: #f2f2f2;
-      font-family: system-ui, sans-serif;
-      font-size: 0.85rem;
-      text-align: left;
-    }
-    code { background: #f3f3f3; padding: 0.08rem 0.25rem; border-radius: 3px; }
-    .small { font-size: 0.92rem; color: #555; }
-    .refs li { margin-bottom: 0.55rem; }
-    footer { border-top: 1px solid #ddd; margin-top: 3rem; padding-top: 1.25rem; font-size: 0.85rem; }
-  </style>
+  <link rel="stylesheet" href="../../styles/site.css" />
 </head>
-<body>
-  <header>
+<body class="paper-page">
+  <div class="page-shell">
+  <header class="paper-shell">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a>
+      <span>/</span>
+      <a href="./">qqc-001-foundations</a>
+      <span>/</span>
+      <span aria-current="page">paper.html</span>
+    </nav>
     <div class="badge">RQM Quaternionic Quantum Computing Series · Paper 1</div>
     <h1>Foundations of Quaternionic Quantum Computing: Qubits, Spinors, and SU(2) Geometry</h1>
     <p class="byline">
@@ -141,7 +46,7 @@
     </div>
   </header>
 
-  <main>
+  <main class="paper-shell">
     <h2>1. Introduction</h2>
     <p>Single-qubit quantum mechanics is usually taught in matrix language: states are vectors in C<sup>2</sup>, observables are Hermitian matrices, and gates are unitary matrices. That formulation is complete and standard. The present paper addresses a narrower question of representation. For single-qubit structure, quaternionic notation can expose geometry that matrix notation already contains but often leaves implicit.</p>
     <p>The paper therefore does not propose a replacement for standard quantum mechanics. Its aim is instead to organize a set of familiar facts with unusually explicit distinctions: normalized vectors in C<sup>2</sup>; the unit 3-sphere in that space; pure states modulo global phase; the Bloch sphere; single-qubit gates in U(2); SU(2) representatives after removing overall phase; and the unit quaternions as a model of SU(2).</p>
@@ -301,9 +206,10 @@
     </ol>
   </main>
 
-  <footer>
+  <footer class="paper-shell">
     <p>qqc-001-foundations · version 0.1.0 · draft · license: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p>
-    <p><a href="main.tex">LaTeX source</a> · <a href="paper.pdf">PDF</a> · <a href="metadata.json">metadata</a> · <a href="paper.jats.xml">JATS XML</a></p>
+    <p><a href="./">Package page</a> · <a href="main.tex">LaTeX source</a> · <a href="paper.pdf">PDF</a> · <a href="metadata.json">metadata</a> · <a href="paper.jats.xml">JATS XML</a></p>
   </footer>
+  </div>
 </body>
 </html>

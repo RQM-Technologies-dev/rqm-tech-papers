@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="280" viewBox="0 0 980 280" role="img" aria-labelledby="title desc">
+  <title id="title">Quaternionic gate fusion pipeline</title>
+  <desc id="desc">Pipeline from named single-qubit segment syntax to quaternion translation, fusion by quaternion multiplication, canonicalization, and reconstructed optimized output.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+      <polygon points="0,0 10,4 0,8" fill="#35578a"/>
+    </marker>
+  </defs>
+  <rect width="980" height="280" fill="#ffffff"/>
+  <rect x="35" y="60" width="190" height="110" rx="16" ry="16" fill="#f7fbff" stroke="#35578a" stroke-width="2"/>
+  <text x="130" y="92" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#1f3352">Named segment</text>
+  <text x="130" y="124" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#1f1f1f">Rx(pi/2) ; Rx(pi/2)</text>
+  <text x="130" y="149" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#555">syntax-preserving baseline</text>
+
+  <rect x="275" y="40" width="190" height="150" rx="16" ry="16" fill="#f8fff7" stroke="#3b7541" stroke-width="2"/>
+  <text x="370" y="72" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#244a28">Quaternion IR</text>
+  <text x="370" y="108" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#1f1f1f">qÅ = (2/2, 2/2, 0, 0)</text>
+  <text x="370" y="136" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#1f1f1f">qÇ = (2/2, 2/2, 0, 0)</text>
+  <text x="370" y="167" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#555">translate each gate</text>
+
+  <rect x="515" y="40" width="190" height="150" rx="16" ry="16" fill="#fff8f1" stroke="#a3651f" stroke-width="2"/>
+  <text x="610" y="72" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#6f4512">Fusion + canonicalization</text>
+  <text x="610" y="108" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#1f1f1f">qÇ qÅ = (0, 1, 0, 0)</text>
+  <text x="610" y="136" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#555">normalize if needed</text>
+  <text x="610" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#555">apply sign rule</text>
+
+  <rect x="755" y="60" width="190" height="110" rx="16" ry="16" fill="#f7f5ff" stroke="#6542a4" stroke-width="2"/>
+  <text x="850" y="92" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#442d72">Optimized output</text>
+  <text x="850" y="124" text-anchor="middle" font-family="Georgia, serif" font-size="20" fill="#1f1f1f">X</text>
+  <text x="850" y="149" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#555">named or axis-aware recovery</text>
+
+  <line x1="225" y1="115" x2="275" y2="115" stroke="#35578a" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="465" y1="115" x2="515" y2="115" stroke="#35578a" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="705" y1="115" x2="755" y2="115" stroke="#35578a" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <text x="490" y="235" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#555">
+    Geometry-native optimization pass: multiply adjacent single-qubit representatives in circuit order, canonicalize once, then reconstruct an interpretable result when possible.
+  </text>
+</svg>

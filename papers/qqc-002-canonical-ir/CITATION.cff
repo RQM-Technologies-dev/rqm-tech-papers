@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this paper package, please cite the draft below."
+type: article
+title: "A Canonical Quaternionic Intermediate Representation for Single-Qubit Quantum Circuits"
+version: "0.1.0"
+abstract: "This paper defines a canonical quaternionic intermediate representation for single-qubit circuit segments and specifies deterministic normalization, sign canonicalization, and segment-fusion rules for single-qubit gate action modulo global phase."
+authors:
+  - name: "RQM Technologies Research Team"
+    affiliation: "RQM Technologies"
+license: CC-BY-4.0
+keywords:
+  - quaternionic intermediate representation
+  - single-qubit circuits
+  - compiler IR
+  - SU(2)
+  - unit quaternions
+  - circuit canonicalization
+preferred-citation:
+  type: article
+  title: "A Canonical Quaternionic Intermediate Representation for Single-Qubit Quantum Circuits"
+  authors:
+    - name: "RQM Technologies Research Team"
+      affiliation: "RQM Technologies"
+  year: 2026
+  version: "0.1.0"
+  notes: "Draft paper package in the RQM Quaternionic Quantum Computing Series; no DOI assigned."
