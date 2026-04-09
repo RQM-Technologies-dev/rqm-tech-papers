@@ -9,7 +9,7 @@ Reads all paper folders under papers/ and generates:
   index/glossary.json  — All glossary terms across all papers
 
 Usage:
-    python scripts/generate_index.py [--output-dir OUTPUT_DIR]
+    python3 scripts/generate_index.py [--output-dir OUTPUT_DIR]
 
 Exit codes:
     0 — indexes generated successfully

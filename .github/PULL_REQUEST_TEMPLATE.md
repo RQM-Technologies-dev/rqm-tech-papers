@@ -41,8 +41,8 @@ For each paper folder added or modified, confirm the following:
 - [ ] `abstract` is the verbatim authored abstract
 
 ### Validation
-- [ ] `python scripts/validate_papers.py` passes with no errors
-- [ ] `python scripts/generate_index.py` has been run
+- [ ] `python3 scripts/validate_papers.py` passes with no errors
+- [ ] `python3 scripts/generate_index.py` has been run
 - [ ] Updated `index/` files are committed in this PR
 
 ### Canonical URLs and IDs

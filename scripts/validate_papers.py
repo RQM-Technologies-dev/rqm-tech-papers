@@ -6,7 +6,7 @@ Checks that every paper folder under papers/ contains all required files,
 and validates JSON companion files against their schemas.
 
 Usage:
-    python scripts/validate_papers.py [--paper PAPER_ID]
+    python3 scripts/validate_papers.py [--paper PAPER_ID]
 
 Exit codes:
     0 — all validations passed

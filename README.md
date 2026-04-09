@@ -177,12 +177,12 @@ Each paper folder should also include a short `README.md` that declares the curr
 
 8. **Validate:**
    ```bash
-   python scripts/validate_papers.py
+   python3 scripts/validate_papers.py
    ```
 
 9. **Regenerate indexes:**
    ```bash
-   python scripts/generate_index.py
+   python3 scripts/generate_index.py
    ```
 
 10. **Open a PR** using the paper PR template (`.github/PULL_REQUEST_TEMPLATE.md`).
@@ -192,7 +192,7 @@ Each paper folder should also include a short `README.md` that declares the curr
 Run the validation script to check all paper folders:
 
 ```bash
-python scripts/validate_papers.py
+python3 scripts/validate_papers.py
 ```
 
 This checks:
@@ -204,7 +204,7 @@ This checks:
 Run index generation after adding or updating papers:
 
 ```bash
-python scripts/generate_index.py
+python3 scripts/generate_index.py
 ```
 
 This regenerates `index/papers.json`, `index/claims.json`, `index/notation.json`, and `index/glossary.json`.
