@@ -53,6 +53,21 @@ a:hover {
   text-decoration: underline;
 }
 
+a.series-paper-title-link,
+body.paper-page a.series-paper-title-link,
+body.paper-shell a.series-paper-title-link,
+body.site-body a.series-paper-title-link {
+  color: #202020;
+}
+
+a.series-paper-title-link:hover,
+body.paper-page a.series-paper-title-link:hover,
+body.paper-shell a.series-paper-title-link:hover,
+body.site-body a.series-paper-title-link:hover {
+  color: #202020;
+  text-decoration: underline;
+}
+
 .page,
 .site-page,
 .site-shell,
