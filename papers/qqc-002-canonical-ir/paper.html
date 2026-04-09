@@ -4,25 +4,73 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>A Canonical Quaternionic Intermediate Representation for Single-Qubit Quantum Circuits</title>
-  <meta
-    name="description"
-    content="Compiler-facing draft defining a canonical quaternionic intermediate representation for single-qubit circuit segments modulo global phase."
-  />
+  <meta name="description" content="This paper defines a canonical quaternionic intermediate representation for single-qubit circuit segments. Building on the fixed quaternion-SU(2) correspondence established in qqc-001-foundations, it treats the physically relevant action of a single-qubit gate modulo global phase by first choosing an SU(2) representative and then representing that representative by a unit quaternion q = w + x i + y j + z k. The paper introduces a compiler-facing IR object u1q(w, x, y, z), formalizes its unit-norm and sign-ambiguity constraints, and defines deterministic normalization and canonicalization rules. The canonical representative is chosen from {q, -q} by a closed-hemisphere convention w &gt; 0, together with an explicit equatorial tie-break when w = 0. This yields a shortest-geodesic, deterministic internal form suitable for fusion and rewrite pipelines. Explicit translations are given for the identity, Pauli gates, H, S, T and their adjoints, and axis rotations Rx(theta), Ry(theta), Rz(theta). Composition of adjacent single-qubit gates is shown to correspond to quaternion multiplication followed by re-canonicalization, and worked examples illustrate the relation between named gate syntax, canonical IR, and single-qubit segments extracted from larger circuits. The scope is limited to single-qubit gate action modulo global phase; no multi-qubit IR, optimization guarantee, or hardware claim is made." />
   <meta name="author" content="John G. Van Geem" />
-  <meta
-    name="keywords"
-    content="quantum intermediate representation, single-qubit circuits, unit quaternions, SU(2), canonicalization, compiler IR"
-  />
-  <meta
-    name="citation_title"
-    content="A Canonical Quaternionic Intermediate Representation for Single-Qubit Quantum Circuits"
-  />
+  <meta name="keywords" content="quaternionic intermediate representation, single-qubit circuits, compiler IR, SU(2), unit quaternions, circuit canonicalization" />
+  <meta name="citation_title" content="A Canonical Quaternionic Intermediate Representation for Single-Qubit Quantum Circuits" />
   <meta name="citation_author" content="John G. Van Geem" />
   <meta name="citation_pdf_url" content="paper.pdf" />
-  <link rel="canonical" href="./" />
   <link rel="alternate" type="application/json" href="metadata.json" title="Paper metadata" />
   <link rel="alternate" type="application/xml" href="paper.jats.xml" title="JATS XML" />
   <link rel="stylesheet" href="../../styles/site.css" />
+  <script>
+window.MathJax = {
+  "tex": {
+    "inlineMath": [
+      [
+        "\\(",
+        "\\)"
+      ]
+    ],
+    "displayMath": [
+      [
+        "\\[",
+        "\\]"
+      ]
+    ],
+    "macros": {
+      "R": "\\mathbb{R}",
+      "C": "\\mathbb{C}",
+      "HH": "\\mathbb{H}",
+      "SU": "\\mathrm{SU}",
+      "U": "\\mathrm{U}",
+      "Id": "I",
+      "ii": "\\mathbf{i}",
+      "jj": "\\mathbf{j}",
+      "kk": "\\mathbf{k}",
+      "norm": [
+        "\\left\\lVert #1 \\right\\rVert",
+        1
+      ],
+      "abs": [
+        "\\left\\lvert #1 \\right\\rvert",
+        1
+      ],
+      "set": [
+        "\\left\\{ #1 \\right\\}",
+        1
+      ],
+      "canon": "\\operatorname{Can}",
+      "normalize": "\\operatorname{Norm}",
+      "sgncanon": "\\operatorname{SignCan}",
+      "uoneq": "\\mathrm{u1q}",
+      "firstnz": "\\operatorname{firstnz}"
+    },
+    "processEscapes": true
+  },
+  "options": {
+    "skipHtmlTags": [
+      "script",
+      "noscript",
+      "style",
+      "textarea",
+      "pre",
+      "code"
+    ]
+  }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </head>
 <body class="paper-page">
   <div class="page-shell">
@@ -30,211 +78,205 @@
       <nav class="breadcrumb" aria-label="Breadcrumb">
         <a href="../../index.html">Home</a>
         <span>/</span>
-        <a href="./">qqc-002-canonical-ir</a>
+        <a href="/papers/qqc-002-canonical-ir/">qqc-002-canonical-ir</a>
         <span>/</span>
         <span aria-current="page">paper.html</span>
       </nav>
       <div class="badge">RQM Quaternionic Quantum Computing Series · Paper 2</div>
-      <h1>A Canonical Quaternionic Intermediate Representation for Single-Qubit Quantum Circuits</h1>
-      <p class="byline">
-        John G. Van Geem<br />
-        RQM Technologies<br />
-        orcid: 0009-0002-4003-8452
-      </p>
+      <h1><strong>A Canonical Quaternionic Intermediate Representation</strong><br />
+for Single-Qubit Quantum Circuits</h1>
+      <p class="byline">John G. Van Geem<br />
+RQM Technologies<br />
+orcid: 0009-0002-4003-8452</p>
 
       <div class="abstract">
         <strong>Abstract</strong>
-        <p>This paper defines a canonical quaternionic intermediate representation for single-qubit circuit segments. Building on the fixed SU(2)-to-quaternion convention established in qqc-001-foundations, we model a single-qubit gate action modulo global phase by a unit quaternion q = w + x i + y j + z k, recorded as a four-real IR object u1q = (w, x, y, z). The paper distinguishes carefully between gates as elements of U(2), representative elements of SU(2) after removal of global phase, and deterministic compiler-facing canonical representatives selected from the sign-equivalent pair {q, -q}. A normalization map, a sign-canonicalization rule, and a shortest-geodesic hemisphere convention are defined, including an explicit tie-break on the equator w = 0. The resulting IR is intended for deterministic representation, safe fusion of adjacent single-qubit gates, and stable translation from named gate syntax into a canonical internal form. The scope is limited to single-qubit circuit segments between entangling boundaries. No claim is made about hardware advantage, multi-qubit ontology, universal compiler superiority, or replacement of standard matrix methods.</p>
+        <p>This paper defines a canonical quaternionic intermediate representation for single-qubit circuit segments. Building on the fixed quaternion--\(\SU(2)\) correspondence established in <code>qqc-001-foundations</code>, it treats the physically relevant action of a single-qubit gate modulo global phase by first choosing an \(\SU(2)\) representative and then representing that representative by a unit quaternion</p>
+<div class="display">\[q = w + x\ii + y\jj + z\kk.\]</div>
+<p>The paper introduces a compiler-facing IR object</p>
+<div class="display">\[\uoneq(w,x,y,z),\]</div>
+<p>formalizes its unit-norm and sign-ambiguity constraints, and defines deterministic normalization and canonicalization rules. The canonical representative is chosen from \(\set{q,-q}\) by a closed-hemisphere convention \(w>0\), together with an explicit equatorial tie-break when \(w=0\). This yields a shortest-geodesic, deterministic internal form suitable for fusion and rewrite pipelines. Explicit translations are given for the identity, Pauli gates, \(H\), \(S\), \(T\) and their adjoints, and axis rotations \(R_x(\theta), R_y(\theta), R_z(\theta)\). Composition of adjacent single-qubit gates is shown to correspond to quaternion multiplication followed by re-canonicalization, and worked examples illustrate the relation between named gate syntax, canonical IR, and single-qubit segments extracted from larger circuits. The scope is limited to single-qubit gate action modulo global phase; no multi-qubit IR, optimization guarantee, or hardware claim is made.</p>
       </div>
 
       <div class="meta">
         <div><strong>Paper ID:</strong> qqc-002-canonical-ir · <strong>Version:</strong> 0.1.0 · <strong>Status:</strong> draft · <strong>Last updated:</strong> 2026-04-09</div>
-        <div><strong>Depends on:</strong> <a href="../qqc-001-foundations/">qqc-001-foundations</a></div>
-        <div><strong>Keywords:</strong> quantum intermediate representation; single-qubit circuits; unit quaternions; SU(2); canonicalization; compiler IR</div>
-        <div><strong>Companion files:</strong> <a href="./">package index</a>, <a href="main.tex">main.tex</a>, <a href="paper.pdf">paper.pdf</a>, <a href="metadata.json">metadata.json</a>, <a href="paper.jats.xml">paper.jats.xml</a>, <a href="claims.json">claims.json</a>, <a href="notation.json">notation.json</a>, <a href="glossary.json">glossary.json</a>, <a href="references.bib">references.bib</a>, <a href="CITATION.cff">CITATION.cff</a></div>
+        <div><strong>Depends on:</strong> <a href="/papers/qqc-001-foundations/">qqc-001-foundations</a></div>
+        <div><strong>Keywords:</strong> quaternionic intermediate representation; single-qubit circuits; compiler IR; SU(2); unit quaternions; circuit canonicalization</div>
+        <div><strong>Companion files:</strong> <a href="/papers/qqc-002-canonical-ir/">package index</a>, <a href="/papers/qqc-002-canonical-ir/main.tex">main.tex</a>, <a href="/papers/qqc-002-canonical-ir/paper.pdf">paper.pdf</a>, <a href="/papers/qqc-002-canonical-ir/metadata.json">metadata.json</a>, <a href="/papers/qqc-002-canonical-ir/paper.jats.xml">paper.jats.xml</a>, <a href="/papers/qqc-002-canonical-ir/claims.json">claims.json</a>, <a href="/papers/qqc-002-canonical-ir/notation.json">notation.json</a>, <a href="/papers/qqc-002-canonical-ir/glossary.json">glossary.json</a>, <a href="/papers/qqc-002-canonical-ir/references.bib">references.bib</a>, <a href="/papers/qqc-002-canonical-ir/CITATION.cff">CITATION.cff</a></div>
       </div>
     </header>
 
     <main class="paper-shell">
       <h2>1. Introduction</h2>
-      <p>The first paper in this series established the fixed mathematical convention used here: after removing overall phase, a single-qubit gate action may be represented by an element of SU(2), and under a chosen standard map <span class="math">Φ</span> that element corresponds exactly to a unit quaternion. The present paper moves from language to infrastructure. Its purpose is to define a deterministic internal representation for single-qubit circuit structure rather than to restate quaternionic geometry for its own sake.</p>
-      <p>Compiler pipelines need internal forms that separate semantic equivalence from surface syntax. A gate list such as <code>H ; T ; Rz(pi/3)</code> is useful as source-level notation, but it is not canonical. Distinct spellings can represent the same single-qubit action modulo global phase, and even a fixed matrix representation carries a sign ambiguity after passage from U(2) to SU(2). A compiler-facing IR must therefore do more than preserve meaning; it must also choose a deterministic representative.</p>
-      <p>This paper defines a canonical single-qubit IR element called <span class="math">u1q</span>. Informally, <span class="math">u1q</span> stores four real numbers <span class="math">(w, x, y, z)</span> satisfying <span class="math">w<sup>2</sup> + x<sup>2</sup> + y<sup>2</sup> + z<sup>2</sup> = 1</span>, interpreted as the unit quaternion <span class="math">q = w + x i + y j + z k</span>. Because the induced single-qubit action modulo global phase is unchanged by <span class="math">q ↦ -q</span>, the paper supplements the raw quaternion representation with a canonicalization rule that chooses one representative from each pair <span class="math">{q, -q}</span>.</p>
-      <p>The intended use is narrow and practical. The IR applies only to single-qubit circuit segments: consecutive single-qubit gates on one wire between entangling boundaries. It does not describe the internals of entangling gates, and it does not claim to be a complete universal multi-qubit circuit IR. The contribution is a representation layer suitable for deterministic translation, fusion, comparison, and rewrite logic on single-qubit structure.</p>
-
-      <h2>2. Background and dependency on paper 1</h2>
-      <p>Single-qubit gates live fundamentally in <span class="math">U(2)</span>. As shown in qqc-001-foundations, every gate <span class="math">U ∈ U(2)</span> admits a representative <span class="math">V ∈ SU(2)</span> after removal of overall phase, and that representative is unique up to multiplication by <span class="math">-1</span>. Under the fixed convention</p>
-      <span class="display">Φ(w + x i + y j + z k) = w I - i (x σ<sub>x</sub> + y σ<sub>y</sub> + z σ<sub>z</sub>)</span>
-      <p>the unit quaternions form a Lie-group model of <span class="math">SU(2)</span>. Composition of representative gates corresponds to quaternion multiplication. The present paper adopts that convention without change.</p>
-      <div class="env remark">
-        <strong>Remark.</strong>
-        The IR defined here models single-qubit gate action <em>modulo global phase</em>. It is therefore not a direct encoding of arbitrary elements of <span class="math">U(2)</span>, but of the sign-equivalence classes of determinant-one representatives in <span class="math">SU(2)</span>.
-      </div>
-
-      <figure>
-        <img src="artifacts/figures/fig-ir-pipeline.svg" alt="Pipeline from named single-qubit syntax to SU(2) representative to quaternion IR and canonical representative." />
-        <figcaption>Named gate syntax is not itself canonical. The IR first passes through the standard SU(2) representative, then into quaternion coordinates, and finally through deterministic canonicalization.</figcaption>
-      </figure>
-
-      <h2>3. Definition of the canonical quaternionic IR</h2>
-      <div class="env definition">
-        <strong>Definition 3.1.</strong>
-        A <em>quaternionic single-qubit IR element</em>, written <span class="math">u1q</span>, is a quadruple <span class="math">(w, x, y, z) ∈ R<sup>4</sup></span> with unit norm <span class="math">w<sup>2</sup> + x<sup>2</sup> + y<sup>2</sup> + z<sup>2</sup> = 1</span>, interpreted as the unit quaternion <span class="math">q = w + x i + y j + z k</span>.
-      </div>
-      <p>Under the fixed map <span class="math">Φ</span>, the quaternion <span class="math">q</span> represents an <span class="math">SU(2)</span> element, hence a single-qubit gate action modulo global phase. The IR is therefore a semantic representation of single-qubit action rather than a direct preservation of source-level gate names.</p>
-      <div class="env definition">
-        <strong>Definition 3.2.</strong>
-        Two unit quaternions <span class="math">q</span> and <span class="math">q'</span> are <em>IR-equivalent</em>, written <span class="math">q ~ q'</span>, if <span class="math">q' = q</span> or <span class="math">q' = -q</span>.
-      </div>
-      <div class="env proposition">
-        <strong>Proposition 3.3.</strong>
-        The equivalence relation <span class="math">q ~ -q</span> is exactly the ambiguity induced by passing from a single-qubit gate in <span class="math">U(2)</span> to an <span class="math">SU(2)</span> representative and then to a unit quaternion under the fixed convention <span class="math">Φ</span>.
-      </div>
-      <p>The proof is the same sign ambiguity already present in qqc-001-foundations: if <span class="math">V ∈ SU(2)</span> is a representative, then <span class="math">-V</span> induces the same physical single-qubit action on pure states, and under <span class="math">Φ</span> the two representatives correspond to <span class="math">q</span> and <span class="math">-q</span>.</p>
-
-      <figure>
-        <img src="artifacts/figures/fig-hemisphere-canonicalization.svg" alt="Schematic of antipodal identification q equivalent to minus q on S3 and the chosen canonical hemisphere." />
-        <figcaption>The IR quotient identifies antipodal points <span class="math">q</span> and <span class="math">-q</span> on the unit 3-sphere. Canonicalization chooses one deterministic representative, primarily by the rule <span class="math">w &gt; 0</span> and secondarily by an equator tie-break.</figcaption>
-      </figure>
-
-      <h2>4. Canonicalization rules</h2>
-      <p>A raw quaternion coordinate tuple is not yet a canonical IR value. In implementation settings, floating-point drift may perturb unit norm, and the pair <span class="math">{q, -q}</span> leaves a sign ambiguity. This section defines the deterministic map used to produce canonical representatives.</p>
-      <div class="env definition">
-        <strong>Definition 4.1.</strong>
-        For a nonzero quaternion <span class="math">q</span>, the <em>normalization map</em> is
-        <span class="display">N(q) = q / ||q||.</span>
-        In exact mathematics, <span class="math">N</span> is unnecessary when <span class="math">q</span> is already unit; in floating-point implementations it repairs small norm drift before further canonicalization.
-      </div>
-      <div class="env definition">
-        <strong>Definition 4.2.</strong>
-        Let <span class="math">q = (w, x, y, z)</span> be a unit quaternion. The <em>sign-canonicalization map</em> <span class="math">S(q)</span> is defined by:
-      </div>
-      <ul>
-        <li>If <span class="math">w &gt; 0</span>, set <span class="math">S(q) = q</span>.</li>
-        <li>If <span class="math">w &lt; 0</span>, set <span class="math">S(q) = -q</span>.</li>
-        <li>If <span class="math">w = 0</span>, inspect <span class="math">(x, y, z)</span> in lexicographic order and choose the sign for which the first nonzero component is positive.</li>
-        <li>If <span class="math">q = (\pm 1, 0, 0, 0)</span>, the rule leaves the identity class at <span class="math">(1, 0, 0, 0)</span>.</li>
-      </ul>
-      <div class="env definition">
-        <strong>Definition 4.3.</strong>
-        The <em>canonical representative map</em> is <span class="math">C(q) = S(N(q))</span> for every nonzero quaternion <span class="math">q</span>.
-      </div>
-      <div class="env proposition">
-        <strong>Proposition 4.4.</strong>
-        The map <span class="math">C</span> is constant on each equivalence class <span class="math">{q, -q}</span> of nonzero quaternions and therefore defines a unique canonical representative for each single-qubit gate action modulo global phase.
-      </div>
-      <p>The proof is immediate from the construction. Normalization preserves sign pairs, and the sign rule explicitly chooses one side of the pair. The hemisphere rule <span class="math">w &gt; 0</span> implements a shortest-geodesic convention on <span class="math">S<sup>3</sup></span>; the equatorial tie-break is needed because <span class="math">w = 0</span> alone does not distinguish <span class="math">q</span> from <span class="math">-q</span>.</p>
-      <div class="env remark">
-        <strong>Remark.</strong>
-        The equator rule is a canonicalization convention, not a physical statement. It resolves representation ambiguity only so that a compiler can store and compare a deterministic normal form.
-      </div>
-
-      <h2>5. Translation from named gates into quaternion IR</h2>
-      <p>Source-level circuits usually arrive as named gates or parameterized rotation syntax. The purpose of translation is to map that syntax into semantic single-qubit actions and then into canonical <span class="math">u1q</span> tuples.</p>
-      <div class="env proposition">
-        <strong>Proposition 5.1.</strong>
-        Under the fixed convention <span class="math">Φ</span>, the standard single-qubit rotation families translate to
-        <span class="display">R<sub>x</sub>(θ) ↦ (cos(θ/2), sin(θ/2), 0, 0),</span>
-        <span class="display">R<sub>y</sub>(θ) ↦ (cos(θ/2), 0, sin(θ/2), 0),</span>
-        <span class="display">R<sub>z</sub>(θ) ↦ (cos(θ/2), 0, 0, sin(θ/2)).</span>
-      </div>
-      <p>Special gates are obtained by substitution and then canonicalization where needed. The table below records the resulting canonical representatives.</p>
-      <table>
-        <thead>
-          <tr><th>Gate</th><th>Representative quaternion</th><th>Canonical <span class="math">u1q</span></th></tr>
-        </thead>
-        <tbody>
-          <tr><td><span class="math">I</span></td><td><span class="math">1</span></td><td><span class="math">(1, 0, 0, 0)</span></td></tr>
-          <tr><td><span class="math">X</span></td><td><span class="math">i</span></td><td><span class="math">(0, 1, 0, 0)</span></td></tr>
-          <tr><td><span class="math">Y</span></td><td><span class="math">j</span></td><td><span class="math">(0, 0, 1, 0)</span></td></tr>
-          <tr><td><span class="math">Z</span></td><td><span class="math">k</span></td><td><span class="math">(0, 0, 0, 1)</span></td></tr>
-          <tr><td><span class="math">H</span></td><td><span class="math">(i + k) / sqrt(2)</span></td><td><span class="math">(0, 1/sqrt(2), 0, 1/sqrt(2))</span></td></tr>
-          <tr><td><span class="math">S</span></td><td><span class="math">(1 + k) / sqrt(2)</span></td><td><span class="math">(sqrt(2)/2, 0, 0, sqrt(2)/2)</span></td></tr>
-          <tr><td><span class="math">S†</span></td><td><span class="math">(1 - k) / sqrt(2)</span></td><td><span class="math">(sqrt(2)/2, 0, 0, -sqrt(2)/2)</span></td></tr>
-          <tr><td><span class="math">T</span></td><td><span class="math">cos(pi/8) + k sin(pi/8)</span></td><td><span class="math">(cos(pi/8), 0, 0, sin(pi/8))</span></td></tr>
-          <tr><td><span class="math">T†</span></td><td><span class="math">cos(pi/8) - k sin(pi/8)</span></td><td><span class="math">(cos(pi/8), 0, 0, -sin(pi/8))</span></td></tr>
-        </tbody>
-      </table>
-      <div class="env remark">
-        <strong>Remark.</strong>
-        Named syntax and canonical IR are different layers. The strings <code>Z ; S ; T</code> and a fused canonical tuple carry the same single-qubit action modulo global phase, but only the latter is intended as a stable internal normal form.
-      </div>
-
-      <figure>
-        <img src="artifacts/figures/fig-ir-pipeline.svg" alt="Pipeline-style figure summarizing representative canonical quaternion mappings and translation into u1q." />
-        <figcaption>Representative canonical <span class="math">u1q</span> entries for common named gates. Parameterized rotations are handled by the axis-specific half-angle formulas before canonicalization.</figcaption>
-      </figure>
-
-      <h2>6. Composition and segment representation</h2>
-      <div class="env definition">
-        <strong>Definition 6.1.</strong>
-        A <em>single-qubit segment</em> is a maximal consecutive run of single-qubit gates acting on one wire between two entangling boundaries, or between an entangling boundary and the circuit boundary.
-      </div>
-      <p>Within such a segment, adjacent single-qubit gates may be fused by quaternion multiplication.</p>
-      <div class="env proposition">
-        <strong>Proposition 6.2.</strong>
-        If two adjacent segment elements are represented by canonical IR values <span class="math">u1q(q<sub>1</sub>)</span> and <span class="math">u1q(q<sub>2</sub>)</span>, then their sequential composition is represented by <span class="math">C(q<sub>2</sub> q<sub>1</sub>)</span>.
-      </div>
-      <p>The order matters: the first gate applied to the state appears on the right in quaternion multiplication, matching matrix composition under <span class="math">Φ(q<sub>2</sub> q<sub>1</sub>) = Φ(q<sub>2</sub>) Φ(q<sub>1</sub>)</span>.</p>
-      <figure>
-        <img src="artifacts/figures/fig-segment-extraction.svg" alt="Two-wire circuit diagram showing a single-qubit segment bounded by entangling gates on one wire." />
-        <figcaption>The paper does not model entangling gates internally. It models the single-qubit run between them as a segment that can be translated and fused into a canonical quaternionic IR value.</figcaption>
-      </figure>
-
-      <h2>7. Worked examples</h2>
-      <h3>7.1 Example: <code>H ; T ; Rz(pi/3)</code></h3>
-      <p>The gate list translates to</p>
-      <ul>
-        <li><span class="math">H ↦ (0, 1/sqrt(2), 0, 1/sqrt(2))</span></li>
-        <li><span class="math">T ↦ (cos(pi/8), 0, 0, sin(pi/8))</span></li>
-        <li><span class="math">R<sub>z</sub>(pi/3) ↦ (cos(pi/6), 0, 0, sin(pi/6))</span></li>
-      </ul>
-      <p>Multiplying in application order and canonicalizing gives the fused representative</p>
-      <span class="display">(0.560985526797, -0.430459334577, -0.560985526797, -0.430459334577).</span>
-      <p>This tuple is deterministic under the sign rule even though the same gate action could also be written by the negative quaternion.</p>
-
-      <h3>7.2 Example: <code>Rx(pi/2) ; Ry(pi/2)</code></h3>
-      <p>The two gates translate to <span class="math">(sqrt(2)/2, sqrt(2)/2, 0, 0)</span> and <span class="math">(sqrt(2)/2, 0, sqrt(2)/2, 0)</span>. Their product canonicalizes to</p>
-      <span class="display">(0.5, 0.5, 0.5, -0.5).</span>
-      <p>The representation is shorter than an equivalent named-gate string and is already ready for equality comparison or further fusion.</p>
-
-      <h3>7.3 Example: <code>Z ; S ; T</code></h3>
-      <p>Here the first gate lies on the equator <span class="math">w = 0</span>, so the example exercises the tie-break convention implicitly. The fused canonical representative is</p>
-      <span class="display">(0.923879532511, 0, 0, -0.382683432365).</span>
-      <p>The negative of this tuple is semantically equivalent but rejected by the canonicalization rule because it lies in the opposite hemisphere.</p>
-
-      <h3>7.4 Example: segment extraction in a two-qubit circuit</h3>
-      <p>Consider the circuit fragment</p>
-      <pre><code>q0: ── H ── T ──●────── T† ── Rx(pi/4) ──
-q1: ─────────────X────────────────────────</code></pre>
-      <p>The paper does not attempt to encode the controlled-NOT. Instead it extracts two single-qubit segments on <span class="math">q0</span>:</p>
-      <ul>
-        <li>segment A: <code>H ; T</code> with canonical fused tuple <span class="math">(0.270598050073, -0.653281482438, -0.270598050073, -0.653281482438)</span></li>
-        <li>segment B: <code>T† ; Rx(pi/4)</code> with canonical fused tuple <span class="math">(0.853553390593, 0.353553390593, 0.146446609407, -0.353553390593)</span></li>
-      </ul>
-      <p>This illustrates the intended scope: entangling gates are boundaries, while the single-qubit runs between them are translated into the canonical IR.</p>
-
-      <h2>8. Standard mathematics vs. RQM Technologies framing</h2>
-      <h3>8.1 Standard facts used here</h3>
-      <p>The following are standard rather than project-specific: single-qubit gates live in <span class="math">U(2)</span>; modulo global phase they admit representatives in <span class="math">SU(2)</span>; unit quaternions form a Lie-group model of <span class="math">SU(2)</span>; and composition of representatives corresponds to quaternion multiplication under a fixed convention.</p>
-      <h3>8.2 Project-specific IR choices</h3>
-      <p>The project-specific contribution of this paper is the compiler-facing representation design: choosing the <span class="math">u1q</span> record format, requiring deterministic normalization and sign canonicalization, preferring the shortest-geodesic hemisphere <span class="math">w ≥ 0</span>, and fixing a lexicographic equator tie-break. These are engineering conventions for a canonical IR, not claims of new mathematics.</p>
-
-      <h2>9. Scope, limitations, and non-claims</h2>
-      <ul>
-        <li>This paper defines only a single-qubit representation layer.</li>
-        <li>It does not define a full multi-qubit quaternionic circuit IR.</li>
-        <li>It does not model the internals of entangling gates.</li>
-        <li>It does not prove optimization advantage, runtime advantage, or compiler superiority.</li>
-        <li>It does not replace standard matrix methods or existing SDKs.</li>
-        <li>It does not provide a full compiler implementation or execution backend.</li>
-      </ul>
-
-      <h2>10. Conclusion</h2>
-      <p>The paper's claim is modest and infrastructural. For single-qubit circuit segments, a deterministic quaternionic IR provides a clean canonical layer between named gate syntax and rewrite logic. Because the IR stores representative <span class="math">SU(2)</span> data modulo global phase in a canonicalized quaternion form, it is suitable for stable translation, fusion, and equivalence handling without changing the underlying physics or denying the standard matrix formulation.</p>
-
-      <h2>Appendix A. Implementation notes</h2>
-      <p>In floating-point settings, normalization should be applied with a small threshold to reject the zero quaternion as invalid IR data. The sign rule should use a tolerance when testing whether <span class="math">w = 0</span>, then fall back to the first nonzero component of <span class="math">(x, y, z)</span>. This avoids unstable behavior near the equator while preserving deterministic output.</p>
+<p>The first paper in this series, <code>qqc-001-foundations</code>, established a conservative mathematical point: after removal of overall phase, a single-qubit gate admits a representative in \(\SU(2)\), and under a fixed standard convention that representative is modeled exactly by a unit quaternion. The present paper moves that statement from mathematical language into software architecture language. Its purpose is to specify a deterministic internal representation for <em>single-qubit circuit structure</em>.</p>
+<p>Compiler pipelines need internal forms that are more rigid than frontend surface syntax. Real circuit languages expose named gates, parameters, control flow, and scheduling constructs <a href="#ref-cross2022">[1]</a>, <a href="#ref-smith2016">[5]</a>. That is appropriate at the program boundary, but it does not by itself supply a canonical representation of single-qubit action. Distinct textual gate lists may denote the same physical action modulo global phase. Likewise, two distinct \(\SU(2)\) representatives may differ only by sign. A simplifier or merger that operates only on gate names therefore has to recover equivalence information that is not explicit in the syntax.</p>
+<p>The claim of this paper is modest. It does not propose a new quantum language, and it does not deny the standard matrix formulation of single-qubit gates. Instead, it defines a canonical intermediate representation layer for single-qubit gate segments. The representation is quaternionic because the quaternion model makes composition and sign ambiguity explicit while remaining exactly equivalent to the standard \(\SU(2)\) representative after global phase has been removed.</p>
+<p>The resulting object is called \(\uoneq\). It is a quadruple</p>
+<div class="display">\[(w,x,y,z)\in\R^4,\qquad w^2+x^2+y^2+z^2=1,\]</div>
+<p>interpreted as the unit quaternion \(q=w+x\ii+y\jj+z\kk\). Canonicalization is then a separate deterministic step: normalize, resolve the sign ambiguity \(q\sim -q\), and choose a unique representative on a closed hemisphere of \(S^3\). This produces an internal form that is suitable for gate fusion, equality checks, and segment-level rewrites.</p>
+<p>The scope is limited to single-qubit circuits only. Entangling gates appear only as boundaries that terminate single-qubit segments. No claim is made about multi-qubit quaternionic ontologies, backend execution, or performance advantage.</p>
+<h2>2. Background and dependency on paper 1</h2>
+<h3>2.1 Gates, phase, and the fixed convention</h3>
+<p>We carry forward without modification the convention fixed in <code>qqc-001-foundations</code>. Single-qubit gates live fundamentally in \(\U(2)\). Physical pure-state action is unchanged if a gate is multiplied by an overall phase. The IR defined here therefore models single-qubit gate action <em>modulo global phase</em>.</p>
+<div class="env proposition"><strong>Proposition 2.1. Single-qubit gates admit \(\SU(2)\) representatives.</strong><p>For every \(U\in\U(2)\) there exist \(\chi\in\R\) and \(V\in\SU(2)\) such that</p>
+<div class="display">\[U=e^{i\chi}V.\]</div>
+<p>The representative \(V\) is unique up to multiplication by \(-1\).</p></div>
+<div class="proof"><p>This is the same determinant-removal argument used in <code>qqc-001-foundations</code>. Choose \(\chi\) such that \(e^{2i\chi}=\det U\). Then \(V=e^{-i\chi}U\) has determinant \(1\), so \(V\in\SU(2)\). Any second determinant-one representative differs from \(V\) by a phase whose square is \(1\), hence by \(\pm 1\).</p></div>
+<p>The quaternion convention is also inherited from paper 1:</p>
+<div class="display" id="eq:phi">\[\Phi(a+b\ii+c\jj+d\kk)=
+\begin{pmatrix}
+a-di & -c-bi \\
+c-bi & a+di
+\end{pmatrix}
+=
+a\Id-i(b\sigma_x+c\sigma_y+d\sigma_z).\]</div>
+<p>Under this convention the quaternion basis units align directly with the Pauli axes:</p>
+<div class="display">\[\Phi(\ii)=-i\sigma_x,\qquad \Phi(\jj)=-i\sigma_y,\qquad \Phi(\kk)=-i\sigma_z.\]</div>
+<div class="env proposition"><strong>Proposition 2.2. Unit quaternions model \(\SU(2)\).</strong><p>The restriction of \(\Phi\) to the unit quaternions</p>
+<div class="display">\[\mathrm{Sp}(1)=\set{q\in\HH:\abs{q}=1}\]</div>
+<p>is a Lie-group isomorphism from \(\mathrm{Sp}(1)\) onto \(\SU(2)\).</p></div>
+<div class="proof"><p>This is the standard result established in paper 1. The key points are that \(\Phi\) preserves the quaternion multiplication rules and that \(\det \Phi(q)=\abs{q}^2\).</p></div>
+<div class="env proposition"><strong>Corollary 2.3. The only ambiguity is \(q\sim -q\).</strong><p>If \(q,q'\in\mathrm{Sp}(1)\) represent the same single-qubit gate action modulo global phase under the convention (<a href="#eq:phi">eq:phi</a>), then \(q'=q\) or \(q'=-q\).</p></div>
+<div class="proof"><p>By the previous proposition, unit quaternions correspond bijectively to \(\SU(2)\) elements. By the first proposition, the \(\SU(2)\) representative of a single-qubit gate action is unique up to sign.</p></div>
+<h3>2.2 Why this matters for compilers</h3>
+<p>From a compiler perspective, the point of the previous subsection is simple. Named gate syntax and canonical IR are different layers.</p>
+<ul><li><p>A frontend may say <code>H ; T ; Rz(pi/3)</code> or some equivalent language surface.</p></li><li><p>The compiler may first translate each gate into a unit quaternion.</p></li><li><p>The compiler may then compose adjacent single-qubit gates by quaternion multiplication.</p></li><li><p>The compiler may finally store only the resulting canonical \(\uoneq(w,x,y,z)\) tuple.</p></li></ul>
+<p>This is not a change of mathematics. It is a change of internal representation.</p>
+<h2>3. Definition of the canonical quaternionic IR</h2>
+<div class="env definition"><strong>Definition 3.1. Global-phase equivalence on \(\U(2)\).</strong><p>For single-qubit gates \(U,V\in\U(2)\), write</p>
+<div class="display">\[U\sim_{\mathrm{gp}} V\]</div>
+<p>if there exists \(\chi\in\R\) such that \(U=e^{i\chi}V\).</p></div>
+<div class="env definition"><strong>Definition 3.2. Quaternionic single-qubit IR element.</strong><p>A <em>quaternionic single-qubit IR element</em>, written</p>
+<div class="display">\[\uoneq(w,x,y,z),\]</div>
+<p>is a quadruple of real numbers satisfying</p>
+<div class="display">\[w^2+x^2+y^2+z^2=1.\]</div>
+<p>It is interpreted as the unit quaternion</p>
+<div class="display">\[q=w+x\ii+y\jj+z\kk\in\mathrm{Sp}(1),\]</div>
+<p>and therefore, under (<a href="#eq:phi">eq:phi</a>), as an \(\SU(2)\) representative of a single-qubit gate action modulo global phase.</p></div>
+<div class="env remark"><strong>Remark 3.3.</strong><p>The IR stores a representative of the physical single-qubit action, not the full \(\U(2)\) gate with its arbitrary global phase. This is why the natural ambiguity is the sign pair \(\set{q,-q}\) rather than an arbitrary complex phase.</p></div>
+<div class="env definition"><strong>Definition 3.4. Equivalence relation on unit quaternions.</strong><p>For unit quaternions \(q,q'\in\mathrm{Sp}(1)\), write</p>
+<div class="display">\[q\sim_{\pm} q'\]</div>
+<p>if \(q'=q\) or \(q'=-q\).</p></div>
+<div class="env definition"><strong>Definition 3.5. Single-qubit segment.</strong><p>A <em>single-qubit segment</em> on wire \(a\) is a maximal consecutive run of gates that act only on wire \(a\), bounded on either side by the beginning or end of the circuit, or by an operation that is outside the single-qubit unitary model for that wire. In particular, an entangling gate touching wire \(a\) terminates the segment.</p></div>
+<h2>4. Canonicalization rules</h2>
+<h3>4.1 Normalization</h3>
+<p>Exact mathematics lives on the unit sphere \(\mathrm{Sp}(1)\subset\R^4\), but software implementations often carry floating-point drift.</p>
+<div class="env definition"><strong>Definition 4.1. Normalization map.</strong><p>For any nonzero quadruple</p>
+<div class="display">\[\tilde q=(\tilde w,\tilde x,\tilde y,\tilde z)\in\R^4\setminus\set{0},\]</div>
+<p>define</p>
+<div class="display">\[\normalize(\tilde q)=\frac{\tilde q}{\norm{\tilde q}},
+\qquad
+\norm{\tilde q}=\sqrt{\tilde w^2+\tilde x^2+\tilde y^2+\tilde z^2}.\]</div></div>
+<div class="env remark"><strong>Remark 4.2.</strong><p>The zero quadruple does not represent any gate action and is therefore outside the domain of canonicalization.</p></div>
+<h3>4.2 Sign canonicalization</h3>
+<p>The quotient ambiguity \(q\sim_{\pm}-q\) must be resolved deterministically.</p>
+<div class="env definition"><strong>Definition 4.3. Canonical hemisphere.</strong><p>Let \(\mathcal{H}_{\mathrm{can}}\subset \mathrm{Sp}(1)\) be the set of unit quaternions satisfying either</p>
+<ol type="a"><li><p>\(w>0\), or</p></li><li><p>\(w=0\) and the first nonzero component among \((x,y,z)\) is positive.</p></li></ol></div>
+<div class="env definition"><strong>Definition 4.4. Sign-canonicalization map.</strong><p>For \(q=(w,x,y,z)\in\mathrm{Sp}(1)\), define \(\sgncanon(q)\) by</p>
+<div class="display">\[\sgncanon(q)=
+\begin{cases}
+q, & w>0,\\
+-q, & w<0,\\
+q, & w=0 \text{ and the first nonzero entry of } (x,y,z) \text{ is positive},\\
+-q, & w=0 \text{ and the first nonzero entry of } (x,y,z) \text{ is negative}.
+\end{cases}\]</div></div>
+<div class="env definition"><strong>Definition 4.5. Canonical representative.</strong><p>For any nonzero quaternionic quadruple \(\tilde q\in\R^4\setminus\set{0}\), define its canonical representative by</p>
+<div class="display">\[\canon(\tilde q)=\sgncanon(\normalize(\tilde q)).\]</div>
+<p>If \(q\in\mathrm{Sp}(1)\) is already unit norm, then \(\canon(q)=\sgncanon(q)\).</p></div>
+<div class="env proposition"><strong>Proposition 4.6. Canonicalization selects one representative from each sign class.</strong><p>Every equivalence class \(\set{q,-q}\) with \(q\in\mathrm{Sp}(1)\) contains exactly one element of \(\mathcal{H}_{\mathrm{can}}\).</p></div>
+<div class="proof"><p>If \(w\neq 0\), then exactly one of \(q\) or \(-q\) has positive real part. If \(w=0\), then \(q\) and \(-q\) have opposite signs in the first nonzero component of \((x,y,z)\), so exactly one satisfies the equatorial tie-break rule. Hence each class intersects \(\mathcal{H}_{\mathrm{can}}\) in exactly one point.</p></div>
+<div class="env remark"><strong>Remark 4.7. Shortest-geodesic convention.</strong><p>Write a unit quaternion in axis--angle form as</p>
+<div class="display">\[q=\cos(\theta/2)+\sin(\theta/2)(n_x\ii+n_y\jj+n_z\kk).\]</div>
+<p>The condition \(w=\cos(\theta/2)\geq 0\) implies \(\theta\in[0,\pi]\). The canonical hemisphere therefore chooses the representative whose rotation angle lies on the shorter closed interval. When \(w=0\), corresponding to \(\theta=\pi\), both signs have the same geodesic length, so the equatorial tie-break supplies determinism rather than new physics.</p></div>
+<div class="env remark"><strong>Remark 4.8. Exact versus numerical equality.</strong><p>The mathematical equivalence relation is exact. In floating-point implementations, comparisons should be performed with explicit tolerances after normalization and canonicalization. That is an implementation detail, not part of the exact equivalence relation itself.</p></div>
+<h2>5. Translation from named gates into quaternion IR</h2>
+<p>Named gate syntax is not itself canonical. Different frontends may expose the same physical action with different symbols, parameters, or decompositions. The translation layer maps those named gates into a common quaternionic form.</p>
+<div class="env proposition"><strong>Proposition 5.1. Standard named gates have explicit canonical \(\uoneq\) entries.</strong><p>Under the convention (<a href="#eq:phi">eq:phi</a>), the following single-qubit gates map to the indicated canonical unit quaternions modulo global phase:</p>
+<table><thead><tr><th>Gate</th><th>Chosen representative modulo global phase</th><th>Canonical quaternion</th></tr></thead><tbody><tr><td>\(\Id\)</td><td>\(\Id\)</td><td>\((1,0,0,0)\)</td></tr><tr><td>\(X\)</td><td>\(-iX\)</td><td>\((0,1,0,0)\)</td></tr><tr><td>\(Y\)</td><td>\(-iY\)</td><td>\((0,0,1,0)\)</td></tr><tr><td>\(Z\)</td><td>\(-iZ\)</td><td>\((0,0,0,1)\)</td></tr><tr><td>\(H\)</td><td>\(-iH\)</td><td>\((0,\tfrac{1}{\sqrt2},0,\tfrac{1}{\sqrt2})\)</td></tr><tr><td>\(S\)</td><td>determinant-one representative of \(S\)</td><td>\((\tfrac{1}{\sqrt2},0,0,\tfrac{1}{\sqrt2})\)</td></tr><tr><td>\(S^\dagger\)</td><td>determinant-one representative of \(S^\dagger\)</td><td>\((\tfrac{1}{\sqrt2},0,0,-\tfrac{1}{\sqrt2})\)</td></tr><tr><td>\(T\)</td><td>determinant-one representative of \(T\)</td><td>\((\cos\tfrac{\pi}{8},0,0,\sin\tfrac{\pi}{8})\)</td></tr><tr><td>\(T^\dagger\)</td><td>determinant-one representative of \(T^\dagger\)</td><td>\((\cos\tfrac{\pi}{8},0,0,-\sin\tfrac{\pi}{8})\)</td></tr><tr><td>\(R_x(\theta)\)</td><td>\(R_x(\theta)\)</td><td>\((\cos\tfrac{\theta}{2},\sin\tfrac{\theta}{2},0,0)\)</td></tr><tr><td>\(R_y(\theta)\)</td><td>\(R_y(\theta)\)</td><td>\((\cos\tfrac{\theta}{2},0,\sin\tfrac{\theta}{2},0)\)</td></tr><tr><td>\(R_z(\theta)\)</td><td>\(R_z(\theta)\)</td><td>\((\cos\tfrac{\theta}{2},0,0,\sin\tfrac{\theta}{2})\)</td></tr></tbody></table></div>
+<div class="proof"><p>The rotation families follow immediately from the quaternion axis--angle form</p>
+<div class="display">\[q=\cos(\theta/2)+\sin(\theta/2)(n_x\ii+n_y\jj+n_z\kk).\]</div>
+<p>The Pauli gates are the \(\pi\)-rotations about the coordinate axes, so their canonical representatives are \(\ii,\jj,\kk\). The \(S\) and \(T\) families are the \(z\)-axis quarter- and eighth-turns after removal of determinant phase. For the Hadamard gate,</p>
+<div class="display">\[H=\frac{\sigma_x+\sigma_z}{\sqrt2},\]</div>
+<p>so after removing a phase factor one obtains the \(\pi\)-rotation about the axis \((1,0,1)/\sqrt2\), giving \(q_H=(0,1/\sqrt2,0,1/\sqrt2)\).</p></div>
+<div class="env remark"><strong>Remark 5.2.</strong><p>The table above concerns semantic gate action modulo global phase. It is therefore a representation table, not a commitment to any specific frontend syntax spelling. For example, <code>sdg</code>, \(S^\dagger\), or an equivalent phase-gate spelling may all map to the same canonical tuple.</p></div>
+<h2>6. Composition and segment representation</h2>
+<p>The group law on unit quaternions makes segment fusion immediate.</p>
+<div class="env proposition"><strong>Proposition 6.1. Composition of adjacent single-qubit gates.</strong><p>Let \(g_1,\dots,g_m\) be consecutive single-qubit gates acting on the same wire, listed in application order. Let \(q_1,\dots,q_m\) be their unit-quaternion representatives under (<a href="#eq:phi">eq:phi</a>). Then the fused single-qubit action of the segment is represented by</p>
+<div class="display">\[q_{\mathrm{seg}}=\canon(q_m q_{m-1}\cdots q_1).\]</div></div>
+<div class="proof"><p>By the convention carried forward from paper 1,</p>
+<div class="display">\[\Phi(q_m q_{m-1}\cdots q_1)
+=
+\Phi(q_m)\Phi(q_{m-1})\cdots\Phi(q_1),\]</div>
+<p>which is exactly the \(\SU(2)\) representative of sequential application of the segment gates. Canonicalization then chooses the deterministic representative of the resulting sign class.</p></div>
+<div class="env proposition"><strong>Corollary 6.2. Canonicalization may be applied after each fusion step.</strong><p>In exact arithmetic, repeated canonicalization during a left-to-right or right-to-left fold produces the same physical single-qubit action as canonicalizing once at the end. In floating-point arithmetic, intermediate re-normalization may improve stability without changing the intended exact semantics.</p></div>
+<div class="env remark"><strong>Remark 6.3.</strong><p>This is the principal compiler-facing advantage of the representation. A frontend may emit a list of named gates, but an optimizer may replace the list by a single canonical \(\uoneq\) payload whenever a maximal single-qubit segment is identified.</p></div>
+<h2>7. Worked examples</h2>
+<p>The examples below use a semicolon-separated gate-list style close to common quantum assembly notations <a href="#ref-cross2022">[1]</a>, <a href="#ref-smith2016">[5]</a>. The point is not to fix a syntax standard, but to show the translation boundary between named gates and canonical IR.</p>
+<div class="env definition"><strong>Example 7.1. A mixed named and parametric segment.</strong><p>Consider the single-qubit segment</p>
+<div class="display">\[H\;;\;T\;;\;R_z(\pi/3).\]</div>
+<p>The gatewise quaternion entries are</p>
+<div class="display">\[q_H=\left(0,\frac{1}{\sqrt2},0,\frac{1}{\sqrt2}\right),\qquad
+q_T=\left(\cos\frac{\pi}{8},0,0,\sin\frac{\pi}{8}\right),\]</div>
+<div class="display">\[q_{R_z(\pi/3)}=\left(\frac{\sqrt3}{2},0,0,\frac12\right).\]</div>
+<p>Composing in application order gives</p>
+<div class="display">\[q_{\mathrm{seg}}=
+\canon\!\bigl(q_{R_z(\pi/3)} q_T q_H\bigr)
+\approx
+(0.5609855,\,-0.4304593,\,-0.5609855,\,-0.4304593).\]</div>
+<p>The named syntax and the canonical tuple are distinct objects: the former is a frontend presentation, while the latter is a deterministic segment payload.</p></div>
+<div class="env definition"><strong>Example 7.2. Fusion of two axis rotations.</strong><p>For</p>
+<div class="display">\[R_x(\pi/2)\;;\;R_y(\pi/2),\]</div>
+<p>the quaternions are</p>
+<div class="display">\[q_x=\left(\frac{\sqrt2}{2},\frac{\sqrt2}{2},0,0\right),\qquad
+q_y=\left(\frac{\sqrt2}{2},0,\frac{\sqrt2}{2},0\right).\]</div>
+<p>Hence</p>
+<div class="display">\[\canon(q_y q_x)=\left(\frac12,\frac12,\frac12,-\frac12\right).\]</div>
+<p>This exact tuple is often easier to compare and store than the original rotation syntax.</p></div>
+<div class="env definition"><strong>Example 7.3. Named syntax can collapse to a simpler canonical payload.</strong><p>Consider</p>
+<div class="display">\[Z\;;\;S\;;\;T.\]</div>
+<p>The gatewise representatives are</p>
+<div class="display">\[q_Z=(0,0,0,1),\qquad
+q_S=\left(\frac{1}{\sqrt2},0,0,\frac{1}{\sqrt2}\right),\qquad
+q_T=\left(\cos\frac{\pi}{8},0,0,\sin\frac{\pi}{8}\right).\]</div>
+<p>The fused canonical result is</p>
+<div class="display">\[\canon(q_T q_S q_Z)=\left(\cos\frac{\pi}{8},0,0,-\sin\frac{\pi}{8}\right),\]</div>
+<p>which is the canonical representative of the same single-qubit action modulo global phase. The example illustrates why a canonical IR is more informative for simplification than the original named gate list.</p></div>
+<div class="env definition"><strong>Example 7.4. Segment extraction inside a larger circuit.</strong><p>Consider the two-wire circuit</p>
+<div class="display">\[\text{wire 0: } H\;;\;\mathrm{CNOT}_{0,1}\;;\;T^\dagger\;;\;R_x(\pi/4),\]</div>
+<div class="display">\[\text{wire 1: } S\;;\;\mathrm{CNOT}_{0,1}\;;\;H.\]</div>
+<p>The entangling gate is outside the present IR. Its only role here is to split single-qubit segments.</p>
+<p>On wire \(0\), the segment before the entangling boundary is the single gate \(H\), while the segment after the boundary is</p>
+<div class="display">\[T^\dagger\;;\;R_x(\pi/4),\]</div>
+<p>with fused canonical payload</p>
+<div class="display">\[\canon\!\bigl(q_{R_x(\pi/4)} q_{T^\dagger}\bigr)
+\approx
+(0.8535534,\,0.3535534,\,0.1464466,\,-0.3535534).\]</div>
+<p>On wire \(1\), the entangling gate similarly separates the one-gate segments \(S\) and \(H\). The example is intentionally modest: the paper does not define the internal representation of the entangling gate, only the single-qubit segments around it.</p></div>
+<h2>8. Standard mathematics vs.\ RQM Technologies framing</h2>
+<h3>8.1 Standard facts used here</h3>
+<p>The following ingredients are standard and not specific to this series:</p>
+<ol type="1"><li><p>single-qubit gates live in \(\U(2)\);</p></li><li><p>after removing global phase, they admit representatives in \(\SU(2)\);</p></li><li><p>the unit quaternions form a Lie group isomorphic to \(\SU(2)\);</p></li><li><p>the only residual ambiguity in that model is \(q\sim -q\); and</p></li><li><p>sequential single-qubit gate composition corresponds to quaternion multiplication under the fixed convention (<a href="#eq:phi">eq:phi</a>).</p></li></ol>
+<h3>8.2 Project-specific design choices</h3>
+<p>The project-specific content of this paper is representational rather than physical:</p>
+<ol type="a"><li><p>the IR object name \(\uoneq\);</p></li><li><p>the decision to store single-qubit action as a four-real quaternion tuple;</p></li><li><p>the closed-hemisphere sign convention \(w>0\) plus the equatorial tie-break rule; and</p></li><li><p>the interpretation of maximal single-qubit runs between entangling boundaries as the natural unit of fusion for this layer.</p></li></ol>
+<p>These are software-architecture choices. They are intended to make equality, fusion, and simplification deterministic. They are not claims about new physics, and they do not imply that named gate syntax or matrix methods are incorrect.</p>
+<h2>9. Scope, limitations, and non-claims</h2>
+<p>This paper makes several non-claims explicit:</p>
+<ol type="1"><li><p>It does <em>not</em> define a full multi-qubit quaternionic circuit IR.</p></li><li><p>It does <em>not</em> specify the internal semantics of entangling gates.</p></li><li><p>It does <em>not</em> prove a runtime, memory, or optimization advantage.</p></li><li><p>It does <em>not</em> replace existing SDKs, assembly languages, or compiler frameworks.</p></li><li><p>It does <em>not</em> define a backend execution format.</p></li><li><p>It does <em>not</em> claim that standard matrix methods are wrong or insufficient.</p></li></ol>
+<p>The paper defines only a canonical representation layer for single-qubit gate action modulo global phase.</p>
+<h2>10. Conclusion</h2>
+<p>The main result of this paper is representational. A single-qubit gate action modulo global phase can be stored deterministically as a canonical unit quaternion</p>
+<div class="display">\[\uoneq(w,x,y,z),\]</div>
+<p>with explicit normalization and sign-resolution rules. The representation is equivalent to the standard \(\SU(2)\) representative after global phase removal, inherits a simple composition law from quaternion multiplication, and provides a clean internal target for single-qubit segment fusion.</p>
+<p>In that sense, the paper is a bridge from quaternionic single-qubit geometry to compiler IR design. It does not solve all compiler problems, but it does make one layer precise: the canonical internal representation of single-qubit gate segments.</p>
+<h2>Appendix A. Lookup table for common gates</h2>
+<table><thead><tr><th>Gate</th><th>Canonical quaternion</th><th>Notes</th></tr></thead><tbody><tr><td>\(\Id\)</td><td>\((1,0,0,0)\)</td><td>identity</td></tr><tr><td>\(X\)</td><td>\((0,1,0,0)\)</td><td>\(\pi\)-rotation about \(x\)</td></tr><tr><td>\(Y\)</td><td>\((0,0,1,0)\)</td><td>\(\pi\)-rotation about \(y\)</td></tr><tr><td>\(Z\)</td><td>\((0,0,0,1)\)</td><td>\(\pi\)-rotation about \(z\)</td></tr><tr><td>\(H\)</td><td>\((0,\tfrac{1}{\sqrt2},0,\tfrac{1}{\sqrt2})\)</td><td>\(\pi\)-rotation about \((1,0,1)/\sqrt2\)</td></tr><tr><td>\(S\)</td><td>\((\tfrac{1}{\sqrt2},0,0,\tfrac{1}{\sqrt2})\)</td><td>quarter-turn about \(z\)</td></tr><tr><td>\(T\)</td><td>\((\cos\tfrac{\pi}{8},0,0,\sin\tfrac{\pi}{8})\)</td><td>eighth-turn about \(z\)</td></tr><tr><td>\(R_x(\theta)\)</td><td>\((\cos\tfrac{\theta}{2},\sin\tfrac{\theta}{2},0,0)\)</td><td>exact family</td></tr><tr><td>\(R_y(\theta)\)</td><td>\((\cos\tfrac{\theta}{2},0,\sin\tfrac{\theta}{2},0)\)</td><td>exact family</td></tr><tr><td>\(R_z(\theta)\)</td><td>\((\cos\tfrac{\theta}{2},0,0,\sin\tfrac{\theta}{2})\)</td><td>exact family</td></tr></tbody></table>
+<h2>Appendix B. Implementation notes</h2>
+<p>The mathematical definition of \(\canon\) is exact, but an implementation should usually include three practical checks:</p>
+<ol type="a"><li><p>reject or special-case near-zero input before normalization;</p></li><li><p>re-normalize after quaternion multiplication to control floating-point drift; and</p></li><li><p>evaluate the \(w=0\) tie-break with a tolerance so that numerically small values are not misclassified.</p></li></ol>
+<p>These are engineering details layered on top of the exact canonicalization rule.</p>
+<h2>Appendix C. Companion figures</h2>
+<p>Publication-ready SVG figures for the package are provided in <code>artifacts/figures/</code>. They illustrate the frontend-to-IR translation pipeline, the quotient identification \(q\sim -q\), the canonical hemisphere selection rule, and segment extraction around entangling boundaries.</p>
 
       <h2>References</h2>
       <ol class="refs">
@@ -249,7 +291,7 @@ q1: ─────────────X────────────
 
     <footer class="paper-shell">
       <p>qqc-002-canonical-ir · version 0.1.0 · draft · license: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p>
-      <p><a href="./">Package page</a> · <a href="main.tex">LaTeX source</a> · <a href="paper.pdf">PDF</a> · <a href="metadata.json">metadata</a> · <a href="paper.jats.xml">JATS XML</a></p>
+      <p><a href="/papers/qqc-002-canonical-ir/">Package page</a> · <a href="/papers/qqc-002-canonical-ir/main.tex">LaTeX source</a> · <a href="/papers/qqc-002-canonical-ir/paper.pdf">PDF</a> · <a href="/papers/qqc-002-canonical-ir/metadata.json">metadata</a> · <a href="/papers/qqc-002-canonical-ir/paper.jats.xml">JATS XML</a></p>
     </footer>
   </div>
 </body>
