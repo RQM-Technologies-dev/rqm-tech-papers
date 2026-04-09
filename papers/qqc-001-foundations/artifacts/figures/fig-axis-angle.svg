@@ -1,33 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="360" viewBox="0 0 720 360" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="420" viewBox="0 0 840 420" role="img" aria-labelledby="title desc">
   <title id="title">Axis-angle and quaternion composition schematic</title>
-  <desc id="desc">A Bloch-sphere style circle with an axis n-hat and rotation angle theta over two, alongside a symbolic quaternion multiplication rule showing scalar and cross-product terms.</desc>
+  <desc id="desc">A quaternion basis-axis sketch and compact axis-angle expression, together with a wrapped scalar-vector multiplication law that keeps all terms on-canvas.</desc>
   <style>
     text { font-family: Arial, Helvetica, sans-serif; fill: #222; }
-    .small { font-size: 16px; }
-    .label { font-size: 18px; font-weight: bold; }
-    .math { font-size: 20px; font-style: italic; }
-    .thin { stroke: #666; stroke-width: 1.5; fill: none; }
-    .heavy { stroke: #1f4f99; stroke-width: 3; fill: none; }
-    .accent { stroke: #b22222; stroke-width: 3; fill: none; }
-    .dot { fill: #1f4f99; }
+    .small { font-size: 16px; fill: #3d4f58; }
+    .label { font-size: 20px; font-weight: 700; }
+    .math { font-size: 22px; font-style: italic; }
+    .axis { stroke: #1f4f99; stroke-width: 3.2; fill: none; }
+    .frame { fill: #fbfdff; stroke: #9fb5c5; stroke-width: 2; rx: 12; ry: 12; }
   </style>
   <rect width="100%" height="100%" fill="#ffffff"/>
-  <circle cx="180" cy="180" r="110" class="thin"/>
-  <ellipse cx="180" cy="180" rx="110" ry="42" class="thin"/>
-  <line x1="180" y1="290" x2="180" y2="70" class="thin"/>
-  <line x1="180" y1="180" x2="250" y2="110" class="heavy"/>
-  <polygon points="250,110 239,113 243,117" fill="#1f4f99"/>
-  <text x="258" y="107" class="math">n</text>
-  <path d="M 222 168 A 48 48 0 0 0 203 129" class="accent"/>
-  <polygon points="202,129 207,137 211,131" fill="#b22222"/>
-  <text x="227" y="144" class="math">∏/2</text>
-  <text x="112" y="36" class="label">Axis-angle form</text>
-  <text x="64" y="328" class="small">q = cos(∏/2) + sin(∏/2)(n_x i + n_y j + n_z k)</text>
-  <line x1="345" y1="50" x2="345" y2="310" stroke="#cccccc" stroke-width="2"/>
-  <text x="395" y="38" class="label">Composition law</text>
-  <text x="386" y="112" class="math">(aÅ + vÅ)(aÇ + vÇ)</text>
-  <text x="386" y="150" class="math">= (aÅaÇ  vÅ∑vÇ)</text>
-  <text x="386" y="184" class="math">  + (aÅvÇ + aÇvÅ + vÅ◊vÇ)</text>
-  <text x="386" y="236" class="small">The cross-product term makes noncommutativity visible.</text>
-  <text x="386" y="266" class="small">Quaternion multiplication encodes rotation composition directly.</text>
+  <text x="70" y="54" class="label">Basis axes and axis-angle parameterization</text>
+  <line x1="100" y1="220" x2="280" y2="220" class="axis"/>
+  <polygon points="280,220 266,214 266,226" fill="#1f4f99"/>
+  <line x1="100" y1="220" x2="100" y2="64" class="axis"/>
+  <polygon points="100,64 94,78 106,78" fill="#1f4f99"/>
+  <line x1="100" y1="220" x2="30" y2="304" class="axis"/>
+  <polygon points="30,304 44,300 36,292" fill="#1f4f99"/>
+  <text x="288" y="224" class="math">i / x</text>
+  <text x="94" y="52" class="math">j / y</text>
+  <text x="12" y="322" class="math">k / z</text>
+
+  <rect class="frame" x="320" y="102" width="488" height="102"/>
+  <text x="344" y="140" class="math">q(&#952;,\ n&#770;)=cos(&#952;/2)+sin(&#952;/2)\,(n_x i+n_y j+n_z k)</text>
+
+  <text x="70" y="266" class="label">Quaternion composition (scalar-vector split)</text>
+  <rect class="frame" x="70" y="286" width="738" height="104"/>
+  <text x="94" y="322" class="math">(a&#8321;+v&#8321;)(a&#8322;+v&#8322;)=</text>
+  <text x="94" y="352" class="math">(a&#8321;a&#8322;-v&#8321;&#183;v&#8322;)+(a&#8321;v&#8322;+a&#8322;v&#8321;+v&#8321;&#215;v&#8322;)</text>
+  <text x="94" y="380" class="small">The cross-product term is the explicit source of noncommutativity in sequential rotations.</text>
 </svg>
