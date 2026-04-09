@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="420" viewBox="0 0 1120 420" role="img" aria-labelledby="title desc">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="500" viewBox="0 0 1120 500" role="img" aria-labelledby="title desc">
   <title id="title">Normalized spinors, phase fibers, projective quotient, and Bloch sphere</title>
-  <desc id="desc">A four-stage schematic separating the ambient space C2 isomorphic to R4, the normalized spinor sphere S3, the U(1) phase orbit quotient to CP1, and the Bloch-sphere identification with S2.</desc>
+  <desc id="desc">Schematic with clear spacing between ambient C2 state vectors, normalized representatives on S3, phase orbits, projective quotient CP1, and Bloch sphere S2.</desc>
   <defs>
     <marker id="arrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto">
       <polygon points="0,0 12,5 0,10" fill="#314c63"/>
@@ -12,65 +12,77 @@
     .soft { fill: #eef5ff; stroke: #54799b; stroke-width: 2; }
     .accent { fill: #f4f9f4; stroke: #5d8b67; stroke-width: 2; }
     .label { font-family: Georgia, serif; fill: #15222d; }
-    .title { font-size: 24px; font-weight: 700; }
+    .title { font-size: 22px; font-weight: 700; }
     .body { font-size: 18px; }
     .small { font-family: Arial, sans-serif; font-size: 15px; fill: #425563; }
     .arrow { stroke: #314c63; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+    .dashed { stroke-dasharray: 8 6; }
     .orbit { fill: none; stroke: #799fc3; stroke-width: 2; stroke-dasharray: 7 5; }
     .axis { stroke: #7d8b96; stroke-width: 1.8; }
     .dot { fill: #274b7a; }
   </style>
 
-  <rect x="0" y="0" width="1120" height="420" fill="#ffffff"/>
+  <rect x="0" y="0" width="1120" height="500" fill="#ffffff"/>
 
-  <rect class="panel" x="30" y="40" width="220" height="260"/>
-  <text class="label title" x="140" y="82" text-anchor="middle">Ambient state space</text>
-  <text class="label body" x="140" y="128" text-anchor="middle">spinors in C²</text>
-  <text class="label body" x="140" y="156" text-anchor="middle">? R?</text>
-  <text class="small" x="140" y="200" text-anchor="middle">raw state representatives</text>
-  <text class="small" x="140" y="224" text-anchor="middle">before normalization or phase quotient</text>
-  <text class="small" x="140" y="262" text-anchor="middle">coordinates (a,b,c,d)</text>
+  <rect class="panel" x="30" y="44" width="230" height="250"/>
+  <text class="label title" x="145" y="84" text-anchor="middle">Ambient state space</text>
+  <text class="label body" x="145" y="128" text-anchor="middle">spinors in C^2</text>
+  <text class="label body" x="145" y="154" text-anchor="middle">isomorphic to R^4</text>
+  <text class="small" x="145" y="196" text-anchor="middle">raw state representatives</text>
+  <text class="small" x="145" y="220" text-anchor="middle">before normalization</text>
+  <text class="small" x="145" y="244" text-anchor="middle">or phase quotient</text>
 
-  <path class="arrow" d="M250 170 L320 170"/>
-  <text class="small" x="285" y="152" text-anchor="middle">impose</text>
-  <text class="small" x="285" y="174" text-anchor="middle">??? = 1</text>
+  <rect class="soft panel" x="300" y="44" width="250" height="250"/>
+  <text class="label title" x="425" y="84" text-anchor="middle">Normalized reps</text>
+  <text class="label body" x="425" y="116" text-anchor="middle">S^3 inside C^2</text>
+  <ellipse cx="425" cy="178" rx="82" ry="58" fill="#eaf2fd" stroke="#3a6fa3" stroke-width="2"/>
+  <ellipse class="orbit" cx="425" cy="178" rx="44" ry="14"/>
+  <circle class="dot" cx="425" cy="178" r="5"/>
+  <text class="small" x="425" y="246" text-anchor="middle">each point is a normalized spinor</text>
+  <text class="small" x="425" y="268" text-anchor="middle">orbit shown by dashed ellipse</text>
 
-  <rect class="soft panel" x="330" y="40" width="250" height="260"/>
-  <ellipse cx="455" cy="174" rx="82" ry="58" fill="#eaf2fd" stroke="#3a6fa3" stroke-width="2"/>
-  <ellipse class="orbit" cx="455" cy="174" rx="44" ry="14"/>
-  <circle class="dot" cx="455" cy="174" r="5"/>
-  <text class="label title" x="455" y="82" text-anchor="middle">Normalized representatives</text>
-  <text class="label body" x="455" y="110" text-anchor="middle">S³ ? C² ? R?</text>
-  <text class="small" x="455" y="246" text-anchor="middle">each point is a normalized spinor</text>
-  <text class="small" x="455" y="268" text-anchor="middle">phase circle through ? shown schematically</text>
+  <rect class="accent panel" x="590" y="44" width="230" height="250"/>
+  <text class="label title" x="705" y="84" text-anchor="middle">Projective pure state</text>
+  <text class="label body" x="705" y="116" text-anchor="middle">CP^1 = S^3 / U(1)</text>
+  <rect x="648" y="150" width="114" height="46" rx="12" ry="12" fill="#ffffff" stroke="#5d8b67" stroke-width="2"/>
+  <text class="label body" x="705" y="180" text-anchor="middle">[psi]</text>
+  <text class="small" x="705" y="232" text-anchor="middle">one ray equals one</text>
+  <text class="small" x="705" y="254" text-anchor="middle">physical pure state</text>
 
-  <path class="arrow" d="M580 170 L675 170"/>
-  <text class="small" x="628" y="148" text-anchor="middle">identify</text>
-  <text class="small" x="628" y="170" text-anchor="middle">? ~ e^{i?} ?</text>
-  <text class="small" x="628" y="192" text-anchor="middle">quotient by U(1)</text>
+  <rect class="panel" x="860" y="44" width="230" height="250"/>
+  <text class="label title" x="975" y="84" text-anchor="middle">Bloch sphere</text>
+  <text class="label body" x="975" y="110" text-anchor="middle">S^2</text>
+  <circle cx="975" cy="176" r="58" fill="#fafafa" stroke="#444f58" stroke-width="2"/>
+  <ellipse cx="975" cy="176" rx="58" ry="18" fill="none" stroke="#95a0a8" stroke-width="1.5"/>
+  <line class="axis" x1="975" y1="118" x2="975" y2="234"/>
+  <line class="axis" x1="917" y1="176" x2="1033" y2="176"/>
+  <circle cx="975" cy="118" r="3.5" fill="#222"/>
+  <circle cx="975" cy="234" r="3.5" fill="#222"/>
+  <text class="small" x="975" y="258" text-anchor="middle">projective pure states</text>
 
-  <rect class="accent panel" x="685" y="40" width="190" height="260"/>
-  <text class="label title" x="780" y="82" text-anchor="middle">Projective pure state</text>
-  <text class="label body" x="780" y="116" text-anchor="middle">CP¹ = S³ / U(1)</text>
-  <rect x="728" y="144" width="104" height="46" rx="12" ry="12" fill="#ffffff" stroke="#5d8b67" stroke-width="2"/>
-  <text class="label body" x="780" y="173" text-anchor="middle">[?]</text>
-  <text class="small" x="780" y="222" text-anchor="middle">one ray / one physical pure state</text>
-  <text class="small" x="780" y="246" text-anchor="middle">global phase removed</text>
+  <rect class="panel" x="300" y="326" width="250" height="120"/>
+  <text class="label title" x="425" y="360" text-anchor="middle">Phase orbit</text>
+  <text class="label body" x="425" y="388" text-anchor="middle">{ exp(i chi) psi : chi in R }</text>
+  <text class="small" x="425" y="416" text-anchor="middle">all points represent the same pure state</text>
 
-  <path class="arrow" d="M875 170 L955 170"/>
-  <text class="small" x="915" y="152" text-anchor="middle">standard identification</text>
-  <text class="small" x="915" y="174" text-anchor="middle">with Bloch vector r(?)</text>
+  <path class="arrow" d="M260 169 H300"/>
+  <text class="small" x="280" y="150" text-anchor="middle">impose</text>
+  <text class="small" x="280" y="170" text-anchor="middle">norm(psi) = 1</text>
 
-  <rect class="panel" x="965" y="40" width="125" height="260"/>
-  <circle cx="1028" cy="176" r="54" fill="#fafafa" stroke="#444f58" stroke-width="2"/>
-  <ellipse cx="1028" cy="176" rx="54" ry="16" fill="none" stroke="#95a0a8" stroke-width="1.5"/>
-  <line class="axis" x1="1028" y1="122" x2="1028" y2="230"/>
-  <line class="axis" x1="974" y1="176" x2="1082" y2="176"/>
-  <circle cx="1028" cy="122" r="3.5" fill="#222"/>
-  <circle cx="1028" cy="230" r="3.5" fill="#222"/>
-  <text class="label title" x="1028" y="82" text-anchor="middle">Bloch sphere</text>
-  <text class="label body" x="1028" y="106" text-anchor="middle">S²</text>
-  <text class="small" x="1028" y="255" text-anchor="middle">projective pure-state space</text>
+  <path class="arrow" d="M550 169 H590"/>
+  <text class="small" x="570" y="150" text-anchor="middle">quotient by</text>
+  <text class="small" x="570" y="170" text-anchor="middle">global phase U(1)</text>
 
-  <text class="small" x="560" y="362" text-anchor="middle">Key distinction: S³ is the sphere of normalized state representatives, while S² is the quotient space of physical pure states after removing global phase.</text>
+  <path class="arrow" d="M820 169 H860"/>
+  <text class="small" x="840" y="150" text-anchor="middle">identify with</text>
+  <text class="small" x="840" y="170" text-anchor="middle">Bloch vector r(psi)</text>
+
+  <path class="arrow" d="M425 294 V326"/>
+  <text class="small" x="446" y="312">same phase circle</text>
+
+  <path class="arrow dashed" d="M550 386 H590"/>
+  <text class="small" x="570" y="370" text-anchor="middle">each orbit maps</text>
+  <text class="small" x="570" y="390" text-anchor="middle">to one point [psi]</text>
+
+  <text class="small" x="560" y="476" text-anchor="middle">Key distinction: S^3 is the normalized representative sphere, while S^2 is the quotient space of physical pure states.</text>
 </svg>

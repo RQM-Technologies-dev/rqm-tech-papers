@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="430" viewBox="0 0 1080 430" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="480" viewBox="0 0 1080 480" role="img" aria-labelledby="title desc">
   <title id="title">From U(2) single-qubit gates to SU(2), Sp(1), and SO(3)</title>
   <desc id="desc">Detailed schematic separating full single-qubit gates in U(2), their global-phase quotient classes, chosen SU(2) representatives, equivalent unit-quaternion representatives in Sp(1), and the induced Bloch-sphere rotation action in SO(3).</desc>
   <defs>
@@ -8,67 +8,64 @@
   </defs>
   <style>
     .box { stroke-width: 2.2; rx: 14; ry: 14; }
-    .step { font: 700 24px Georgia, serif; fill: #1b2e3b; }
-    .label { font: 20px Georgia, serif; fill: #1b1b1b; }
-    .small { font: 16px Arial, sans-serif; fill: #31444d; }
-    .tiny { font: 14px Arial, sans-serif; fill: #4a5d66; }
+    .step { font: 700 21px Georgia, serif; fill: #1b2e3b; }
+    .label { font: 18px Georgia, serif; fill: #1b1b1b; }
+    .small { font: 15px Arial, sans-serif; fill: #31444d; }
+    .tiny { font: 13px Arial, sans-serif; fill: #4a5d66; }
     .arrow { stroke: #35556c; stroke-width: 3; fill: none; marker-end: url(#arrow); }
     .guide { stroke: #7f98a6; stroke-width: 2; fill: none; stroke-dasharray: 8 6; }
   </style>
 
-  <rect x="0" y="0" width="1080" height="430" fill="#ffffff"/>
+  <rect x="0" y="0" width="1080" height="480" fill="#ffffff"/>
 
-  <rect class="box" x="28" y="62" width="220" height="146" fill="#f9ede2" stroke="#b57b42"/>
-  <text class="step" x="52" y="95">Step 1: full gate</text>
-  <text class="label" x="52" y="130">U &#8712; U(2)</text>
-  <text class="small" x="52" y="160">physical single-qubit unitary</text>
-  <text class="tiny" x="52" y="185">includes an arbitrary overall phase</text>
+  <rect class="box" x="36" y="44" width="230" height="160" fill="#f9ede2" stroke="#b57b42"/>
+  <text class="step" x="58" y="76">Step 1: full gate</text>
+  <text class="label" x="58" y="108">U &#8712; U(2)</text>
+  <text class="small" x="58" y="138">physical single-qubit unitary</text>
+  <text class="tiny" x="58" y="164">includes an overall phase factor</text>
 
-  <rect class="box" x="292" y="48" width="230" height="178" fill="#f7f0ff" stroke="#7750a8"/>
-  <text class="step" x="316" y="81">Step 2: gate class</text>
-  <text class="label" x="316" y="116">[U] modulo global phase</text>
-  <text class="small" x="316" y="146">U ~ e&#8305;&#967; U</text>
-  <text class="small" x="316" y="171">same action on pure states</text>
-  <text class="tiny" x="316" y="198">this is the physically relevant class</text>
+  <rect class="box" x="312" y="44" width="240" height="160" fill="#f7f0ff" stroke="#7750a8"/>
+  <text class="step" x="334" y="76">Step 2: gate class</text>
+  <text class="label" x="334" y="108">[U] &#8712; U(2)/U(1)</text>
+  <text class="small" x="334" y="138">U ~ e&#8305;&#967; U</text>
+  <text class="tiny" x="334" y="164">same action on pure states</text>
 
-  <rect class="box" x="568" y="48" width="230" height="178" fill="#edf4ff" stroke="#3f6fa8"/>
-  <text class="step" x="592" y="81">Step 3: choose rep</text>
-  <text class="label" x="592" y="116">V &#8712; SU(2)</text>
-  <text class="small" x="592" y="146">U = e&#8305;&#967; V</text>
-  <text class="small" x="592" y="171">det V = 1</text>
-  <text class="tiny" x="592" y="198">representative is unique only up to sign</text>
+  <rect class="box" x="598" y="44" width="220" height="160" fill="#edf4ff" stroke="#3f6fa8"/>
+  <text class="step" x="620" y="76">Step 3: choose rep</text>
+  <text class="label" x="620" y="108">V &#8712; SU(2)</text>
+  <text class="small" x="620" y="138">U = e&#8305;&#967; V, det V = 1</text>
+  <text class="tiny" x="620" y="164">representative unique up to sign</text>
 
-  <rect class="box" x="842" y="48" width="210" height="178" fill="#f2edff" stroke="#6f4ba8"/>
-  <text class="step" x="866" y="81">Step 4: quaternion</text>
-  <text class="label" x="866" y="116">q &#8712; Sp(1)</text>
-  <text class="small" x="866" y="146">q = a + b i + c j + d k</text>
-  <text class="small" x="866" y="171">a&#178; + b&#178; + c&#178; + d&#178; = 1</text>
-  <text class="tiny" x="866" y="198">&#934;(q) = V and q ~ -q at the action level</text>
+  <rect class="box" x="846" y="44" width="198" height="160" fill="#f2edff" stroke="#6f4ba8"/>
+  <text class="step" x="866" y="76">Step 4: quaternion</text>
+  <text class="label" x="866" y="108">q &#8712; Sp(1)</text>
+  <text class="small" x="866" y="138">q = a + b i + c j + d k</text>
+  <text class="tiny" x="866" y="164">a&#178; + b&#178; + c&#178; + d&#178; = 1</text>
 
-  <path class="arrow" d="M248 136 H292"/>
-  <text class="tiny" x="270" y="123" text-anchor="middle">forget phase</text>
+  <path class="arrow" d="M266 126 H312"/>
+  <text class="tiny" x="289" y="112" text-anchor="middle">remove phase</text>
 
-  <path class="arrow" d="M522 136 H568"/>
-  <text class="tiny" x="545" y="123" text-anchor="middle">pick det = 1 rep</text>
+  <path class="arrow" d="M552 126 H598"/>
+  <text class="tiny" x="575" y="112" text-anchor="middle">det = 1 rep</text>
 
-  <path class="arrow" d="M798 136 H842"/>
-  <text class="tiny" x="820" y="123" text-anchor="middle">&#934;</text>
+  <path class="arrow" d="M818 126 H846"/>
+  <text class="tiny" x="832" y="112" text-anchor="middle">&#934;</text>
 
-  <rect class="box" x="592" y="274" width="250" height="106" fill="#eef8ee" stroke="#4d8a57"/>
-  <text class="step" x="616" y="307">Induced spatial action</text>
-  <text class="label" x="616" y="340">&#961; : Sp(1) &#8594; SO(3)</text>
-  <text class="small" x="616" y="365">v &#8614; q v q&#8315;&#185; on Im(H) &#8773; R&#179;</text>
+  <rect class="box" x="374" y="276" width="266" height="130" fill="#eef8ee" stroke="#4d8a57"/>
+  <text class="step" x="396" y="310">Induced spatial action</text>
+  <text class="label" x="396" y="343">&#961; : Sp(1) &#8594; SO(3)</text>
+  <text class="small" x="396" y="371">v &#8614; q v q&#8315;&#185; on Im(H) &#8773; R&#179;</text>
 
-  <rect class="box" x="868" y="274" width="170" height="106" fill="#f8f8f8" stroke="#5c6b73"/>
-  <text class="step" x="892" y="307">Rotation class</text>
-  <text class="label" x="892" y="340">SO(3)</text>
-  <text class="small" x="892" y="365">kernel {+1, -1}</text>
+  <rect class="box" x="686" y="276" width="226" height="130" fill="#f8f8f8" stroke="#5c6b73"/>
+  <text class="step" x="708" y="310">Rotation class</text>
+  <text class="label" x="708" y="343">SO(3)</text>
+  <text class="small" x="708" y="371">kernel {+1, -1}</text>
 
-  <path class="arrow" d="M947 226 V274"/>
-  <text class="tiny" x="964" y="255">conjugation on pure quaternions</text>
-  <path class="arrow" d="M842 327 H868"/>
+  <path class="arrow" d="M945 204 V276"/>
+  <text class="tiny" x="962" y="244">conjugation action</text>
+  <path class="arrow" d="M640 341 H686"/>
 
-  <path class="guide" d="M683 226 V258"/>
-  <text class="tiny" x="535" y="405">Decomposed view: U(2) is the full gate space, SU(2) is a chosen determinant-one representative space,</text>
-  <text class="tiny" x="534" y="423">Sp(1) is the equivalent unit-quaternion model, and SO(3) is the induced Bloch-sphere rotation action.</text>
+  <path class="guide" d="M708 204 V254"/>
+  <text class="tiny" x="540" y="444" text-anchor="middle">Decomposed view: U(2) gives full gates; SU(2) gives determinant-one representatives;</text>
+  <text class="tiny" x="540" y="462" text-anchor="middle">Sp(1) is an equivalent unit-quaternion model; SO(3) is the induced Bloch-sphere rotation action.</text>
 </svg>
