@@ -83,8 +83,8 @@
     </sec>
 
     <sec id="sec-background">
-      <title>2. Background and dependency on paper 1</title>
-      <p>The paper inherits from qqc-001-foundations the facts that single-qubit gates live in U(2), that they admit SU(2) representatives after removal of global phase, and that the unit quaternions model SU(2) exactly under a fixed convention Phi.</p>
+      <title>2. Background and dependency on Foundations of Quaternionic Quantum Computing</title>
+      <p>The paper inherits from Foundations of Quaternionic Quantum Computing the facts that single-qubit gates live in U(2), that they admit SU(2) representatives after removal of global phase, and that the unit quaternions model SU(2) exactly under a fixed convention Phi.</p>
       <p>Under that convention the only residual ambiguity in the quaternion model is the sign pair {q, -q}. This is the ambiguity resolved by the canonicalization rule defined here.</p>
     </sec>
 
