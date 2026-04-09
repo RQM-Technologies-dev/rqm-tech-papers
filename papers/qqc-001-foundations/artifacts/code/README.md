@@ -1,31 +1,14 @@
 # Code — qqc-001-foundations
 
-This directory contains source code supporting
+This directory is reserved for optional code artifacts associated with
 **Foundations of Quaternionic Quantum Computing: Qubits, Spinors, and SU(2) Geometry**.
 
-## Files
+No executable code is required for the present paper package. The paper is a
+mathematical and expository foundation paper rather than a computational
+results paper.
 
-| File | Description | Status |
-|------|-------------|--------|
-| `quaternion_gates.py` | Python implementation of quaternionic single-qubit gates; validates Proposition 1 and Result 1 | Pending |
+If later revisions add support code, it should remain limited to:
 
-## Requirements
-
-Python 3.9+, `numpy`.
-
-## Usage
-
-```python
-from quaternion_gates import QuaternionGate, X, Y, Z, H, S, T
-
-# Apply X gate to quaternionic qubit q = 1 (|0⟩)
-q0 = (1.0, 0.0, 0.0, 0.0)  # a + bi + cj + dk
-q1 = X(q0)
-print(q1)  # Should be (0, 1, 0, 0) = i  ↔  |1⟩
-```
-
-## Testing
-
-```bash
-python -m pytest quaternion_gates.py -v
-```
+- explicit conversions between unit quaternions and `SU(2)` matrices,
+- small symbolic or numerical checks of axis-angle formulas, and
+- figure-generation scripts for the diagrams in `artifacts/figures/`.

@@ -2,10 +2,10 @@
   "paper_id": "qqc-001-foundations",
   "title": "Foundations of Quaternionic Quantum Computing: Qubits, Spinors, and SU(2) Geometry",
   "slug": "foundations",
-  "version": "1.0.0",
-  "status": "preprint",
-  "publication_date": "2025-01-15",
-  "last_updated": "2025-01-15",
+  "version": "0.1.0",
+  "status": "draft",
+  "publication_date": null,
+  "last_updated": "2026-04-09",
   "authors": [
     {
       "name": "RQM Technologies Research Team",
@@ -15,52 +15,43 @@
       "corresponding": true
     }
   ],
-  "abstract": "We develop the foundational framework for quaternionic quantum computing, establishing rigorous connections between quaternion algebra, spinor representations, and the geometry of SU(2). We show that the quaternionic qubit—a unit quaternion in the Bloch sphere interpretation—provides a natural geometric encoding of two-level quantum systems, and that quaternion multiplication corresponds directly to SU(2) rotations on the Bloch sphere. We derive the quaternionic analogues of standard quantum gates, prove that any SU(2) gate can be expressed as a unit quaternion, and demonstrate that the double-cover relationship between SU(2) and SO(3) has direct implications for phase accumulation in quaternionic circuits. We further examine the quaternionic Hilbert space structure and discuss how non-commutativity of quaternion multiplication constrains the design of multi-qubit systems. This paper establishes the mathematical foundation for the subsequent papers in the RQM quaternionic quantum computing series.",
+  "abstract": "This paper assembles a conservative mathematical foundation for the use of quaternions in single-qubit quantum computing. The goal is not to replace standard quantum mechanics, but to organize familiar structures in a way that makes their geometry more explicit. We distinguish carefully between normalized state vectors in C^2 ≅ R^4, the unit sphere S^3 inside that space, pure states modulo global phase, the projective space CP^1 ≅ S^2, the single-qubit gate group U(2), and SU(2) representatives obtained after removing global phase. Within that framework, we exhibit an explicit isomorphism between the unit quaternions and SU(2), explain why unit quaternions are therefore a natural model for single-qubit gates modulo global phase, and show how quaternion multiplication exposes the axis-angle and composition structure of rotations. Standard facts are separated from the organizational choices adopted in the RQM Technologies series. The paper is restricted to single-qubit structure and makes no claim about new physics, multi-qubit quaternionic state evolution, or computational advantage.",
   "keywords": [
-    "quaternionic quantum computing",
-    "quaternion algebra",
-    "qubits",
+    "qubit geometry",
     "spinors",
-    "SU(2) geometry",
+    "SU(2)",
+    "unit quaternions",
     "Bloch sphere",
-    "quantum gates",
-    "non-commutative algebra"
+    "single-qubit gates"
   ],
-  "series": "qqc",
+  "series": "RQM Quaternionic Quantum Computing Series",
   "series_number": 1,
   "depends_on": [],
-  "canonical_url": "https://papers.rqm-technologies.com/papers/qqc-001-foundations/",
-  "pdf_url": "https://papers.rqm-technologies.com/papers/qqc-001-foundations/paper.pdf",
-  "html_url": "https://papers.rqm-technologies.com/papers/qqc-001-foundations/paper.html",
-  "jats_url": "https://papers.rqm-technologies.com/papers/qqc-001-foundations/paper.jats.xml",
+  "canonical_url": null,
+  "pdf_url": null,
+  "html_url": null,
+  "jats_url": null,
   "doi": null,
   "journal": null,
   "volume": null,
   "issue": null,
   "pages": null,
   "citations": [
-    "hamilton1844",
-    "dirac1928",
     "adler1995",
-    "conway2003",
-    "nielsen2010",
     "bloch1946",
-    "cayley1845",
-    "weyl1931",
-    "penrose1984",
-    "kuipers1999"
+    "hall2015",
+    "kuipers1999",
+    "nielsen2010",
+    "penrose1984"
   ],
   "related_artifacts": [
-    "artifacts/notebooks/bloch_sphere_visualization.ipynb",
-    "artifacts/code/quaternion_gates.py",
-    "artifacts/figures/"
+    "main.tex",
+    "artifacts/figures/fig-spinor-quotient.svg",
+    "artifacts/figures/fig-su2-quaternion.svg",
+    "artifacts/figures/fig-axis-angle.svg",
+    "artifacts/notebooks/README.md",
+    "artifacts/code/README.md"
   ],
   "license": "CC-BY-4.0",
-  "funding": [
-    {
-      "funder": "RQM Technologies",
-      "grant_id": null
-    }
-  ],
-  "notes": "This is the first paper in the RQM quaternionic quantum computing series. It establishes notation and conventions used in all subsequent papers."
+  "notes": "Draft foundation paper for the series. The current author record is organizational; individual contributor metadata may be refined later without changing the paper ID."
 }
