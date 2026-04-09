@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quaternionic Gate Fusion on S^3: Geometry-Native Optimization for Single-Qubit Circuit Segments</title>
+  <meta
+    name="description"
+    content="Optimization-focused draft defining quaternionic gate fusion, canonicalization, reconstruction, and measured local simplification results for single-qubit circuit segments."
+  />
+  <meta name="author" content="RQM Technologies Research Team" />
+  <meta
+    name="keywords"
+    content="quaternionic gate fusion, single-qubit optimization, compiler method, circuit simplification, SU(2), unit quaternions"
+  />
+  <meta
+    name="citation_title"
+    content="Quaternionic Gate Fusion on S^3: Geometry-Native Optimization for Single-Qubit Circuit Segments"
+  />
+  <meta name="citation_author" content="RQM Technologies Research Team" />
+  <meta name="citation_pdf_url" content="paper.pdf" />
+  <link rel="canonical" href="./" />
+  <link rel="alternate" type="application/json" href="metadata.json" title="Paper metadata" />
+  <link rel="alternate" type="application/xml" href="paper.jats.xml" title="JATS XML" />
+  <link rel="stylesheet" href="../../styles/site.css" />
+</head>
+<body class="paper-page">
+  <div class="page-shell">
+    <header class="paper-shell">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="../../index.html">Home</a>
+        <span>/</span>
+        <a href="./">qqc-003-gate-fusion</a>
+        <span>/</span>
+        <span aria-current="page">paper.html</span>
+      </nav>
+      <div class="badge">RQM Quaternionic Quantum Computing Series · Paper 3</div>
+      <h1>Quaternionic Gate Fusion on S<sup>3</sup>: Geometry-Native Optimization for Single-Qubit Circuit Segments</h1>
+      <p class="byline">
+        RQM Technologies Research Team<br />
+        RQM Technologies<br />
+        Correspondence: <a href="mailto:research@rqm-technologies.com">research@rqm-technologies.com</a><br />
+        <span class="small">Organizational author record used for this draft; individual contributor records are pending confirmation.</span>
+      </p>
+
+      <div class="abstract">
+        <strong>Abstract</strong>
+        <p>This paper studies quaternionic gate fusion as a local optimization pass for single-qubit circuit segments. Building on the unit-quaternion model of SU(2) from qqc-001-foundations and the canonical u1q representation of qqc-002-canonical-ir, it defines a deterministic fusion method for maximal single-qubit runs between non-fusible boundaries such as entangling gates, measurement, reset, or classical-control barriers. Each gate in a segment is translated to canonical quaternionic IR, multiplied in circuit order, re-normalized, and sign-canonicalized to obtain a unique fused representative on a closed hemisphere of S<sup>3</sup>. The paper then studies an axis-aware reconstruction layer that detects identity, exact axis rotations, and exact named-gate matches before falling back to a generic canonical single-qubit primitive. The method preserves exact segment action modulo global phase by construction. A small executable reference benchmark corpus is included with the paper package; on thirteen measured segments totaling thirty-six single-qubit gates, the local fusion pass reconstructs eleven output gates, including two identity eliminations and eight named or axis-aligned recoveries. The scope is intentionally local: the paper does not optimize entangling gates, does not define a full compiler, and does not claim global circuit optimality.</p>
+      </div>
+
+      <div class="meta">
+        <div><strong>Paper ID:</strong> qqc-003-gate-fusion · <strong>Version:</strong> 0.1.0 · <strong>Status:</strong> draft · <strong>Last updated:</strong> 2026-04-09</div>
+        <div><strong>Depends on:</strong> <a href="../qqc-001-foundations/">qqc-001-foundations</a>, <a href="../qqc-002-canonical-ir/">qqc-002-canonical-ir</a></div>
+        <div><strong>Keywords:</strong> quaternionic gate fusion; single-qubit optimization; compiler method; circuit simplification; SU(2); unit quaternions</div>
+        <div><strong>Companion files:</strong> <a href="./">package index</a>, <a href="main.tex">main.tex</a>, <a href="paper.pdf">paper.pdf</a>, <a href="metadata.json">metadata.json</a>, <a href="paper.jats.xml">paper.jats.xml</a>, <a href="claims.json">claims.json</a>, <a href="notation.json">notation.json</a>, <a href="glossary.json">glossary.json</a>, <a href="references.bib">references.bib</a>, <a href="CITATION.cff">CITATION.cff</a></div>
+      </div>
+    </header>
+
+    <main class="paper-shell">
+      <h2>1. Introduction</h2>
+      <p>Paper 2 in this series defined a canonical quaternionic intermediate representation for single-qubit circuit segments. That result was representational: named single-qubit syntax could be translated into canonical <span class="math">u1q(w, x, y, z)</span> tuples that stored determinant-one gate action modulo global phase. The present paper studies the operational consequence of that representation. Once adjacent single-qubit gates are expressed as unit quaternions, fusion becomes a direct group operation rather than a syntax rewrite problem.</p>
+      <p>The motivating observation is simple. A maximal run of one-qubit gates on one wire between non-fusible boundaries has a well-defined combined single-qubit action. If each gate in the run is mapped into quaternionic IR, then the run collapses naturally to one canonical representative by quaternion multiplication followed by re-canonicalization. The main questions are therefore algorithmic rather than philosophical: how circuit order is represented, how canonicalization is maintained, how interpretable output is reconstructed, and how the resulting local simplification compares to a transparent baseline.</p>
+      <p>The contribution of this paper is modest and local. It does not attempt to optimize entangling gates, does not define a full quantum compiler, and does not claim universal superiority over existing transpilation stacks. It defines a geometry-native local optimization pass for single-qubit segments and evaluates that pass on a shipped reference corpus with an executable Python harness included in the paper package.</p>
+
+      <h2>2. Background and dependency on papers 1–2</h2>
+      <p>Paper 1 fixed the standard convention <span class="math">Φ</span> identifying the unit quaternions with <span class="math">SU(2)</span> and established that the only residual ambiguity in representing a single-qubit gate action modulo global phase is the sign pair <span class="math">{q, -q}</span>. Paper 2 turned that observation into a canonical IR object <span class="math">u1q</span>, together with normalization and sign-canonicalization rules choosing a unique representative on a closed hemisphere of <span class="math">S<sup>3</sup></span>.</p>
+      <p>The present paper uses that same convention without change. In particular, if a segment contains gates <span class="math">g<sub>1</sub>, ..., g<sub>n</sub></span> in application order and the corresponding unit quaternions are <span class="math">q<sub>1</sub>, ..., q<sub>n</sub></span>, then the fused representative is formed from the product <span class="math">q<sub>n</sub> ... q<sub>1</sub></span>. This multiplication order is the same one already used for matrix composition under <span class="math">Φ(q<sub>n</sub> ... q<sub>1</sub>) = Φ(q<sub>n</sub>) ... Φ(q<sub>1</sub>)</span>.</p>
+
+      <figure>
+        <img src="artifacts/figures/fig-fusion-pipeline.svg" alt="Optimization pipeline from named gate segment to quaternion IR to fused quaternion and reconstructed output." />
+        <figcaption>The optimization pass is local and layered: segment extraction, translation into quaternion IR, multiplication in circuit order, canonicalization, and interpretable reconstruction.</figcaption>
+      </figure>
+
+      <h2>3. Problem setup</h2>
+      <div class="env definition">
+        <strong>Definition 3.1.</strong>
+        A <em>single-qubit segment</em> on wire <span class="math">a</span> is a maximal consecutive run of gates that act only on wire <span class="math">a</span>, bounded by circuit start or end, or by a non-fusible boundary such as an entangling gate, measurement, reset, barrier, or classical-control boundary touching that wire.
+      </div>
+      <div class="env definition">
+        <strong>Definition 3.2.</strong>
+        The <em>local fusion problem</em> for a segment is to replace its input gate list by a shorter output representation that preserves the represented single-qubit action modulo global phase.
+      </div>
+      <p>The baseline considered in this paper is deliberately simple: keep the original segment syntax unchanged. The fusion pass is therefore evaluated as a local optimizer relative to no fusion, not as a comparison against a full external compiler. This makes the benchmark claim narrow and defensible.</p>
+
+      <figure>
+        <img src="artifacts/figures/fig-segment-boundaries.svg" alt="Example of segment extraction within a larger multi-qubit circuit, showing boundaries caused by CNOT, measurement, and reset." />
+        <figcaption>Only the highlighted one-qubit runs are eligible for the present pass. Entangling operations and other non-fusible boundaries terminate segments.</figcaption>
+      </figure>
+
+      <h2>4. Quaternionic fusion method</h2>
+      <p>The pass uses the canonical single-qubit IR defined in paper 2. Each source gate is first translated into a unit quaternion and canonicalized into <span class="math">u1q</span> form.</p>
+      <div class="env definition">
+        <strong>Definition 4.1.</strong>
+        Let <span class="math">seg = (g<sub>1</sub>, ..., g<sub>n</sub>)</span> be a single-qubit segment in application order, and let <span class="math">τ(g<sub>k</sub>) = q<sub>k</sub></span> be the canonical quaternionic translation of gate <span class="math">g<sub>k</sub></span>. The <em>fusion operator</em> is
+        <span class="display">Fuse(seg) = Can(q<sub>n</sub> q<sub>n-1</sub> ... q<sub>1</sub>).</span>
+      </div>
+      <p>Here <span class="math">Can</span> denotes the normalization and sign-canonicalization map already fixed in paper 2. The explicit ordering matters: the first gate applied in the circuit appears on the right in the quaternion product.</p>
+      <div class="env proposition">
+        <strong>Proposition 4.2.</strong>
+        Quaternionic fusion preserves the exact represented single-qubit action of the segment modulo global phase.
+      </div>
+      <p>The proof is direct. Quaternion multiplication follows the same order as matrix composition under the inherited map <span class="math">Φ</span>, and the final canonicalization step changes only the choice of representative inside the sign class <span class="math">{q, -q}</span>.</p>
+      <div class="env proposition">
+        <strong>Proposition 4.3.</strong>
+        For a fixed segment and the sign convention of paper 2, <span class="math">Fuse(seg)</span> is deterministic.
+      </div>
+      <p>Determinism follows because translation, multiplication, normalization, and sign-canonicalization are all deterministic once the segment order is fixed.</p>
+
+      <figure>
+        <img src="artifacts/figures/fig-canonical-hemisphere.svg" alt="S3 hemisphere diagram showing antipodal sign ambiguity and the shortest-geodesic canonical hemisphere used after fusion." />
+        <figcaption>After multiplication, the fused quaternion is re-projected to the canonical hemisphere. This shortest-geodesic convention keeps the stored representative deterministic.</figcaption>
+      </figure>
+
+      <h2>5. Axis-aware reconstruction</h2>
+      <p>A fused quaternion is a complete semantic result, but human-facing compiler output often benefits from a more interpretable reconstruction layer. The key point is that semantic fusion and reconstructed syntax are separate concerns: equivalence is proved at the quaternion level, while reconstruction is a presentation choice.</p>
+      <div class="env definition">
+        <strong>Definition 5.1.</strong>
+        The <em>axis-aware reconstruction operator</em> applies the following ordered tests to a canonical fused quaternion:
+      </div>
+      <ul>
+        <li>if the quaternion equals the identity representative, emit no gate;</li>
+        <li>if it matches a known named-gate quaternion exactly, emit that named gate;</li>
+        <li>if exactly one of <span class="math">x, y, z</span> is nonzero, recover <span class="math">R<sub>x</sub>(θ)</span>, <span class="math">R<sub>y</sub>(θ)</span>, or <span class="math">R<sub>z</sub>(θ)</span> from the half-angle relation;</li>
+        <li>otherwise emit a generic canonical primitive, represented in this paper as <span class="math">u1q(w, x, y, z)</span>.</li>
+      </ul>
+      <div class="env proposition">
+        <strong>Proposition 5.2.</strong>
+        Axis-aware reconstruction is not unique in general, but exact axis-aligned fused quaternions admit exact recovery of a corresponding <span class="math">R<sub>x</sub>(θ)</span>, <span class="math">R<sub>y</sub>(θ)</span>, or <span class="math">R<sub>z</sub>(θ)</span> output.
+      </div>
+      <p>This is a presentation-layer proposition, not the core equivalence proof. The canonical quaternion itself is the authoritative representation; reconstruction is a useful view when the fused action lies on a recognizable axis or matches a known named gate.</p>
+
+      <figure>
+        <img src="artifacts/figures/fig-before-after.svg" alt="Before and after examples showing gate lists collapsing to X, S, identity, or generic u1q output." />
+        <figcaption>Some fused segments recover as exact named gates or axis rotations, while others remain as a generic canonical primitive. All are equivalent at the quaternion level.</figcaption>
+      </figure>
+
+      <h2>6. Theoretical properties</h2>
+      <div class="env corollary">
+        <strong>Corollary 6.1.</strong>
+        Any adjacent single-qubit segment can be replaced by a single canonical quaternionic representative without changing the represented segment action modulo global phase.
+      </div>
+      <p>This is the direct local simplification rule induced by the quaternionic model. In the IR itself, the fully fused segment is already minimal in count because it is stored as one canonical payload.</p>
+      <div class="env remark">
+        <strong>Remark.</strong>
+        Minimality in the quaternionic IR does not imply uniqueness of all possible named-gate reconstructions. It means only that the internal fused representation has a unique one-payload form under the chosen convention.
+      </div>
+
+      <h2>7. Benchmark methodology</h2>
+      <p>The evaluation shipped with this paper uses a small executable reference corpus rather than a large external benchmark suite. This choice is intentional: the paper aims to establish a reproducible local method, not to overstate broad compiler dominance.</p>
+      <p>The corpus categories are:</p>
+      <ul>
+        <li>textbook single-qubit chains,</li>
+        <li>mixed named-gate segments,</li>
+        <li>rotation-heavy segments,</li>
+        <li>segments extracted from small two-qubit circuits, and</li>
+        <li>a small ansatz-style segment.</li>
+      </ul>
+      <p>The baseline flow is syntax-preserving: keep each segment exactly as written and perform no fusion. The evaluated pass translates the segment into quaternion IR, multiplies in circuit order, canonicalizes, reconstructs, and then measures the resulting local output representation.</p>
+      <p>The reported metrics are:</p>
+      <ul>
+        <li>original gate count,</li>
+        <li>optimized gate count,</li>
+        <li>original and optimized local depth,</li>
+        <li>exact equivalence preservation up to global phase using canonical quaternion equality,</li>
+        <li>number of segments collapsed to one canonical representative, and</li>
+        <li>fraction of outputs recoverable as named or axis-aligned gates.</li>
+      </ul>
+
+      <h2>8. Worked examples and measured reference results</h2>
+      <h3>8.1 Worked examples</h3>
+      <p>The reference harness confirms several interpretable simplifications:</p>
+      <ul>
+        <li><code>Rx(pi/2) ; Rx(pi/2)</code> fuses to canonical quaternion <span class="math">(0, 1, 0, 0)</span> and reconstructs as <code>X</code>.</li>
+        <li><code>Rz(pi/4) ; Rz(pi/4)</code> fuses to <span class="math">(sqrt(2)/2, 0, 0, sqrt(2)/2)</span> and reconstructs as <code>S</code>.</li>
+        <li><code>H ; Z ; H</code> fuses to the canonical <code>X</code> representative.</li>
+        <li><code>S ; T ; T† ; Z</code> fuses to the canonical <code>S†</code> representative.</li>
+        <li>A segment such as <code>Rz(pi/5) ; Rz(pi/10)</code> is not a named gate in the lookup table but is recovered exactly as the axis-aligned gate <code>Rz(0.3*pi)</code>.</li>
+      </ul>
+
+      <h3>8.2 Measured aggregate results</h3>
+      <p>The shipped benchmark harness evaluates thirteen single-qubit segments containing thirty-six input gates in total. Under the syntax-preserving baseline, these remain thirty-six local segment gates. Under quaternionic fusion with layered reconstruction, they reduce to eleven reconstructed outputs, including two identity eliminations.</p>
+      <table>
+        <thead>
+          <tr><th>Metric</th><th>Measured value</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Segments evaluated</td><td>13</td></tr>
+          <tr><td>Original single-qubit gates</td><td>36</td></tr>
+          <tr><td>Optimized reconstructed outputs</td><td>11</td></tr>
+          <tr><td>Gate-count reduction</td><td>25 (69.44%)</td></tr>
+          <tr><td>Local depth reduction</td><td>25 (69.44%)</td></tr>
+          <tr><td>Identity eliminations</td><td>2</td></tr>
+          <tr><td>Named or axis-aligned recoveries</td><td>8 of 13 segments (61.54%)</td></tr>
+        </tbody>
+      </table>
+      <p>All measured segments pass the paper's authoritative equivalence check: equality of canonical quaternion representatives after normalization and sign-canonicalization.</p>
+
+      <h3>8.3 Category summary</h3>
+      <table>
+        <thead>
+          <tr><th>Category</th><th>Segments</th><th>Original gates</th><th>Optimized outputs</th><th>Compression ratio</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Textbook single-qubit chains</td><td>3</td><td>7</td><td>3</td><td>0.428571</td></tr>
+          <tr><td>Mixed named-gate segments</td><td>3</td><td>9</td><td>2</td><td>0.222222</td></tr>
+          <tr><td>Rotation-heavy segments</td><td>4</td><td>11</td><td>3</td><td>0.272727</td></tr>
+          <tr><td>Segments from two-qubit circuits</td><td>2</td><td>4</td><td>2</td><td>0.5</td></tr>
+          <tr><td>Ansatz-style segments</td><td>1</td><td>5</td><td>1</td><td>0.2</td></tr>
+        </tbody>
+      </table>
+      <p>These numbers should be read narrowly. They describe only the shipped reference corpus and only the local single-qubit segments targeted by the pass. They do not claim global optimality or broad superiority over external compilers.</p>
+
+      <h2>9. Standard mathematics vs. RQM Technologies framing</h2>
+      <h3>9.1 Standard ingredients</h3>
+      <p>The mathematical facts used here are standard: passage from <span class="math">U(2)</span> to <span class="math">SU(2)</span> modulo global phase, the unit-quaternion model of <span class="math">SU(2)</span>, the sign ambiguity <span class="math">q ~ -q</span>, and quaternion multiplication as the composition rule.</p>
+      <h3>9.2 Project-specific method choices</h3>
+      <p>The project-specific contribution is the optimization-method framing: canonical <span class="math">u1q</span> payloads, explicit segment extraction boundaries, the local fusion operator, the layered reconstruction policy, and the choice of a simple syntax-preserving baseline for initial evaluation. These are compiler-method choices, not new physics.</p>
+
+      <h2>10. Scope, limitations, and non-claims</h2>
+      <ul>
+        <li>This paper does not optimize entangling gates.</li>
+        <li>It does not define a full quantum compiler.</li>
+        <li>It does not claim universal superiority over all baseline compilers.</li>
+        <li>It does not claim hardware speedups.</li>
+        <li>It does not claim overall circuit optimality.</li>
+        <li>It does not solve the general single-qubit synthesis problem in all gate sets.</li>
+      </ul>
+
+      <h2>11. Conclusion</h2>
+      <p>Quaternionic representation is operationally useful because it turns local single-qubit fusion into an exact group operation followed by a deterministic canonicalization step. In that sense, the representation is not only descriptive: it induces a geometry-native optimization pass for single-qubit segments. The measured reference corpus shows that the pass can reduce local gate count and local depth while preserving exact segment action modulo global phase, and can often recover interpretable named or axis-aligned outputs.</p>
+
+      <h2>Appendix A. Benchmark harness note</h2>
+      <p>The results reported here are generated by the shipped script <a href="artifacts/code/benchmark_gate_fusion.py">artifacts/code/benchmark_gate_fusion.py</a>, which writes <a href="artifacts/code/benchmark_results.json">benchmark_results.json</a>. The harness uses only the Python standard library and the fixed quaternion convention inherited from papers 1 and 2.</p>
+
+      <h2>References</h2>
+      <ol class="refs">
+        <li>Cross, Andrew W., Ali Javadi-Abhari, Thomas Alexander, Niel de Beaudrap, Lev S. Bishop, Steven Heidel, Colm A. Ryan, Prasahnt Sivarajah, John A. Smolin, Jay M. Gambetta, and Blake R. Johnson. “OpenQASM 3: A Broader and Deeper Quantum Assembly Language.” <em>ACM Transactions on Quantum Computing</em> 3(3), Article 12, 2022. DOI: <a href="https://doi.org/10.1145/3505636">10.1145/3505636</a>.</li>
+        <li>Hall, Brian C. <em>Lie Groups, Lie Algebras, and Representations: An Elementary Introduction</em>, 2nd ed. Springer, 2015.</li>
+        <li>Kuipers, Jack B. <em>Quaternions and Rotation Sequences: A Primer with Applications to Orbits, Aerospace, and Virtual Reality</em>. Princeton University Press, 1999.</li>
+        <li>Nielsen, Michael A., and Isaac L. Chuang. <em>Quantum Computation and Quantum Information</em>, 10th Anniversary Edition. Cambridge University Press, 2010.</li>
+        <li>Smith, Robert S., Michael J. Curtis, and William J. Zeng. “A Practical Quantum Instruction Set Architecture.” <em>arXiv preprint</em> arXiv:1608.03355, 2016.</li>
+      </ol>
+    </main>
+
+    <footer class="paper-shell">
+      <p>qqc-003-gate-fusion · version 0.1.0 · draft · license: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p>
+      <p><a href="./">Package page</a> · <a href="main.tex">LaTeX source</a> · <a href="paper.pdf">PDF</a> · <a href="metadata.json">metadata</a> · <a href="paper.jats.xml">JATS XML</a></p>
+    </footer>
+  </div>
+</body>
+</html>
