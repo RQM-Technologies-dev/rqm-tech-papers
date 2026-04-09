@@ -58,7 +58,7 @@ orcid: 0009-0002-4003-8452}
 \begin{abstract}
 This paper studies a local optimization pass for single-qubit circuit segments
 using the canonical quaternionic intermediate representation defined in
-\texttt{qqc-002-canonical-ir}. A maximal run of adjacent single-qubit gates on
+\emph{A Canonical Quaternionic Intermediate Representation for Single-Qubit Quantum Circuits}. A maximal run of adjacent single-qubit gates on
 one wire is translated into unit quaternions, multiplied in circuit order,
 re-normalized, and sign-canonicalized on the quotient $q\sim -q$ induced by
 global-phase removal. The result is a unique canonical fused representative in
@@ -83,9 +83,9 @@ compiler superiority.
 
 \section{Introduction}
 
-Paper 1 in this series, \texttt{qqc-001-foundations}, established the fixed
+Paper 1 in this series, \emph{Foundations of Quaternionic Quantum Computing: Qubits, Spinors, and SU(2) Geometry}, established the fixed
 quaternion--$\SU(2)$ convention used throughout the repository. Paper 2,
-\texttt{qqc-002-canonical-ir}, defined a canonical single-qubit intermediate
+\emph{A Canonical Quaternionic Intermediate Representation for Single-Qubit Quantum Circuits}, defined a canonical single-qubit intermediate
 representation $\uoneq(w,x,y,z)$ together with deterministic normalization and
 sign-canonicalization rules. The present paper asks the next compiler-facing
 question: once the representation exists, what optimization rule does it induce?

@@ -686,8 +686,18 @@ def companion_links(paper_id: str) -> str:
     )
 
 
-def render_depends_on(depends_on: Iterable[str]) -> str:
-    links = [f'<a href="/papers/{paper_id}/">{paper_id}</a>' for paper_id in depends_on]
+def render_depends_on(depends_on: Iterable[str], repo_root: Path) -> str:
+    links: list[str] = []
+    for paper_id in depends_on:
+        title = paper_id
+        metadata_path = repo_root / "papers" / paper_id / "metadata.json"
+        if metadata_path.exists():
+            try:
+                dep_metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+                title = dep_metadata.get("title") or paper_id
+            except json.JSONDecodeError:
+                title = paper_id
+        links.append(f'<a href="/papers/{paper_id}/">{html.escape(title)}</a>')
     return ", ".join(links)
 
 
@@ -734,7 +744,10 @@ def render_paper_html(paper_dir: Path) -> str:
     keywords_text = "; ".join(keywords)
     depends_html = ""
     if metadata.get("depends_on"):
-        depends_html = f'<div><strong>Depends on:</strong> {render_depends_on(metadata["depends_on"])}</div>'
+        depends_html = (
+            f'<div><strong>Depends on:</strong> '
+            f'{render_depends_on(metadata["depends_on"], paper_dir.parent.parent)}</div>'
+        )
 
     return f"""<!DOCTYPE html>
 <html lang="en">

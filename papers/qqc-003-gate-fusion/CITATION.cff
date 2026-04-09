@@ -3,7 +3,7 @@ message: "If you use this paper package, please cite the draft below."
 type: article
 title: "Quaternionic Gate Fusion on S^3: Geometry-Native Optimization for Single-Qubit Circuit Segments"
 version: "0.1.0"
-abstract: "This paper studies a local optimization pass for single-qubit circuit segments based on the canonical quaternionic intermediate representation introduced in qqc-002-canonical-ir."
+abstract: "This paper studies a local optimization pass for single-qubit circuit segments based on the canonical quaternionic intermediate representation introduced in A Canonical Quaternionic Intermediate Representation for Single-Qubit Quantum Circuits."
 authors:
   - family-names: "Van Geem"
     given-names: "John G."

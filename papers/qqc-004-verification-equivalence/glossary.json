@@ -6,96 +6,179 @@
       "definition": "Equivalence of two single-qubit segments under the authoritative criterion that their normalized and sign-canonicalized quaternion representatives are exactly equal.",
       "aliases": [],
       "paper_specific": true,
-      "related_terms": ["canonical representative", "verification procedure", "global-phase-aware equivalence"],
-      "see_also": ["def-2", "prop-5"]
+      "related_terms": [
+        "canonical representative",
+        "verification procedure",
+        "global-phase-aware equivalence"
+      ],
+      "see_also": [
+        "def-2",
+        "prop-5"
+      ]
     },
     {
       "term": "canonical representative",
-      "definition": "The unique unit quaternion selected from the sign class {q, -q} by normalization together with the fixed hemisphere and equatorial tie-break rules inherited from qqc-002-canonical-ir.",
+      "definition": "The unique unit quaternion selected from the sign class {q, -q} by normalization together with the fixed hemisphere and equatorial tie-break rules inherited from A Canonical Quaternionic Intermediate Representation for Single-Qubit Quantum Circuits.",
       "aliases": [],
       "paper_specific": true,
-      "related_terms": ["canonical sign convention", "shortest-geodesic representative", "u1q"],
-      "see_also": ["qqc-002-canonical-ir:prop-8"]
+      "related_terms": [
+        "canonical sign convention",
+        "shortest-geodesic representative",
+        "u1q"
+      ],
+      "see_also": [
+        "qqc-002-canonical-ir:prop-8"
+      ]
     },
     {
       "term": "canonical sign convention",
       "definition": "The deterministic rule that chooses the representative with w > 0, and when w = 0 chooses the sign for which the first nonzero component among (x, y, z) is positive.",
-      "aliases": ["sign-canonicalization"],
+      "aliases": [
+        "sign-canonicalization"
+      ],
       "paper_specific": true,
-      "related_terms": ["canonical representative", "equatorial tie-break", "shortest-geodesic representative"],
-      "see_also": ["def-1"]
+      "related_terms": [
+        "canonical representative",
+        "equatorial tie-break",
+        "shortest-geodesic representative"
+      ],
+      "see_also": [
+        "def-1"
+      ]
     },
     {
       "term": "equatorial tie-break",
       "definition": "The secondary sign rule used when the quaternion real part w equals zero, resolving the sign by requiring the first nonzero coordinate among x, y, z to be positive.",
       "aliases": [],
       "paper_specific": true,
-      "related_terms": ["canonical sign convention", "shortest-geodesic representative", "verification invariant"],
-      "see_also": ["def-1"]
+      "related_terms": [
+        "canonical sign convention",
+        "shortest-geodesic representative",
+        "verification invariant"
+      ],
+      "see_also": [
+        "def-1"
+      ]
     },
     {
       "term": "global-phase-aware equivalence",
       "definition": "Equivalence of single-qubit gate actions after quotienting the overall complex phase in U(2), so that only the represented SU(2) action matters.",
       "aliases": [],
       "paper_specific": false,
-      "related_terms": ["canonical equivalence", "SU(2) representative", "phase-aware residual"],
-      "see_also": ["Section 2", "def-2"]
+      "related_terms": [
+        "canonical equivalence",
+        "SU(2) representative",
+        "phase-aware residual"
+      ],
+      "see_also": [
+        "Section 2",
+        "def-2"
+      ]
     },
     {
       "term": "interoperability diagnostic",
       "definition": "A matrix-based quantity, such as phase-aware residual or process fidelity, used to compare quaternionic verification outputs with standard matrix-oriented toolchains.",
       "aliases": [],
       "paper_specific": true,
-      "related_terms": ["phase-aware residual", "process fidelity", "trace overlap"],
-      "see_also": ["def-5", "Section 6"]
+      "related_terms": [
+        "phase-aware residual",
+        "process fidelity",
+        "trace overlap"
+      ],
+      "see_also": [
+        "def-5",
+        "Section 6"
+      ]
     },
     {
       "term": "phase-aware residual",
       "definition": "The maximum norm difference between U†V and the closest scalar phase times the identity, used here as an interoperability-friendly diagnostic for matrix equivalence up to global phase.",
       "aliases": [],
       "paper_specific": true,
-      "related_terms": ["process fidelity", "trace overlap", "global-phase-aware equivalence"],
-      "see_also": ["def-5"]
+      "related_terms": [
+        "process fidelity",
+        "trace overlap",
+        "global-phase-aware equivalence"
+      ],
+      "see_also": [
+        "def-5"
+      ]
     },
     {
       "term": "process fidelity",
       "definition": "The normalized squared trace overlap |Tr(U†V)|^2 / 4 used here as a matrix-based diagnostic for how closely two single-qubit unitaries agree up to global phase.",
       "aliases": [],
       "paper_specific": false,
-      "related_terms": ["phase-aware residual", "trace overlap", "interoperability diagnostic"],
-      "see_also": ["def-5"]
+      "related_terms": [
+        "phase-aware residual",
+        "trace overlap",
+        "interoperability diagnostic"
+      ],
+      "see_also": [
+        "def-5"
+      ]
     },
     {
       "term": "trace overlap",
       "definition": "The absolute trace of U†V for two single-qubit representative matrices U and V, used here as an interpretable matrix-based agreement indicator.",
       "aliases": [],
       "paper_specific": false,
-      "related_terms": ["process fidelity", "phase-aware residual", "interoperability diagnostic"],
-      "see_also": ["def-5"]
+      "related_terms": [
+        "process fidelity",
+        "phase-aware residual",
+        "interoperability diagnostic"
+      ],
+      "see_also": [
+        "def-5"
+      ]
     },
     {
       "term": "u1q",
-      "definition": "The canonical single-qubit quaternionic intermediate representation defined in qqc-002-canonical-ir, storing a deterministic unit-quaternion payload.",
-      "aliases": ["u1q payload"],
+      "definition": "The canonical single-qubit quaternionic intermediate representation defined in A Canonical Quaternionic Intermediate Representation for Single-Qubit Quantum Circuits, storing a deterministic unit-quaternion payload.",
+      "aliases": [
+        "u1q payload"
+      ],
       "paper_specific": true,
-      "related_terms": ["canonical representative", "verification invariant", "single-qubit segment"],
-      "see_also": ["qqc-002-canonical-ir:def-5"]
+      "related_terms": [
+        "canonical representative",
+        "verification invariant",
+        "single-qubit segment"
+      ],
+      "see_also": [
+        "qqc-002-canonical-ir:def-5"
+      ]
     },
     {
       "term": "validation procedure",
       "definition": "A concrete sequence of checks applied to an optimized segment, consisting here of canonical quaternion comparison as the authoritative test and matrix-based diagnostics as interoperable secondary evidence.",
-      "aliases": ["verification workflow"],
+      "aliases": [
+        "verification workflow"
+      ],
       "paper_specific": true,
-      "related_terms": ["canonical equivalence", "interoperability diagnostic", "verification invariant"],
-      "see_also": ["Section 5", "Section 6"]
+      "related_terms": [
+        "canonical equivalence",
+        "interoperability diagnostic",
+        "verification invariant"
+      ],
+      "see_also": [
+        "Section 5",
+        "Section 6"
+      ]
     },
     {
       "term": "verification invariant",
       "definition": "A property that must be preserved by a correct quaternionic compilation pass, such as unit norm after normalization, sign-canonical form, and equality of canonical fused representatives for equivalent segments.",
       "aliases": [],
       "paper_specific": true,
-      "related_terms": ["canonical sign convention", "u1q", "validation procedure"],
-      "see_also": ["prop-6", "Section 4"]
+      "related_terms": [
+        "canonical sign convention",
+        "u1q",
+        "validation procedure"
+      ],
+      "see_also": [
+        "prop-6",
+        "Section 4"
+      ]
     }
   ]
 }

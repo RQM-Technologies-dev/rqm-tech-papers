@@ -59,7 +59,7 @@
       "claim_id": "prop-5",
       "label": "Proposition 6.2 (Determinism of the fused representative)",
       "type": "proposition",
-      "statement": "For every nonempty single-qubit segment, Fuse(seg) is uniquely determined by the segment action and the fixed canonicalization convention inherited from qqc-002-canonical-ir.",
+      "statement": "For every nonempty single-qubit segment, Fuse(seg) is uniquely determined by the segment action and the fixed canonicalization convention inherited from A Canonical Quaternionic Intermediate Representation for Single-Qubit Quantum Circuits.",
       "status": "proved",
       "proof_sketch": "Quaternion multiplication gives the segment action uniquely up to the sign ambiguity q ~ -q, and the canonicalization map Can selects exactly one representative from that sign class.",
       "dependencies": [

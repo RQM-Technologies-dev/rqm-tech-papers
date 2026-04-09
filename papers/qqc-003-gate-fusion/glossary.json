@@ -6,120 +6,231 @@
       "definition": "A layered output rule that recovers identity, recognized named gates, exact axis-aligned rotations, or a generic one-qubit primitive from a fused canonical quaternion.",
       "aliases": [],
       "paper_specific": true,
-      "related_terms": ["gate fusion", "canonical representative", "single-qubit segment"],
-      "see_also": ["def-3", "Section 5"]
+      "related_terms": [
+        "gate fusion",
+        "canonical representative",
+        "single-qubit segment"
+      ],
+      "see_also": [
+        "def-3",
+        "Section 5"
+      ]
     },
     {
       "term": "baseline flow",
       "definition": "The reference comparison flow used in the paper. Here it is the syntax-preserving baseline that leaves each single-qubit segment unchanged and performs no fusion.",
-      "aliases": ["syntax-preserving baseline"],
+      "aliases": [
+        "syntax-preserving baseline"
+      ],
       "paper_specific": true,
-      "related_terms": ["benchmark methodology", "gate count reduction", "depth reduction"],
-      "see_also": ["Section 4", "Section 7"]
+      "related_terms": [
+        "benchmark methodology",
+        "gate count reduction",
+        "depth reduction"
+      ],
+      "see_also": [
+        "Section 4",
+        "Section 7"
+      ]
     },
     {
       "term": "canonical representative",
-      "definition": "The unique stored unit quaternion selected from the sign class {q, -q} by normalization together with the hemisphere and equatorial tie-break rules inherited from qqc-002-canonical-ir.",
+      "definition": "The unique stored unit quaternion selected from the sign class {q, -q} by normalization together with the hemisphere and equatorial tie-break rules inherited from A Canonical Quaternionic Intermediate Representation for Single-Qubit Quantum Circuits.",
       "aliases": [],
       "paper_specific": true,
-      "related_terms": ["sign-canonicalization", "shortest geodesic", "u1q"],
-      "see_also": ["qqc-002-canonical-ir:prop-8", "Section 2"]
+      "related_terms": [
+        "sign-canonicalization",
+        "shortest geodesic",
+        "u1q"
+      ],
+      "see_also": [
+        "qqc-002-canonical-ir:prop-8",
+        "Section 2"
+      ]
     },
     {
       "term": "depth reduction",
       "definition": "Decrease in segment-local sequential depth between the syntax-preserving baseline and the reconstructed output of the local fusion pass.",
       "aliases": [],
       "paper_specific": true,
-      "related_terms": ["gate count reduction", "baseline flow", "single-qubit segment"],
-      "see_also": ["Section 7", "emp-9"]
+      "related_terms": [
+        "gate count reduction",
+        "baseline flow",
+        "single-qubit segment"
+      ],
+      "see_also": [
+        "Section 7",
+        "emp-9"
+      ]
     },
     {
       "term": "equivalence preservation",
       "definition": "Property that the optimized output represents exactly the same single-qubit action as the original segment modulo global phase under the authoritative canonical-quaternion equivalence check.",
       "aliases": [],
       "paper_specific": false,
-      "related_terms": ["canonical representative", "global phase", "gate fusion"],
-      "see_also": ["prop-4"]
+      "related_terms": [
+        "canonical representative",
+        "global phase",
+        "gate fusion"
+      ],
+      "see_also": [
+        "prop-4"
+      ]
     },
     {
       "term": "gate count reduction",
       "definition": "Decrease in the number of emitted single-qubit gates after applying the local fusion pass and reconstruction layer relative to the baseline flow.",
       "aliases": [],
       "paper_specific": true,
-      "related_terms": ["depth reduction", "baseline flow", "gate fusion"],
-      "see_also": ["Section 7", "emp-9"]
+      "related_terms": [
+        "depth reduction",
+        "baseline flow",
+        "gate fusion"
+      ],
+      "see_also": [
+        "Section 7",
+        "emp-9"
+      ]
     },
     {
       "term": "gate fusion",
       "definition": "Replacement of a consecutive single-qubit segment by one fused canonical quaternionic representative, optionally followed by reconstruction into an interpretable one-gate or zero-gate output.",
-      "aliases": ["segment fusion"],
+      "aliases": [
+        "segment fusion"
+      ],
       "paper_specific": false,
-      "related_terms": ["single-qubit segment", "canonical representative", "local optimization pass"],
-      "see_also": ["def-2", "cor-6"]
+      "related_terms": [
+        "single-qubit segment",
+        "canonical representative",
+        "local optimization pass"
+      ],
+      "see_also": [
+        "def-2",
+        "cor-6"
+      ]
     },
     {
       "term": "geometry-native optimization pass",
       "definition": "A local optimization pass whose core rewrite rule is the native group law of the chosen representation rather than an external symbolic heuristic over frontend syntax.",
       "aliases": [],
       "paper_specific": true,
-      "related_terms": ["gate fusion", "quaternionic representation", "local optimization pass"],
-      "see_also": ["int-10"]
+      "related_terms": [
+        "gate fusion",
+        "quaternionic representation",
+        "local optimization pass"
+      ],
+      "see_also": [
+        "int-10"
+      ]
     },
     {
       "term": "global phase",
       "definition": "An overall complex phase factor that does not change the physical single-qubit action on pure states. The optimization pass preserves segment action only up to this phase, exactly as intended by the inherited SU(2) representative model.",
       "aliases": [],
       "paper_specific": false,
-      "related_terms": ["SU(2) representative", "equivalence preservation", "sign-canonicalization"],
-      "see_also": ["Section 2", "prop-4"]
+      "related_terms": [
+        "SU(2) representative",
+        "equivalence preservation",
+        "sign-canonicalization"
+      ],
+      "see_also": [
+        "Section 2",
+        "prop-4"
+      ]
     },
     {
       "term": "local optimization pass",
       "definition": "A compiler transformation restricted to a bounded region of the circuit rather than the full global structure. In this paper the region is a single-qubit segment.",
       "aliases": [],
       "paper_specific": false,
-      "related_terms": ["single-qubit segment", "gate fusion", "baseline flow"],
-      "see_also": ["Section 1", "Section 3"]
+      "related_terms": [
+        "single-qubit segment",
+        "gate fusion",
+        "baseline flow"
+      ],
+      "see_also": [
+        "Section 1",
+        "Section 3"
+      ]
     },
     {
       "term": "quaternionic gate fusion",
       "definition": "The specific local fusion method studied in this paper: translate a segment into canonical quaternions, multiply in circuit order, canonicalize the product, and reconstruct an output gate form when possible.",
       "aliases": [],
       "paper_specific": true,
-      "related_terms": ["gate fusion", "u1q", "axis-aware reconstruction"],
-      "see_also": ["def-2", "emp-9"]
+      "related_terms": [
+        "gate fusion",
+        "u1q",
+        "axis-aware reconstruction"
+      ],
+      "see_also": [
+        "def-2",
+        "emp-9"
+      ]
     },
     {
       "term": "shortest geodesic",
       "definition": "The sign choice convention on the unit three-sphere that prefers representatives with nonnegative real part, thereby selecting the shorter closed axis-angle interval when possible.",
-      "aliases": ["shortest-geodesic representative"],
+      "aliases": [
+        "shortest-geodesic representative"
+      ],
       "paper_specific": true,
-      "related_terms": ["canonical representative", "sign-canonicalization", "S^3"],
-      "see_also": ["qqc-002-canonical-ir:rem-9"]
+      "related_terms": [
+        "canonical representative",
+        "sign-canonicalization",
+        "S^3"
+      ],
+      "see_also": [
+        "qqc-002-canonical-ir:rem-9"
+      ]
     },
     {
       "term": "sign-canonicalization",
       "definition": "The deterministic rule that chooses one representative from the pair {q, -q} using the primary test w > 0 and an explicit tie-break on the equator w = 0.",
-      "aliases": ["SignCan"],
+      "aliases": [
+        "SignCan"
+      ],
       "paper_specific": true,
-      "related_terms": ["canonical representative", "shortest geodesic", "equivalence preservation"],
-      "see_also": ["qqc-002-canonical-ir:def-7"]
+      "related_terms": [
+        "canonical representative",
+        "shortest geodesic",
+        "equivalence preservation"
+      ],
+      "see_also": [
+        "qqc-002-canonical-ir:def-7"
+      ]
     },
     {
       "term": "single-qubit segment",
       "definition": "A maximal consecutive run of one-qubit gates on one wire between circuit endpoints or boundaries such as entangling gates, measurement, reset, or classical control.",
-      "aliases": ["segment"],
+      "aliases": [
+        "segment"
+      ],
       "paper_specific": true,
-      "related_terms": ["local optimization pass", "gate fusion", "baseline flow"],
-      "see_also": ["def-1"]
+      "related_terms": [
+        "local optimization pass",
+        "gate fusion",
+        "baseline flow"
+      ],
+      "see_also": [
+        "def-1"
+      ]
     },
     {
       "term": "u1q",
-      "definition": "Canonical quaternionic IR object inherited from qqc-002-canonical-ir and used here as the storage format for fused single-qubit segment action modulo global phase.",
-      "aliases": ["u1q payload"],
+      "definition": "Canonical quaternionic IR object inherited from A Canonical Quaternionic Intermediate Representation for Single-Qubit Quantum Circuits and used here as the storage format for fused single-qubit segment action modulo global phase.",
+      "aliases": [
+        "u1q payload"
+      ],
       "paper_specific": true,
-      "related_terms": ["canonical representative", "quaternionic gate fusion", "single-qubit segment"],
-      "see_also": ["qqc-002-canonical-ir:def-5"]
+      "related_terms": [
+        "canonical representative",
+        "quaternionic gate fusion",
+        "single-qubit segment"
+      ],
+      "see_also": [
+        "qqc-002-canonical-ir:def-5"
+      ]
     }
   ]
 }

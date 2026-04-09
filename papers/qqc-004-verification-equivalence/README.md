@@ -12,7 +12,7 @@ This folder is a semantic paper package for:
 
 ## Dependencies on earlier papers
 
-- This draft depends explicitly on `qqc-001-foundations`, `qqc-002-canonical-ir`, and `qqc-003-gate-fusion`.
+- This draft depends explicitly on `Foundations of Quaternionic Quantum Computing: Qubits, Spinors, and SU(2) Geometry`, `A Canonical Quaternionic Intermediate Representation for Single-Qubit Quantum Circuits`, and `qqc-003-gate-fusion`.
 - It reuses the same quaternion--`SU(2)` convention `Phi`, canonical `u1q` representation, and local fusion semantics.
 - Its contribution is the trust layer: canonical equivalence, invariants, validation procedures, and matrix-based interoperability diagnostics.
 

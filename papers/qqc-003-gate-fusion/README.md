@@ -12,7 +12,7 @@ This folder is a semantic paper package for:
 
 ## Dependency on papers 1 and 2
 
-- This draft depends explicitly on `qqc-001-foundations` and `qqc-002-canonical-ir`.
+- This draft depends explicitly on `Foundations of Quaternionic Quantum Computing: Qubits, Spinors, and SU(2) Geometry` and `A Canonical Quaternionic Intermediate Representation for Single-Qubit Quantum Circuits`.
 - Paper 1 supplies the fixed quaternion--`SU(2)` convention.
 - Paper 2 supplies the canonical `u1q` representation and sign-canonicalization rules.
 - Paper 3 studies a local optimization pass built on top of those earlier layers.
