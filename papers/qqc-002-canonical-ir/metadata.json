@@ -1,0 +1,58 @@
+{
+  "paper_id": "qqc-002-canonical-ir",
+  "title": "A Canonical Quaternionic Intermediate Representation for Single-Qubit Quantum Circuits",
+  "slug": "canonical-ir",
+  "version": "0.1.0",
+  "status": "draft",
+  "publication_date": null,
+  "last_updated": "2026-04-09",
+  "authors": [
+    {
+      "name": "RQM Technologies Research Team",
+      "affiliation": "RQM Technologies",
+      "orcid": null,
+      "email": "research@rqm-technologies.com",
+      "corresponding": true
+    }
+  ],
+  "abstract": "This paper defines a canonical quaternionic intermediate representation for single-qubit circuit segments. Building on the fixed quaternion-SU(2) correspondence established in qqc-001-foundations, it treats the physically relevant action of a single-qubit gate modulo global phase by first choosing an SU(2) representative and then representing that representative by a unit quaternion q = w + x i + y j + z k. The paper introduces a compiler-facing IR object u1q(w, x, y, z), formalizes its unit-norm and sign-ambiguity constraints, and defines deterministic normalization and canonicalization rules. The canonical representative is chosen from {q, -q} by a closed-hemisphere convention w > 0, together with an explicit equatorial tie-break when w = 0. This yields a shortest-geodesic, deterministic internal form suitable for fusion and rewrite pipelines. Explicit translations are given for the identity, Pauli gates, H, S, T and their adjoints, and axis rotations Rx(theta), Ry(theta), Rz(theta). Composition of adjacent single-qubit gates is shown to correspond to quaternion multiplication followed by re-canonicalization, and worked examples illustrate the relation between named gate syntax, canonical IR, and single-qubit segments extracted from larger circuits. The scope is limited to single-qubit gate action modulo global phase; no multi-qubit IR, optimization guarantee, or hardware claim is made.",
+  "keywords": [
+    "quaternionic intermediate representation",
+    "single-qubit circuits",
+    "compiler IR",
+    "SU(2)",
+    "unit quaternions",
+    "circuit canonicalization"
+  ],
+  "series": "RQM Quaternionic Quantum Computing Series",
+  "series_number": 2,
+  "depends_on": [
+    "qqc-001-foundations"
+  ],
+  "canonical_url": null,
+  "pdf_url": null,
+  "html_url": null,
+  "jats_url": null,
+  "doi": null,
+  "journal": null,
+  "volume": null,
+  "issue": null,
+  "pages": null,
+  "citations": [
+    "cross2022",
+    "hall2015",
+    "kuipers1999",
+    "nielsen2010",
+    "smith2016"
+  ],
+  "related_artifacts": [
+    "main.tex",
+    "artifacts/figures/fig-ir-pipeline.svg",
+    "artifacts/figures/fig-hemisphere-canonicalization.svg",
+    "artifacts/figures/fig-segment-extraction.svg",
+    "artifacts/notebooks/README.md",
+    "artifacts/code/README.md"
+  ],
+  "license": "CC-BY-4.0",
+  "notes": "Draft representation paper defining a canonical quaternionic IR for single-qubit circuit segments. This paper depends conceptually on qqc-001-foundations for the fixed quaternion-SU(2) convention and stays explicitly within the single-qubit scope."
+}
