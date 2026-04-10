@@ -306,6 +306,14 @@ h3,
   font-size: 1.12rem;
 }
 
+.paper-title-link {
+  color: inherit;
+}
+
+.paper-title-link:hover {
+  color: inherit;
+}
+
 .paper-meta,
 .site-meta-row {
   display: flex;
