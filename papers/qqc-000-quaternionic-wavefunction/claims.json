@@ -1,0 +1,111 @@
+{
+  "paper_id": "qqc-000-quaternionic-wavefunction",
+  "claims": [
+    {
+      "claim_id": "def-1",
+      "label": "Definition 2.1 (Quaternionic wavefunction)",
+      "type": "definition",
+      "statement": "Given a normalized spinor psi = (alpha, beta)^T in C^2 with alpha = a_0 + a_1 i and beta = b_0 + b_1 i, the quaternionic wavefunction is the quaternion q_psi = a_0 + a_1 i + b_0 j + b_1 k in H.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": [],
+      "evidence_location": "Section 2",
+      "notes": "This is the paper's core expository definition."
+    },
+    {
+      "claim_id": "prop-2",
+      "label": "Proposition 2.2 (C^2 and H have the same underlying real dimension)",
+      "type": "proposition",
+      "statement": "The assignment (alpha, beta) -> q_psi identifies C^2 with H as real vector spaces by grouping the four real coefficients of a spinor into one quaternion.",
+      "status": "proved",
+      "proof_sketch": "Write alpha = a_0 + a_1 i and beta = b_0 + b_1 i. Then both C^2 and H are four-dimensional over R, and the coefficient-grouping map is linear and invertible over R.",
+      "dependencies": [
+        "def-1"
+      ],
+      "evidence_location": "Section 2",
+      "notes": "This is a real-vector-space identification, not a claim that complex and quaternionic Hilbert-space formalisms are identical in full generality."
+    },
+    {
+      "claim_id": "prop-3",
+      "label": "Proposition 2.3 (Normalized quaternionic wavefunctions form S^3)",
+      "type": "proposition",
+      "statement": "If psi = (alpha, beta)^T is normalized so that |alpha|^2 + |beta|^2 = 1, then the associated quaternionic wavefunction q_psi satisfies |q_psi| = 1. Therefore the space of normalized quaternionic wavefunctions is the three-sphere S^3.",
+      "status": "proved",
+      "proof_sketch": "Under alpha = a_0 + a_1 i and beta = b_0 + b_1 i, normalization becomes a_0^2 + a_1^2 + b_0^2 + b_1^2 = 1, which is exactly the unit-quaternion norm condition.",
+      "dependencies": [
+        "def-1",
+        "prop-2"
+      ],
+      "evidence_location": "Section 2",
+      "notes": "This identifies the normalized-state sphere with S^3."
+    },
+    {
+      "claim_id": "prop-4",
+      "label": "Proposition 3.1 (Unit quaternions model SU(2))",
+      "type": "proposition",
+      "statement": "Under the fixed convention Phi(a + b i + c j + d k) = a I - i (b sigma_x + c sigma_y + d sigma_z), the unit quaternions are in Lie-group isomorphism with SU(2).",
+      "status": "proved",
+      "proof_sketch": "This is the standard quaternion-SU(2) correspondence: the unit-quaternion norm condition matches determinant one, and the quaternion basis units map to the Pauli generators.",
+      "dependencies": [],
+      "evidence_location": "Section 3",
+      "notes": "Standard background fact used to interpret spin-1/2 transformations."
+    },
+    {
+      "claim_id": "cor-5",
+      "label": "Corollary 3.2 (Quaternionic wavefunctions transform naturally under SU(2))",
+      "type": "corollary",
+      "statement": "Because normalized quaternionic wavefunctions lie on S^3 and unit quaternions model SU(2), spin-1/2 transformations can be represented geometrically as SU(2) actions on quaternionic wavefunctions.",
+      "status": "proved",
+      "proof_sketch": "Combine the normalized-state sphere result with the quaternion-SU(2) group identification.",
+      "dependencies": [
+        "prop-3",
+        "prop-4"
+      ],
+      "evidence_location": "Section 3",
+      "notes": "This is the geometric bridge from the quaternionic wavefunction to spin-1/2 dynamics."
+    },
+    {
+      "claim_id": "prop-6",
+      "label": "Proposition 4.1 (Spin-1/2 geometry and the double cover)",
+      "type": "proposition",
+      "statement": "The map SU(2) -> SO(3) is a double cover. Consequently spin-1/2 states distinguish a 2 pi rotation from the identity at the spinor level, and return to the same representative only after 4 pi.",
+      "status": "proved",
+      "proof_sketch": "The kernel of the standard map SU(2) -> SO(3) is {+I, -I}. Therefore a full 2 pi rotation in SO(3) lifts to minus the identity in SU(2), while 4 pi lifts back to plus the identity.",
+      "dependencies": [
+        "prop-4"
+      ],
+      "evidence_location": "Section 4",
+      "notes": "This is the standard geometric reason spin-1/2 objects exhibit the 4 pi property."
+    },
+    {
+      "claim_id": "rem-7",
+      "label": "Remark 5.1 (Two roles of S^3)",
+      "type": "remark",
+      "statement": "The manifold S^3 appears both as the space of normalized quaternionic wavefunctions and as the manifold underlying the group of unit quaternions. These are mathematically the same manifold but conceptually different roles and should not be conflated with the Bloch sphere S^2.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": [
+        "prop-3",
+        "prop-4"
+      ],
+      "evidence_location": "Section 5",
+      "notes": "This distinction is central to the paper's pedagogy."
+    },
+    {
+      "claim_id": "int-8",
+      "label": "Interpretive Claim 6.1 (RQM prequel framing)",
+      "type": "interpretive_claim",
+      "statement": "RQM Technologies uses the term quaternionic wavefunction as an expository bridge from two-component spinors in C^2 to quaternionic geometry, because that bridge makes spin-1/2 structure, S^3, and SU(2) visually and conceptually clearer without changing the standard mathematics.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": [
+        "prop-3",
+        "cor-5",
+        "prop-6",
+        "rem-7"
+      ],
+      "evidence_location": "Section 6",
+      "notes": "This is a framing claim, not a theorem of new physics."
+    }
+  ]
+}
