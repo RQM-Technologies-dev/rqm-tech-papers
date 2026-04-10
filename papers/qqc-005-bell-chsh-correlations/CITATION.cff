@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this paper package, please cite the draft below."
+type: article
+title: "Bell and CHSH Correlations from Quaternionic Spin Geometry: A Direct Derivation on S^3"
+version: "0.1.0"
+abstract: "This paper derives the singlet Bell correlation law and the CHSH bound in the fixed quaternion-SU(2) convention of the RQM paper series."
+authors:
+  - given-names: "John G."
+    family-names: "Van Geem"
+    affiliation: "RQM Technologies"
+    orcid: "https://orcid.org/0009-0002-4003-8452"
+license: CC-BY-4.0
+keywords:
+  - Bell correlation
+  - CHSH inequality
+  - singlet state
+  - quaternionic spin geometry
+  - SU(2)
+  - unit quaternions
+preferred-citation:
+  type: article
+  title: "Bell and CHSH Correlations from Quaternionic Spin Geometry: A Direct Derivation on S^3"
+  authors:
+    - given-names: "John G."
+      family-names: "Van Geem"
+      affiliation: "RQM Technologies"
+      orcid: "https://orcid.org/0009-0002-4003-8452"
+  year: 2026
+  version: "0.1.0"
+  notes: "Draft Bell/CHSH paper package in the RQM Quaternionic Quantum Computing Series; no DOI assigned."
