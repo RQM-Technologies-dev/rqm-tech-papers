@@ -1,0 +1,61 @@
+{
+  "paper_id": "qqc-005-bell-chsh-correlations",
+  "glossary": [
+    {
+      "term": "Bell correlation",
+      "definition": "The two-detector correlation function E(a,b) for a Bell-type experiment. For the singlet state it equals minus the analyzer dot product.",
+      "aliases": ["correlation function"],
+      "paper_specific": false,
+      "related_terms": ["CHSH value", "singlet state", "analyzer direction"],
+      "see_also": ["Section 4", "cor-4"]
+    },
+    {
+      "term": "CHSH value",
+      "definition": "The scalar combination S = E(a,b) + E(a,b') + E(a',b) - E(a',b') used in the Clauser-Horne-Shimony-Holt inequality.",
+      "aliases": ["CHSH combination"],
+      "paper_specific": false,
+      "related_terms": ["Bell correlation", "Tsirelson bound", "analyzer direction"],
+      "see_also": ["Section 5", "thm-6"]
+    },
+    {
+      "term": "pure analyzer quaternion",
+      "definition": "A pure unit quaternion u_a in the imaginary subspace of H used to encode an analyzer direction a in the quaternionic spin geometry of this paper.",
+      "aliases": ["analyzer quaternion"],
+      "paper_specific": true,
+      "related_terms": ["analyzer direction", "unit quaternion", "scalar part"],
+      "see_also": ["Section 3", "def-1"]
+    },
+    {
+      "term": "scalar part",
+      "definition": "The real component of a quaternion. In this paper the scalar part of u_a u_b reproduces the Bell correlation law.",
+      "aliases": ["real part of a quaternion"],
+      "paper_specific": false,
+      "related_terms": ["pure analyzer quaternion", "Bell correlation", "cross product"],
+      "see_also": ["Section 3", "prop-2"]
+    },
+    {
+      "term": "singlet state",
+      "definition": "The antisymmetric two-qubit state |Psi^-> = (|01> - |10>)/sqrt(2), equivalently the rotationally invariant spin-0 state used in Bell and CHSH derivations.",
+      "aliases": ["singlet sector", "Bell singlet"],
+      "paper_specific": false,
+      "related_terms": ["Bell correlation", "joint probability", "CHSH value"],
+      "see_also": ["Section 4", "thm-3"]
+    },
+    {
+      "term": "Tsirelson bound",
+      "definition": "The quantum-mechanical upper bound |S| <= 2 sqrt(2) for the CHSH value.",
+      "aliases": ["Cirelson bound"],
+      "paper_specific": false,
+      "related_terms": ["CHSH value", "Bell correlation", "commutator geometry"],
+      "see_also": ["Section 5", "thm-6"]
+    },
+    {
+      "term": "commutator geometry",
+      "definition": "The geometric content of the CHSH derivation arising from noncommuting local observables. In this paper it is written as a cross-product statement in quaternionic language.",
+      "aliases": [],
+      "paper_specific": true,
+      "related_terms": ["cross product", "pure analyzer quaternion", "Tsirelson bound"],
+      "see_also": ["Section 5", "prop-5"]
+    }
+  ]
+}

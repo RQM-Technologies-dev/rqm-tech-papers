@@ -1,0 +1,58 @@
+{
+  "paper_id": "qqc-005-bell-chsh-correlations",
+  "title": "Bell and CHSH Correlations from Quaternionic Spin Geometry: A Direct Derivation on S^3",
+  "slug": "bell-chsh-correlations",
+  "version": "0.1.0",
+  "status": "draft",
+  "publication_date": null,
+  "last_updated": "2026-04-10",
+  "authors": [
+    {
+      "name": "John G. Van Geem",
+      "affiliation": "RQM Technologies",
+      "orcid": "0009-0002-4003-8452",
+      "email": null,
+      "corresponding": true
+    }
+  ],
+  "abstract": "This paper gives a direct derivation of Bell and Clauser-Horne-Shimony-Holt (CHSH) correlations using the fixed quaternion-SU(2) convention established in qqc-001-foundations. The analyzer settings are represented by pure unit quaternions u_a and u_b in the imaginary subspace of H, so that their product decomposes as u_a u_b = -a·b + u_{a×b}. In the singlet sector, that scalar-vector decomposition yields the standard joint probabilities P(s,t|a,b) = 1/4(1 - st a·b), the correlation law E(a,b) = -a·b = Sc(u_a u_b), and the CHSH operator bound |S| <= 2 sqrt(2). The paper also records one optimal analyzer configuration that saturates the bound. The mathematical predictions are the standard quantum-mechanical ones; the project-specific contribution is the geometric organization. In this framing, Bell's theorem excludes local hidden-variable reductions of the singlet state, but it does not exclude quaternionic spin geometry itself. The paper is intentionally conservative: it does not introduce a new physical theory, does not claim a local hidden-variable completion, and does not define a full general quaternionic tensor-product formalism beyond the singlet-sector derivations used here.",
+  "keywords": [
+    "Bell correlation",
+    "CHSH inequality",
+    "singlet state",
+    "quaternionic spin geometry",
+    "SU(2)",
+    "unit quaternions"
+  ],
+  "series": "RQM Quaternionic Quantum Computing Series",
+  "series_number": 5,
+  "depends_on": [
+    "qqc-001-foundations"
+  ],
+  "canonical_url": null,
+  "pdf_url": null,
+  "html_url": null,
+  "jats_url": null,
+  "doi": null,
+  "journal": null,
+  "volume": null,
+  "issue": null,
+  "pages": null,
+  "citations": [
+    "bell1964",
+    "clauser1969",
+    "cirelson1980",
+    "hall2015",
+    "kuipers1999",
+    "nielsen2010",
+    "penrose1984"
+  ],
+  "related_artifacts": [
+    "main.tex",
+    "artifacts/code/bell_chsh_demo.py",
+    "artifacts/code/chsh_reference_results.json",
+    "artifacts/code/README.md"
+  ],
+  "license": "CC-BY-4.0",
+  "notes": "Draft Bell/CHSH paper expressing singlet-sector correlations in the fixed quaternion-SU(2) convention of the series. The package includes a small reference script that reproduces the Bell, joint-probability, and CHSH values used in the text."
+}

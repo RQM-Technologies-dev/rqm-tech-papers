@@ -1,0 +1,74 @@
+{
+  "paper_id": "qqc-005-bell-chsh-correlations",
+  "description": "Reference Bell/CHSH values computed from quaternionic analyzer geometry and singlet probabilities.",
+  "settings": {
+    "a": [0.0, 0.0, 1.0],
+    "a_prime": [1.0, 0.0, 0.0],
+    "b": [0.7071067811865475, 0.0, 0.7071067811865475],
+    "b_prime": [-0.7071067811865475, 0.0, 0.7071067811865475]
+  },
+  "pairs": {
+    "E(a,b)": {
+      "dot_product": 0.7071067811865475,
+      "pure_quaternion_product": {
+        "scalar_part": -0.7071067811865475,
+        "vector_part": [0.0, 0.7071067811865475, 0.0]
+      },
+      "joint_probabilities": {
+        "+1+1": 0.07322330470336313,
+        "+1-1": 0.42677669529663687,
+        "-1+1": 0.42677669529663687,
+        "-1-1": 0.07322330470336313
+      },
+      "correlation": -0.7071067811865475
+    },
+    "E(a,b_prime)": {
+      "dot_product": 0.7071067811865475,
+      "pure_quaternion_product": {
+        "scalar_part": -0.7071067811865475,
+        "vector_part": [0.0, -0.7071067811865475, 0.0]
+      },
+      "joint_probabilities": {
+        "+1+1": 0.07322330470336313,
+        "+1-1": 0.42677669529663687,
+        "-1+1": 0.42677669529663687,
+        "-1-1": 0.07322330470336313
+      },
+      "correlation": -0.7071067811865475
+    },
+    "E(a_prime,b)": {
+      "dot_product": 0.7071067811865475,
+      "pure_quaternion_product": {
+        "scalar_part": -0.7071067811865475,
+        "vector_part": [0.0, -0.7071067811865475, 0.0]
+      },
+      "joint_probabilities": {
+        "+1+1": 0.07322330470336313,
+        "+1-1": 0.42677669529663687,
+        "-1+1": 0.42677669529663687,
+        "-1-1": 0.07322330470336313
+      },
+      "correlation": -0.7071067811865475
+    },
+    "E(a_prime,b_prime)": {
+      "dot_product": -0.7071067811865475,
+      "pure_quaternion_product": {
+        "scalar_part": 0.7071067811865475,
+        "vector_part": [0.0, -0.7071067811865475, 0.0]
+      },
+      "joint_probabilities": {
+        "+1+1": 0.42677669529663687,
+        "+1-1": 0.07322330470336313,
+        "-1+1": 0.07322330470336313,
+        "-1-1": 0.42677669529663687
+      },
+      "correlation": 0.7071067811865475
+    }
+  },
+  "chsh": {
+    "value": -2.82842712474619,
+    "absolute_value": 2.82842712474619,
+    "tsirelson_bound": 2.8284271247461903,
+    "saturates_tsirelson_bound": true
+  }
+}

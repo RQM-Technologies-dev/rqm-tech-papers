@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bell and CHSH Correlations from Quaternionic Spin Geometry: A Direct Derivation on S^3</title>
+  <meta name="description" content="This paper gives a direct derivation of Bell and Clauser-Horne-Shimony-Holt (CHSH) correlations using the fixed quaternion-SU(2) convention established in qqc-001-foundations." />
+  <meta name="author" content="John G. Van Geem" />
+  <meta name="keywords" content="Bell correlation, CHSH inequality, singlet state, quaternionic spin geometry, SU(2), unit quaternions" />
+  <meta name="citation_title" content="Bell and CHSH Correlations from Quaternionic Spin Geometry: A Direct Derivation on S^3" />
+  <meta name="citation_author" content="John G. Van Geem" />
+  <meta name="citation_pdf_url" content="paper.pdf" />
+  <link rel="alternate" type="application/json" href="metadata.json" title="Paper metadata" />
+  <link rel="alternate" type="application/xml" href="paper.jats.xml" title="JATS XML" />
+  <link rel="stylesheet" href="../../styles/site.css" />
+  <script>
+window.MathJax = {
+  tex: {
+    inlineMath: [["\\(","\\)"]],
+    displayMath: [["\\[","\\]"]],
+    macros: {
+      Sc: "\\operatorname{Sc}",
+      tr: "\\operatorname{tr}"
+    },
+    processEscapes: true
+  },
+  options: {
+    skipHtmlTags: ["script","noscript","style","textarea","pre","code"]
+  }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body class="paper-page">
+  <div class="page-shell">
+    <header class="paper-shell">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="../../index.html">Home</a>
+        <span>/</span>
+        <a href="/papers/qqc-005-bell-chsh-correlations/">qqc-005-bell-chsh-correlations</a>
+        <span>/</span>
+        <span aria-current="page">paper.html</span>
+      </nav>
+      <div class="badge">RQM Quaternionic Quantum Computing Series - Paper 5</div>
+      <h1><strong>Bell and CHSH Correlations from Quaternionic Spin Geometry:</strong><br />A Direct Derivation on \(S^3\)</h1>
+      <p class="byline">John G. Van Geem<br />RQM Technologies<br />orcid: 0009-0002-4003-8452</p>
+
+      <div class="abstract">
+        <strong>Abstract</strong>
+        <p>This paper gives a direct derivation of Bell and Clauser-Horne-Shimony-Holt (CHSH) correlations using the fixed quaternion-SU(2) convention established in <code>qqc-001-foundations</code>. The analyzer settings are represented by pure unit quaternions \(u_a\) and \(u_b\) in the imaginary subspace of \(\mathbb H\), so that their product decomposes as \(u_a u_b = -a\cdot b + u_{{a\times b}}\). In the singlet sector, that scalar-vector decomposition yields the standard joint probabilities \(P(s,t\mid a,b)=\tfrac14(1-st\,a\cdot b)\), the correlation law \(E(a,b)=-a\cdot b=\Sc(u_a u_b)\), and the CHSH operator bound \(|S|\le 2\sqrt2\). The mathematical predictions are the standard quantum-mechanical ones; the project-specific contribution is the geometric organization.</p>
+      </div>
+
+      <div class="meta">
+        <div><strong>Paper ID:</strong> qqc-005-bell-chsh-correlations - <strong>Version:</strong> 0.1.0 - <strong>Status:</strong> draft - <strong>Last updated:</strong> 2026-04-10</div>
+        <div><strong>Companion files:</strong> <a href="/papers/qqc-005-bell-chsh-correlations/">package index</a> - <a href="/papers/qqc-005-bell-chsh-correlations/main.tex">main.tex</a> - <a href="/papers/qqc-005-bell-chsh-correlations/paper.pdf">paper.pdf</a> - <a href="/papers/qqc-005-bell-chsh-correlations/metadata.json">metadata.json</a> - <a href="/papers/qqc-005-bell-chsh-correlations/paper.jats.xml">paper.jats.xml</a></div>
+      </div>
+    </header>
+
+    <main class="paper-shell">
+      <h2>1. Introduction</h2>
+      <p>Bell's theorem rules out local hidden-variable reductions that assign separable pre-existing answers to distant analyzers while preserving the observed statistics. It does not rule out the standard spinor geometry of \(\mathrm{SU}(2)\), nor any equivalent language that keeps the singlet state nonfactorized from the start.</p>
+      <p>The purpose of this paper is therefore modest and technical: to derive the standard singlet Bell correlation law and the CHSH bound in a quaternionic language already fixed elsewhere in the series.</p>
+
+      <h2>2. Inherited quaternion-SU(2) convention</h2>
+      <p>We reuse the fixed convention</p>
+      <div class="display">\[\Phi(a+b\mathbf i+c\mathbf j+d\mathbf k)=aI-i(b\sigma_x+c\sigma_y+d\sigma_z).\]</div>
+      <p>For a pure unit quaternion \(u_a=a_x\mathbf i+a_y\mathbf j+a_z\mathbf k\) determined by analyzer direction \(a\in S^2\), this becomes</p>
+      <div class="display">\[\Phi(u_a)=-i(a\cdot\sigma).\]</div>
+
+      <h2>3. Quaternionic analyzer geometry</h2>
+      <p>For pure analyzer quaternions \(u_a\) and \(u_b\), quaternion multiplication gives</p>
+      <div class="display">\[u_a u_b=-a\cdot b+u_{a\times b}.\]</div>
+      <p>Hence the scalar part obeys</p>
+      <div class="display">\[\Sc(u_a u_b)=-a\cdot b.\]</div>
+      <p>This scalar-vector decomposition is the geometric core of the Bell correlation law: the scalar part records the analyzer dot product, while the pure part records the oriented mismatch by the cross product.</p>
+
+      <h2>4. Singlet-sector probabilities and Bell correlation</h2>
+      <p>Let \(\rho_{\mathrm{sing}}=|\Psi^-\rangle\langle\Psi^-|\) be the standard two-qubit singlet state with density-matrix expansion</p>
+      <div class="display">\[\rho_{\mathrm{sing}}=\frac14\left(I\otimes I-\sum_{k=x,y,z}\sigma_k\otimes\sigma_k\right).\]</div>
+      <p>For analyzer direction \(a\), define</p>
+      <div class="display">\[\Pi_s(a)=\frac12(I+s\,a\cdot\sigma),\qquad s\in\{+1,-1\}.\]</div>
+      <p>Then direct evaluation yields</p>
+      <div class="display">\[P(s,t\mid a,b)=\operatorname{tr}[\rho_{\mathrm{sing}}(\Pi_s(a)\otimes\Pi_t(b))]=\frac14(1-st\,a\cdot b).\]</div>
+      <p>Summing with sign weight \(st\) gives the Bell correlation law</p>
+      <div class="display">\[E(a,b)=\sum_{s,t=\pm 1} st\,P(s,t\mid a,b)=-a\cdot b=\Sc(u_a u_b).\]</div>
+      <p>This is the standard singlet prediction, written here as the scalar part of a quaternionic analyzer product.</p>
+
+      <h2>5. CHSH bound and optimal configuration</h2>
+      <p>With local observables \(A(a)=a\cdot\sigma\) and \(B(b)=b\cdot\sigma\), define</p>
+      <div class="display">\[\mathcal B=A(a)\otimes(B(b)+B(b'))+A(a')\otimes(B(b)-B(b')).\]</div>
+      <p>The commutators take the form</p>
+      <div class="display">\[[A(a),A(a')]=2i(a\times a')\cdot\sigma,\qquad [B(b),B(b')]=2i(b\times b')\cdot\sigma.\]</div>
+      <p>Under the fixed quaternionic convention, these are the matrix images of the pure-quaternion commutators \([u_a,u_{a'}]=2u_{a\times a'}\) and \([u_b,u_{b'}]=2u_{b\times b'}\).</p>
+      <p>From the standard operator identity \(\mathcal B^2=4I\otimes I-[A(a),A(a')]\otimes[B(b),B(b')]\), one obtains the Tsirelson bound</p>
+      <div class="display">\[|\langle \mathcal B\rangle|\le 2\sqrt2.\]</div>
+      <p>One optimal choice is</p>
+      <div class="display">\[a=\hat z,\quad a'=\hat x,\quad b=\tfrac1{\sqrt2}(\hat x+\hat z),\quad b'=\tfrac1{\sqrt2}(-\hat x+\hat z).\]</div>
+      <p>Then</p>
+      <div class="display">\[E(a,b)=E(a,b')=E(a',b)=-\tfrac1{\sqrt2},\qquad E(a',b')=+\tfrac1{\sqrt2},\]</div>
+      <p>so</p>
+      <div class="display">\[S=E(a,b)+E(a,b')+E(a',b)-E(a',b')=-2\sqrt2,\qquad |S|=2\sqrt2.\]</div>
+
+      <h2>6. Standard mathematics versus RQM framing</h2>
+      <p>The probabilities, correlation law, and CHSH bound proved here are all standard quantum-mechanical statements. The project-specific contribution is the geometric organization: analyzer settings are expressed as pure unit quaternions, the Bell correlation is written as the scalar part \(\Sc(u_a u_b)\), and the CHSH commutator structure becomes a cross-product statement in quaternionic language.</p>
+      <p>In this framing, Bell's theorem excludes local hidden-variable reductions that attempt to replace the nonfactorized singlet state by separable preassigned detector answers. It does not exclude quaternionic spin geometry itself when that geometry is used only as an equivalent language for the standard singlet-state formalism.</p>
+
+      <h2>7. Scope and non-claims</h2>
+      <ul>
+        <li>This paper does not introduce a new physical theory beyond standard quantum mechanics.</li>
+        <li>It does not claim a local hidden-variable completion of Bell correlations.</li>
+        <li>It does not define a full general quaternionic tensor-product formalism.</li>
+        <li>It does not claim faster-than-light signaling or any violation of no-signaling.</li>
+      </ul>
+
+      <h2>8. Conclusion</h2>
+      <p>The Bell and CHSH correlations of the singlet state fit cleanly into quaternionic spin geometry. The scalar part of the analyzer product yields the correlation law \(E(a,b)=-a\cdot b\), and the noncommutative part yields the operator geometry behind the Tsirelson bound \(|S|\le 2\sqrt2\).</p>
+      <p>Nothing in this paper changes the standard predictions. It shows instead that the quaternionic framework is a compact language for expressing them. On this reading, Bell's theorem does not refute quaternionic spin geometry. It refutes attempts to replace the nonfactorized singlet state by separable local hidden instructions.</p>
+
+      <h2>References</h2>
+      <ol class="refs">
+        <li>Bell, J. S. "On the Einstein Podolsky Rosen paradox." <em>Physics Physique Fizika</em> 1(3):195-200, 1964.</li>
+        <li>Clauser, John F.; Horne, Michael A.; Shimony, Abner; Holt, Richard A. "Proposed experiment to test local hidden-variable theories." <em>Physical Review Letters</em> 23(15):880-884, 1969.</li>
+        <li>Tsirelson, B. S. "Quantum generalizations of Bell's inequality." <em>Letters in Mathematical Physics</em> 4(2):93-100, 1980.</li>
+        <li>Hall, Brian C. <em>Lie Groups, Lie Algebras, and Representations: An Elementary Introduction</em>, 2nd ed. Springer, 2015.</li>
+        <li>Kuipers, Jack B. <em>Quaternions and Rotation Sequences</em>. Princeton University Press, 1999.</li>
+        <li>Nielsen, Michael A., and Isaac L. Chuang. <em>Quantum Computation and Quantum Information</em>, 10th Anniversary Edition. Cambridge University Press, 2010.</li>
+        <li>Penrose, Roger, and Wolfgang Rindler. <em>Spinors and Space-Time. Volume 1: Two-Spinor Calculus and Relativistic Fields</em>. Cambridge University Press, 1984.</li>
+      </ol>
+    </main>
+
+    <footer class="paper-shell">
+      <p>qqc-005-bell-chsh-correlations - version 0.1.0 - draft - license: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p>
+      <p><a href="/papers/qqc-005-bell-chsh-correlations/">Package page</a> - <a href="/papers/qqc-005-bell-chsh-correlations/main.tex">LaTeX source</a> - <a href="/papers/qqc-005-bell-chsh-correlations/paper.pdf">PDF</a></p>
+    </footer>
+  </div>
+</body>
+</html>
