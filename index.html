@@ -26,7 +26,11 @@
     <section class="section">
       <div id="paper-list" class="grid paper-grid">
         <article class="card paper-card">
-          <h3 class="paper-title">The Quaternionic Wavefunction: Spin-1/2 Particles, S^3, and SU(2)</h3>
+          <h3 class="paper-title">
+            <a class="paper-title-link" href="papers/qqc-000-quaternionic-wavefunction/paper.pdf">
+              The Quaternionic Wavefunction: Spin-1/2 Particles, S^3, and SU(2)
+            </a>
+          </h3>
           <div class="paper-authors">John G. Van Geem</div>
           <p class="paper-summary">
             Conceptual prequel paper introducing the quaternionic wavefunction as a compact geometric framing of
@@ -179,6 +183,11 @@
       }
 
       function renderPaperCard(paper) {
+        const titleText = paper.title || paper.paper_id || "Untitled paper";
+        const titleHref = paper._pdf || paper.pdf_url || paper._html || paper._path || "";
+        const linkedTitle = titleHref
+          ? '<a class="paper-title-link" href="' + escapeHtml(titleHref) + '">' + escapeHtml(titleText) + "</a>"
+          : escapeHtml(titleText);
         const readerLinks = [
           optionalLink(
             paper._html || paper._path,
@@ -197,7 +206,7 @@
 
         return (
           '<article class="card paper-card">' +
-            '<h3 class="paper-title">' + escapeHtml(paper.title || paper.paper_id || "Untitled paper") + "</h3>" +
+            '<h3 class="paper-title">' + linkedTitle + "</h3>" +
             '<div class="paper-authors">' + escapeHtml(authorLine(paper.authors)) + "</div>" +
             '<p class="paper-summary">' + escapeHtml(summarize(paper.abstract)) + "</p>" +
             '<div class="paper-link-groups">' +
