@@ -1,0 +1,52 @@
+{
+  "paper_id": "qqc-000-quaternionic-wavefunction",
+  "title": "The Quaternionic Wavefunction: Spin-1/2 Particles, S^3, and SU(2)",
+  "slug": "quaternionic-wavefunction",
+  "version": "0.1.0",
+  "status": "draft",
+  "publication_date": null,
+  "last_updated": "2026-04-10",
+  "authors": [
+    {
+      "name": "John G. Van Geem",
+      "affiliation": "RQM Technologies",
+      "orcid": "0009-0002-4003-8452",
+      "email": null,
+      "corresponding": true
+    }
+  ],
+  "abstract": "This paper introduces the quaternionic wavefunction as a compact way to organize the standard spinor geometry of a spin-1/2 particle. Starting from a normalized two-component complex state vector (alpha, beta) in C^2, it groups the four real coefficients into a single quaternion q_psi = a_0 + a_1 i + b_0 j + b_1 k. Under this identification, normalization becomes |q_psi| = 1, so the space of normalized representatives is the three-sphere S^3. The paper then distinguishes carefully between two roles played by the same manifold: S^3 as the state-representative sphere of normalized spinors, and S^3 as the manifold underlying the Lie group of unit quaternions, which models SU(2). This makes the geometry of spin-1/2 particles more transparent: the quaternionic wavefunction transforms naturally under SU(2), and the double cover SU(2) -> SO(3) explains why 2 pi and 4 pi rotations behave differently for spinors. The mathematical content is standard; the project-specific contribution is the expository framing. The paper does not propose a new physical theory and does not claim quaternionic Hilbert-space quantum mechanics beyond this geometric re-expression of ordinary spin-1/2 structure.",
+  "keywords": [
+    "quaternionic wavefunction",
+    "spin-1/2",
+    "spinors",
+    "S^3",
+    "SU(2)",
+    "unit quaternions"
+  ],
+  "series": "RQM Quaternionic Quantum Computing Prelude",
+  "series_number": 1,
+  "depends_on": [],
+  "canonical_url": null,
+  "pdf_url": null,
+  "html_url": null,
+  "jats_url": null,
+  "doi": null,
+  "journal": null,
+  "volume": null,
+  "issue": null,
+  "pages": null,
+  "citations": [
+    "adler1995",
+    "hall2015",
+    "kuipers1999",
+    "nielsen2010",
+    "penrose1984"
+  ],
+  "related_artifacts": [
+    "main.tex",
+    "artifacts/code/README.md"
+  ],
+  "license": "CC-BY-4.0",
+  "notes": "Conceptual prequel paper introducing the quaternionic wavefunction as the grouping of a two-component complex spinor into one quaternion. Intended to precede qqc-001-foundations conceptually without making new-physics claims."
+}
