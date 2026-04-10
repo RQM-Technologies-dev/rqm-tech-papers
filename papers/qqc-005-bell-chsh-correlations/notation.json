@@ -1,0 +1,137 @@
+{
+  "paper_id": "qqc-005-bell-chsh-correlations",
+  "notation": [
+    {
+      "symbol": "u_a, u_b",
+      "name": "pure analyzer quaternions",
+      "latex": "u_a, u_b",
+      "meaning": "Pure unit quaternions in Im(H) representing analyzer directions a and b in the inherited quaternion-SU(2) convention.",
+      "domain": "quaternion algebra / spin geometry",
+      "type": "vector",
+      "standard_or_project_specific": "variant",
+      "first_use": "Section 3",
+      "related_symbols": ["a, b", "Sc(u_a u_b)", "Phi"]
+    },
+    {
+      "symbol": "a, b, a', b'",
+      "name": "analyzer directions",
+      "latex": "a, b, a', b'",
+      "meaning": "Unit vectors in S^2 specifying local measurement axes in the Bell/CHSH setup.",
+      "domain": "spin geometry",
+      "type": "vector",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 3",
+      "related_symbols": ["u_a, u_b", "A(a), B(b)"]
+    },
+    {
+      "symbol": "Sc(q)",
+      "name": "scalar part of a quaternion",
+      "latex": "\\Sc(q)",
+      "meaning": "Real scalar component of a quaternion q = a + b i + c j + d k.",
+      "domain": "quaternion algebra",
+      "type": "function",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 3",
+      "related_symbols": ["u_a, u_b", "u_a u_b"]
+    },
+    {
+      "symbol": "Phi",
+      "name": "fixed quaternion-SU(2) map",
+      "latex": "\\Phi",
+      "meaning": "Inherited map from quaternions to 2 x 2 complex matrices under which unit quaternions model SU(2).",
+      "domain": "representation theory",
+      "type": "map",
+      "standard_or_project_specific": "variant",
+      "first_use": "Section 2",
+      "related_symbols": ["u_a, u_b", "A(a), B(b)", "SU(2)"]
+    },
+    {
+      "symbol": "A(a), B(b)",
+      "name": "local spin observables",
+      "latex": "A(a), B(b)",
+      "meaning": "Pauli-spin observables a·sigma and b·sigma with eigenvalues plus or minus one.",
+      "domain": "quantum mechanics",
+      "type": "operator",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 5",
+      "related_symbols": ["a, b, a', b'", "Pi_s(a)", "Pi_t(b)"]
+    },
+    {
+      "symbol": "Pi_s(a)",
+      "name": "spin projector",
+      "latex": "\\Pi_s(a)",
+      "meaning": "Projector 1/2 (I + s a·sigma) onto the s-eigenspace of spin along analyzer direction a.",
+      "domain": "quantum mechanics",
+      "type": "operator",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 4",
+      "related_symbols": ["A(a), B(b)", "rho_singlet", "P(s,t|a,b)"]
+    },
+    {
+      "symbol": "rho_singlet",
+      "name": "singlet density matrix",
+      "latex": "\\rho_{\\mathrm{sing}}",
+      "meaning": "Density matrix of the two-qubit singlet state written as 1/4(I⊗I - sum_k sigma_k⊗sigma_k).",
+      "domain": "quantum mechanics",
+      "type": "operator",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 4",
+      "related_symbols": ["|Psi^->", "Pi_s(a)", "P(s,t|a,b)"]
+    },
+    {
+      "symbol": "P(s,t|a,b)",
+      "name": "joint measurement probability",
+      "latex": "P(s,t\\mid a,b)",
+      "meaning": "Probability of obtaining outcomes s and t when the singlet state is measured along analyzer directions a and b.",
+      "domain": "quantum mechanics",
+      "type": "function",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 4",
+      "related_symbols": ["rho_singlet", "Pi_s(a)", "E(a,b)"]
+    },
+    {
+      "symbol": "E(a,b)",
+      "name": "Bell correlation function",
+      "latex": "E(a,b)",
+      "meaning": "Singlet correlation function equal to the expectation of the product of the two local outcomes; in this paper E(a,b) = -a·b = Sc(u_a u_b).",
+      "domain": "Bell correlations",
+      "type": "function",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 4",
+      "related_symbols": ["P(s,t|a,b)", "Sc(u_a u_b)", "S"]
+    },
+    {
+      "symbol": "B",
+      "name": "CHSH operator",
+      "latex": "\\mathcal{B}",
+      "meaning": "Operator A(a)⊗(B(b)+B(b')) + A(a')⊗(B(b)-B(b')) used to derive the Tsirelson bound.",
+      "domain": "Bell inequalities",
+      "type": "operator",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 5",
+      "related_symbols": ["A(a), B(b)", "S", "[A(a),A(a')]"]
+    },
+    {
+      "symbol": "S",
+      "name": "CHSH value",
+      "latex": "S",
+      "meaning": "Scalar CHSH combination E(a,b) + E(a,b') + E(a',b) - E(a',b').",
+      "domain": "Bell inequalities",
+      "type": "scalar",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 5",
+      "related_symbols": ["E(a,b)", "B", "2 sqrt(2)"]
+    },
+    {
+      "symbol": "[u_a, u_a']",
+      "name": "pure-quaternion commutator",
+      "latex": "[u_a, u_{a'}]",
+      "meaning": "Quaternion commutator of analyzer quaternions; in this paper it equals 2 u_{a×a'}.",
+      "domain": "quaternion algebra",
+      "type": "operator",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 5",
+      "related_symbols": ["u_a, u_b", "[A(a),A(a')]", "a×a'"]
+    }
+  ]
+}
