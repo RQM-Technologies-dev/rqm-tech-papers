@@ -1,0 +1,272 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{xcolor}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{corollary}[definition]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[definition]{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\Sp}{\mathrm{Sp}}
+\newcommand{\CP}{\mathbb{CP}}
+\newcommand{\ii}{\mathbf{i}}
+\newcommand{\jj}{\mathbf{j}}
+\newcommand{\kk}{\mathbf{k}}
+\newcommand{\Id}{I}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\ket}[1]{\lvert #1 \rangle}
+
+\title{\textbf{The Quaternionic Wavefunction:}\\ \textbf{Spin-1/2 Particles, \texorpdfstring{$S^3$}{S3}, and \texorpdfstring{$SU(2)$}{SU(2)}}}
+\author{John G. Van Geem\\RQM Technologies\\\texttt{0009-0002-4003-8452}}
+\date{Version 0.1.0 \\ Draft dated 2026-04-10}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This paper introduces the quaternionic wavefunction as a compact way to organize the standard spinor geometry of a spin-1/2 particle. Starting from a normalized two-component complex state vector $(\alpha,\beta)$ in $\C^2$, it groups the four real coefficients into a single quaternion $q_\psi = a_0 + a_1\ii + b_0\jj + b_1\kk$. Under this identification, normalization becomes $\abs{q_\psi}=1$, so the space of normalized representatives is the three-sphere $S^3$. The paper then distinguishes carefully between two roles played by the same manifold: $S^3$ as the state-representative sphere of normalized spinors, and $S^3$ as the manifold underlying the Lie group of unit quaternions, which models $\SU(2)$. This makes the geometry of spin-1/2 particles more transparent: the quaternionic wavefunction transforms naturally under $\SU(2)$, and the double cover $\SU(2)\to\SO(3)$ explains why $2\pi$ and $4\pi$ rotations behave differently for spinors. The mathematical content is standard; the project-specific contribution is the expository framing. The paper does not propose a new physical theory and does not claim quaternionic Hilbert-space quantum mechanics beyond this geometric re-expression of ordinary spin-1/2 structure.
+\end{abstract}
+
+\noindent\textbf{Keywords:} quaternionic wavefunction; spin-1/2; spinors; $S^3$; $\SU(2)$; unit quaternions
+
+\section{Introduction}
+
+Later papers in this series assume comfort with spinors, the appearance of the three-sphere, and the role of $\SU(2)$ in single-qubit and spin-1/2 geometry. This prequel exists to make those ideas feel natural before the series becomes more technical.
+
+The central move is simple. A normalized spin-1/2 state is usually written as a two-component complex vector
+\[
+\psi = \begin{pmatrix} \alpha \\ \beta \end{pmatrix} \in \C^2,
+\qquad
+\abs{\alpha}^2 + \abs{\beta}^2 = 1.
+\]
+Each complex component contains two real numbers, so the state carries four real coefficients in total. The quaternionic wavefunction is nothing more mysterious than regrouping those same four real coefficients into one quaternion.
+
+This regrouping does not change the standard mathematics. Rather, it makes some of the geometry easier to see at a glance:
+\begin{enumerate}
+\item a normalized spinor is a point on $S^3$;
+\item unit quaternions also live on $S^3$;
+\item unit quaternions form a Lie group isomorphic to $\SU(2)$; and
+\item spin-1/2 transformations are naturally spinorial because $\SU(2)$ is the double cover of $\SO(3)$.
+\end{enumerate}
+
+The rest of the paper is about keeping these statements clear while not conflating them.
+
+\section{From a two-component spinor to a quaternionic wavefunction}
+
+\begin{definition}[Quaternionic wavefunction]
+Let
+\[
+\psi = \begin{pmatrix} \alpha \\ \beta \end{pmatrix} \in \C^2,
+\qquad
+\alpha = a_0 + a_1 i,
+\qquad
+\beta = b_0 + b_1 i,
+\]
+with $a_0,a_1,b_0,b_1\in\R$. The \emph{quaternionic wavefunction} associated to $\psi$ is the quaternion
+\begin{equation}
+q_\psi = a_0 + a_1\ii + b_0\jj + b_1\kk \in \HH.
+\label{eq:qpsi}
+\end{equation}
+\end{definition}
+
+This is an expository regrouping of coefficients. It uses the standard identification of both $\C^2$ and $\HH$ with $\R^4$.
+
+\begin{proposition}
+The map
+\[
+(\alpha,\beta) \longmapsto q_\psi
+\]
+identifies $\C^2$ with $\HH$ as real vector spaces.
+\end{proposition}
+
+\begin{proof}
+Writing
+\[
+\alpha = a_0 + a_1 i,
+\qquad
+\beta = b_0 + b_1 i
+\]
+shows that a spinor in $\C^2$ is determined by four real coefficients. The same is true for a quaternion
+\[
+q = a_0 + a_1\ii + b_0\jj + b_1\kk.
+\]
+The assignment is linear over $\R$ and invertible by inspection.
+\end{proof}
+
+\begin{proposition}
+If $\psi$ is normalized in $\C^2$, then the associated quaternionic wavefunction satisfies
+\[
+\abs{q_\psi} = 1.
+\]
+Hence the space of normalized quaternionic wavefunctions is the three-sphere $S^3$.
+\end{proposition}
+
+\begin{proof}
+By definition,
+\[
+\abs{\alpha}^2 + \abs{\beta}^2
+=
+a_0^2 + a_1^2 + b_0^2 + b_1^2.
+\]
+On the other hand, the quaternion norm is
+\[
+\abs{q_\psi}^2 = a_0^2 + a_1^2 + b_0^2 + b_1^2.
+\]
+Therefore $\abs{\alpha}^2 + \abs{\beta}^2 = 1$ if and only if $\abs{q_\psi}=1$. The normalized set is thus the unit sphere in $\R^4$, namely $S^3$.
+\end{proof}
+
+\begin{remark}
+At this point the quaternionic wavefunction is a way of seeing a normalized spinor as a point on $S^3$. That already helps. But another, different appearance of $S^3$ is still to come.
+\end{remark}
+
+\section{Unit quaternions and \texorpdfstring{$SU(2)$}{SU(2)}}
+
+The same manifold $S^3$ also appears as the set of unit quaternions
+\[
+\Sp(1) = \set{q\in\HH : \abs{q}=1}.
+\]
+Unlike the quaternionic wavefunction in Section 2, however, a unit quaternion here is being used as a \emph{group element}. This is the transformation side of the story.
+
+Following the convention used in the main series, define
+\begin{equation}
+\Phi(a+b\ii+c\jj+d\kk)
+=
+\begin{pmatrix}
+a-di & -c-bi \\
+c-bi & a+di
+\end{pmatrix}
+=
+a\Id - i(b\sigma_x+c\sigma_y+d\sigma_z).
+\label{eq:phi}
+\end{equation}
+
+\begin{proposition}
+The restriction of $\Phi$ to the unit quaternions is a Lie-group isomorphism
+\[
+\Phi : \Sp(1) \xrightarrow{\sim} \SU(2).
+\]
+\end{proposition}
+
+\begin{proof}
+Under the map $\Phi$, the quaternion units satisfy the same multiplication rules as the matrices $-i\sigma_x$, $-i\sigma_y$, and $-i\sigma_z$. Moreover,
+\[
+\det\Phi(a+b\ii+c\jj+d\kk)=a^2+b^2+c^2+d^2=\abs{q}^2.
+\]
+Thus unit quaternions map into $\SU(2)$, and every standard-form matrix in $\SU(2)$ has a unique unit-quaternion preimage.
+\end{proof}
+
+\begin{corollary}
+Spin-1/2 transformations can be represented geometrically as $\SU(2)$ actions on quaternionic wavefunctions.
+\end{corollary}
+
+\begin{proof}
+Normalized quaternionic wavefunctions lie on $S^3$, and the unit quaternions form a group isomorphic to $\SU(2)$. Therefore the natural spinor transformation group acts through the same underlying quaternionic geometry.
+\end{proof}
+
+\section{Spin-1/2 and the double cover of rotations}
+
+The reason spin-1/2 particles behave differently from ordinary spatial vectors is that their natural symmetry group is not $\SO(3)$ directly, but its double cover $\SU(2)$.
+
+\begin{proposition}
+There is a two-to-one surjective homomorphism
+\[
+\SU(2) \to \SO(3)
+\]
+with kernel $\set{+\Id,-\Id}$. Consequently a full $2\pi$ rotation in $\SO(3)$ lifts to minus the identity in $\SU(2)$, while a $4\pi$ rotation lifts back to plus the identity.
+\end{proposition}
+
+\begin{proof}
+This is the standard double-cover relation between spinors and spatial rotations. Since both $\Id$ and $-\Id$ project to the same element of $\SO(3)$, the lift is two-to-one. A path representing a $2\pi$ spatial rotation ends at $-\Id$ in $\SU(2)$, and only after another full turn does it return to $+\Id$.
+\end{proof}
+
+\begin{remark}
+This is the geometric content behind the familiar statement that spin-1/2 objects need a $4\pi$ rotation to return to the same spinor representative. In the present paper, the quaternionic wavefunction gives a concrete way to picture where that behavior lives: on the spinor side of the $\SU(2)$ geometry, not on the projected $\SO(3)$ side.
+\end{remark}
+
+\section{Why \texorpdfstring{$S^3$}{S3} is not just the Bloch sphere}
+
+Because normalized representatives form $S^3$, it is tempting to identify $S^3$ itself with the physical pure-state space. That is not correct. Global phase still has to be quotiented out.
+
+If
+\[
+\psi = \begin{pmatrix}\alpha \\ \beta\end{pmatrix}
+\]
+is a normalized spinor, then multiplying both entries by a common phase $e^{i\chi}$ leaves the physical pure state unchanged. The pure-state space is therefore the projective quotient
+\[
+\CP^1 \cong S^2,
+\]
+which is the Bloch sphere.
+
+A standard formula for the Bloch vector is
+\[
+\mathbf r(\psi)=\bigl(2\mathrm{Re}(\alpha^\ast\beta),\;2\mathrm{Im}(\alpha^\ast\beta),\;\abs{\alpha}^2-\abs{\beta}^2\bigr).
+\]
+Its image lies on the unit two-sphere.
+
+\begin{remark}[Two roles of $S^3$]
+The manifold $S^3$ appears twice in this paper:
+\begin{enumerate}
+\item as the sphere of normalized quaternionic wavefunctions, and
+\item as the manifold underlying the group of unit quaternions, hence of $\SU(2)$.
+\end{enumerate}
+These are mathematically the same manifold, but they play conceptually different roles. Neither should be confused with the Bloch sphere $S^2$, which is the projective pure-state space after quotienting global phase.
+\end{remark}
+
+\section{Standard mathematics versus project-specific framing}
+
+The underlying mathematics in this paper is standard:
+\begin{enumerate}
+\item spin-1/2 states are modeled by normalized spinors in $\C^2$;
+\item normalized representatives form $S^3$;
+\item the pure-state space is $\CP^1\cong S^2$;
+\item unit quaternions form a Lie group isomorphic to $\SU(2)$; and
+\item $\SU(2)$ is the double cover of $\SO(3)$.
+\end{enumerate}
+
+What is project-specific here is the emphasis. The term \emph{quaternionic wavefunction} is used as an expository bridge from the standard spinor formalism to quaternionic geometry. The goal is clarity, not a change of theory.
+
+\section{Scope and non-claims}
+
+This paper does \emph{not}:
+\begin{enumerate}
+\item propose a new physical theory;
+\item replace ordinary complex quantum mechanics;
+\item claim quaternionic Hilbert-space quantum mechanics in the Adler sense; or
+\item claim that later engineering papers in the series require nonstandard foundational axioms.
+\end{enumerate}
+
+It is a prequel in a simpler sense: it introduces one piece of language that makes later geometry feel more natural.
+
+\section{Conclusion}
+
+The quaternionic wavefunction is a compact way to look at a standard spin-1/2 state. By regrouping the four real coefficients of a normalized spinor into one quaternion, the normalized-state sphere becomes visibly $S^3$. That same manifold also underlies the unit quaternions, which model $\SU(2)$. Once those two appearances are kept conceptually distinct, much of the geometry of spin-1/2 particles becomes easier to teach:
+\begin{enumerate}
+\item the state representative lives on $S^3$;
+\item the natural transformation group is $\SU(2)$;
+\item the Bloch sphere is a projection, not the full state sphere; and
+\item the $4\pi$ property of spinors follows from the double cover $\SU(2)\to\SO(3)$.
+\end{enumerate}
+
+That is the whole purpose of the prequel. It places the Quaternionic Wavefunction at the door of the series as a clean geometric bridge.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
