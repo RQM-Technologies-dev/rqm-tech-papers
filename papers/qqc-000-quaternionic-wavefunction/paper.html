@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Quaternionic Wavefunction: Spin-1/2 Particles, S^3, and SU(2)</title>
+  <meta name="description" content="This prequel paper introduces the quaternionic wavefunction as an expository bridge from a two-component spinor in C^2 to the geometry of S^3 and the transformation group SU(2)." />
+  <meta name="author" content="John G. Van Geem" />
+  <meta name="keywords" content="quaternionic wavefunction, spin-1/2, spinors, S^3, SU(2), unit quaternions" />
+  <meta name="citation_title" content="The Quaternionic Wavefunction: Spin-1/2 Particles, S^3, and SU(2)" />
+  <meta name="citation_author" content="John G. Van Geem" />
+  <meta name="citation_pdf_url" content="paper.pdf" />
+  <link rel="alternate" type="application/json" href="metadata.json" title="Paper metadata" />
+  <link rel="alternate" type="application/xml" href="paper.jats.xml" title="JATS XML" />
+  <link rel="stylesheet" href="../../styles/site.css" />
+  <script>
+window.MathJax = {
+  tex: {
+    inlineMath: [["\\(","\\)"]],
+    displayMath: [["\\[","\\]"]],
+    processEscapes: true
+  },
+  options: {
+    skipHtmlTags: ["script","noscript","style","textarea","pre","code"]
+  }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body class="paper-page">
+  <div class="page-shell">
+    <header class="paper-shell">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="../../index.html">Home</a>
+        <span>/</span>
+        <a href="/papers/qqc-000-quaternionic-wavefunction/">qqc-000-quaternionic-wavefunction</a>
+        <span>/</span>
+        <span aria-current="page">paper.html</span>
+      </nav>
+      <div class="badge">RQM Quaternionic Quantum Computing Prelude</div>
+      <h1><strong>The Quaternionic Wavefunction:</strong><br />Spin-1/2 Particles, \(S^3\), and \(SU(2)\)</h1>
+      <p class="byline">John G. Van Geem<br />RQM Technologies<br />orcid: 0009-0002-4003-8452</p>
+
+      <div class="abstract">
+        <strong>Abstract</strong>
+        <p>This paper introduces the quaternionic wavefunction as a compact way to organize the standard spinor geometry of a spin-1/2 particle. A normalized two-component complex state vector \((\alpha,\beta)\in \mathbb C^2\) is regrouped into one quaternion \(q_\psi = a_0 + a_1\mathbf i + b_0\mathbf j + b_1\mathbf k\). Under this regrouping, normalization becomes \(|q_\psi|=1\), so the space of normalized representatives is \(S^3\). The paper then distinguishes carefully between two roles played by that same manifold: \(S^3\) as the state-representative sphere of normalized spinors, and \(S^3\) as the manifold underlying the Lie group of unit quaternions, which models \(SU(2)\). The mathematical content is standard; the project-specific contribution is the expository framing.</p>
+      </div>
+
+      <div class="meta">
+        <div><strong>Paper ID:</strong> qqc-000-quaternionic-wavefunction · <strong>Version:</strong> 0.1.0 · <strong>Status:</strong> draft · <strong>Last updated:</strong> 2026-04-10</div>
+        <div><strong>Companion files:</strong> <a href="/papers/qqc-000-quaternionic-wavefunction/">package index</a> · <a href="/papers/qqc-000-quaternionic-wavefunction/main.tex">main.tex</a> · <a href="/papers/qqc-000-quaternionic-wavefunction/paper.pdf">paper.pdf</a> · <a href="/papers/qqc-000-quaternionic-wavefunction/metadata.json">metadata.json</a></div>
+      </div>
+    </header>
+
+    <main class="paper-shell">
+      <h2>1. Introduction</h2>
+      <p>This prequel exists to make later quaternionic papers feel natural before the series becomes more technical. The basic teaching move is simple: a spin-1/2 state in \(\mathbb C^2\) has four real coefficients, and those same four coefficients can be grouped into one quaternion.</p>
+
+      <h2>2. From a spinor to a quaternionic wavefunction</h2>
+      <p>Write the normalized spinor as</p>
+      <div class="display">\[\psi = \begin{pmatrix} \alpha \\ \beta \end{pmatrix}, \qquad \alpha=a_0+a_1 i, \qquad \beta=b_0+b_1 i.\]</div>
+      <p>The quaternionic wavefunction is then defined by</p>
+      <div class="display">\[q_\psi = a_0 + a_1\mathbf i + b_0\mathbf j + b_1\mathbf k.\]</div>
+      <p>This does not add new physics. It simply regroups the same four real coefficients into one quaternion.</p>
+      <p>Normalization becomes</p>
+      <div class="display">\[|\alpha|^2+|\beta|^2=a_0^2+a_1^2+b_0^2+b_1^2=|q_\psi|^2.\]</div>
+      <p>So normalized quaternionic wavefunctions lie on the three-sphere \(S^3\).</p>
+
+      <h2>3. Unit quaternions and \(SU(2)\)</h2>
+      <p>The same manifold \(S^3\) also appears as the set of unit quaternions, but now in a different role: as a Lie group. Using the fixed convention</p>
+      <div class="display">\[\Phi(a+b\mathbf i+c\mathbf j+d\mathbf k)=aI-i(b\sigma_x+c\sigma_y+d\sigma_z),\]</div>
+      <p>the unit quaternions model \(SU(2)\). This is the natural transformation group for spin-1/2 states. So the quaternionic wavefunction gives one way to see, geometrically, both the state sphere and the symmetry group that acts on it.</p>
+
+      <h2>4. Spin-1/2 and the double cover</h2>
+      <p>The group \(SU(2)\) is the double cover of \(SO(3)\). That is why spin-1/2 states are not ordinary spatial vectors: a full \(2\pi\) rotation does not return the spinor to the same representative, while a \(4\pi\) rotation does.</p>
+      <p>In this paper's language, that 4 pi property lives naturally on the quaternionic-wavefunction / spinor side of the geometry, not on the projected \(SO(3)\) side.</p>
+
+      <h2>5. Why \(S^3\) is not just the Bloch sphere</h2>
+      <p>Because normalized representatives lie on \(S^3\), it is tempting to identify \(S^3\) with the physical pure-state space. That is not correct. Global phase must still be quotiented out.</p>
+      <p>After quotienting global phase, the pure-state space is \(\mathbb{CP}^1\cong S^2\), the Bloch sphere. So the paper emphasizes a key distinction:</p>
+      <ul>
+        <li>\(S^3\) is the sphere of normalized representatives, and</li>
+        <li>\(S^2\) is the projective pure-state space.</li>
+      </ul>
+
+      <h2>6. Standard mathematics versus project framing</h2>
+      <p>The standard mathematics here is familiar: normalized spinors in \(\mathbb C^2\), the appearance of \(S^3\), the Bloch sphere, the quaternionic model of \(SU(2)\), and the double cover \(SU(2)\to SO(3)\).</p>
+      <p>The project-specific part is the language. The term <em>quaternionic wavefunction</em> is used as an expository bridge because it makes the geometry of spin-1/2 structure easier to see without changing the standard theory.</p>
+
+      <h2>7. Scope and non-claims</h2>
+      <ul>
+        <li>This paper does not propose a new physical theory.</li>
+        <li>It does not replace ordinary complex quantum mechanics.</li>
+        <li>It does not claim quaternionic Hilbert-space quantum mechanics in the Adler sense.</li>
+      </ul>
+
+      <h2>8. Conclusion</h2>
+      <p>The quaternionic wavefunction is a compact geometric way to look at a standard spin-1/2 state. By regrouping the four real coefficients of a normalized spinor into one quaternion, the normalized-state sphere becomes visibly \(S^3\). That same manifold also underlies the unit quaternions, which model \(SU(2)\). Once those two appearances are kept conceptually distinct, the geometry of spin-1/2 particles becomes much easier to teach.</p>
+
+      <h2>References</h2>
+      <ol class="refs">
+        <li>Adler, Stephen L. <em>Quaternionic Quantum Mechanics and Quantum Fields</em>. Oxford University Press, 1995.</li>
+        <li>Bloch, Felix. "Nuclear Induction." <em>Physical Review</em> 70(7-8):460-474, 1946.</li>
+        <li>Hall, Brian C. <em>Lie Groups, Lie Algebras, and Representations: An Elementary Introduction</em>, 2nd ed. Springer, 2015.</li>
+        <li>Kuipers, Jack B. <em>Quaternions and Rotation Sequences</em>. Princeton University Press, 1999.</li>
+        <li>Nielsen, Michael A., and Isaac L. Chuang. <em>Quantum Computation and Quantum Information</em>, 10th Anniversary Edition. Cambridge University Press, 2010.</li>
+        <li>Penrose, Roger, and Wolfgang Rindler. <em>Spinors and Space-Time. Volume 1</em>. Cambridge University Press, 1984.</li>
+      </ol>
+    </main>
+
+    <footer class="paper-shell">
+      <p>qqc-000-quaternionic-wavefunction · version 0.1.0 · draft · license: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p>
+      <p><a href="/papers/qqc-000-quaternionic-wavefunction/">Package page</a> · <a href="/papers/qqc-000-quaternionic-wavefunction/main.tex">LaTeX source</a> · <a href="/papers/qqc-000-quaternionic-wavefunction/paper.pdf">PDF</a></p>
+    </footer>
+  </div>
+</body>
+</html>
