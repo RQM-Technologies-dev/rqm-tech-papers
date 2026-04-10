@@ -1,0 +1,61 @@
+{
+  "paper_id": "qqc-000-quaternionic-wavefunction",
+  "glossary": [
+    {
+      "term": "quaternionic wavefunction",
+      "definition": "The paper's term for the quaternion obtained by grouping the four real coefficients of a normalized two-component complex spinor into one quaternion.",
+      "aliases": [],
+      "paper_specific": true,
+      "related_terms": ["spinor", "S^3", "unit quaternion"],
+      "see_also": ["Section 2", "def-1"]
+    },
+    {
+      "term": "spin-1/2 particle",
+      "definition": "A quantum system whose state transforms in the fundamental spinor representation of SU(2), with the characteristic 4 pi rotation property.",
+      "aliases": ["spin one-half system"],
+      "paper_specific": false,
+      "related_terms": ["spinor", "SU(2)", "SO(3)"],
+      "see_also": ["Section 4", "prop-6"]
+    },
+    {
+      "term": "spinor",
+      "definition": "A state object transforming under SU(2) rather than directly under SO(3). In this paper a two-component spinor in C^2 is regrouped into a quaternionic wavefunction for geometric clarity.",
+      "aliases": [],
+      "paper_specific": false,
+      "related_terms": ["quaternionic wavefunction", "spin-1/2 particle", "SU(2)"],
+      "see_also": ["Section 2"]
+    },
+    {
+      "term": "unit quaternion",
+      "definition": "A quaternion of norm 1. Unit quaternions form the group Sp(1), which is isomorphic to SU(2).",
+      "aliases": [],
+      "paper_specific": false,
+      "related_terms": ["SU(2)", "S^3", "quaternionic wavefunction"],
+      "see_also": ["Section 3", "prop-4"]
+    },
+    {
+      "term": "double cover",
+      "definition": "A two-to-one surjective map between groups or spaces. In this paper SU(2) is the double cover of SO(3).",
+      "aliases": ["two-to-one cover"],
+      "paper_specific": false,
+      "related_terms": ["SU(2)", "SO(3)", "spin-1/2 particle"],
+      "see_also": ["Section 4", "prop-6"]
+    },
+    {
+      "term": "Bloch sphere",
+      "definition": "The unit 2-sphere S^2 obtained after quotienting normalized spinor representatives by global phase. It is not the same object as the full S^3 state-representative sphere.",
+      "aliases": [],
+      "paper_specific": false,
+      "related_terms": ["S^3", "global phase", "spinor"],
+      "see_also": ["Section 5", "rem-7"]
+    },
+    {
+      "term": "S^3",
+      "definition": "The three-sphere. In this paper it appears both as the space of normalized quaternionic wavefunctions and as the manifold underlying the unit quaternions, which should be distinguished conceptually.",
+      "aliases": ["three-sphere"],
+      "paper_specific": false,
+      "related_terms": ["quaternionic wavefunction", "unit quaternion", "Bloch sphere"],
+      "see_also": ["Section 2", "Section 5", "rem-7"]
+    }
+  ]
+}
