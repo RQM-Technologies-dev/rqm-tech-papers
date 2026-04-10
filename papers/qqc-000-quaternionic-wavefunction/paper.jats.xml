@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.3 20210610//EN"
+  "https://jats.nlm.nih.gov/archiving/1.3/JATS-archivearticle1-3.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="1.3">
+  <front>
+    <journal-meta>
+      <journal-id journal-id-type="publisher-id">rqm-tech-papers</journal-id>
+      <journal-title-group>
+        <journal-title>RQM Technologies Technical Papers</journal-title>
+      </journal-title-group>
+      <publisher>
+        <publisher-name>RQM Technologies</publisher-name>
+      </publisher>
+    </journal-meta>
+
+    <article-meta>
+      <article-id pub-id-type="publisher-id">qqc-000-quaternionic-wavefunction</article-id>
+      <title-group>
+        <article-title>The Quaternionic Wavefunction: Spin-1/2 Particles, S^3, and SU(2)</article-title>
+      </title-group>
+
+      <contrib-group>
+        <contrib contrib-type="author" corresp="yes">
+          <name>
+            <surname>Van Geem</surname>
+            <given-names>John G.</given-names>
+          </name>
+          <contrib-id contrib-id-type="orcid">0009-0002-4003-8452</contrib-id>
+          <aff>RQM Technologies</aff>
+        </contrib>
+      </contrib-group>
+
+      <abstract>
+        <p>This paper introduces the quaternionic wavefunction as a compact way to organize the standard spinor geometry of a spin-1/2 particle. A normalized two-component complex state vector in C^2 is regrouped into one quaternion q_psi. Under this regrouping, normalization becomes |q_psi| = 1, so the space of normalized representatives is S^3. The paper then distinguishes carefully between two roles played by the same manifold: S^3 as the state-representative sphere of normalized spinors, and S^3 as the manifold underlying the Lie group of unit quaternions, which models SU(2). The mathematical content is standard; the project-specific contribution is the expository framing.</p>
+      </abstract>
+
+      <kwd-group kwd-group-type="author">
+        <kwd>quaternionic wavefunction</kwd>
+        <kwd>spin-1/2</kwd>
+        <kwd>spinors</kwd>
+        <kwd>S^3</kwd>
+        <kwd>SU(2)</kwd>
+        <kwd>unit quaternions</kwd>
+      </kwd-group>
+
+      <permissions>
+        <license license-type="open-access" xlink:href="https://creativecommons.org/licenses/by/4.0/">
+          <license-p>This draft is distributed under the terms of the Creative Commons Attribution 4.0 International License.</license-p>
+        </license>
+      </permissions>
+
+      <custom-meta-group>
+        <custom-meta>
+          <meta-name>version</meta-name>
+          <meta-value>0.1.0</meta-value>
+        </custom-meta>
+        <custom-meta>
+          <meta-name>status</meta-name>
+          <meta-value>draft</meta-value>
+        </custom-meta>
+        <custom-meta>
+          <meta-name>last_updated</meta-name>
+          <meta-value>2026-04-10</meta-value>
+        </custom-meta>
+        <custom-meta>
+          <meta-name>series_role</meta-name>
+          <meta-value>conceptual prequel</meta-value>
+        </custom-meta>
+      </custom-meta-group>
+
+      <related-object object-type="source" content-type="latex" xlink:href="main.tex">LaTeX source</related-object>
+      <related-object object-type="data-set" content-type="text" xlink:href="artifacts/code/README.md">Artifacts README</related-object>
+    </article-meta>
+  </front>
+
+  <body>
+    <sec id="sec-introduction">
+      <title>1. Introduction</title>
+      <p>This prequel introduces the quaternionic wavefunction as an expository bridge from two-component spinors in C^2 to the geometry of S^3 and the transformation group SU(2).</p>
+    </sec>
+    <sec id="sec-qwavefunction">
+      <title>2. From a spinor to a quaternionic wavefunction</title>
+      <p>A normalized spinor psi = (alpha, beta)^T is regrouped into the quaternion q_psi = a_0 + a_1 i + b_0 j + b_1 k. This identifies the normalized state sphere with S^3.</p>
+    </sec>
+    <sec id="sec-su2">
+      <title>3. Unit quaternions and SU(2)</title>
+      <p>The same manifold S^3 also appears as the manifold underlying the unit quaternions. Under the fixed map Phi, the unit quaternions model SU(2), which is the natural transformation group for spin-1/2 states.</p>
+    </sec>
+    <sec id="sec-spinhalf">
+      <title>4. Spin-1/2 and the double cover</title>
+      <p>Because SU(2) is the double cover of SO(3), spin-1/2 states distinguish a 2 pi rotation from the identity and return only after 4 pi.</p>
+    </sec>
+    <sec id="sec-blochsphere">
+      <title>5. Why S^3 is not just the Bloch sphere</title>
+      <p>S^3 is the sphere of normalized representatives, while the physical pure-state space after quotienting global phase is CP^1 ≅ S^2. The paper emphasizes keeping those roles distinct.</p>
+    </sec>
+  </body>
+
+  <back>
+    <ref-list>
+      <title>References</title>
+      <ref id="ref-adler1995">
+        <mixed-citation publication-type="book">Adler, Stephen L. <source>Quaternionic Quantum Mechanics and Quantum Fields</source>. Oxford University Press; <year>1995</year>.</mixed-citation>
+      </ref>
+      <ref id="ref-hall2015">
+        <mixed-citation publication-type="book">Hall, Brian C. <source>Lie Groups, Lie Algebras, and Representations: An Elementary Introduction</source>. 2nd ed. Springer; <year>2015</year>.</mixed-citation>
+      </ref>
+      <ref id="ref-kuipers1999">
+        <mixed-citation publication-type="book">Kuipers, Jack B. <source>Quaternions and Rotation Sequences</source>. Princeton University Press; <year>1999</year>.</mixed-citation>
+      </ref>
+      <ref id="ref-nielsen2010">
+        <mixed-citation publication-type="book">Nielsen, Michael A.; Chuang, Isaac L. <source>Quantum Computation and Quantum Information</source>. Cambridge University Press; <year>2010</year>.</mixed-citation>
+      </ref>
+      <ref id="ref-penrose1984">
+        <mixed-citation publication-type="book">Penrose, Roger; Rindler, Wolfgang. <source>Spinors and Space-Time. Volume 1</source>. Cambridge University Press; <year>1984</year>.</mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

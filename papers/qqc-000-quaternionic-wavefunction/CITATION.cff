@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this paper package, please cite the draft below."
+type: article
+title: "The Quaternionic Wavefunction: Spin-1/2 Particles, S^3, and SU(2)"
+version: "0.1.0"
+abstract: "This prequel paper introduces the quaternionic wavefunction as an expository bridge from two-component spinors in C^2 to the geometry of S^3 and the transformation group SU(2)."
+authors:
+  - given-names: "John G."
+    family-names: "Van Geem"
+    affiliation: "RQM Technologies"
+    orcid: "https://orcid.org/0009-0002-4003-8452"
+license: CC-BY-4.0
+keywords:
+  - quaternionic wavefunction
+  - spin-1/2
+  - spinors
+  - S^3
+  - SU(2)
+  - unit quaternions
+preferred-citation:
+  type: article
+  title: "The Quaternionic Wavefunction: Spin-1/2 Particles, S^3, and SU(2)"
+  authors:
+    - given-names: "John G."
+      family-names: "Van Geem"
+      affiliation: "RQM Technologies"
+      orcid: "https://orcid.org/0009-0002-4003-8452"
+  year: 2026
+  version: "0.1.0"
+  notes: "Draft prequel paper package preceding the main quaternionic quantum computing series conceptually; no DOI assigned."
