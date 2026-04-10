@@ -1,0 +1,148 @@
+{
+  "paper_id": "qqc-000-quaternionic-wavefunction",
+  "notation": [
+    {
+      "symbol": "q_psi",
+      "name": "quaternionic wavefunction",
+      "latex": "q_{\\psi}",
+      "meaning": "Quaternion obtained by grouping the four real coefficients of a two-component complex spinor into one quaternion.",
+      "domain": "quaternion algebra / spin geometry",
+      "type": "scalar",
+      "standard_or_project_specific": "project_specific",
+      "first_use": "Section 2",
+      "related_symbols": ["psi", "alpha, beta", "H"]
+    },
+    {
+      "symbol": "psi",
+      "name": "two-component spinor",
+      "latex": "\\psi",
+      "meaning": "Normalized spin-1/2 state written as the column vector (alpha, beta)^T in C^2.",
+      "domain": "quantum mechanics",
+      "type": "vector",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 2",
+      "related_symbols": ["alpha, beta", "q_psi", "C^2"]
+    },
+    {
+      "symbol": "alpha, beta",
+      "name": "spinor components",
+      "latex": "\\alpha, \\beta",
+      "meaning": "Complex amplitudes of a spin-1/2 state vector in C^2.",
+      "domain": "quantum mechanics",
+      "type": "scalar",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 2",
+      "related_symbols": ["psi", "q_psi", "a_0, a_1, b_0, b_1"]
+    },
+    {
+      "symbol": "a_0, a_1, b_0, b_1",
+      "name": "real coefficient coordinates",
+      "latex": "a_0, a_1, b_0, b_1",
+      "meaning": "Real coefficients obtained by writing alpha = a_0 + a_1 i and beta = b_0 + b_1 i.",
+      "domain": "real linear algebra",
+      "type": "scalar",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 2",
+      "related_symbols": ["alpha, beta", "q_psi", "S^3"]
+    },
+    {
+      "symbol": "H",
+      "name": "quaternion algebra",
+      "latex": "\\mathbb{H}",
+      "meaning": "Hamilton's quaternion algebra with basis 1, i, j, k.",
+      "domain": "algebra",
+      "type": "algebra",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 2",
+      "related_symbols": ["q_psi", "i, j, k", "Sp(1)"]
+    },
+    {
+      "symbol": "i, j, k",
+      "name": "quaternion basis units",
+      "latex": "\\mathbf{i}, \\mathbf{j}, \\mathbf{k}",
+      "meaning": "Imaginary quaternion units satisfying i^2 = j^2 = k^2 = ijk = -1.",
+      "domain": "algebra",
+      "type": "constant",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 2",
+      "related_symbols": ["H", "q_psi", "Phi"]
+    },
+    {
+      "symbol": "C^2",
+      "name": "two-dimensional complex state space",
+      "latex": "\\mathbb{C}^2",
+      "meaning": "Ambient complex vector space for two-component spinors before projectivization.",
+      "domain": "linear algebra",
+      "type": "space",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 2",
+      "related_symbols": ["psi", "q_psi", "S^3"]
+    },
+    {
+      "symbol": "S^3",
+      "name": "three-sphere",
+      "latex": "S^3",
+      "meaning": "Unit sphere in four real dimensions; in this paper it appears both as the normalized quaternionic-wavefunction sphere and as the manifold underlying the unit quaternions.",
+      "domain": "geometry",
+      "type": "space",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 2",
+      "related_symbols": ["q_psi", "Sp(1)", "S^2"]
+    },
+    {
+      "symbol": "Phi",
+      "name": "quaternion-SU(2) map",
+      "latex": "\\Phi",
+      "meaning": "Fixed convention mapping quaternions to 2 x 2 complex matrices so that unit quaternions model SU(2).",
+      "domain": "representation theory",
+      "type": "map",
+      "standard_or_project_specific": "variant",
+      "first_use": "Section 3",
+      "related_symbols": ["H", "SU(2)", "sigma_x, sigma_y, sigma_z"]
+    },
+    {
+      "symbol": "SU(2)",
+      "name": "special unitary group",
+      "latex": "\\mathrm{SU}(2)",
+      "meaning": "Group of 2 x 2 complex unitary matrices with determinant 1, naturally associated with spin-1/2 transformations.",
+      "domain": "Lie groups",
+      "type": "group",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 3",
+      "related_symbols": ["Sp(1)", "SO(3)", "Phi"]
+    },
+    {
+      "symbol": "Sp(1)",
+      "name": "unit-quaternion group",
+      "latex": "\\mathrm{Sp}(1)",
+      "meaning": "Group of unit quaternions, identified with SU(2) under the fixed map Phi.",
+      "domain": "Lie groups",
+      "type": "group",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 3",
+      "related_symbols": ["SU(2)", "S^3", "q_psi"]
+    },
+    {
+      "symbol": "SO(3)",
+      "name": "rotation group in three dimensions",
+      "latex": "\\mathrm{SO}(3)",
+      "meaning": "Group of proper spatial rotations, related to SU(2) by the standard double cover.",
+      "domain": "Lie groups",
+      "type": "group",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 4",
+      "related_symbols": ["SU(2)", "2 pi", "4 pi"]
+    },
+    {
+      "symbol": "sigma_x, sigma_y, sigma_z",
+      "name": "Pauli matrices",
+      "latex": "\\sigma_x, \\sigma_y, \\sigma_z",
+      "meaning": "Standard Pauli matrices generating the spin-1/2 representation of SU(2).",
+      "domain": "quantum mechanics",
+      "type": "matrix",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 3",
+      "related_symbols": ["Phi", "SU(2)", "spin-1/2"]
+    }
+  ]
+}
