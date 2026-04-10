@@ -1,0 +1,421 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{xcolor}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{corollary}[definition]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[definition]{Remark}
+\newtheorem{example}[definition]{Example}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\Sp}{\mathrm{Sp}}
+\newcommand{\ii}{\mathbf{i}}
+\newcommand{\jj}{\mathbf{j}}
+\newcommand{\kk}{\mathbf{k}}
+\newcommand{\Id}{I}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\Sc}{\operatorname{Sc}}
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\ket}[1]{\lvert #1 \rangle}
+\newcommand{\bra}[1]{\langle #1 \rvert}
+
+\title{\textbf{Bell and CHSH Correlations from Quaternionic Spin Geometry:}\\ \textbf{A Direct Derivation on \texorpdfstring{$S^3$}{S3}}}
+\author{John G. Van Geem\\RQM Technologies\\\texttt{0009-0002-4003-8452}}
+\date{Version 0.1.0 \\ Draft dated 2026-04-10}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This paper gives a direct derivation of Bell and Clauser--Horne--Shimony--Holt (CHSH) correlations using the fixed quaternion--$\SU(2)$ convention established in \texttt{qqc-001-foundations}. The analyzer settings are represented by pure unit quaternions $u_a$ and $u_b$ in the imaginary subspace of $\HH$, so that their product decomposes as $u_a u_b = -a\cdot b + u_{a\times b}$. In the singlet sector, that scalar--vector decomposition yields the standard joint probabilities $P(s,t \mid a,b)=\frac14(1-st\,a\cdot b)$, the correlation law $E(a,b)=-a\cdot b=\Sc(u_a u_b)$, and the CHSH operator bound $\abs{S}\le 2\sqrt2$. The paper also records one optimal analyzer configuration that saturates the bound. The mathematical predictions are the standard quantum-mechanical ones; the project-specific contribution is the geometric organization. In this framing, Bell's theorem excludes local hidden-variable reductions of the singlet state, but it does not exclude quaternionic spin geometry itself. The paper is intentionally conservative: it does not introduce a new physical theory, does not claim a local hidden-variable completion, and does not define a full general quaternionic tensor-product formalism beyond the singlet-sector derivations used here.
+\end{abstract}
+
+\noindent\textbf{Keywords:} Bell correlation; CHSH inequality; singlet state; quaternionic spin geometry; $\SU(2)$; unit quaternions
+
+\section{Introduction}
+
+Bell's theorem is often presented as a verdict against any geometric or realist reading of quantum correlations. That conclusion is too coarse. What Bell excludes is a \emph{local hidden-variable reduction} that assigns pre-existing, separable answers to distant detectors while preserving the observed statistics \citep{bell1964,clauser1969}. It does not exclude the standard spinor geometry of $\SU(2)$, nor any equivalent language that keeps the singlet state nonfactorized from the start.
+
+The purpose of this paper is narrow and technical. Using the quaternion--$\SU(2)$ convention fixed in paper 1 of this series, we derive the standard singlet correlations and the CHSH bound in a quaternionic language. The analyzer settings are encoded by pure unit quaternions, the scalar part of their product reproduces the correlation law, and the commutator geometry behind the CHSH bound becomes a cross-product statement in $\R^3$.
+
+This paper does \emph{not} propose a new physical theory. The probabilities and operator identities proved here are the standard quantum-mechanical ones. The contribution is organizational: to show that Bell/CHSH structure can be written cleanly in the same quaternionic geometry that paper 1 used for single-qubit $\SU(2)$ structure.
+
+\section{Background and dependency on paper 1}
+
+Paper 1 fixed the explicit convention
+\begin{equation}
+\Phi(a+b\ii+c\jj+d\kk)
+=
+\begin{pmatrix}
+a-di & -c-bi \\
+c-bi & a+di
+\end{pmatrix}
+=
+a\Id-i(b\sigma_x+c\sigma_y+d\sigma_z),
+\label{eq:phi}
+\end{equation}
+under which the unit quaternions $\Sp(1)$ are isomorphic to $\SU(2)$ \citep{hall2015,kuipers1999,penrose1984}. In particular, if
+\[
+u_a = a_x \ii + a_y \jj + a_z \kk
+\]
+is a pure unit quaternion determined by a unit vector $a\in S^2\subset\R^3$, then
+\begin{equation}
+\Phi(u_a) = -i(a\cdot \sigma),
+\label{eq:pure-map}
+\end{equation}
+where $a\cdot \sigma = a_x \sigma_x + a_y \sigma_y + a_z \sigma_z$ is the standard spin observable with eigenvalues $\pm 1$.
+
+\begin{remark}
+The present paper uses this inherited convention without change. No new quaternion--matrix identification is introduced here.
+\end{remark}
+
+\section{Quaternionic analyzer geometry}
+
+\begin{definition}[Pure analyzer quaternion]
+For a unit analyzer direction $a=(a_x,a_y,a_z)\in S^2$, define the corresponding pure unit quaternion
+\[
+u_a = a_x \ii + a_y \jj + a_z \kk \in \operatorname{Im}\HH.
+\]
+Likewise define $u_b$ for a second analyzer direction $b$.
+\end{definition}
+
+\begin{proposition}[Scalar--vector product identity]
+For pure unit quaternions $u_a$ and $u_b$,
+\begin{equation}
+u_a u_b = -a\cdot b + u_{a\times b}.
+\label{eq:scalar-vector}
+\end{equation}
+Equivalently,
+\[
+\Sc(u_a u_b) = -a\cdot b.
+\]
+\end{proposition}
+
+\begin{proof}
+Write $u_a = a_x \ii + a_y \jj + a_z \kk$ and $u_b = b_x \ii + b_y \jj + b_z \kk$. Quaternion multiplication gives the standard scalar--vector decomposition
+\[
+(a_1\ii+a_2\jj+a_3\kk)(b_1\ii+b_2\jj+b_3\kk)
+=
+-(a\cdot b) + (a\times b)_x \ii + (a\times b)_y \jj + (a\times b)_z \kk.
+\]
+This is exactly \eqref{eq:scalar-vector}.
+\end{proof}
+
+\begin{remark}
+The scalar part of the quaternion product records the analyzer dot product, while the pure part records the oriented mismatch by the cross product. Both ingredients reappear below: the scalar part controls the correlation, and the cross-product part controls the CHSH commutator geometry.
+\end{remark}
+
+\section{Singlet-sector probabilities and the Bell correlation law}
+
+Let
+\[
+\rho_{\mathrm{sing}} = \ket{\Psi^-}\bra{\Psi^-},
+\qquad
+\ket{\Psi^-} = \frac{1}{\sqrt2}\bigl(\ket{01}-\ket{10}\bigr),
+\]
+be the standard two-qubit singlet state. It admits the well-known Pauli-basis expansion
+\begin{equation}
+\rho_{\mathrm{sing}}
+=
+\frac14
+\left(
+\Id\otimes\Id
+-
+\sum_{k=x,y,z}\sigma_k\otimes\sigma_k
+\right).
+\label{eq:singlet-density}
+\end{equation}
+
+For a measurement of spin along analyzer direction $a$, define the projectors
+\begin{equation}
+\Pi_s(a) = \frac12\bigl(\Id + s\, a\cdot \sigma\bigr),
+\qquad s\in\set{+1,-1},
+\label{eq:projectors}
+\end{equation}
+and similarly for $\Pi_t(b)$ on the second particle.
+
+\begin{theorem}[Joint probabilities in the singlet sector]
+For analyzer directions $a,b\in S^2$ and outcomes $s,t\in\set{+1,-1}$,
+\begin{equation}
+P(s,t\mid a,b)
+=
+\tr\!\left[\rho_{\mathrm{sing}}\bigl(\Pi_s(a)\otimes \Pi_t(b)\bigr)\right]
+=
+\frac14\bigl(1-st\,a\cdot b\bigr).
+\label{eq:joint-prob}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Expand the projector product:
+\[
+\Pi_s(a)\otimes \Pi_t(b)
+=
+\frac14\Bigl(
+\Id\otimes\Id
++
+s\,a\cdot\sigma\otimes\Id
++
+t\,\Id\otimes b\cdot\sigma
++
+st\,a\cdot\sigma\otimes b\cdot\sigma
+\Bigr).
+\]
+Using \eqref{eq:singlet-density}, the trace identities
+\[
+\tr(\sigma_j)=0,
+\qquad
+\tr(\sigma_j\sigma_k)=2\delta_{jk},
+\]
+and bilinearity, the mixed single-Pauli terms vanish and the last term contributes
+\[
+\tr\!\left[
+\rho_{\mathrm{sing}}
+\bigl(a\cdot\sigma\otimes b\cdot\sigma\bigr)
+\right]
+=
+-a\cdot b.
+\]
+Therefore
+\[
+P(s,t\mid a,b)
+=
+\frac14\bigl(1-st\,a\cdot b\bigr).
+\]
+\end{proof}
+
+\begin{corollary}[Bell correlation law]
+The singlet correlation function is
+\begin{equation}
+E(a,b)
+=
+\sum_{s,t=\pm1} st\,P(s,t\mid a,b)
+=
+-a\cdot b
+=
+\Sc(u_a u_b).
+\label{eq:bell-law}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Insert \eqref{eq:joint-prob}:
+\[
+E(a,b)
+=
+\sum_{s,t=\pm1} st\,\frac14(1-st\,a\cdot b).
+\]
+The term proportional to $st$ sums to zero over the four sign choices, while the term proportional to $s^2 t^2 = 1$ contributes $-a\cdot b$. By Proposition 3.1, $\Sc(u_a u_b)=-a\cdot b$, proving the quaternionic form.
+\end{proof}
+
+\begin{remark}
+Equation \eqref{eq:bell-law} is not a local hidden-variable formula. It is a nonfactorized singlet-state formula written in quaternionic analyzer geometry. That distinction matters: Bell excludes the former, not the latter.
+\end{remark}
+
+\section{The CHSH bound and its optimal quaternionic realization}
+
+Define the local observables
+\[
+A(a)=a\cdot \sigma,
+\qquad
+A(a')=a'\cdot \sigma,
+\qquad
+B(b)=b\cdot \sigma,
+\qquad
+B(b')=b'\cdot \sigma.
+\]
+For the CHSH combination,
+\begin{equation}
+\mathcal{B}
+=
+A(a)\otimes\bigl(B(b)+B(b')\bigr)
++
+A(a')\otimes\bigl(B(b)-B(b')\bigr).
+\label{eq:chsh-operator}
+\end{equation}
+
+\begin{proposition}[Quaternionic commutator geometry]
+For unit vectors $a,a'\in S^2$,
+\begin{equation}
+[A(a),A(a')] = 2i\,(a\times a')\cdot \sigma.
+\label{eq:comm-a}
+\end{equation}
+Likewise,
+\[
+[B(b),B(b')] = 2i\,(b\times b')\cdot \sigma.
+\]
+Under \eqref{eq:pure-map}, this is the matrix image of the pure-quaternion commutator
+\[
+[u_a,u_{a'}] = 2u_{a\times a'}.
+\]
+\end{proposition}
+
+\begin{proof}
+Using the Pauli multiplication rule
+\[
+(a\cdot \sigma)(a'\cdot \sigma)
+=
+(a\cdot a')\Id + i(a\times a')\cdot \sigma,
+\]
+subtract the reversed product. The quaternionic statement follows from Proposition 3.1 and \eqref{eq:pure-map}.
+\end{proof}
+
+\begin{theorem}[CHSH operator bound]
+For every quantum state,
+\begin{equation}
+\abs{\langle \mathcal{B}\rangle} \le 2\sqrt2.
+\label{eq:tsirelson}
+\end{equation}
+In particular, the singlet state obeys the same bound.
+\end{theorem}
+
+\begin{proof}
+A standard calculation gives
+\[
+\mathcal{B}^2
+=
+4\,\Id\otimes\Id - [A(a),A(a')]\otimes[B(b),B(b')].
+\]
+By Proposition 5.1,
+\[
+[A(a),A(a')] = 2i(a\times a')\cdot \sigma,
+\qquad
+[B(b),B(b')] = 2i(b\times b')\cdot \sigma.
+\]
+Hence
+\[
+\norm{[A(a),A(a')]} \le 2,
+\qquad
+\norm{[B(b),B(b')]} \le 2,
+\]
+because $\norm{a\times a'}\le 1$ and $\norm{b\times b'}\le 1$. Therefore
+\[
+\norm{\mathcal{B}^2}\le 8,
+\qquad
+\norm{\mathcal{B}}\le 2\sqrt2.
+\]
+So for any normalized state $\rho$,
+\[
+\abs{\tr(\rho\mathcal{B})}\le \norm{\mathcal{B}}\le 2\sqrt2.
+\]
+\end{proof}
+
+\begin{example}[Optimal analyzer configuration]
+Choose
+\[
+a=(0,0,1),\qquad
+a'=(1,0,0),
+\]
+\[
+b=\frac{1}{\sqrt2}(1,0,1),\qquad
+b'=\frac{1}{\sqrt2}(-1,0,1).
+\]
+Then
+\[
+E(a,b)=E(a,b')=E(a',b)=-\frac{1}{\sqrt2},
+\qquad
+E(a',b')=\frac{1}{\sqrt2}.
+\]
+Therefore
+\begin{equation}
+S
+=
+E(a,b)+E(a,b')+E(a',b)-E(a',b')
+=
+-2\sqrt2,
+\label{eq:optimal-s}
+\end{equation}
+so $\abs{S}=2\sqrt2$ and the bound is saturated.
+\end{example}
+
+\section{Standard mathematics versus RQM framing}
+
+\subsection{Standard content used here}
+
+The following ingredients are standard:
+\begin{enumerate}
+\item the singlet state and its density matrix expansion;
+\item the projectors $\Pi_{\pm}(a)=\frac12(\Id\pm a\cdot \sigma)$;
+\item the Bell correlation law $E(a,b)=-a\cdot b$ for the singlet state;
+\item the CHSH operator and the bound $\abs{S}\le 2\sqrt2$; and
+\item the equivalence between Pauli-matrix spin geometry and quaternionic $\SU(2)$ geometry.
+\end{enumerate}
+
+\subsection{Project-specific contribution}
+
+The project-specific contribution of this paper is organizational:
+\begin{enumerate}
+\item analyzer settings are expressed as pure unit quaternions;
+\item the Bell correlation is written as the scalar part $\Sc(u_a u_b)$;
+\item the CHSH commutator structure is presented as a cross-product statement in quaternionic language; and
+\item Bell's theorem is interpreted as excluding local hidden-variable \emph{reductions}, not quaternionic spin geometry itself.
+\end{enumerate}
+
+These are framing choices. They do not change the predicted probabilities.
+
+\section{Scope, limitations, and non-claims}
+
+This paper does \emph{not}:
+\begin{enumerate}
+\item introduce a new physical theory beyond standard quantum mechanics;
+\item claim a local hidden-variable completion of Bell correlations;
+\item define a general multi-qubit quaternionic tensor-product formalism;
+\item claim faster-than-light signaling or any violation of relativistic no-signaling; or
+\item treat arbitrary many-qubit nonlocality scenarios beyond the singlet-sector Bell/CHSH derivations used here.
+\end{enumerate}
+
+The point is narrower: the standard Bell and CHSH formulas can be derived directly in a quaternionic language once analyzer geometry is represented in $\Sp(1)\cong\SU(2)$.
+
+\section{Conclusion}
+
+The Bell and CHSH correlations of the singlet state can be written cleanly in quaternionic spin geometry. The analyzer settings become pure unit quaternions, their product splits into a scalar dot-product part and a vector cross-product part, the scalar part reproduces the correlation law
+\[
+E(a,b) = -a\cdot b = \Sc(u_a u_b),
+\]
+and the cross-product part controls the noncommutative structure that yields the Tsirelson bound
+\[
+\abs{S}\le 2\sqrt2.
+\]
+
+Nothing in this paper alters the standard quantum-mechanical predictions. What it shows is that the quaternionic framework is not in tension with Bell/CHSH structure; rather, it is a compact geometric language for expressing that structure. On this reading, Bell's theorem does not refute quaternionic spin geometry. It refutes attempts to replace the nonfactorized singlet state by separable local hidden instructions.
+
+\appendix
+
+\section{Reference formulas used in the code artifact}
+
+The code artifact included with this package evaluates the following formulas:
+\[
+u_a u_b = -a\cdot b + u_{a\times b},
+\]
+\[
+P(s,t\mid a,b)=\frac14(1-st\,a\cdot b),
+\]
+\[
+E(a,b)=\sum_{s,t=\pm1} st\,P(s,t\mid a,b)=-a\cdot b,
+\]
+\[
+S = E(a,b)+E(a,b')+E(a',b)-E(a',b').
+\]
+For the analyzer configuration in Example 5.3, the script returns $\abs{S}=2\sqrt2$.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
