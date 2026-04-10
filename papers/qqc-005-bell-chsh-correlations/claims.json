@@ -1,0 +1,130 @@
+{
+  "paper_id": "qqc-005-bell-chsh-correlations",
+  "claims": [
+    {
+      "claim_id": "def-1",
+      "label": "Definition 3.1 (Pure analyzer quaternion)",
+      "type": "definition",
+      "statement": "For a unit analyzer direction a = (a_x, a_y, a_z) in S^2, the corresponding pure analyzer quaternion is u_a = a_x i + a_y j + a_z k in Im(H).",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": [
+        "qqc-001-foundations:def-4",
+        "qqc-001-foundations:prop-5"
+      ],
+      "evidence_location": "Section 3",
+      "notes": "This identifies analyzer settings with pure unit quaternions in the inherited quaternion-SU(2) convention."
+    },
+    {
+      "claim_id": "prop-2",
+      "label": "Proposition 3.2 (Scalar-vector product identity)",
+      "type": "proposition",
+      "statement": "For pure unit quaternions u_a and u_b corresponding to unit vectors a and b, one has u_a u_b = - a·b + u_{a×b}, hence Sc(u_a u_b) = - a·b.",
+      "status": "proved",
+      "proof_sketch": "Expand quaternion multiplication in the basis i, j, k. The scalar part is minus the Euclidean dot product and the pure part is the quaternion corresponding to the cross product.",
+      "dependencies": [
+        "def-1"
+      ],
+      "evidence_location": "Section 3",
+      "notes": "This is the geometric identity that feeds directly into the Bell correlation law."
+    },
+    {
+      "claim_id": "thm-3",
+      "label": "Theorem 4.1 (Singlet-sector joint probabilities)",
+      "type": "theorem",
+      "statement": "For the singlet state and analyzer directions a, b in S^2, the joint probabilities are P(s,t|a,b) = 1/4 (1 - s t a·b) for outcomes s, t in {+1, -1}.",
+      "status": "proved",
+      "proof_sketch": "Use the singlet density matrix rho_singlet = 1/4(I⊗I - Σ_k σ_k⊗σ_k), the projectors Pi_s(a) = 1/2(I + s a·σ), and the Pauli trace identities.",
+      "dependencies": [
+        "qqc-001-foundations:def-4",
+        "qqc-001-foundations:prop-5"
+      ],
+      "evidence_location": "Section 4",
+      "notes": "This is the standard singlet probability law, organized here in the inherited quaternionic convention."
+    },
+    {
+      "claim_id": "cor-4",
+      "label": "Corollary 4.2 (Bell correlation law)",
+      "type": "corollary",
+      "statement": "The singlet correlation function is E(a,b) = Σ_{s,t} s t P(s,t|a,b) = - a·b = Sc(u_a u_b).",
+      "status": "proved",
+      "proof_sketch": "Sum the theorem's joint probabilities over s,t with the sign weight st and apply the scalar-vector identity.",
+      "dependencies": [
+        "prop-2",
+        "thm-3"
+      ],
+      "evidence_location": "Section 4",
+      "notes": "The quaternionic expression Sc(u_a u_b) is equivalent to the standard quantum prediction -a·b."
+    },
+    {
+      "claim_id": "prop-5",
+      "label": "Proposition 5.1 (Quaternionic commutator geometry)",
+      "type": "proposition",
+      "statement": "For local observables A(a) = a·σ and A(a') = a'·σ, one has [A(a), A(a')] = 2 i (a×a')·σ, and under the fixed map Phi this is the matrix image of the pure-quaternion commutator [u_a, u_a'] = 2 u_{a×a' }.",
+      "status": "proved",
+      "proof_sketch": "Use the Pauli multiplication rule (a·σ)(a'·σ) = (a·a')I + i(a×a')·σ and subtract the reversed product; then translate via Phi(u_a) = -i a·σ.",
+      "dependencies": [
+        "def-1",
+        "prop-2",
+        "qqc-001-foundations:def-4"
+      ],
+      "evidence_location": "Section 5",
+      "notes": "This is the noncommutative geometric ingredient behind the CHSH bound."
+    },
+    {
+      "claim_id": "thm-6",
+      "label": "Theorem 5.2 (CHSH operator bound)",
+      "type": "theorem",
+      "statement": "For the CHSH operator B = A(a)⊗(B(b)+B(b')) + A(a')⊗(B(b)-B(b')), one has |<B>| <= 2 sqrt(2) for every quantum state.",
+      "status": "proved",
+      "proof_sketch": "Compute B^2 = 4 I⊗I - [A(a),A(a')]⊗[B(b),B(b')] and bound the commutator norms by 2 using the cross-product form from Proposition 5.1.",
+      "dependencies": [
+        "prop-5"
+      ],
+      "evidence_location": "Section 5",
+      "notes": "This is the standard Tsirelson bound, written in the paper's quaternionic analyzer language."
+    },
+    {
+      "claim_id": "ex-7",
+      "label": "Example 5.3 (Optimal analyzer configuration)",
+      "type": "example",
+      "statement": "For a = z-hat, a' = x-hat, b = (x-hat + z-hat)/sqrt(2), and b' = (-x-hat + z-hat)/sqrt(2), one obtains E(a,b) = E(a,b') = E(a',b) = -1/sqrt(2), E(a',b') = +1/sqrt(2), and therefore |S| = 2 sqrt(2).",
+      "status": "informal",
+      "proof_sketch": "Insert the analyzer directions into E(a,b) = -a·b and evaluate the CHSH combination.",
+      "dependencies": [
+        "cor-4",
+        "thm-6"
+      ],
+      "evidence_location": "Section 5",
+      "notes": "The shipped code artifact reproduces this configuration numerically."
+    },
+    {
+      "claim_id": "int-8",
+      "label": "Interpretive Claim 6.1 (Bell excludes local hidden-variable reductions, not quaternionic spin geometry)",
+      "type": "interpretive_claim",
+      "statement": "In the framing of this paper, Bell's theorem excludes local hidden-variable reductions that replace the nonfactorized singlet state by separable preassigned detector answers, but it does not exclude quaternionic spin geometry itself when that geometry is used only as an equivalent language for the standard singlet-state formalism.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": [
+        "cor-4",
+        "thm-6"
+      ],
+      "evidence_location": "Section 6",
+      "notes": "This is a framing claim about interpretation and organization, not a new physical theorem."
+    },
+    {
+      "claim_id": "emp-9",
+      "label": "Empirical Result 7.1 (Reference code artifact values)",
+      "type": "empirical_result",
+      "statement": "The shipped reference script reproduces the singlet joint probabilities, Bell correlations, and the optimal CHSH value |S| = 2 sqrt(2) for the analyzer configuration recorded in Example 5.3.",
+      "status": "empirical",
+      "proof_sketch": "Computed by bell_chsh_demo.py with outputs recorded in chsh_reference_results.json.",
+      "dependencies": [
+        "cor-4",
+        "ex-7"
+      ],
+      "evidence_location": "Appendix A; artifacts/code/chsh_reference_results.json",
+      "notes": "This is a measured reproducibility result for the included code artifact only."
+    }
+  ]
+}
