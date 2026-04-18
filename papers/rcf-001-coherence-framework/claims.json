@@ -1,0 +1,107 @@
+{
+  "paper_id": "rcf-001-coherence-framework",
+  "claims": [
+    {
+      "claim_id": "def-1",
+      "label": "Definition 2.1 (Operator coherence principle)",
+      "type": "definition",
+      "statement": "A state Psi in Dom(A) is exactly coherent relative to A if there exists E in R such that A Psi = E Psi; it is near-coherent when it is close to that relation in norm.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": [],
+      "evidence_location": "Section 2, Definition 2.1",
+      "notes": "This definition sets coherence as an operator property rather than a descriptive label."
+    },
+    {
+      "claim_id": "def-2",
+      "label": "Definition 5.1 (Residual functional)",
+      "type": "definition",
+      "statement": "For Psi in Dom(A), residual coherence is defined by R(Psi) = inf over E in R of ||A Psi - E Psi||.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": [
+        "def-1"
+      ],
+      "evidence_location": "Section 5, Definition 5.1",
+      "notes": "This is the central mathematical object of the framework."
+    },
+    {
+      "claim_id": "prop-3",
+      "label": "Proposition 4.2 (Separated coherent modes)",
+      "type": "proposition",
+      "statement": "For the quadratic local model U(s) = kappa (s-s_*)^2, separated product states Psi_{ell,alpha,n}(g,s) = Y_{ell,alpha}(g) chi_n(s) satisfy A Psi_{ell,alpha,n} = E_{ell,n} Psi_{ell,alpha,n} with E_{ell,n} = lambda_ell + mu_n.",
+      "status": "proved",
+      "proof_sketch": "Apply the product operator to Y_{ell,alpha}(g) chi_n(s), use the S^3 eigenvalue equation and the shifted harmonic-oscillator eigenvalue equation, and collect scalar terms.",
+      "dependencies": [],
+      "evidence_location": "Section 4, Proposition 4.2",
+      "notes": "This establishes exact coherent families in the local v0.1 model."
+    },
+    {
+      "claim_id": "prop-4",
+      "label": "Proposition 5.2 (Meaning of residual size)",
+      "type": "proposition",
+      "statement": "For nonzero Psi in Dom(A), R(Psi)=0 if and only if Psi is an exact eigenstate of A; small R(Psi) indicates near-coherence, while large R(Psi) indicates non-coherence relative to A.",
+      "status": "proved",
+      "proof_sketch": "Use the definition of R(Psi): eigenstates make the norm vanish directly; conversely, if the infimum is zero, one obtains convergence to an eigenvalue relation.",
+      "dependencies": [
+        "def-2"
+      ],
+      "evidence_location": "Section 5, Proposition 5.2",
+      "notes": null
+    },
+    {
+      "claim_id": "lem-5",
+      "label": "Lemma 5.3 (Best scalar fit)",
+      "type": "lemma",
+      "statement": "For nonzero Psi, the minimizing scalar in ||A Psi - E Psi||^2 is E_*(Psi) = <Psi, A Psi> / ||Psi||^2, and R(Psi)^2 equals ||A Psi||^2 minus |<Psi, A Psi>|^2 / ||Psi||^2.",
+      "status": "proved",
+      "proof_sketch": "Expand the quadratic in E, differentiate, and substitute the minimizer.",
+      "dependencies": [
+        "def-2"
+      ],
+      "evidence_location": "Section 5, Lemma 5.3",
+      "notes": "This gives a computable residual form tied to the Rayleigh quotient."
+    },
+    {
+      "claim_id": "prop-6",
+      "label": "Proposition 6.1 (Spectral decay law)",
+      "type": "proposition",
+      "statement": "Under the dissipative flow d_t Psi = -A Psi, each spectral coefficient c_{ell,alpha,n}(t) decays as c_{ell,alpha,n}(0) exp(-E_{ell,n} t), so higher-energy components decay faster.",
+      "status": "proved",
+      "proof_sketch": "Expand the initial state in the eigenbasis and solve uncoupled scalar ODEs for coefficients.",
+      "dependencies": [
+        "prop-3"
+      ],
+      "evidence_location": "Section 6, Proposition 6.1",
+      "notes": "This formalizes temporal equilibration in the v0.1 setting."
+    },
+    {
+      "claim_id": "cor-7",
+      "label": "Corollary 6.2 (Suppression of high-energy sectors)",
+      "type": "corollary",
+      "statement": "If E_i > E_j and c_j(0) is nonzero, then |c_i(t)| / |c_j(t)| decays exponentially to zero as t increases.",
+      "status": "proved",
+      "proof_sketch": "Take the ratio of coefficient decay laws from Proposition 6.1.",
+      "dependencies": [
+        "prop-6"
+      ],
+      "evidence_location": "Section 6, Corollary 6.2",
+      "notes": null
+    },
+    {
+      "claim_id": "int-8",
+      "label": "Interpretive Claim 7.1 (Operational metric backbone)",
+      "type": "interpretive_claim",
+      "statement": "The residual and auxiliary coherence measures define a common metric layer that can guide alignment scoring, residual minimization, mode concentration tracking, and convergence diagnostics across RQM Studio, WaveEngine, and future coherence-locked systems.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": [
+        "def-2",
+        "prop-4",
+        "prop-6"
+      ],
+      "evidence_location": "Section 7",
+      "notes": "This is a systems-design interpretation, not an empirical performance claim."
+    }
+  ]
+}

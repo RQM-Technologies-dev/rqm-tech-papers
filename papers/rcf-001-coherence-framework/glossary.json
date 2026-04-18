@@ -1,0 +1,85 @@
+{
+  "paper_id": "rcf-001-coherence-framework",
+  "glossary": [
+    {
+      "term": "axis coherence",
+      "definition": "Projection score of a state onto a chosen distinguished mode. High axis coherence means strong alignment with that mode.",
+      "aliases": [],
+      "paper_specific": true,
+      "related_terms": ["operator coherence", "family coherence", "distinguished slice"],
+      "see_also": ["Section 5", "Definition 5.5"]
+    },
+    {
+      "term": "coherent family",
+      "definition": "A selected set of eigenmodes used as an operational target set. In this paper the main family is the slice-grounded set {Psi_{ell,alpha,0}}.",
+      "aliases": [],
+      "paper_specific": true,
+      "related_terms": ["family coherence", "orientation manifold", "distinguished slice"],
+      "see_also": ["Section 5", "Definition 5.6"]
+    },
+    {
+      "term": "distinguished slice",
+      "definition": "The reference slice value s_* around which the quadratic potential kappa (s - s_*)^2 is centered.",
+      "aliases": ["slice center"],
+      "paper_specific": true,
+      "related_terms": ["slice coordinate", "coherent family", "temporal equilibration"],
+      "see_also": ["Section 4", "eq:quadratic-potential"]
+    },
+    {
+      "term": "family coherence",
+      "definition": "Fraction of state energy concentrated in a declared coherent family of modes. It is computed as a normalized sum of squared modal projections.",
+      "aliases": [],
+      "paper_specific": true,
+      "related_terms": ["coherent family", "spectral concentration", "axis coherence"],
+      "see_also": ["Section 5", "def-7"]
+    },
+    {
+      "term": "near-coherence",
+      "definition": "State condition in which the residual to the best eigenform fit is small but nonzero.",
+      "aliases": ["approximate coherence"],
+      "paper_specific": true,
+      "related_terms": ["true coherence", "residual", "operator coherence"],
+      "see_also": ["Section 2", "Section 5"]
+    },
+    {
+      "term": "operator coherence",
+      "definition": "Cosine-type alignment between a state and its operator image, measured by |<Psi, A Psi>|/(||Psi|| ||A Psi||).",
+      "aliases": [],
+      "paper_specific": true,
+      "related_terms": ["residual", "axis coherence", "family coherence"],
+      "see_also": ["Section 5", "Definition 5.4"]
+    },
+    {
+      "term": "orientation manifold",
+      "definition": "The S^3 factor in M = S^3 x R_s, interpreted as the orientation sector and identified with SU(2).",
+      "aliases": ["S^3 orientation sector"],
+      "paper_specific": false,
+      "related_terms": ["hyperspherical harmonics", "slice coordinate", "coherent family"],
+      "see_also": ["Section 3"]
+    },
+    {
+      "term": "residual",
+      "definition": "The quantity R(Psi) = inf_E ||A Psi - E Psi|| measuring how close a state is to an exact eigenform of the governing operator.",
+      "aliases": ["residual coherence functional"],
+      "paper_specific": true,
+      "related_terms": ["true coherence", "near-coherence", "operator coherence"],
+      "see_also": ["Section 5", "Definition 5.1"]
+    },
+    {
+      "term": "temporal equilibration",
+      "definition": "Energy-ordered damping under the flow partial_t Psi = -A Psi, where higher-energy modes decay faster than lower-energy modes.",
+      "aliases": ["dissipative equilibration"],
+      "paper_specific": true,
+      "related_terms": ["coherent family", "spectral concentration", "residual"],
+      "see_also": ["Section 6", "Proposition 6.1"]
+    },
+    {
+      "term": "true coherence",
+      "definition": "Exact eigenform condition A Psi = E Psi for some real scalar E.",
+      "aliases": ["exact coherence"],
+      "paper_specific": true,
+      "related_terms": ["near-coherence", "residual", "operator coherence"],
+      "see_also": ["Section 2", "Section 5"]
+    }
+  ]
+}

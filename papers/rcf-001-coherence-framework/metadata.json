@@ -1,0 +1,56 @@
+{
+  "paper_id": "rcf-001-coherence-framework",
+  "title": "RQM Coherence Framework v0.1: Spectral-Variational Coherence on S^3 x R",
+  "slug": "coherence-framework",
+  "version": "0.1.0",
+  "status": "draft",
+  "publication_date": null,
+  "last_updated": "2026-04-18",
+  "authors": [
+    {
+      "name": "John G. Van Geem",
+      "affiliation": "RQM Technologies LLC",
+      "orcid": null,
+      "email": null,
+      "corresponding": true
+    }
+  ],
+  "abstract": "This paper introduces the first formal version of an RQM coherence framework on the manifold M=S^3 x R_s. The framework defines coherence as an operator-theoretic property relative to a native spectral-variational model, rather than as descriptive language. The state space is L^2(M) and the governing operator is A = -Delta_{S^3} - partial_s^2 + U(s), with the local quadratic specialization U(s)=kappa(s-s_*)^2, kappa>0. In this model, separated modes combine hyperspherical harmonics on S^3 congruent to SU(2) with Hermite-Gaussian slice modes on R, yielding eigenfamilies indexed by orientation and slice quantum numbers. The central coherence object is the residual functional R(Psi)=inf_E ||A Psi - E Psi||, which is zero for exact eigenforms and small for near-coherent states. Auxiliary measures are introduced for operator alignment, axis alignment, family concentration, and spectral concentration. A dissipative flow partial_t Psi=-A Psi is used to formalize temporal equilibration toward lower-energy coherent sectors. The paper states what is proved, what remains open, and why this framework is operationally relevant for RQM Technologies as a shared metric backbone for alignment, residual minimization, mode tracking, and coherence-locked algorithm design.",
+  "keywords": [
+    "Resonant Quantum Mechanics",
+    "coherence framework",
+    "spectral geometry",
+    "variational residual",
+    "Laplace-Beltrami operator",
+    "harmonic oscillator",
+    "temporal equilibration",
+    "operator metrics"
+  ],
+  "series": "RQM Coherence Framework",
+  "series_number": 1,
+  "depends_on": [],
+  "canonical_url": null,
+  "pdf_url": null,
+  "html_url": null,
+  "jats_url": null,
+  "doi": null,
+  "journal": null,
+  "volume": null,
+  "issue": null,
+  "pages": null,
+  "citations": [
+    "hall2015",
+    "helgason1984",
+    "chavel1984",
+    "reed1978iv",
+    "sakurai2017"
+  ],
+  "related_artifacts": [
+    "main.tex",
+    "paper.html",
+    "paper.jats.xml"
+  ],
+  "license": "CC-BY-4.0",
+  "funding": [],
+  "notes": "Draft technical foundation for operator-theoretic coherence metrics on S^3 x R in Resonant Quantum Mechanics. This version formalizes definitions and spectral constructions without claiming full empirical derivation across deployed systems."
+}
