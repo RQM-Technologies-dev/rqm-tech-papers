@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this paper package, please cite the draft below."
+type: article
+title: "RQM Coherence Framework v0.1: Spectral-Variational Coherence on S^3 x R"
+version: "0.1.0"
+date-released: "2026-04-18"
+abstract: "This paper introduces a formal RQM coherence framework on S^3 x R using a spectral-variational operator model and a residual-based coherence criterion."
+authors:
+  - given-names: "John G."
+    family-names: "Van Geem"
+    affiliation: "RQM Technologies LLC"
+repository-code: "https://github.com/RQM-Technologies-dev/rqm-tech-papers"
+license: CC-BY-4.0
+keywords:
+  - Resonant Quantum Mechanics
+  - coherence framework
+  - spectral geometry
+  - variational residual
+  - Laplace-Beltrami operator
+  - harmonic oscillator
+preferred-citation:
+  type: article
+  title: "RQM Coherence Framework v0.1: Spectral-Variational Coherence on S^3 x R"
+  authors:
+    - given-names: "John G."
+      family-names: "Van Geem"
+      affiliation: "RQM Technologies LLC"
+  year: 2026
+  version: "0.1.0"
+  notes: "Draft technical paper package in rqm-tech-papers; no DOI assigned."

@@ -1,0 +1,415 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{xcolor}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{corollary}[definition]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[definition]{Remark}
+\newtheorem{example}[definition]{Example}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\Lp}{L^2}
+\newcommand{\ip}[2]{\left\langle #1, #2 \right\rangle}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\Aop}{\mathcal{A}}
+\newcommand{\Res}{\mathcal{R}}
+\newcommand{\COp}{\widetilde{\mathcal{C}}}
+\newcommand{\CAxis}{\mathcal{C}_{\mathrm{axis}}}
+\newcommand{\CFamily}{\mathcal{C}_{\mathrm{family}}}
+\newcommand{\CSpec}{\mathcal{C}_{\mathrm{spec}}}
+
+\title{\textbf{RQM Coherence Framework v0.1:}\\ \textbf{Spectral-Variational Coherence on \texorpdfstring{$S^3 \times \R$}{S3 x R}}}
+\author{John G. Van Geem\\RQM Technologies LLC}
+\date{Version 0.1.0 \\ Draft dated 2026-04-18}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This paper introduces the first formal version of an RQM coherence framework on the manifold $M=S^3\times\R_s$. The framework defines coherence as an operator-theoretic property relative to a native spectral-variational model, rather than as descriptive language. The state space is $\Lp(M)$ and the governing operator is
+\[
+\Aop = -\Delta_{S^3} - \partial_s^2 + U(s),
+\]
+with the local quadratic specialization $U(s)=\kappa(s-s_*)^2$, $\kappa>0$. In this model, separated modes combine hyperspherical harmonics on $S^3\cong\SU(2)$ with Hermite-Gaussian slice modes on $\R$, yielding eigenfamilies indexed by orientation and slice quantum numbers. The central coherence object is the residual functional
+\[
+\Res(\Psi)=\inf_{E\in\R}\norm{\Aop\Psi-E\Psi},
+\]
+which is zero for exact eigenforms and small for near-coherent states. Auxiliary measures are introduced for operator alignment, axis alignment, family concentration, and spectral concentration. A dissipative flow $\partial_t\Psi=-\Aop\Psi$ is used to formalize temporal equilibration toward lower-energy coherent sectors. The paper states what is proved, what remains open, and why this framework is operationally relevant for RQM Technologies as a shared metric backbone for alignment, residual minimization, mode tracking, and coherence-locked algorithm design.
+\end{abstract}
+
+\noindent\textbf{Keywords:} Resonant Quantum Mechanics; coherence framework; spectral geometry; variational residual; Laplace-Beltrami operator; harmonic oscillator; temporal equilibration; operator metrics
+
+\section{Introduction}
+
+Resonant Quantum Mechanics (RQM) has used the term \emph{coherence} as a guiding notion for alignment, mode structure, and convergence behavior across analysis and product workflows. A recurring technical problem is that descriptive coherence language can look plausible without being falsifiable. This paper addresses that gap by defining coherence through operator structure on a concrete state space.
+
+The scope is intentionally narrow. We formalize a first model on
+\[
+M=S^3\times\R_s,
+\]
+with a self-adjoint operator $\Aop$ and a residual-based coherence functional. The model is mathematically standard in its ingredients (compact-manifold Laplacian, one-dimensional confining potential, spectral decomposition), but new in its role as an RQM-native coherence backbone \citep{hall2015,chavel1984,reed1978iv}.
+
+The paper is written as a v0.1 foundation document. It does claim a clean operator-theoretic and variational coherence framework. It does not claim that all downstream RQM physical or engineering phenomena are already derived from this model alone.
+
+\section{From descriptive coherence to operator coherence}
+
+Many systems can be described as coherent in an informal sense (smooth behavior, stable patterns, attractive visual structure). Such descriptions are useful heuristics but are insufficient as technical criteria. In this paper, coherence is defined relative to an operator and quantified by residual and projection-based metrics.
+
+\begin{definition}[Operator coherence principle]
+Let $\Aop$ be a densely defined self-adjoint operator on a Hilbert space $\mathcal{H}$. A state $\Psi\in\mathrm{Dom}(\Aop)$ is \emph{exactly coherent} (relative to $\Aop$) if there exists $E\in\R$ such that
+\[
+\Aop\Psi=E\Psi.
+\]
+It is \emph{near-coherent} when $\Psi$ is close to this condition in norm.
+\end{definition}
+
+\begin{remark}
+This definition makes coherence falsifiable. A state either satisfies an eigenform relation, approximately satisfies it under a declared norm tolerance, or does not.
+\end{remark}
+
+\section{The manifold \texorpdfstring{$S^3\times\R$}{S3 x R}}
+
+\subsection{Geometric decomposition}
+
+Set
+\[
+M=S^3\times\R_s.
+\]
+The first factor $S^3$ is the compact orientation manifold, identified with $\SU(2)$ under the standard group-manifold correspondence \citep{hall2015,helgason1984}. The second factor $s\in\R$ is a slice coordinate, interpreted in this framework as slice/scale/spectral-height direction.
+
+\begin{definition}[State space]
+The base Hilbert space is
+\[
+\mathcal{H}:=\Lp(S^3\times\R),
+\]
+with inner product
+\[
+\ip{\Psi_1}{\Psi_2}
+=
+\int_{S^3}\int_{\R}\overline{\Psi_1(g,s)}\,\Psi_2(g,s)\,ds\,d\mu_{S^3}(g).
+\]
+\end{definition}
+
+\subsection{Orientation and slice roles}
+
+The product structure separates two effects:
+\begin{enumerate}
+\item orientation variation on the compact manifold $S^3$ (representation/harmonic mode structure), and
+\item slice variation along $s\in\R$ (local concentration around distinguished slice values).
+\end{enumerate}
+This separation makes the spectrum interpretable in terms of orientation sectors and slice sectors.
+
+\section{The governing operator and separated spectrum}
+
+\subsection{Native operator and local quadratic model}
+
+Define
+\begin{equation}
+\Aop = -\Delta_{S^3} - \partial_s^2 + U(s),
+\label{eq:operator-general}
+\end{equation}
+where $\Delta_{S^3}$ is the Laplace-Beltrami operator on $S^3$ and $U:\R\to\R$ is a confining slice potential.
+
+For v0.1 we specialize to
+\begin{equation}
+U(s)=\kappa (s-s_*)^2,\qquad \kappa>0.
+\label{eq:quadratic-potential}
+\end{equation}
+
+\begin{remark}
+This is a first mathematically controlled model: intrinsic geometry on $S^3$, one-dimensional slice structure on $\R$, and a restoring term toward a distinguished slice $s_*$.
+\end{remark}
+
+\subsection{Separation of variables}
+
+Seek separated states
+\[
+\Psi(g,s)=Y(g)\chi(s).
+\]
+Substituting into $\Aop\Psi=E\Psi$ with \eqref{eq:quadratic-potential} gives
+\begin{equation}
+-\Delta_{S^3}Y=\lambda_\ell Y,
+\label{eq:orientation-eigen}
+\end{equation}
+and
+\begin{equation}
+\left(-\frac{d^2}{ds^2}+\kappa(s-s_*)^2\right)\chi=\mu_n\chi,
+\label{eq:slice-eigen}
+\end{equation}
+with total energy
+\[
+E_{\ell,n}=\lambda_\ell+\mu_n.
+\]
+
+\subsection{Orientation spectrum on \texorpdfstring{$S^3$}{S3}}
+
+For $S^3$, Laplace-Beltrami eigenvalues are \citep{chavel1984,helgason1984}
+\begin{equation}
+\lambda_\ell=\ell(\ell+2),\qquad \ell=0,1,2,\dots
+\label{eq:s3-spectrum}
+\end{equation}
+with eigenspaces spanned by hyperspherical harmonics $Y_{\ell,\alpha}$; equivalently, these are $\SU(2)$ representation modes at level $\ell$.
+
+\subsection{Slice spectrum on \texorpdfstring{$\R$}{R}}
+
+The shifted harmonic oscillator in \eqref{eq:slice-eigen} has eigenvalues
+\begin{equation}
+\mu_n=(2n+1)\sqrt{\kappa},\qquad n=0,1,2,\dots,
+\label{eq:slice-spectrum}
+\end{equation}
+and normalized Hermite-Gaussian eigenfunctions \citep{sakurai2017}
+\begin{equation}
+\chi_n(s)
+=
+N_n\,H_n\!\big(\kappa^{1/4}(s-s_*)\big)
+\exp\!\left[-\frac{\sqrt{\kappa}}{2}(s-s_*)^2\right].
+\label{eq:chi}
+\end{equation}
+
+\begin{proposition}[Separated coherent modes]
+Let $\Psi_{\ell,\alpha,n}(g,s):=Y_{\ell,\alpha}(g)\chi_n(s)$ with $Y_{\ell,\alpha}$ satisfying \eqref{eq:orientation-eigen} and $\chi_n$ satisfying \eqref{eq:slice-eigen}. Then
+\begin{equation}
+\Aop\Psi_{\ell,\alpha,n}=E_{\ell,n}\Psi_{\ell,\alpha,n},
+\qquad
+E_{\ell,n}=\lambda_\ell+\mu_n.
+\label{eq:product-eigen}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Apply \eqref{eq:operator-general} to the product $\Psi_{\ell,\alpha,n}=Y_{\ell,\alpha}\chi_n$. The $S^3$ and $s$ terms act on different factors:
+\[
+\Aop(Y_{\ell,\alpha}\chi_n)
+=
+\chi_n(-\Delta_{S^3}Y_{\ell,\alpha})
++
+Y_{\ell,\alpha}\!\left(-\chi_n''+\kappa(s-s_*)^2\chi_n\right).
+\]
+Use \eqref{eq:orientation-eigen} and \eqref{eq:slice-eigen}. The result is
+\[
+(\lambda_\ell+\mu_n)Y_{\ell,\alpha}\chi_n
+=
+E_{\ell,n}\Psi_{\ell,\alpha,n}.
+\]
+\end{proof}
+
+\section{Residual coherence and auxiliary coherence measures}
+
+\subsection{Residual coherence as the central object}
+
+\begin{definition}[Residual functional]
+For $\Psi\in\mathrm{Dom}(\Aop)$, define
+\begin{equation}
+\Res(\Psi)=\inf_{E\in\R}\norm{\Aop\Psi-E\Psi}.
+\label{eq:residual}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Meaning of residual size]
+For nonzero $\Psi\in\mathrm{Dom}(\Aop)$:
+\begin{enumerate}
+\item $\Res(\Psi)=0$ if and only if $\Psi$ is an exact eigenstate of $\Aop$.
+\item Small $\Res(\Psi)$ means $\Psi$ is near-coherent in the operator sense.
+\item Large $\Res(\Psi)$ means $\Psi$ is not coherent relative to $\Aop$, regardless of descriptive appeal.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+If $\Psi$ is an eigenstate, choose its eigenvalue in \eqref{eq:residual} to get zero norm. Conversely, if $\Res(\Psi)=0$, then by definition there exists a sequence $E_m$ with $\norm{\Aop\Psi-E_m\Psi}\to 0$. Because $\Psi\neq 0$, the scalar sequence is Cauchy, converges to some $E$, and closedness of scalar multiplication in Hilbert norm gives $\Aop\Psi=E\Psi$.
+\end{proof}
+
+\begin{lemma}[Best scalar fit]
+For nonzero $\Psi\in\mathrm{Dom}(\Aop)$, the minimizer of $E\mapsto \norm{\Aop\Psi-E\Psi}^2$ is
+\begin{equation}
+E_*(\Psi)=\frac{\ip{\Psi}{\Aop\Psi}}{\norm{\Psi}^2},
+\label{eq:rayleigh}
+\end{equation}
+and
+\begin{equation}
+\Res(\Psi)^2
+=
+\norm{\Aop\Psi}^2-\frac{|\ip{\Psi}{\Aop\Psi}|^2}{\norm{\Psi}^2}.
+\label{eq:residual-variance}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Expand
+\[
+\norm{\Aop\Psi-E\Psi}^2
+=
+\norm{\Aop\Psi}^2-2E\,\mathrm{Re}\,\ip{\Psi}{\Aop\Psi}+E^2\norm{\Psi}^2.
+\]
+For self-adjoint $\Aop$, $\ip{\Psi}{\Aop\Psi}\in\R$. Differentiate with respect to $E$ and set to zero, yielding \eqref{eq:rayleigh}. Substitution gives \eqref{eq:residual-variance}.
+\end{proof}
+
+\subsection{Additional coherence measures}
+
+The residual is central, but practical diagnostics benefit from additional scores.
+
+\begin{definition}[Operator coherence]
+For nonzero $\Psi$ with $\Aop\Psi\neq 0$, define
+\begin{equation}
+\COp(\Psi)
+=
+\frac{|\ip{\Psi}{\Aop\Psi}|}{\norm{\Psi}\,\norm{\Aop\Psi|}
+}.
+\label{eq:operator-coherence}
+\end{equation}
+\end{definition}
+
+\begin{definition}[Axis coherence]
+Fix a distinguished mode $\Psi_*\neq 0$. Define
+\begin{equation}
+\CAxis(\Psi)
+=
+\frac{|\ip{\Psi}{\Psi_*}|^2}{\norm{\Psi}^2\norm{\Psi_*}^2}.
+\label{eq:axis-coherence}
+\end{equation}
+\end{definition}
+
+\begin{definition}[Family coherence]
+For the slice-grounded orientation family $\{\Psi_{\ell,\alpha,0}\}$, define
+\begin{equation}
+\CFamily(\Psi)
+=
+\frac{\sum_{\ell,\alpha} |\ip{\Psi}{\Psi_{\ell,\alpha,0}}|^2}{\norm{\Psi}^2}.
+\label{eq:family-coherence}
+\end{equation}
+\end{definition}
+
+\begin{definition}[Spectral concentration]
+Let $\{\Psi_{\ell,\alpha,n}\}$ be an orthonormal eigenbasis and define modal weights
+\[
+p_{\ell,\alpha,n}(\Psi)=\frac{|\ip{\Psi}{\Psi_{\ell,\alpha,n}}|^2}{\norm{\Psi}^2}.
+\]
+For any index set $\mathcal{I}\subset\N\times\N\times\N$, define concentration
+\begin{equation}
+\CSpec^{\mathcal{I}}(\Psi)=\sum_{(\ell,\alpha,n)\in\mathcal{I}} p_{\ell,\alpha,n}(\Psi).
+\label{eq:spectral-concentration}
+\end{equation}
+\end{definition}
+
+\begin{remark}
+Equations \eqref{eq:operator-coherence}--\eqref{eq:spectral-concentration} are not replacements for $\Res$. They are companion diagnostics for alignment and concentration once the operator has been fixed.
+\end{remark}
+
+\section{Temporal equilibration and preferred coherent families}
+
+Define the dissipative flow
+\begin{equation}
+\partial_t\Psi(t)=-\Aop\Psi(t),
+\qquad
+\Psi(0)=\Psi_0.
+\label{eq:flow}
+\end{equation}
+
+\begin{proposition}[Spectral decay law]
+Expand $\Psi_0=\sum c_{\ell,\alpha,n}\Psi_{\ell,\alpha,n}$. Then
+\begin{equation}
+\Psi(t)=\sum_{\ell,\alpha,n} c_{\ell,\alpha,n}e^{-E_{\ell,n}t}\Psi_{\ell,\alpha,n},
+\label{eq:flow-spectral}
+\end{equation}
+and each mode decays at rate $E_{\ell,n}$.
+\end{proposition}
+
+\begin{proof}
+Insert the expansion into \eqref{eq:flow}, use $\Aop\Psi_{\ell,\alpha,n}=E_{\ell,n}\Psi_{\ell,\alpha,n}$, and solve scalar ODEs
+\[
+\dot c_{\ell,\alpha,n}(t)=-E_{\ell,n}c_{\ell,\alpha,n}(t).
+\]
+\end{proof}
+
+\begin{corollary}[Suppression of high-energy sectors]
+If $E_i>E_j$ and $c_j(0)\neq 0$, then
+\[
+\frac{|c_i(t)|}{|c_j(t)|}
+=
+\frac{|c_i(0)|}{|c_j(0)|}e^{-(E_i-E_j)t}\to 0
+\quad\text{as }t\to\infty.
+\]
+Hence higher-energy components are exponentially suppressed relative to lower-energy components.
+\end{corollary}
+
+\begin{remark}
+Within RQM language, this formalizes ``Temporal Equilibration of the Eigenvector'' as a semigroup contraction toward low-energy coherent sectors, not as a claim of universal physical dissipation in every deployment context.
+\end{remark}
+
+\section{Why this framework matters for RQM Technologies}
+
+This section addresses operational relevance. The framework does not serve as marketing language; it serves as a shared mathematical contract.
+
+\subsection{Metric layer for products}
+
+For systems such as RQM Studio, WaveEngine, and future coherence-locking or mode-recovery tools, the framework provides:
+\begin{enumerate}
+\item a rigorous coherence criterion via $\Aop\Psi=E\Psi$ and residual $\Res(\Psi)$;
+\item a house metric stack ($\Res$, $\COp$, $\CAxis$, $\CFamily$, $\CSpec^{\mathcal{I}}$) usable across tools;
+\item a common spectral coordinate system $(\ell,\alpha,n)$ for tracking mode movement and concentration.
+\end{enumerate}
+
+\subsection{Engineering implications}
+
+The model supports concrete algorithmic directions:
+\begin{enumerate}
+\item residual minimization as an optimization target for alignment and stabilization;
+\item spectral tracking dashboards for mode concentration and convergence diagnostics;
+\item basis-guided decomposition for signal and state representations;
+\item operator-scored control loops for coherence-locked behavior;
+\item initialization and recovery policies based on low-energy family attraction.
+\end{enumerate}
+
+\begin{remark}
+These implications are design routes, not claims that every implementation is complete today. The value of v0.1 is that product-native metrics can now be derived from one operator framework rather than from disconnected heuristics.
+\end{remark}
+
+\section{Limits of the v0.1 model and next steps}
+
+\subsection{Claims and non-claims}
+
+This paper claims:
+\begin{enumerate}
+\item a mathematically coherent operator framework on $S^3\times\R$;
+\item a central residual object that distinguishes exact coherence from near-coherence;
+\item a spectral mechanism for temporal equilibration under the dissipative flow.
+\end{enumerate}
+
+This paper does not claim:
+\begin{enumerate}
+\item a full physical derivation of all RQM phenomena;
+\item that telecom, timing, or quantum platform behavior is fully derived from v0.1 alone;
+\item completed empirical validation across all current or future RQM products.
+\end{enumerate}
+
+\subsection{Next technical steps}
+
+The next model extensions are structural:
+\begin{enumerate}
+\item richer slice potentials $U(s)$ beyond quadratic localization;
+\item coupling terms between orientation and slice sectors;
+\item data-calibrated operator families and uncertainty quantification;
+\item discrete-time and control-theoretic formulations for deployed systems.
+\end{enumerate}
+
+\section{Conclusion}
+
+The v0.1 RQM Coherence Framework defines coherence as an operator-theoretic and variational object on $S^3\times\R$, with a residual that is measurable, optimizable, and falsifiable. In the quadratic local model, separated $\SU(2)$ orientation modes and Hermite-Gaussian slice modes yield a complete coherent basis; the dissipative flow then explains how high-energy sectors are suppressed over time. This moves coherence from descriptive language to a technical object that can support metrics, convergence diagnostics, and algorithm design across RQM Technologies systems.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

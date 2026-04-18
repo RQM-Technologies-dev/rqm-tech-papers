@@ -1,0 +1,203 @@
+{
+  "paper_id": "rcf-001-coherence-framework",
+  "notation": [
+    {
+      "symbol": "M",
+      "name": "coherence manifold",
+      "latex": "M",
+      "meaning": "Product manifold S^3 times R_s used as the state-space domain for the v0.1 coherence model.",
+      "domain": "differential geometry",
+      "type": "space",
+      "standard_or_project_specific": "variant",
+      "first_use": "Section 3",
+      "related_symbols": ["S^3", "R_s", "g", "s"]
+    },
+    {
+      "symbol": "S^3",
+      "name": "orientation manifold",
+      "latex": "S^3",
+      "meaning": "Three-sphere identified with SU(2), carrying orientation representation modes.",
+      "domain": "Lie groups / geometry",
+      "type": "space",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 3",
+      "related_symbols": ["SU(2)", "g", "Delta_{S^3}", "Y_{ell,alpha}"]
+    },
+    {
+      "symbol": "SU(2)",
+      "name": "special unitary group",
+      "latex": "\\mathrm{SU}(2)",
+      "meaning": "Lie group identified with S^3 and used to interpret orientation harmonics in representation terms.",
+      "domain": "Lie groups",
+      "type": "group",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 3",
+      "related_symbols": ["S^3", "Y_{ell,alpha}"]
+    },
+    {
+      "symbol": "s",
+      "name": "slice coordinate",
+      "latex": "s",
+      "meaning": "Real-valued slice/scale/spectral-height coordinate in the second factor of M.",
+      "domain": "spectral modeling",
+      "type": "scalar",
+      "standard_or_project_specific": "project_specific",
+      "first_use": "Section 3",
+      "related_symbols": ["R_s", "s_*", "chi_n(s)"]
+    },
+    {
+      "symbol": "\\mathcal{H}",
+      "name": "state Hilbert space",
+      "latex": "\\mathcal{H}",
+      "meaning": "Hilbert space L^2(S^3 x R) on which the coherence operator acts.",
+      "domain": "functional analysis",
+      "type": "space",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 3",
+      "related_symbols": ["Psi", "A", "R(Psi)"]
+    },
+    {
+      "symbol": "\\mathcal{A}",
+      "name": "governing coherence operator",
+      "latex": "\\mathcal{A}",
+      "meaning": "Self-adjoint operator -Delta_{S^3} - partial_s^2 + U(s) defining exact and near coherence.",
+      "domain": "spectral operator theory",
+      "type": "operator",
+      "standard_or_project_specific": "project_specific",
+      "first_use": "Section 4",
+      "related_symbols": ["Delta_{S^3}", "U(s)", "R(Psi)", "E_{ell,n}"]
+    },
+    {
+      "symbol": "\\Delta_{S^3}",
+      "name": "Laplace-Beltrami operator on S^3",
+      "latex": "\\Delta_{S^3}",
+      "meaning": "Intrinsic Laplace-Beltrami operator on the orientation manifold S^3.",
+      "domain": "spectral geometry",
+      "type": "operator",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 4",
+      "related_symbols": ["lambda_{ell}", "Y_{ell,alpha}", "A"]
+    },
+    {
+      "symbol": "U(s)",
+      "name": "slice potential",
+      "latex": "U(s)",
+      "meaning": "Confining potential in the slice coordinate; v0.1 uses the quadratic local model kappa (s-s_*)^2.",
+      "domain": "spectral modeling",
+      "type": "function",
+      "standard_or_project_specific": "project_specific",
+      "first_use": "Section 4",
+      "related_symbols": ["kappa", "s_*", "chi_n(s)", "mu_n"]
+    },
+    {
+      "symbol": "s_*",
+      "name": "distinguished slice",
+      "latex": "s_*",
+      "meaning": "Reference slice around which the quadratic restoring potential is centered.",
+      "domain": "spectral modeling",
+      "type": "constant",
+      "standard_or_project_specific": "project_specific",
+      "first_use": "Section 4",
+      "related_symbols": ["s", "U(s)", "chi_n(s)"]
+    },
+    {
+      "symbol": "\\kappa",
+      "name": "slice stiffness parameter",
+      "latex": "\\kappa",
+      "meaning": "Positive parameter controlling curvature of the quadratic slice potential and oscillator spacing.",
+      "domain": "spectral modeling",
+      "type": "constant",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 4",
+      "related_symbols": ["U(s)", "mu_n", "chi_n(s)"]
+    },
+    {
+      "symbol": "\\Psi",
+      "name": "state function",
+      "latex": "\\Psi",
+      "meaning": "State in L^2(S^3 x R), generally expanded in orientation-slice eigenmodes.",
+      "domain": "Hilbert-space methods",
+      "type": "function",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 2",
+      "related_symbols": ["A", "R(Psi)", "C~(Psi)", "C_axis(Psi)", "C_family(Psi)"]
+    },
+    {
+      "symbol": "Y_{ell,alpha}",
+      "name": "orientation harmonic mode",
+      "latex": "Y_{\\ell,\\alpha}",
+      "meaning": "Hyperspherical harmonic eigenfunction of -Delta_{S^3} with eigenvalue lambda_ell.",
+      "domain": "harmonic analysis on compact manifolds",
+      "type": "function",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 4",
+      "related_symbols": ["lambda_{ell}", "Psi_{ell,alpha,n}"]
+    },
+    {
+      "symbol": "\\chi_n",
+      "name": "slice mode",
+      "latex": "\\chi_n",
+      "meaning": "Hermite-Gaussian eigenfunction of the one-dimensional quadratic slice operator.",
+      "domain": "harmonic oscillator spectral theory",
+      "type": "function",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 4",
+      "related_symbols": ["mu_n", "kappa", "s_*", "Psi_{ell,alpha,n}"]
+    },
+    {
+      "symbol": "E_{ell,n}",
+      "name": "separated eigenvalue",
+      "latex": "E_{\\ell,n}",
+      "meaning": "Total eigenvalue lambda_ell plus mu_n for product mode Psi_{ell,alpha,n}.",
+      "domain": "spectral theory",
+      "type": "scalar",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 4",
+      "related_symbols": ["lambda_{ell}", "mu_n", "Psi_{ell,alpha,n}"]
+    },
+    {
+      "symbol": "\\mathcal{R}(\\Psi)",
+      "name": "residual coherence functional",
+      "latex": "\\mathcal{R}(\\Psi)",
+      "meaning": "Infimum over E of norm ||A Psi - E Psi||; central coherence residual in the framework.",
+      "domain": "variational analysis",
+      "type": "function",
+      "standard_or_project_specific": "project_specific",
+      "first_use": "Section 5",
+      "related_symbols": ["A", "Psi", "E_*(Psi)", "C~(Psi)"]
+    },
+    {
+      "symbol": "\\widetilde{\\mathcal{C}}(\\Psi)",
+      "name": "operator coherence score",
+      "latex": "\\widetilde{\\mathcal{C}}(\\Psi)",
+      "meaning": "Cosine-type alignment score between Psi and A Psi.",
+      "domain": "operator diagnostics",
+      "type": "function",
+      "standard_or_project_specific": "project_specific",
+      "first_use": "Section 5",
+      "related_symbols": ["R(Psi)", "A", "Psi"]
+    },
+    {
+      "symbol": "\\mathcal{C}_{\\mathrm{axis}}",
+      "name": "axis coherence",
+      "latex": "\\mathcal{C}_{\\mathrm{axis}}",
+      "meaning": "Squared normalized projection of Psi onto a distinguished mode Psi_*.",
+      "domain": "projection metrics",
+      "type": "function",
+      "standard_or_project_specific": "project_specific",
+      "first_use": "Section 5",
+      "related_symbols": ["Psi_*", "Psi", "C_family(Psi)"]
+    },
+    {
+      "symbol": "\\mathcal{C}_{\\mathrm{family}}",
+      "name": "family coherence",
+      "latex": "\\mathcal{C}_{\\mathrm{family}}",
+      "meaning": "Fraction of Psi energy in the family of slice-grounded orientation modes {Psi_{ell,alpha,0}}.",
+      "domain": "spectral concentration metrics",
+      "type": "function",
+      "standard_or_project_specific": "project_specific",
+      "first_use": "Section 5",
+      "related_symbols": ["Psi_{ell,alpha,0}", "Psi", "C_spec^I(Psi)"]
+    }
+  ]
+}
