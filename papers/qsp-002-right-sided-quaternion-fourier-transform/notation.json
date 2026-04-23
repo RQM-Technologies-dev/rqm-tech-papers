@@ -2,17 +2,81 @@
   "paper_id": "qsp-002-right-sided-quaternion-fourier-transform",
   "notation": [
     {
-      "symbol": "q",
-      "name": "quaternion signal sample",
-      "latex": "q",
-      "meaning": "Placeholder symbol for a quaternion-valued sample in draft notation.",
+      "symbol": "\\mathbb{H}",
+      "name": "quaternion algebra",
+      "latex": "\\mathbb{H}",
+      "meaning": "Quaternion signal codomain with basis {1, i, j, k}.",
       "domain": "quaternionic signal processing",
-      "type": "scalar",
+      "type": "set",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 2",
+      "related_symbols": ["x[n]", "X[k]"]
+    },
+    {
+      "symbol": "\\mathbb{C}_{\\mathbf{i}}",
+      "name": "commuting slice subalgebra",
+      "latex": "\\mathbb{C}_{\\mathbf{i}}",
+      "meaning": "Fixed-axis commuting slice {a+b i : a,b in R} used for kernel phase factors.",
+      "domain": "quaternionic signal processing",
+      "type": "set",
       "standard_or_project_specific": "project-specific",
-      "first_use": "Draft placeholder",
-      "related_symbols": [
-        "\\mathbb{H}"
-      ]
+      "first_use": "Section 3",
+      "related_symbols": ["\\mathbf{i}", "\\mathcal{F}_{\\mathbf{i}}"]
+    },
+    {
+      "symbol": "x[n]",
+      "name": "quaternion lane sample",
+      "latex": "x[n]",
+      "meaning": "Input quaternion-valued sequence sample at index n.",
+      "domain": "multichannel spectral analysis",
+      "type": "sequence",
+      "standard_or_project_specific": "project-specific",
+      "first_use": "Introduction",
+      "related_symbols": ["X[k]", "\\mathcal{F}_{\\mathbf{i}}"]
+    },
+    {
+      "symbol": "X[k]",
+      "name": "quaternion spectrum bin",
+      "latex": "X[k]",
+      "meaning": "Right-sided fixed-axis DQFT coefficient at frequency index k.",
+      "domain": "multichannel spectral analysis",
+      "type": "sequence",
+      "standard_or_project_specific": "project-specific",
+      "first_use": "Abstract",
+      "related_symbols": ["x[n]", "P[k]"]
+    },
+    {
+      "symbol": "\\mathcal{F}_{\\mathbf{i}}",
+      "name": "forward transform",
+      "latex": "\\mathcal{F}_{\\mathbf{i}}",
+      "meaning": "Fixed-axis right-sided discrete quaternion Fourier transform.",
+      "domain": "quaternionic signal processing",
+      "type": "operator",
+      "standard_or_project_specific": "project-specific",
+      "first_use": "Section 4",
+      "related_symbols": ["\\mathcal{F}_{\\mathbf{i}}^{-1}", "x[n]", "X[k]"]
+    },
+    {
+      "symbol": "\\mathcal{F}_{\\mathbf{i}}^{-1}",
+      "name": "inverse transform",
+      "latex": "\\mathcal{F}_{\\mathbf{i}}^{-1}",
+      "meaning": "Inverse of the fixed-axis right-sided discrete quaternion Fourier transform.",
+      "domain": "quaternionic signal processing",
+      "type": "operator",
+      "standard_or_project_specific": "project-specific",
+      "first_use": "Section 4",
+      "related_symbols": ["\\mathcal{F}_{\\mathbf{i}}", "x[n]", "X[k]"]
+    },
+    {
+      "symbol": "P[k]",
+      "name": "spectral power",
+      "latex": "P[k]",
+      "meaning": "Binwise power invariant defined as |X[k]|^2.",
+      "domain": "spectral invariants",
+      "type": "scalar sequence",
+      "standard_or_project_specific": "project-specific",
+      "first_use": "Section 7",
+      "related_symbols": ["X[k]"]
     }
   ]
 }

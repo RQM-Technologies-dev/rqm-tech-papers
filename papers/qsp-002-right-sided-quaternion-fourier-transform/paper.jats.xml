@@ -17,9 +17,19 @@
           <aff>RQM Technologies</aff>
         </contrib>
       </contrib-group>
-      <pub-date pub-type="epub"><year>2026</year></pub-date>
-      <abstract><p>This draft package prepares the structural publication surfaces for a right-sided quaternion Fourier analysis paper focused on multichannel spectral workflows. The current revision captures machine-readable metadata, claims placeholders, notation placeholders, and exchange files so the series can be indexed consistently while technical derivations are still in progress. It is explicitly a scaffolding release and does not present completed proofs, experimental measurements, or finalized publication details such as DOI, venue, or page range.</p></abstract>
-      <kwd-group kwd-group-type="author"><kwd>quaternion Fourier transform</kwd><kwd>multichannel spectra</kwd><kwd>right-sided operators</kwd><kwd>draft scaffold</kwd><kwd>signal processing</kwd></kwd-group>
+      <pub-date pub-type="epub"><year>2026</year><month>04</month><day>23</day></pub-date>
+      <abstract>
+        <p>This paper defines a stable right-sided discrete quaternion Fourier regime for multichannel spectral analysis. It adopts a fixed transform axis i with forward transform X[k]=sum x[n]exp(-i2πnk/N) and inverse x[n]=(1/N)sum X[k]exp(+i2πnk/N).</p>
+        <p>Core results are exact inversion, right-linearity over the commuting slice C_i, spectral power nonnegativity, and Parseval invariance. The scope is intentionally limited to a one-dimensional fixed-axis right-sided seam for quaternion-lifted lanes.</p>
+      </abstract>
+      <kwd-group kwd-group-type="author">
+        <kwd>quaternion Fourier transform</kwd>
+        <kwd>right-sided transform</kwd>
+        <kwd>multichannel spectra</kwd>
+        <kwd>quaternionic signal processing</kwd>
+        <kwd>Parseval identity</kwd>
+        <kwd>fixed-axis transform</kwd>
+      </kwd-group>
       <permissions>
         <license license-type="open-access" xlink:href="https://creativecommons.org/licenses/by/4.0/">
           <license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License (CC BY 4.0).</license-p>
@@ -27,5 +37,25 @@
       </permissions>
     </article-meta>
   </front>
-  <body><sec id="sec-introduction"><title>Draft scaffold notice</title><p>Layout scaffolding release; full paper text pending.</p></sec></body>
+  <body>
+    <sec id="sec-introduction">
+      <title>Introduction</title>
+      <p>This manuscript selects one reproducible quaternion Fourier convention for downstream multichannel processing: one-dimensional index, right-sided kernel placement, and fixed axis i.</p>
+    </sec>
+    <sec id="sec-definitions">
+      <title>Transform definitions</title>
+      <disp-formula id="eq-forward"><tex-math><![CDATA[X[k]=\sum_{n=0}^{N-1}x[n]\exp\left(-\mathbf{i}\frac{2\pi nk}{N}\right).]]></tex-math></disp-formula>
+      <disp-formula id="eq-inverse"><tex-math><![CDATA[x[n]=\frac{1}{N}\sum_{k=0}^{N-1}X[k]\exp\left(+\mathbf{i}\frac{2\pi nk}{N}\right).]]></tex-math></disp-formula>
+    </sec>
+    <sec id="sec-results">
+      <title>Core results</title>
+      <p>The paper proves right C_i-linearity, exact inversion, spectral power nonnegativity, and Parseval identity.</p>
+      <disp-formula id="eq-parseval"><tex-math><![CDATA[\sum_{n=0}^{N-1}|x[n]|^2=\frac{1}{N}\sum_{k=0}^{N-1}|X[k]|^2.]]></tex-math></disp-formula>
+      <p>These invariants extend lanewise to grouped multichannel quaternion captures.</p>
+    </sec>
+    <sec id="sec-limitations">
+      <title>Scope and limitations</title>
+      <p>The manuscript does not claim universal superiority over other quaternion Fourier variants and does not address two-sided or higher-dimensional transforms.</p>
+    </sec>
+  </body>
 </article>

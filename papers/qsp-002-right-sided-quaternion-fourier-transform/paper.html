@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>A Stable Right-Sided Quaternion Fourier Regime for Multichannel Spectral Analysis - RQM Technologies</title>
-  <meta name="description" content="Draft publication page scaffold for A Stable Right-Sided Quaternion Fourier Regime for Multichannel Spectral Analysis." />
+  <meta name="description" content="Defines a fixed-axis right-sided discrete quaternion Fourier transform with exact inversion and Parseval invariance for lanewise multichannel spectra." />
   <meta name="author" content="John G. Van Geem" />
-  <meta name="keywords" content="quaternion Fourier transform, multichannel spectra, right-sided operators, draft scaffold, signal processing" />
+  <meta name="keywords" content="quaternion Fourier transform, right-sided transform, multichannel spectra, quaternionic signal processing, Parseval identity, fixed-axis transform" />
   <meta name="citation_title" content="A Stable Right-Sided Quaternion Fourier Regime for Multichannel Spectral Analysis" />
   <meta name="citation_author" content="John G. Van Geem" />
   <meta name="citation_pdf_url" content="paper.pdf" />
@@ -27,7 +27,7 @@
         <div class="eyebrow">Series paper - browsable publication page</div>
         <h1>A Stable Right-Sided Quaternion Fourier Regime for Multichannel Spectral Analysis</h1>
         <p class="hero-copy">
-          Draft scaffold page. Full paper text is pending and will be synchronized from <code>main.tex</code>.
+          This draft defines a one-dimensional fixed-axis right-sided quaternion Fourier regime for lanewise multichannel spectral processing and proves inversion and energy invariants.
         </p>
         <p class="byline">
           John G. Van Geem<br />
@@ -37,7 +37,12 @@
 
       <div class="paper-panel">
         <strong>Abstract</strong>
-        <p>This draft package prepares the structural publication surfaces for a right-sided quaternion Fourier analysis paper focused on multichannel spectral workflows. The current revision captures machine-readable metadata, claims placeholders, notation placeholders, and exchange files so the series can be indexed consistently while technical derivations are still in progress. It is explicitly a scaffolding release and does not present completed proofs, experimental measurements, or finalized publication details such as DOI, venue, or page range.</p>
+        <p>
+          This paper defines a stable right-sided discrete quaternion Fourier regime for multichannel spectral analysis. Building on canonical quaternion lanes, it adopts a fixed transform axis <em>i</em> and uses
+          X[k] = &Sigma;<sub>n=0</sub><sup>N-1</sup> x[n] exp(-i2&pi;nk/N),
+          x[n] = (1/N)&Sigma;<sub>k=0</sub><sup>N-1</sup> X[k] exp(+i2&pi;nk/N).
+          The manuscript proves exact inversion, right-linearity over the commuting slice C<sub>i</sub>, spectral power nonnegativity, and Parseval invariance. Scope is intentionally limited to this fixed public convention.
+        </p>
       </div>
 
       <div class="paper-panel compact">
@@ -59,28 +64,44 @@
     </header>
 
     <main class="paper-main">
-      <h2 id="sec-1">1. Draft scaffold notice</h2>
-      <p>This publication page is intentionally limited to scaffolding content. Full sections, definitions, and results are not yet published.</p>
+      <h2 id="sec-intro">1. Introduction</h2>
+      <p>
+        Quaternion Fourier analysis admits multiple conventions (left-, right-, and two-sided variants). This paper declares one stable public seam: fixed axis i, right-sided kernel placement, one-dimensional index, and lanewise application to quaternion-lifted multichannel data.
+      </p>
 
-      <h2 id="sec-2">2. Planned structure</h2>
-      <blockquote class="paper-callout definition" id="def-1">
-        <strong>Definition placeholder.</strong>
-        Formal definitions will be added in a future revision.
+      <h2 id="sec-definition">2. Stable transform definition</h2>
+      <blockquote class="paper-callout definition" id="def-forward">
+        <strong>Forward transform.</strong>
+        X[k] = &Sigma;<sub>n=0</sub><sup>N-1</sup> x[n] exp(-i2&pi;nk/N), for k=0,...,N-1.
+      </blockquote>
+      <blockquote class="paper-callout definition" id="def-inverse">
+        <strong>Inverse transform.</strong>
+        x[n] = (1/N)&Sigma;<sub>k=0</sub><sup>N-1</sup> X[k] exp(+i2&pi;nk/N), for n=0,...,N-1.
       </blockquote>
 
-      <blockquote class="paper-callout theorem" id="thm-1">
-        <strong>Theorem placeholder.</strong>
-        Theorems and proofs are pending and are intentionally omitted from this scaffold revision.
-      </blockquote>
+      <h2 id="sec-results">3. Core algebraic results</h2>
+      <ul>
+        <li>Additivity and right C<sub>i</sub>-linearity over commuting slice scalars.</li>
+        <li>Exact inversion using root-of-unity orthogonality in C<sub>i</sub>.</li>
+        <li>Spectral power P[k] = |X[k]|<sup>2</sup> is real and nonnegative.</li>
+        <li>Parseval identity: &Sigma;<sub>n</sub>|x[n]|<sup>2</sup> = (1/N)&Sigma;<sub>k</sub>|X[k]|<sup>2</sup>.</li>
+        <li>Lanewise multichannel Parseval extension by summing lane identities.</li>
+      </ul>
+
+      <h2 id="sec-scope">4. Scope and non-claims</h2>
+      <p>
+        The paper does not claim universal superiority over other quaternion Fourier conventions and does not cover two-sided, higher-dimensional, or axis-adaptive transforms. It also defers cross-lane coherence/orientation metrics to the next paper.
+      </p>
 
       <h2 id="sec-references">References</h2>
       <ol class="references">
-        <li id="ref-1">Reference entries will be added once manuscript citations are finalized.</li>
+        <li id="ref-1">Todd A. Ell and Stephen J. Sangwine, “Quaternion Fourier transforms for analysis of two-dimensional linear time-invariant partial-differential systems,” 2007.</li>
+        <li id="ref-2">Jack B. Kuipers, <em>Quaternions and Rotation Sequences</em>, 1999.</li>
       </ol>
     </main>
 
     <footer class="paper-footer">
-      <p>Draft scaffold only. No publication DOI, venue metadata, or performance claims are assigned in this version.</p>
+      <p>Draft manuscript aligned to the source-of-truth main.tex spine (version 0.1.0 dated 2026-04-23).</p>
     </footer>
   </div>
 </body>

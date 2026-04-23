@@ -16,17 +16,21 @@
       "corresponding": true
     }
   ],
-  "abstract": "This draft package prepares the structural publication surfaces for a right-sided quaternion Fourier analysis paper focused on multichannel spectral workflows. The current revision captures machine-readable metadata, claims placeholders, notation placeholders, and exchange files so the series can be indexed consistently while technical derivations are still in progress. It is explicitly a scaffolding release and does not present completed proofs, experimental measurements, or finalized publication details such as DOI, venue, or page range.",
+  "abstract": "This paper defines a stable right-sided discrete quaternion Fourier regime for multichannel spectral analysis. Building on a canonical quaternion lane representation of paired complex channels, it treats each lifted lane as a quaternion-valued sequence x[n] in H and adopts a fixed transform axis i. The forward transform is X[k]=sum_{n=0}^{N-1} x[n] exp(-i 2πnk/N), with inverse x[n]=(1/N)sum_{k=0}^{N-1} X[k] exp(+i 2πnk/N). The paper proves exact inversion, right-linearity over the commuting slice C_i, nonnegativity of spectral power, and Parseval invariance. The scope is intentionally limited to a one-dimensional fixed-axis right-sided regime intended as a deterministic spectral seam for quaternion-lifted multichannel processing.",
   "keywords": [
     "quaternion Fourier transform",
+    "right-sided transform",
     "multichannel spectra",
-    "right-sided operators",
-    "draft scaffold",
-    "signal processing"
+    "quaternionic signal processing",
+    "spectral invariants",
+    "Parseval identity",
+    "fixed-axis transform"
   ],
   "series": "RQM Quaternionic Signal Processing Series",
   "series_number": 2,
-  "depends_on": [],
+  "depends_on": [
+    "qsp-001-canonical-quaternion-lift"
+  ],
   "canonical_url": null,
   "pdf_url": null,
   "html_url": null,
@@ -45,5 +49,5 @@
   ],
   "license": "CC-BY-4.0",
   "funding": [],
-  "notes": "Draft scaffold package for the RQM Quaternionic Signal Processing Series. Layout and companion files are in place; full manuscript content is pending."
+  "notes": "Upgraded from scaffold-only package to a full manuscript draft with formal transform definition, inversion, right-linearity, spectral power nonnegativity, and Parseval invariants for lanewise multichannel extension."
 }
