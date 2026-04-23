@@ -1,29 +1,31 @@
 cff-version: 1.2.0
-message: "If you use this draft package, please cite it as below."
+message: "If you use this paper package, please cite it as below."
 type: article
-title: "Canonical Quaternion Lifting for Multichannel RF and Sensing Signals"
+title: "Quaternion Lifting for Multichannel RF and Sensing Signals: A Canonical Lane Representation for Quaternionic Signal Processing"
 version: "0.1.0"
 date-released: "2026-04-23"
-abstract: "This draft paper defines a canonical quaternion lifting scaffold for multichannel RF and sensing signals, with an emphasis on publication-safe package structure rather than finalized technical claims. It outlines how aligned channel tuples may be lifted into quaternion-valued representations, specifies placeholder conventions for orientation and sign choices, and records interoperability surfaces needed for reproducible downstream indexing. The package is intentionally layout-only at this stage and does not report benchmark results, empirical performance figures, or publication metadata beyond draft status."
+abstract: "This paper defines a canonical quaternion lifting procedure for multichannel RF and sensing signals whose external intake remains standard complex-channel data. Given two complex channels z1[n]=a[n]+ib[n] and z2[n]=c[n]+id[n], the lift forms a quaternion lane q[n]=z1[n]+z2[n]j = a[n]+b[n]i+c[n]j+d[n]k. For larger captures, channels are grouped deterministically into quaternion lanes Q[g,n] in H. The contribution is representational: deterministic grouping, exact recoverability, and energy-preserving representation for downstream quaternionic signal processing."
 authors:
   - given-names: "John G."
     family-names: "Van Geem"
     affiliation: "RQM Technologies"
+    orcid: "https://orcid.org/0009-0002-4003-8452"
 repository-code: "https://github.com/RQM-Technologies-dev/rqm-tech-papers"
 license: CC-BY-4.0
 keywords:
-  - quaternion signal processing
+  - quaternion lift
   - multichannel RF
-  - sensor fusion
-  - draft scaffold
-  - canonical lifting
+  - sensing signals
+  - quaternionic signal processing
+  - MIMO
+  - dual polarization
 preferred-citation:
   type: article
-  title: "Canonical Quaternion Lifting for Multichannel RF and Sensing Signals"
+  title: "Quaternion Lifting for Multichannel RF and Sensing Signals: A Canonical Lane Representation for Quaternionic Signal Processing"
   authors:
     - given-names: "John G."
       family-names: "Van Geem"
       affiliation: "RQM Technologies"
   year: 2026
   version: "0.1.0"
-  notes: "Draft scaffold package in rqm-tech-papers; no DOI assigned."
+  notes: "Draft representation theorem paper in rqm-tech-papers; no DOI assigned."
