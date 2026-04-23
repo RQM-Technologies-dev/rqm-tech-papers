@@ -1,3 +1,7 @@
+% Source-of-truth draft for qsp-001-canonical-quaternion-lift.
+% Keep the title, abstract, and core claims synchronized with paper.html,
+% metadata.json, claims.json, and paper.jats.xml.
+
 \documentclass[11pt]{article}
 
 \usepackage[margin=1in]{geometry}
@@ -5,28 +9,418 @@
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \usepackage{microtype}
-\usepackage{amsmath,amssymb,amsthm}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
 
-\title{\textbf{Canonical Quaternion Lifting for Multichannel RF and Sensing Signals}}
-\author{John G. Van Geem\\RQM Technologies}
-\date{Version 0.1.0 \ Draft dated 2026-04-23}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{corollary}[definition]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[definition]{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\ii}{\mathbf{i}}
+\newcommand{\jj}{\mathbf{j}}
+\newcommand{\kk}{\mathbf{k}}
+\newcommand{\lift}{\mathcal{L}}
+\newcommand{\unpack}{\mathcal{U}}
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+
+\title{\textbf{Quaternion Lifting for Multichannel RF and Sensing Signals}\\
+A Canonical Lane Representation for Quaternionic Signal Processing}
+
+\author{John G. Van Geem\\
+RQM Technologies\\
+orcid: 0009-0002-4003-8452}
+
+\date{Version 0.1.0 \\ Draft dated 2026-04-23}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-This draft paper defines a canonical quaternion lifting scaffold for multichannel RF and sensing signals, with an emphasis on publication-safe package structure rather than finalized technical claims. It outlines how aligned channel tuples may be lifted into quaternion-valued representations, specifies placeholder conventions for orientation and sign choices, and records interoperability surfaces needed for reproducible downstream indexing. The package is intentionally layout-only at this stage and does not report benchmark results, empirical performance figures, or publication metadata beyond draft status.
+This paper defines a canonical quaternion lifting procedure for multichannel RF and sensing signals whose external intake remains standard complex-channel data. Given two complex channels
+\[
+z_1[n]=a[n]+ib[n], \qquad z_2[n]=c[n]+id[n],
+\]
+the lift forms a quaternion lane
+\[
+q[n]=z_1[n]+z_2[n]\mathbf{j}
+     = a[n]+b[n]\mathbf{i}+c[n]\mathbf{j}+d[n]\mathbf{k}.
+\]
+For larger captures, channels are grouped deterministically into quaternion lanes \(Q[g,n]\in\HH\). The paper formalizes this lift, its inverse unpacking map, odd-channel handling, and the representation-level invariants that make it suitable as a canonical internal form. The contribution is deliberately representational rather than speculative: instead of flattening multichannel structure too early, the lift preserves paired phase-bearing relations inside a single quaternion object while remaining exactly recoverable back to the grouped complex channels. This makes the lifted form a stable front end for later spectral, coherence, and orientation-aware processing. The paper does not claim a new sensing physics, a universal hardware advantage, or a standalone performance gain beyond establishing a deterministic, information-preserving representation layer for downstream quaternionic signal processing.
 \end{abstract}
 
-\noindent\textbf{Authoring note:} This file is the source of truth for this draft paper package.
+\noindent\textbf{Keywords:} quaternion lift; multichannel RF; sensing signals; quaternionic signal processing; multichannel representation; MIMO; dual polarization; canonical signal representation
 
-\section{Draft scaffold notice}
-This manuscript is intentionally in scaffold form only.
+\section{Introduction}
 
-\section{Planned content}
-Full technical sections will be authored in a future revision.
+Multichannel RF and sensing systems are commonly observed through related complex channels rather than isolated scalar streams. Dual-polarized receivers, multi-antenna baseband captures, phased-array and radar-adjacent sensing pipelines, and archived multichannel replay data all produce signal families whose components are meaningfully coupled at the time of observation. Standard processing pipelines can certainly operate on such channels directly, but they often summarize or separate them too early for later structure-aware analysis.
+
+This paper introduces a canonical quaternion lifting procedure that groups paired complex channels into deterministic quaternion lanes. The lift is deliberately modest in scope. It does not replace the standard external contract of complex samples, and it does not by itself claim a downstream performance advantage. Its purpose is representational: to define a lossless internal form that preserves paired phase-bearing structure before later quaternionic processing stages.
+
+The key design choice is simple. For a pair of complex channels
+\[
+z_1[n]=a[n]+ib[n],
+\qquad
+z_2[n]=c[n]+id[n],
+\]
+the internal lane is
+\[
+q[n]=z_1[n]+z_2[n]\jj
+     = a[n]+b[n]\ii+c[n]\jj+d[n]\kk.
+\]
+Thus one quaternion lane stores exactly four real degrees of freedom, corresponding to two complex input channels at the same sample index. For larger captures, the same idea is applied deterministically across channel pairs.
+
+\medskip
+\noindent\textbf{Contributions.}
+This paper makes three concrete contributions:
+\begin{enumerate}[label=(\arabic*)]
+    \item it defines a canonical quaternion lift from ordered complex-channel captures to grouped quaternion lanes;
+    \item it proves exact recoverability and determinism of the lift under fixed channel ordering; and
+    \item it establishes basic representation invariants, including per-lane energy additivity and capture-wide energy preservation.
+\end{enumerate}
+
+The role of this paper in the series is foundational. It addresses the representation layer only. Later papers can then build on this front end to define a stable quaternionic spectral transform regime and, after that, coherence and orientation metrics on the lifted data. The present paper is therefore best read as a front-end theorem paper rather than as a transform paper or a benchmarking paper.
+
+\section{Scope and external signal model}
+
+We represent an ordered multichannel capture by
+\[
+Z=(z_c[n])_{0\le c \le C-1,\; 0\le n \le N-1},
+\qquad
+z_c[n]\in\C.
+\]
+Here \(c\) indexes channels and \(n\) indexes sample position. The number of channels is \(C\), and the per-channel sample count is \(N\).
+
+The external intake contract remains standard: callers provide complex-valued channels, not quaternions. The purpose of the lift is to define the canonical \emph{internal} representation used after validation and ordering are already fixed.
+
+\begin{remark}
+The ordered channel list is part of the signal contract. The lift defined in this paper is deterministic relative to that order. This paper does not claim that the channel-pairing rule is universally optimal for every downstream task; it claims only that the rule is fixed, lossless, and reproducible.
+\end{remark}
+
+\begin{remark}
+The symbol \(i\) in expressions such as \(z_c[n]=x_c[n]+iy_c[n]\) denotes the ordinary complex imaginary unit in the external channel representation. The bold symbols \(\ii,\jj,\kk\) denote quaternion basis units in the internal lifted representation.
+\end{remark}
+
+\section{Quaternion preliminaries}
+
+\begin{definition}
+The quaternion algebra \(\HH\) is the real associative algebra with basis
+\[
+\set{1,\ii,\jj,\kk}
+\]
+and multiplication rules
+\[
+\ii^2=\jj^2=\kk^2=\ii\jj\kk=-1.
+\]
+Every quaternion has the form
+\[
+q=q_0+q_1\ii+q_2\jj+q_3\kk,
+\qquad q_0,q_1,q_2,q_3\in\R.
+\]
+\end{definition}
+
+The quaternion conjugate and norm are defined by
+\[
+q^*=q_0-q_1\ii-q_2\jj-q_3\kk,
+\qquad
+\abs{q}^2=qq^*=q_0^2+q_1^2+q_2^2+q_3^2.
+\]
+
+\begin{remark}
+Only the basic coordinate structure of \(\HH\) is needed in this paper. No spectral transform convention, left/right module convention, or quaternionic filtering rule is required yet. Those belong to later layers in the series.
+\end{remark}
+
+\section{Canonical quaternion lift}
+
+\subsection{Two-channel lift}
+
+\begin{definition}[Pair lift]
+Let
+\[
+z_1[n]=a[n]+ib[n],
+\qquad
+z_2[n]=c[n]+id[n]
+\]
+be two complex channels. Their quaternion lift is the quaternion-valued sequence
+\[
+q[n]=z_1[n]+z_2[n]\jj
+     = a[n]+b[n]\ii+c[n]\jj+d[n]\kk.
+\]
+\end{definition}
+
+This construction simply stores the real and imaginary parts of the two complex channels as the four real coordinates of a quaternion. Nothing is discarded at the representation level.
+
+\subsection{Deterministic grouped lift}
+
+For a general ordered capture with \(C\) channels, define
+\[
+G=\left\lceil \frac{C}{2}\right\rceil.
+\]
+The integer \(G\) is the number of quaternion lanes.
+
+\begin{definition}[Canonical grouped lift]
+Let \(Z=(z_c[n])\) be an ordered complex-channel capture. For each lane index \(g=0,\dots,G-1\), define
+\[
+c_0(g)=2g,
+\qquad
+c_1(g)=2g+1.
+\]
+The canonical grouped lift \(\lift(Z)\) is the quaternion-lane array \(Q[g,n]\in\HH\) given by
+\[
+Q[g,n]=
+\begin{cases}
+z_{c_0(g)}[n]+z_{c_1(g)}[n]\jj, & c_1(g)<C,\\[4pt]
+z_{c_0(g)}[n], & c_1(g)\ge C.
+\end{cases}
+\]
+\end{definition}
+
+Equivalently, if
+\[
+Q[g,n]=q_0[g,n]+q_1[g,n]\ii+q_2[g,n]\jj+q_3[g,n]\kk,
+\]
+then for a full pair one has
+\[
+q_0[g,n]=\Re z_{2g}[n],\quad
+q_1[g,n]=\Im z_{2g}[n],\quad
+q_2[g,n]=\Re z_{2g+1}[n],\quad
+q_3[g,n]=\Im z_{2g+1}[n].
+\]
+If the final lane corresponds to an odd tail channel, then
+\[
+q_2[g,n]=q_3[g,n]=0.
+\]
+
+\begin{remark}
+The grouped lift is canonical in the operational sense that it uses a fixed, declared pairing rule. It is not an adaptive or learned pairing rule, and this paper does not claim that the deterministic grouping is optimal for every downstream inference task.
+\end{remark}
+
+\section{Recoverability and representation invariants}
+
+\begin{proposition}[Exact recoverability of one lifted pair]
+Let
+\[
+q[n]=q_0[n]+q_1[n]\ii+q_2[n]\jj+q_3[n]\kk
+\]
+be the quaternion lift of a pair of complex channels. Then the original pair is recovered uniquely by
+\[
+z_1[n]=q_0[n]+iq_1[n],
+\qquad
+z_2[n]=q_2[n]+iq_3[n].
+\]
+\end{proposition}
+
+\begin{proof}
+By construction, the pair lift stores the real and imaginary parts of \(z_1[n]\) and \(z_2[n]\) directly as the four real coordinates of \(q[n]\). Reading back those four coordinates therefore reconstructs both complex channels uniquely.
+\end{proof}
+
+\begin{definition}[Inverse unpacking map]
+Let \(Q=\lift(Z)\) be a grouped quaternion-lane array. Define the inverse unpacking map \(\unpack\) channelwise by
+\[
+\unpack(Q)_{2g}[n]=q_0[g,n]+iq_1[g,n],
+\]
+and, whenever \(2g+1<C\),
+\[
+\unpack(Q)_{2g+1}[n]=q_2[g,n]+iq_3[g,n].
+\]
+For an odd tail channel, the second output channel of the final lane is omitted.
+\end{definition}
+
+\begin{proposition}[Exact recoverability of ordered captures]
+For every ordered complex-channel capture \(Z\),
+\[
+\unpack(\lift(Z))=Z.
+\]
+Hence the canonical grouped lift is injective.
+\end{proposition}
+
+\begin{proof}
+Each lane is built from either one complex channel or one ordered channel pair. By the previous proposition, each full pair is recovered exactly from its quaternion coordinates. In the odd-tail case, the final lane stores only the single remaining complex channel in its scalar and \(\ii\)-components, so that channel is recovered exactly as well. Applying the inverse lane-by-lane reconstructs all channels and samples, yielding \(\unpack(\lift(Z))=Z\).
+\end{proof}
+
+\begin{proposition}[Determinism of the canonical grouped lift]
+For fixed ordered input \(Z\), the grouped lift \(\lift(Z)\) is unique.
+\end{proposition}
+
+\begin{proof}
+The grouped lift is specified by a fixed rule: channel \(2g\) and channel \(2g+1\) form lane \(g\), with the final odd channel, if present, occupying the last lane by itself. No branch of the definition depends on statistics, optimization, or learned parameters. Therefore the output is uniquely determined by the ordered input \(Z\).
+\end{proof}
+
+\begin{proposition}[Energy additivity for one full lane]
+If
+\[
+q[n]=z_1[n]+z_2[n]\jj,
+\]
+then
+\[
+\abs{q[n]}^2=\abs{z_1[n]}^2+\abs{z_2[n]}^2.
+\]
+\end{proposition}
+
+\begin{proof}
+Write
+\[
+z_1[n]=a[n]+ib[n],
+\qquad
+z_2[n]=c[n]+id[n].
+\]
+Then
+\[
+q[n]=a[n]+b[n]\ii+c[n]\jj+d[n]\kk,
+\]
+so
+\[
+\abs{q[n]}^2=a[n]^2+b[n]^2+c[n]^2+d[n]^2.
+\]
+But
+\[
+\abs{z_1[n]}^2=a[n]^2+b[n]^2,
+\qquad
+\abs{z_2[n]}^2=c[n]^2+d[n]^2,
+\]
+and the claimed identity follows.
+\end{proof}
+
+\begin{corollary}[Capture-wide energy preservation]
+Let \(Z\) be an ordered complex-channel capture and \(Q=\lift(Z)\) its grouped lift. Then
+\[
+\sum_{g=0}^{G-1}\sum_{n=0}^{N-1}\abs{Q[g,n]}^2
+=
+\sum_{c=0}^{C-1}\sum_{n=0}^{N-1}\abs{z_c[n]}^2.
+\]
+In the odd-tail case, the missing second channel contributes zero in the final lane.
+\end{corollary}
+
+\begin{proof}
+For every full lane the previous proposition gives exact additivity of the two channel energies. For an odd tail channel, the lifted lane equals that single complex channel embedded into the scalar and \(\ii\)-components, so the lane norm equals the channel norm. Summing over lanes and samples yields the result.
+\end{proof}
+
+\begin{theorem}[Main representation theorem]
+The canonical grouped lift
+\[
+\lift:\C^{C\times N}\to\HH^{G\times N}
+\]
+defines a deterministic, lossless internal representation of ordered multichannel complex captures. Specifically, for every ordered input \(Z\), the lifted output \(\lift(Z)\) is uniquely determined, exactly recoverable by \(\unpack\), and preserves total channel energy under grouped-lane aggregation.
+\end{theorem}
+
+\begin{proof}
+Determinism follows from the fixed grouping rule. Exact recoverability follows from the explicit inverse unpacking map. Capture-wide energy preservation follows from the corollary above.
+\end{proof}
+
+\section{Why the lift matters for RF and sensing}
+
+The lift is useful because many real sensing systems already produce channel relationships in pairs or small grouped sets, even when those relationships are recorded as separate complex streams. The quaternion lane is therefore not an arbitrary algebraic rewrite; it is a compact carrier for four real degrees of freedom that often arrive together in practice.
+
+Representative examples include:
+\begin{enumerate}[label=(\arabic*)]
+    \item \textbf{dual-polarized reception,} where two complex channels represent coordinated polarization components;
+    \item \textbf{paired MIMO streams,} where two related complex baseband channels are processed jointly;
+    \item \textbf{phased-array or radar-adjacent sensing,} where ordered channel pairs can be preserved before later reduction; and
+    \item \textbf{archived multichannel replay data,} where a deterministic internal representation improves reproducibility across offline analysis runs.
+\end{enumerate}
+
+The representation-level value of the lift is therefore not a mysterious quaternionic effect. It is the practical fact that two complex channels can be stored in one quaternion lane without losing information, while retaining a form suited to later quaternionic processing.
+
+\begin{remark}
+This paper does not claim that every multichannel acquisition should be paired in exactly one way for every downstream task. The claim is narrower: once an ordered grouping convention is declared, the quaternion lift preserves that grouped structure exactly and reproducibly.
+\end{remark}
+
+\section{Downstream role in quaternionic signal processing}
+
+The lift defined here is intended as the front end of a larger quaternionic processing stack. Once the data have been lifted into grouped quaternion lanes, later stages may define:
+\begin{enumerate}[label=(\alph*)]
+    \item quaternionic spectral transforms on each lane;
+    \item cross-lane coherence metrics in quaternion spectral space; and
+    \item orientation or drift metrics on normalized quaternion states.
+\end{enumerate}
+
+Those later layers are important, but they depend on having a stable internal representation first. The present paper therefore stops before the transform and metric levels. Its contribution is to make the representation layer precise.
+
+A second practical point follows from this separation: external callers do not need to provide quaternion objects directly. The external contract remains ordinary complex-channel data. Quaternion structure appears only after validation and canonical internal lift.
+
+\section{Scope, limitations, and non-claims}
+
+This paper is intentionally limited. In particular, it makes the following non-claims explicit:
+\begin{enumerate}[label=(\arabic*)]
+    \item It does \emph{not} claim a new physics of RF, sensing, or propagation.
+    \item It does \emph{not} claim that quaternion lifting alone guarantees improved downstream task performance.
+    \item It does \emph{not} claim that the deterministic pairing rule is universally optimal for all applications.
+    \item It does \emph{not} require external users to provide quaternion-valued inputs.
+    \item It does \emph{not} yet define the full quaternion Fourier transform regime.
+    \item It does \emph{not} yet define coherence, drift, or orientation metrics in full generality.
+    \item It does \emph{not} introduce vendor-specific runtime logic or hardware-specific assumptions.
+\end{enumerate}
+
+The paper should therefore be read as a canonical representation paper. It establishes the front-end internal form on which later spectral and diagnostic papers can build.
+
+\section{Conclusion}
+
+This paper defined a canonical quaternion lift for ordered multichannel RF and sensing signals. The lift preserves the ordinary external complex-channel contract while providing a deterministic internal lane representation in \(\HH\). Its main formal properties are exact recoverability, determinism under fixed channel ordering, and energy preservation under grouped-lane aggregation.
+
+These results are modest by design. The paper does not yet analyze the lifted signal in the frequency domain or define coherence and orientation metrics on top of it. Instead, it establishes the representation layer needed before those later steps can be stated cleanly. In that sense, quaternion lifting is not the whole quaternionic signal-processing story; it is the stable front end that allows the rest of that story to be written precisely.
+
+\appendix
+
+\section{Notation used repeatedly}
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Symbol & Meaning & Role \\
+\midrule
+\(C\) & number of complex input channels & external capture size \\
+\(N\) & samples per channel & temporal length \\
+\(z_c[n]\) & complex sample in channel \(c\) at index \(n\) & external signal model \\
+\(G=\lceil C/2\rceil\) & number of quaternion lanes & internal grouped size \\
+\(Q[g,n]\) & quaternion sample in lane \(g\) at index \(n\) & lifted representation \\
+\(\ii,\jj,\kk\) & quaternion basis units & internal quaternion coordinates \\
+\(\lift\) & canonical grouped lift & forward representation map \\
+\(\unpack\) & inverse unpacking map & exact reconstruction \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Worked grouping examples}
+
+\subsection*{Example 1: two-channel capture}
+
+For two complex channels \(z_0[n]\) and \(z_1[n]\), there is one quaternion lane:
+\[
+Q[0,n]=z_0[n]+z_1[n]\jj.
+\]
+
+\subsection*{Example 2: four-channel capture}
+
+For four ordered channels \(z_0[n],z_1[n],z_2[n],z_3[n]\), the grouped lift is
+\[
+Q[0,n]=z_0[n]+z_1[n]\jj,
+\qquad
+Q[1,n]=z_2[n]+z_3[n]\jj.
+\]
+
+\subsection*{Example 3: odd channel count}
+
+For five ordered channels \(z_0[n],\dots,z_4[n]\), one obtains
+\[
+Q[0,n]=z_0[n]+z_1[n]\jj,
+\qquad
+Q[1,n]=z_2[n]+z_3[n]\jj,
+\qquad
+Q[2,n]=z_4[n].
+\]
+The final lane stores only the single remaining complex channel, with zero \(\jj\)- and \(\kk\)-components.
 
 \bibliographystyle{plainnat}
 \bibliography{references}

@@ -2,15 +2,95 @@
   "paper_id": "qsp-001-canonical-quaternion-lift",
   "claims": [
     {
-      "claim_id": "draft-scope-1",
-      "label": "Draft scope note",
-      "type": "statement",
-      "statement": "This release is a layout scaffold and does not present finalized technical claims.",
+      "claim_id": "def-1",
+      "label": "Definition (Pair lift)",
+      "type": "definition",
+      "statement": "Given two complex channels z_1[n]=a[n]+ib[n] and z_2[n]=c[n]+id[n], the pair lift is q[n]=z_1[n]+z_2[n]j = a[n]+b[n]i+c[n]j+d[n]k.",
       "status": "informal",
       "proof_sketch": null,
       "dependencies": [],
-      "evidence_location": "README.md / paper.html draft notice",
-      "notes": "Placeholder until full manuscript claims are available."
+      "evidence_location": "Section 4.1",
+      "notes": "Defines the basic two-channel quaternion lane construction."
+    },
+    {
+      "claim_id": "def-2",
+      "label": "Definition (Canonical grouped lift)",
+      "type": "definition",
+      "statement": "For ordered channels z_c[n], the canonical grouped lift forms lane g from channels (2g,2g+1) as Q[g,n]=z_{2g}[n]+z_{2g+1}[n]j when both exist, and uses Q[g,n]=z_{2g}[n] for an odd tail channel.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": [
+        "def-1"
+      ],
+      "evidence_location": "Section 4.2",
+      "notes": "Fixes deterministic pairing and odd-channel handling."
+    },
+    {
+      "claim_id": "prop-3",
+      "label": "Proposition (Exact recoverability of ordered captures)",
+      "type": "proposition",
+      "statement": "For every ordered complex-channel capture Z, unpack(lift(Z)) = Z, so the canonical grouped lift is injective and lossless at the representation layer.",
+      "status": "proved",
+      "proof_sketch": "Recover each full lane by reading quaternion coordinates into two complex channels; in the odd-tail case recover the single channel from scalar and i components.",
+      "dependencies": [
+        "def-2"
+      ],
+      "evidence_location": "Section 5",
+      "notes": "Formal representation-level exactness guarantee."
+    },
+    {
+      "claim_id": "prop-4",
+      "label": "Proposition (Determinism of canonical grouped lift)",
+      "type": "proposition",
+      "statement": "For fixed ordered input Z, the grouped lift lift(Z) is unique because channel pairing is fully specified by a fixed index rule and does not depend on optimization, statistics, or learned parameters.",
+      "status": "proved",
+      "proof_sketch": "The mapping from channel indices to lane indices is fixed and total.",
+      "dependencies": [
+        "def-2"
+      ],
+      "evidence_location": "Section 5",
+      "notes": "Reproducibility guarantee under fixed channel ordering."
+    },
+    {
+      "claim_id": "prop-5",
+      "label": "Proposition (Energy additivity per full lane)",
+      "type": "proposition",
+      "statement": "If q[n]=z_1[n]+z_2[n]j, then |q[n]|^2 = |z_1[n]|^2 + |z_2[n]|^2.",
+      "status": "proved",
+      "proof_sketch": "Expand q[n] into four real coordinates and compare squared norms term-by-term.",
+      "dependencies": [
+        "def-1"
+      ],
+      "evidence_location": "Section 5",
+      "notes": "Per-lane invariant used for capture-wide preservation."
+    },
+    {
+      "claim_id": "cor-6",
+      "label": "Corollary (Capture-wide energy preservation)",
+      "type": "corollary",
+      "statement": "Summed over all lanes and sample indices, the total lifted quaternion energy equals the original summed complex-channel energy, with zero contribution for a missing odd-tail partner channel.",
+      "status": "proved",
+      "proof_sketch": "Apply per-lane additivity and sum over all lanes and indices.",
+      "dependencies": [
+        "prop-5"
+      ],
+      "evidence_location": "Section 5",
+      "notes": "Global invariant under canonical grouped lifting."
+    },
+    {
+      "claim_id": "thm-7",
+      "label": "Theorem (Main representation theorem)",
+      "type": "theorem",
+      "statement": "The canonical grouped lift from C^{C×N} to H^{G×N} defines a deterministic, lossless internal representation of ordered multichannel complex captures with exact recovery and capture-wide energy preservation.",
+      "status": "proved",
+      "proof_sketch": "Combine determinism, exact recoverability, and energy-preservation results established in prior propositions and corollary.",
+      "dependencies": [
+        "prop-3",
+        "prop-4",
+        "cor-6"
+      ],
+      "evidence_location": "Section 5",
+      "notes": "Core theorem of the paper's representation layer."
     }
   ]
 }

@@ -12,9 +12,9 @@ This folder is a semantic paper package for:
 
 ## Package status
 
-- Current status: **draft scaffold**
-- This package intentionally includes placeholder publication surfaces only.
-- Full technical sections and validated results will be added in a later revision.
+- Current status: **draft manuscript**
+- This package includes synchronized LaTeX, metadata, claims, and JATS draft content for the representation-layer theorem paper.
+- Additional transform-layer and metric-layer papers will extend this foundation in later revisions.
 
 ## Local build
 
