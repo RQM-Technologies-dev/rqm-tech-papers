@@ -15,7 +15,7 @@
       "corresponding": true
     }
   ],
-  "abstract": "This paper assembles a conservative mathematical foundation for the use of quaternions in single-qubit quantum computing. The goal is not to replace standard quantum mechanics, but to organize familiar structures in a way that makes their geometry more explicit. We distinguish carefully between normalized state vectors in C^2 ≅ R^4, the unit sphere S^3 inside that space, pure states modulo global phase, the projective space CP^1 ≅ S^2, the single-qubit gate group U(2), and SU(2) representatives obtained after removing global phase. Within that framework, we exhibit an explicit isomorphism between the unit quaternions and SU(2), explain why unit quaternions are therefore a natural model for single-qubit gates modulo global phase, and show how quaternion multiplication exposes the axis-angle and composition structure of rotations. Standard facts are separated from the organizational choices adopted in the RQM Technologies series. The paper is restricted to single-qubit structure and makes no claim about new physics, multi-qubit quaternionic state evolution, or computational advantage.",
+  "abstract": "This paper assembles a conservative mathematical foundation for the use of quaternions in single-qubit quantum computing. The goal is not to replace standard quantum mechanics, but to organize familiar structures in a way that makes their geometry more explicit. We distinguish carefully between normalized state vectors in C^2 \u2245 R^4, the unit sphere S^3 inside that space, pure states modulo global phase, the projective space CP^1 \u2245 S^2, the single-qubit gate group U(2), and SU(2) representatives obtained after removing global phase. Within that framework, we exhibit an explicit isomorphism between the unit quaternions and SU(2), explain why unit quaternions are therefore a natural model for single-qubit gates modulo global phase, and show how quaternion multiplication exposes the axis-angle and composition structure of rotations. Standard facts are separated from the organizational choices adopted in the RQM Technologies series. The paper is restricted to single-qubit structure and makes no claim about new physics, multi-qubit quaternionic state evolution, or computational advantage.",
   "keywords": [
     "qubit geometry",
     "spinors",
@@ -53,5 +53,6 @@
     "artifacts/code/README.md"
   ],
   "license": "CC-BY-4.0",
-  "notes": "Draft foundation paper for the series. This metadata mirrors the current authored source and remains explicitly limited to standard single-qubit mathematics plus project-specific framing choices."
+  "notes": "Draft foundation paper for the series. This metadata mirrors the current authored source and remains explicitly limited to standard single-qubit mathematics plus project-specific framing choices.",
+  "domain": "quantum_computing"
 }

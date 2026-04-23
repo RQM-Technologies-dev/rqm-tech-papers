@@ -48,5 +48,6 @@
     "artifacts/code/README.md"
   ],
   "license": "CC-BY-4.0",
-  "notes": "Conceptual prequel paper introducing the quaternionic wavefunction as the grouping of a two-component complex spinor into one quaternion. Intended to precede qqc-001-foundations conceptually without making new-physics claims."
+  "notes": "Conceptual prequel paper introducing the quaternionic wavefunction as the grouping of a two-component complex spinor into one quaternion. Intended to precede qqc-001-foundations conceptually without making new-physics claims.",
+  "domain": "quantum_computing"
 }

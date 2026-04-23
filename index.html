@@ -24,6 +24,28 @@
     </header>
 
     <section class="section">
+      <div class="paper-domain-toggle" role="tablist" aria-label="Publication page">
+        <button
+          id="toggle-quantum-computing"
+          class="paper-domain-toggle-button is-active"
+          type="button"
+          data-domain="quantum_computing"
+          aria-controls="paper-list"
+          aria-selected="true"
+        >
+          Quantum Computing
+        </button>
+        <button
+          id="toggle-signal-processing"
+          class="paper-domain-toggle-button"
+          type="button"
+          data-domain="signal_processing"
+          aria-controls="paper-list"
+          aria-selected="false"
+        >
+          Signal Processing
+        </button>
+      </div>
       <div id="paper-list" class="grid paper-grid">
         <article class="card paper-card">
           <h3 class="paper-title">
@@ -150,6 +172,12 @@
   <script>
     (function () {
       const target = document.getElementById("paper-list");
+      const toggleButtons = Array.prototype.slice.call(
+        document.querySelectorAll(".paper-domain-toggle-button")
+      );
+      const fallbackDomain = "quantum_computing";
+      let selectedDomain = fallbackDomain;
+      let indexedPapers = null;
 
       function escapeHtml(value) {
         return String(value)
@@ -225,6 +253,50 @@
         );
       }
 
+      function inferDomain(paper) {
+        if (paper && typeof paper.domain === "string" && paper.domain) {
+          return paper.domain;
+        }
+        if (paper && typeof paper.paper_id === "string" && paper.paper_id.indexOf("qsp-") === 0) {
+          return "signal_processing";
+        }
+        return "quantum_computing";
+      }
+
+      function updateToggleUi() {
+        toggleButtons.forEach(function (button) {
+          const isActive = button.getAttribute("data-domain") === selectedDomain;
+          button.classList.toggle("is-active", isActive);
+          button.setAttribute("aria-selected", isActive ? "true" : "false");
+        });
+      }
+
+      function renderFilteredCards() {
+        if (!indexedPapers || indexedPapers.length === 0) {
+          target.innerHTML = '<p class="empty-state">No paper packages have been indexed yet.</p>';
+          return;
+        }
+        const filtered = indexedPapers.filter(function (paper) {
+          return inferDomain(paper) === selectedDomain;
+        });
+        if (filtered.length === 0) {
+          target.innerHTML = '<p class="empty-state">No papers are available for this publication page yet.</p>';
+          return;
+        }
+        target.innerHTML = filtered.map(renderPaperCard).join("");
+      }
+
+      updateToggleUi();
+      toggleButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          selectedDomain = button.getAttribute("data-domain") || fallbackDomain;
+          updateToggleUi();
+          if (indexedPapers) {
+            renderFilteredCards();
+          }
+        });
+      });
+
       fetch("index/papers.json")
         .then(function (response) {
           if (!response.ok) {
@@ -233,11 +305,8 @@
           return response.json();
         })
         .then(function (data) {
-          if (!data || !Array.isArray(data.papers) || data.papers.length === 0) {
-            target.innerHTML = '<p class="empty-state">No paper packages have been indexed yet.</p>';
-            return;
-          }
-          target.innerHTML = data.papers.map(renderPaperCard).join("");
+          indexedPapers = data && Array.isArray(data.papers) ? data.papers : [];
+          renderFilteredCards();
         })
         .catch(function () {
           /* Keep the static fallback card if the index cannot be fetched. */

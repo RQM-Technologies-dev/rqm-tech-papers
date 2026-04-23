@@ -1,0 +1,49 @@
+{
+  "paper_id": "qsp-003-coherence-and-s3-orientation-metrics",
+  "title": "Quaternionic Coherence and S^3 Orientation Metrics for Multichannel Wave Analysis",
+  "slug": "coherence-and-s3-orientation-metrics",
+  "version": "0.1.0",
+  "status": "draft",
+  "domain": "signal_processing",
+  "publication_date": null,
+  "last_updated": "2026-04-23",
+  "authors": [
+    {
+      "name": "John G. Van Geem",
+      "affiliation": "RQM Technologies",
+      "orcid": null,
+      "email": null,
+      "corresponding": true
+    }
+  ],
+  "abstract": "This draft paper package establishes the publication scaffolding for quaternionic coherence and S^3 orientation metric concepts in multichannel wave analysis. It provides placeholder narrative surfaces and structured companion files so future formal definitions, propositions, and validation procedures can be added without changing package shape. The content is intentionally non-final and avoids fabricated outcomes, numerical claims, or publication identifiers until the authored manuscript is complete.",
+  "keywords": [
+    "quaternionic coherence",
+    "S^3 orientation",
+    "wave analysis",
+    "multichannel signals",
+    "draft scaffold"
+  ],
+  "series": "RQM Quaternionic Signal Processing Series",
+  "series_number": 3,
+  "depends_on": [],
+  "canonical_url": null,
+  "pdf_url": null,
+  "html_url": null,
+  "jats_url": null,
+  "doi": null,
+  "journal": null,
+  "volume": null,
+  "issue": null,
+  "pages": null,
+  "citations": [],
+  "related_artifacts": [
+    "main.tex",
+    "artifacts/figures/README.md",
+    "artifacts/notebooks/README.md",
+    "artifacts/code/README.md"
+  ],
+  "license": "CC-BY-4.0",
+  "funding": [],
+  "notes": "Draft scaffold package for the RQM Quaternionic Signal Processing Series. Layout and companion files are in place; full manuscript content is pending."
+}

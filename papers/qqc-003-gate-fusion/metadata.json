@@ -58,5 +58,6 @@
     "artifacts/code/README.md"
   ],
   "license": "CC-BY-4.0",
-  "notes": "Draft optimization-method paper defining and evaluating a local quaternionic gate-fusion pass for single-qubit circuit segments. The benchmark numbers reported in the paper are computed by the shipped plain-Python harness on a small reference corpus rather than inferred or fabricated."
+  "notes": "Draft optimization-method paper defining and evaluating a local quaternionic gate-fusion pass for single-qubit circuit segments. The benchmark numbers reported in the paper are computed by the shipped plain-Python harness on a small reference corpus rather than inferred or fabricated.",
+  "domain": "quantum_computing"
 }

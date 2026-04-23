@@ -217,6 +217,36 @@ h3,
   font-size: 0.98rem;
 }
 
+.paper-domain-toggle {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 1rem;
+  padding: 0.25rem;
+  border: 1px solid var(--border);
+  background: var(--surface-alt);
+}
+
+.paper-domain-toggle-button {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-strong);
+  padding: 0.45rem 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.paper-domain-toggle-button:hover {
+  border-color: var(--border-strong);
+}
+
+.paper-domain-toggle-button.is-active {
+  border-color: var(--accent-strong);
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+}
+
 .section,
 .site-section {
   margin-top: 1.5rem;

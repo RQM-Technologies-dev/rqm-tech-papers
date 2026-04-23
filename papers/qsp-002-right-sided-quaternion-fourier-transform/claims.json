@@ -1,0 +1,16 @@
+{
+  "paper_id": "qsp-002-right-sided-quaternion-fourier-transform",
+  "claims": [
+    {
+      "claim_id": "draft-scope-1",
+      "label": "Draft scope note",
+      "type": "statement",
+      "statement": "This release is a layout scaffold and does not present finalized technical claims.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": [],
+      "evidence_location": "README.md / paper.html draft notice",
+      "notes": "Placeholder until full manuscript claims are available."
+    }
+  ]
+}
