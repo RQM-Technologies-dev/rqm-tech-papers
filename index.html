@@ -85,84 +85,6 @@
       </div>
     </section>
 
-    <section class="section" aria-labelledby="index-heading">
-      <div class="section-header">
-        <div>
-          <h2 id="index-heading">Machine-readable access</h2>
-          <p class="section-copy">
-            AI agents and downstream tools can scan the whole series from the generated indexes without parsing PDFs.
-          </p>
-        </div>
-      </div>
-      <div class="grid index-grid">
-        <article class="card">
-          <h3>Paper index</h3>
-          <p class="muted">Series-wide metadata for every paper package.</p>
-          <div class="quick-links">
-            <a href="index/papers.json">index/papers.json</a>
-          </div>
-        </article>
-        <article class="card">
-          <h3>Claims index</h3>
-          <p class="muted">Structured theorems, definitions, and results across the series.</p>
-          <div class="quick-links">
-            <a href="index/claims.json">index/claims.json</a>
-          </div>
-        </article>
-        <article class="card">
-          <h3>Notation index</h3>
-          <p class="muted">Machine-readable symbols and notation mappings.</p>
-          <div class="quick-links">
-            <a href="index/notation.json">index/notation.json</a>
-          </div>
-        </article>
-        <article class="card">
-          <h3>Glossary index</h3>
-          <p class="muted">Series-wide terminology definitions for AI retrieval and readers.</p>
-          <div class="quick-links">
-            <a href="index/glossary.json">index/glossary.json</a>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="package-heading">
-      <div class="section-header">
-        <div>
-          <h2 id="package-heading">What a paper package includes</h2>
-          <p class="section-copy">
-            Each paper directory is organized for both publication and machine consumption.
-          </p>
-        </div>
-      </div>
-      <div class="grid info-grid">
-        <article class="card">
-          <h3>For human readers</h3>
-          <ul class="list">
-            <li><code>index.html</code> as the clean package route and <code>paper.html</code> as the full paper page</li>
-            <li><code>paper.pdf</code> as the printable paper artifact</li>
-            <li>figures and supporting artifacts inside <code>artifacts/</code></li>
-          </ul>
-        </article>
-        <article class="card">
-          <h3>For AI and indexing</h3>
-          <ul class="list">
-            <li><code>metadata.json</code> for structured discovery</li>
-            <li><code>claims.json</code>, <code>notation.json</code>, and <code>glossary.json</code></li>
-            <li><code>paper.jats.xml</code> and <code>CITATION.cff</code> for exchange formats</li>
-          </ul>
-        </article>
-        <article class="card">
-          <h3>For authors</h3>
-          <ul class="list">
-            <li><code>README.md</code> declaring the source of truth</li>
-            <li><code>main.tex</code> for LaTeX and Overleaf workflows when applicable</li>
-            <li>starter scaffolding available under <code>templates/</code></li>
-          </ul>
-        </article>
-      </div>
-    </section>
-
     <footer class="footer">
       <div class="package-links">
         <a href="README.md">Repository README</a>
@@ -179,6 +101,10 @@
         document.querySelectorAll(".paper-domain-toggle-button")
       );
       const fallbackDomain = "quantum_computing";
+      const allowedPrefixesByDomain = {
+        quantum_computing: "qqc-",
+        signal_processing: "qsp-"
+      };
       let selectedDomain = fallbackDomain;
       let indexedPapers = null;
 
@@ -279,8 +205,10 @@
           target.innerHTML = '<p class="empty-state">No paper packages have been indexed yet.</p>';
           return;
         }
+        const allowedPrefix = allowedPrefixesByDomain[selectedDomain] || "";
         const filtered = indexedPapers.filter(function (paper) {
-          return inferDomain(paper) === selectedDomain;
+          const paperId = paper && typeof paper.paper_id === "string" ? paper.paper_id : "";
+          return inferDomain(paper) === selectedDomain && (!allowedPrefix || paperId.indexOf(allowedPrefix) === 0);
         });
         if (filtered.length === 0) {
           target.innerHTML = '<p class="empty-state">No papers are available for this publication page yet.</p>';
