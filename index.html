@@ -24,27 +24,30 @@
     </header>
 
     <section class="section">
-      <div class="paper-domain-toggle" role="tablist" aria-label="Publication page">
-        <button
-          id="toggle-quantum-computing"
-          class="paper-domain-toggle-button is-active"
-          type="button"
-          data-domain="quantum_computing"
-          aria-controls="paper-list"
-          aria-selected="true"
-        >
-          Quantum Computing
-        </button>
-        <button
-          id="toggle-signal-processing"
-          class="paper-domain-toggle-button"
-          type="button"
-          data-domain="signal_processing"
-          aria-controls="paper-list"
-          aria-selected="false"
-        >
-          Signal Processing
-        </button>
+      <div class="paper-domain-toggle-wrap">
+        <p class="paper-domain-toggle-label">Sort papers by topic</p>
+        <div class="paper-domain-toggle" role="tablist" aria-label="Sort technical papers by topic">
+          <button
+            id="toggle-quantum-computing"
+            class="paper-domain-toggle-button is-active"
+            type="button"
+            data-domain="quantum_computing"
+            aria-controls="paper-list"
+            aria-selected="true"
+          >
+            Quantum Computing
+          </button>
+          <button
+            id="toggle-signal-processing"
+            class="paper-domain-toggle-button"
+            type="button"
+            data-domain="signal_processing"
+            aria-controls="paper-list"
+            aria-selected="false"
+          >
+            Signal Processing
+          </button>
+        </div>
       </div>
       <div id="paper-list" class="grid paper-grid">
         <article class="card paper-card">
