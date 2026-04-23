@@ -39,7 +39,11 @@
   "volume": null,
   "issue": null,
   "pages": null,
-  "citations": [],
+  "citations": [
+    "kuipers1999",
+    "lebihan2004",
+    "ell2007"
+  ],
   "related_artifacts": [
     "main.tex",
     "artifacts/figures/README.md",

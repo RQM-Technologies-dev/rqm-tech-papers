@@ -26,7 +26,7 @@
       <div class="hero-panel">
         <div class="eyebrow">Series paper - browsable publication page</div>
         <h1>Quaternion Lifting for Multichannel RF and Sensing Signals</h1>
-        <p class="hero-copy">A canonical lane representation for quaternionic signal processing.</p>
+        <p class="hero-copy">A Canonical Lane Representation for Quaternionic Signal Processing</p>
         <p class="byline">
           John G. Van Geem<br />
           RQM Technologies<br />
@@ -36,7 +36,7 @@
 
       <div class="paper-panel">
         <strong>Abstract</strong>
-        <p>This paper defines a canonical quaternion lifting procedure for multichannel RF and sensing signals whose external intake remains standard complex-channel data. Given two complex channels z1[n]=a[n]+ib[n] and z2[n]=c[n]+id[n], the lift forms a quaternion lane q[n]=z1[n]+z2[n]j = a[n]+b[n]i+c[n]j+d[n]k. For larger captures, channels are grouped deterministically into quaternion lanes Q[g,n] in H. The paper formalizes this lift, its inverse unpacking map, odd-channel handling, and representation-level invariants that make it suitable as a canonical internal form. The contribution is representational rather than speculative: the lift preserves paired phase-bearing relations inside a single quaternion object while remaining exactly recoverable back to grouped complex channels. This establishes a deterministic, information-preserving front end for downstream quaternionic signal processing.</p>
+        <p>This paper defines a canonical quaternion lifting procedure for multichannel RF and sensing signals whose external intake remains standard complex-channel data. Given two complex channels z1[n]=a[n]+ib[n] and z2[n]=c[n]+id[n], the lift forms a quaternion lane q[n]=z1[n]+z2[n]j = a[n]+b[n]i+c[n]j+d[n]k. For larger captures, channels are grouped deterministically into quaternion lanes Q[g,n] in H. The paper formalizes this lift, its inverse unpacking map, odd-channel handling, and representation-level invariants that make it suitable as a canonical internal form. The contribution is representational rather than speculative: instead of flattening multichannel structure too early, the lift preserves paired phase-bearing relations inside a single quaternion object while remaining exactly recoverable back to the grouped complex channels.</p>
       </div>
 
       <div class="paper-panel compact">
@@ -46,22 +46,38 @@
     </header>
 
     <main class="paper-main">
-      <h2 id="sec-intro">1. Introduction and scope</h2>
-      <p>The paper introduces a deterministic grouped quaternion lift as an internal representation for ordered complex-channel captures without changing the external complex-channel intake contract.</p>
+      <h2 id="sec-introduction">1. Introduction</h2>
+      <p>Multichannel RF and sensing systems are often observed through related complex channels rather than isolated scalar streams. This manuscript introduces a canonical quaternion lifting procedure that groups paired complex channels into deterministic quaternion lanes while preserving the external complex-channel intake contract.</p>
 
-      <h2 id="sec-core">2. Core formal results</h2>
-      <ol>
-        <li>Exact recoverability: unpack(lift(Z)) = Z for ordered captures.</li>
-        <li>Determinism: fixed channel ordering yields a unique grouped lift.</li>
-        <li>Energy preservation: lane-level additivity extends to capture-wide energy equality.</li>
-      </ol>
+      <h2 id="sec-scope-model">2. Scope and external signal model</h2>
+      <p>The external capture is represented as ordered complex samples z<sub>c</sub>[n] with C channels and N samples per channel. The lift operates only as an internal representation layer after ordering and validation are fixed.</p>
 
-      <h2 id="sec-limits">3. Scope and non-claims</h2>
-      <p>The contribution is representational only: no new sensing physics, no universal hardware advantage, and no claim that lift alone guarantees downstream performance gains.</p>
+      <h2 id="sec-preliminaries">3. Quaternion preliminaries</h2>
+      <p>The paper uses standard quaternion coordinates over H with basis units i, j, k and squared norm |q|<sup>2</sup> = qq*. The preliminaries are coordinate-focused and avoid introducing transform conventions at this stage.</p>
+
+      <h2 id="sec-lift">4. Canonical quaternion lift</h2>
+      <p>For a two-channel pair, the lane is q[n] = z<sub>1</sub>[n] + z<sub>2</sub>[n]j. For general channel count C, channels are grouped deterministically as (2g, 2g+1), with odd-tail handling when C is odd.</p>
+
+      <h2 id="sec-invariants">5. Recoverability and representation invariants</h2>
+      <p>The manuscript proves exact recoverability via an inverse unpacking map, determinism under fixed ordering, lane-level energy additivity, and capture-wide energy preservation.</p>
+
+      <h2 id="sec-rf-sensing">6. Why the lift matters for RF and sensing</h2>
+      <p>The representation is motivated by paired or grouped channel structure in dual-polarization, MIMO, phased-array/radar-adjacent captures, and reproducible offline replay workflows.</p>
+
+      <h2 id="sec-downstream">7. Downstream role in quaternionic signal processing</h2>
+      <p>This paper is representation-first. It positions the lift as a stable front end for later spectral, coherence, and orientation-aware quaternionic processing layers.</p>
+
+      <h2 id="sec-limitations">8. Scope, limitations, and non-claims</h2>
+      <p>The manuscript explicitly does not claim new sensing physics, universal performance gains, or transform-level completeness in this first paper.</p>
+
+      <h2 id="sec-conclusion">9. Conclusion</h2>
+      <p>The canonical grouped lift is presented as a deterministic, lossless, energy-preserving internal representation for ordered multichannel complex captures.</p>
 
       <h2 id="sec-references">References</h2>
       <ol class="references">
-        <li>See <code>references.bib</code> for the current bibliography file for this draft package.</li>
+        <li>Kuipers, Jack B. <em>Quaternions and Rotation Sequences: A Primer with Applications to Orbits, Aerospace, and Virtual Reality</em>. Princeton University Press, Princeton, NJ, 1999.</li>
+        <li>Le Bihan, Nicolas, and Jérôme Mars. “Singular Value Decomposition of Quaternion Matrices: A New Tool for Vector-Sensor Signal Processing.” <em>Signal Processing</em> 84(7):1177–1199, 2004.</li>
+        <li>Ell, Todd A., and Stephen J. Sangwine. “Hypercomplex Fourier Transforms of Color Images.” <em>IEEE Transactions on Image Processing</em> 16(1):22–35, 2007.</li>
       </ol>
     </main>
   </div>
