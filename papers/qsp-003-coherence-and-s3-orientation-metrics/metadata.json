@@ -16,7 +16,7 @@
       "corresponding": true
     }
   ],
-  "abstract": "This draft paper package establishes the publication scaffolding for quaternionic coherence and S^3 orientation metric concepts in multichannel wave analysis. It provides placeholder narrative surfaces and structured companion files so future formal definitions, propositions, and validation procedures can be added without changing package shape. The content is intentionally non-final and avoids fabricated outcomes, numerical claims, or publication identifiers until the authored manuscript is complete.",
+  "abstract": "This draft paper package establishes the publication scaffolding for quaternionic coherence and $S^3$ orientation metric concepts in multichannel wave analysis. It provides placeholder narrative surfaces and structured companion files so future formal definitions, propositions, and validation procedures can be added without changing package shape. The content is intentionally non-final and avoids fabricated outcomes, numerical claims, or publication identifiers until the authored manuscript is complete.",
   "keywords": [
     "quaternionic coherence",
     "S^3 orientation",
