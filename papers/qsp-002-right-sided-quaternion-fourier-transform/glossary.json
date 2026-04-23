@@ -3,15 +3,15 @@
   "glossary": [
     {
       "term": "right-sided quaternion Fourier transform",
-      "definition": "A DQFT convention where the exponential kernel multiplies each quaternion sample on the right.",
+      "definition": "A quaternion Fourier convention in which the exponential kernel multiplies each quaternion sample on the right.",
       "aliases": ["right-kernel DQFT"],
       "paper_specific": true,
-      "related_terms": ["fixed-axis transform", "kernel placement"],
+      "related_terms": ["fixed-axis transform", "kernel placement", "spectral seam"],
       "see_also": ["commuting slice"]
     },
     {
       "term": "fixed-axis transform",
-      "definition": "A transform convention that uses a single declared imaginary axis (here i) for all kernel phases.",
+      "definition": "A transform convention that uses one declared imaginary quaternion axis, here i, for all kernel phase factors.",
       "aliases": ["axis-fixed DQFT"],
       "paper_specific": true,
       "related_terms": ["right-sided quaternion Fourier transform", "commuting slice"],
@@ -19,27 +19,59 @@
     },
     {
       "term": "commuting slice",
-      "definition": "The subalgebra C_i={a+b i} inside H in which kernel exponentials commute.",
+      "definition": "The subalgebra C_i = {a + b i} inside H in which the kernel exponentials commute with each other.",
       "aliases": ["C_i slice"],
       "paper_specific": true,
       "related_terms": ["fixed-axis transform", "right C_i-linearity"],
+      "see_also": ["kernel exponential"]
+    },
+    {
+      "term": "discrete kernel orthogonality",
+      "definition": "The root-of-unity identity that collapses sums of exponential phase factors to Kronecker deltas and enables exact inversion and Parseval proofs.",
+      "aliases": ["root-of-unity orthogonality"],
+      "paper_specific": true,
+      "related_terms": ["exact inversion", "Parseval identity"],
       "see_also": []
     },
     {
-      "term": "Parseval invariance",
-      "definition": "The energy identity sum_n |x[n]|^2 = (1/N) sum_k |X[k]|^2 under the declared normalization.",
-      "aliases": ["Parseval identity"],
+      "term": "spectral power",
+      "definition": "The binwise real-valued invariant P[k] = |X[k]|^2 = X[k]X[k]^* associated with a quaternion spectral coefficient.",
+      "aliases": [],
       "paper_specific": true,
-      "related_terms": ["spectral power", "energy preservation"],
+      "related_terms": ["Parseval identity", "energy invariance"],
+      "see_also": []
+    },
+    {
+      "term": "Parseval identity",
+      "definition": "The energy equality sum_n |x[n]|^2 = (1/N) sum_k |X[k]|^2 under the paper's declared normalization.",
+      "aliases": ["Parseval invariance", "energy identity"],
+      "paper_specific": true,
+      "related_terms": ["spectral power", "discrete kernel orthogonality"],
       "see_also": []
     },
     {
       "term": "lanewise extension",
-      "definition": "Applying the single-lane transform and invariants independently to each quaternion lane in grouped multichannel data.",
+      "definition": "Applying the single-lane transform and its invariants independently to each quaternion lane in grouped multichannel data.",
       "aliases": ["lane-wise extension"],
       "paper_specific": true,
-      "related_terms": ["multichannel spectral analysis", "Parseval invariance"],
+      "related_terms": ["multichannel spectral analysis", "Parseval identity", "quaternion lane"],
       "see_also": []
+    },
+    {
+      "term": "spectral seam",
+      "definition": "The single declared Fourier convention that the broader processing stack treats as its stable public spectral interface.",
+      "aliases": ["public transform seam"],
+      "paper_specific": true,
+      "related_terms": ["fixed-axis transform", "right-sided quaternion Fourier transform"],
+      "see_also": []
+    },
+    {
+      "term": "quaternion lane",
+      "definition": "A quaternion-valued sample stream obtained after canonical lifting of paired complex channels.",
+      "aliases": [],
+      "paper_specific": true,
+      "related_terms": ["lanewise extension", "multichannel spectral analysis"],
+      "see_also": ["qsp-001-canonical-quaternion-lift"]
     }
   ]
 }

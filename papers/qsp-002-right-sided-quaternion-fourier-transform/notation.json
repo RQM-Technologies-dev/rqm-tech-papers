@@ -10,46 +10,57 @@
       "type": "set",
       "standard_or_project_specific": "standard",
       "first_use": "Section 2",
-      "related_symbols": ["x[n]", "X[k]"]
+      "related_symbols": ["x[n]", "X[k]", "\\mathbf{i}, \\mathbf{j}, \\mathbf{k}"]
     },
     {
       "symbol": "\\mathbb{C}_{\\mathbf{i}}",
-      "name": "commuting slice subalgebra",
+      "name": "fixed commuting slice",
       "latex": "\\mathbb{C}_{\\mathbf{i}}",
-      "meaning": "Fixed-axis commuting slice {a+b i : a,b in R} used for kernel phase factors.",
+      "meaning": "The commutative subalgebra {a + b i : a,b in R} inside H used for transform kernel phase factors.",
       "domain": "quaternionic signal processing",
       "type": "set",
       "standard_or_project_specific": "project-specific",
-      "first_use": "Section 3",
+      "first_use": "Introduction / Section 3.1",
       "related_symbols": ["\\mathbf{i}", "\\mathcal{F}_{\\mathbf{i}}"]
     },
     {
+      "symbol": "\\mathbf{i}, \\mathbf{j}, \\mathbf{k}",
+      "name": "quaternion basis units",
+      "latex": "\\mathbf{i}, \\mathbf{j}, \\mathbf{k}",
+      "meaning": "The three quaternion imaginary basis units satisfying i^2 = j^2 = k^2 = ijk = -1.",
+      "domain": "quaternion algebra",
+      "type": "basis tuple",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 3.1",
+      "related_symbols": ["\\mathbb{H}", "\\mathbb{C}_{\\mathbf{i}}"]
+    },
+    {
       "symbol": "x[n]",
-      "name": "quaternion lane sample",
+      "name": "quaternion-valued lane sample",
       "latex": "x[n]",
-      "meaning": "Input quaternion-valued sequence sample at index n.",
+      "meaning": "Input quaternion lane sample at discrete time index n.",
       "domain": "multichannel spectral analysis",
       "type": "sequence",
       "standard_or_project_specific": "project-specific",
       "first_use": "Introduction",
-      "related_symbols": ["X[k]", "\\mathcal{F}_{\\mathbf{i}}"]
+      "related_symbols": ["X[k]", "\\mathcal{F}_{\\mathbf{i}}", "N"]
     },
     {
       "symbol": "X[k]",
-      "name": "quaternion spectrum bin",
+      "name": "quaternion spectral coefficient",
       "latex": "X[k]",
-      "meaning": "Right-sided fixed-axis DQFT coefficient at frequency index k.",
+      "meaning": "Fixed-axis right-sided quaternion Fourier coefficient at frequency index k.",
       "domain": "multichannel spectral analysis",
       "type": "sequence",
       "standard_or_project_specific": "project-specific",
       "first_use": "Abstract",
-      "related_symbols": ["x[n]", "P[k]"]
+      "related_symbols": ["x[n]", "P[k]", "\\mathcal{F}_{\\mathbf{i}}"]
     },
     {
       "symbol": "\\mathcal{F}_{\\mathbf{i}}",
       "name": "forward transform",
       "latex": "\\mathcal{F}_{\\mathbf{i}}",
-      "meaning": "Fixed-axis right-sided discrete quaternion Fourier transform.",
+      "meaning": "The fixed-axis right-sided discrete quaternion Fourier transform with transform axis i.",
       "domain": "quaternionic signal processing",
       "type": "operator",
       "standard_or_project_specific": "project-specific",
@@ -71,12 +82,67 @@
       "symbol": "P[k]",
       "name": "spectral power",
       "latex": "P[k]",
-      "meaning": "Binwise power invariant defined as |X[k]|^2.",
+      "meaning": "Binwise spectral power invariant defined by |X[k]|^2 = X[k] X[k]^*.",
       "domain": "spectral invariants",
       "type": "scalar sequence",
       "standard_or_project_specific": "project-specific",
       "first_use": "Section 7",
       "related_symbols": ["X[k]"]
+    },
+    {
+      "symbol": "Q[g,n]",
+      "name": "lifted quaternion lane array",
+      "latex": "Q[g,n]",
+      "meaning": "Quaternion-valued multichannel internal representation indexed by lane g and sample n.",
+      "domain": "multichannel spectral analysis",
+      "type": "array",
+      "standard_or_project_specific": "project-specific",
+      "first_use": "Section 8",
+      "related_symbols": ["X_g[k]", "G", "N"]
+    },
+    {
+      "symbol": "X_g[k]",
+      "name": "lane-wise spectrum",
+      "latex": "X_g[k]",
+      "meaning": "Spectrum of lane g under the fixed-axis right-sided quaternion Fourier transform.",
+      "domain": "multichannel spectral analysis",
+      "type": "array",
+      "standard_or_project_specific": "project-specific",
+      "first_use": "Section 8",
+      "related_symbols": ["Q[g,n]", "\\mathcal{F}_{\\mathbf{i}}"]
+    },
+    {
+      "symbol": "N",
+      "name": "lane length",
+      "latex": "N",
+      "meaning": "Number of discrete samples in a quaternion lane.",
+      "domain": "discrete transform analysis",
+      "type": "scalar",
+      "standard_or_project_specific": "standard",
+      "first_use": "Introduction / Section 2",
+      "related_symbols": ["x[n]", "X[k]", "\\delta_{mn}"]
+    },
+    {
+      "symbol": "\\delta_{mn}",
+      "name": "Kronecker delta",
+      "latex": "\\delta_{mn}",
+      "meaning": "Discrete indicator equal to 1 when m = n and 0 otherwise.",
+      "domain": "discrete transform analysis",
+      "type": "scalar",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 3.2",
+      "related_symbols": ["N"]
+    },
+    {
+      "symbol": "e^{\\mathbf{i}\\theta}",
+      "name": "kernel exponential",
+      "latex": "e^{\\mathbf{i}\\theta}",
+      "meaning": "Complex-like phase factor in the commuting slice C_i, equal to cos(theta) + i sin(theta).",
+      "domain": "quaternionic signal processing",
+      "type": "expression",
+      "standard_or_project_specific": "standard",
+      "first_use": "Section 3.2",
+      "related_symbols": ["\\mathbb{C}_{\\mathbf{i}}", "\\mathbf{i}"]
     }
   ]
 }

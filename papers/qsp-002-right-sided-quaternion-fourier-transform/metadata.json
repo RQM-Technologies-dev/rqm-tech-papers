@@ -11,12 +11,12 @@
     {
       "name": "John G. Van Geem",
       "affiliation": "RQM Technologies",
-      "orcid": null,
+      "orcid": "0009-0002-4003-8452",
       "email": null,
       "corresponding": true
     }
   ],
-  "abstract": "This paper defines a stable right-sided discrete quaternion Fourier regime for multichannel spectral analysis. Building on a canonical quaternion lane representation of paired complex channels, it treats each lifted lane as a quaternion-valued sequence x[n] in H and adopts a fixed transform axis i. The forward transform is X[k]=sum_{n=0}^{N-1} x[n] exp(-i 2πnk/N), with inverse x[n]=(1/N)sum_{k=0}^{N-1} X[k] exp(+i 2πnk/N). The paper proves exact inversion, right-linearity over the commuting slice C_i, nonnegativity of spectral power, and Parseval invariance. The scope is intentionally limited to a one-dimensional fixed-axis right-sided regime intended as a deterministic spectral seam for quaternion-lifted multichannel processing.",
+  "abstract": "This paper defines a stable right-sided discrete quaternion Fourier regime for multichannel spectral analysis. Building on a canonical quaternion lane representation of paired complex channels, it treats each lifted lane as a quaternion-valued sequence x[n] in H and adopts a fixed transform axis i. The forward transform is X[k] = sum_{n=0}^{N-1} x[n] exp(-i 2πnk/N), with inverse x[n] = (1/N) sum_{k=0}^{N-1} X[k] exp(+i 2πnk/N). The contribution is not to survey every quaternion Fourier convention, but to make one public, reproducible choice for downstream WaveEngine-style processing. The paper proves exact inversion, right-linearity over the commuting slice subalgebra C_i, nonnegativity of spectral power, and a Parseval identity sum_n |x[n]|^2 = (1/N) sum_k |X[k]|^2. These results justify the fixed-axis right-sided transform as a deterministic spectral seam for quaternion-lifted multichannel data. The paper does not claim universal superiority over other quaternion Fourier conventions, does not address two-sided or higher-dimensional transforms, and does not yet develop the coherence metrics that sit on top of this spectral regime.",
   "keywords": [
     "quaternion Fourier transform",
     "right-sided transform",
@@ -40,7 +40,11 @@
   "volume": null,
   "issue": null,
   "pages": null,
-  "citations": [],
+  "citations": [
+    "kuipers1999",
+    "lebihan2004",
+    "ell2007"
+  ],
   "related_artifacts": [
     "main.tex",
     "artifacts/figures/README.md",
@@ -49,5 +53,5 @@
   ],
   "license": "CC-BY-4.0",
   "funding": [],
-  "notes": "Upgraded from scaffold-only package to a full manuscript draft with formal transform definition, inversion, right-linearity, spectral power nonnegativity, and Parseval invariants for lanewise multichannel extension."
+  "notes": "Draft spectral-foundation paper defining the fixed-axis right-sided quaternion Fourier seam used after canonical quaternion lifting. This version proves inversion and Parseval-style invariants but intentionally defers cross-lane coherence and orientation metrics to the next paper in the series."
 }

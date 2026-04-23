@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>A Stable Right-Sided Quaternion Fourier Regime for Multichannel Spectral Analysis - RQM Technologies</title>
-  <meta name="description" content="Defines a fixed-axis right-sided discrete quaternion Fourier transform with exact inversion and Parseval invariance for lanewise multichannel spectra." />
+  <meta name="description" content="Defines a fixed-axis right-sided discrete quaternion Fourier transform with exact inversion, slice-linearity, spectral power nonnegativity, and Parseval invariance for lanewise multichannel spectra." />
   <meta name="author" content="John G. Van Geem" />
-  <meta name="keywords" content="quaternion Fourier transform, right-sided transform, multichannel spectra, quaternionic signal processing, Parseval identity, fixed-axis transform" />
+  <meta name="keywords" content="quaternion Fourier transform, right-sided transform, multichannel spectra, quaternionic signal processing, spectral invariants, Parseval identity, fixed-axis transform" />
   <meta name="citation_title" content="A Stable Right-Sided Quaternion Fourier Regime for Multichannel Spectral Analysis" />
   <meta name="citation_author" content="John G. Van Geem" />
   <meta name="citation_pdf_url" content="paper.pdf" />
@@ -27,21 +27,25 @@
         <div class="eyebrow">Series paper - browsable publication page</div>
         <h1>A Stable Right-Sided Quaternion Fourier Regime for Multichannel Spectral Analysis</h1>
         <p class="hero-copy">
-          This draft defines a one-dimensional fixed-axis right-sided quaternion Fourier regime for lanewise multichannel spectral processing and proves inversion and energy invariants.
+          A fixed-axis one-dimensional spectral seam for quaternion-lifted multichannel data.
         </p>
         <p class="byline">
           John G. Van Geem<br />
-          RQM Technologies
+          RQM Technologies<br />
+          ORCID: 0009-0002-4003-8452
         </p>
       </div>
 
       <div class="paper-panel">
         <strong>Abstract</strong>
         <p>
-          This paper defines a stable right-sided discrete quaternion Fourier regime for multichannel spectral analysis. Building on canonical quaternion lanes, it adopts a fixed transform axis <em>i</em> and uses
-          X[k] = &Sigma;<sub>n=0</sub><sup>N-1</sup> x[n] exp(-i2&pi;nk/N),
-          x[n] = (1/N)&Sigma;<sub>k=0</sub><sup>N-1</sup> X[k] exp(+i2&pi;nk/N).
-          The manuscript proves exact inversion, right-linearity over the commuting slice C<sub>i</sub>, spectral power nonnegativity, and Parseval invariance. Scope is intentionally limited to this fixed public convention.
+          This paper defines a stable right-sided discrete quaternion Fourier regime for multichannel spectral analysis. Building on a canonical quaternion lane representation of paired complex channels, it treats each lifted lane as a quaternion-valued sequence <em>x[n]</em> in <em>H</em> and adopts a fixed transform axis <em>i</em>. The forward transform is
+          X[k] = Σ<sub>n=0</sub><sup>N-1</sup> x[n] exp(-i2πnk/N),
+          with inverse
+          x[n] = (1/N) Σ<sub>k=0</sub><sup>N-1</sup> X[k] exp(+i2πnk/N).
+          The paper proves exact inversion, right-linearity over the commuting slice subalgebra C<sub>i</sub>, nonnegativity of spectral power, and a Parseval identity
+          Σ<sub>n=0</sub><sup>N-1</sup>|x[n]|<sup>2</sup> = (1/N) Σ<sub>k=0</sub><sup>N-1</sup>|X[k]|<sup>2</sup>.
+          These results justify the fixed-axis right-sided transform as a deterministic spectral seam for quaternion-lifted multichannel data.
         </p>
       </div>
 
@@ -64,44 +68,109 @@
     </header>
 
     <main class="paper-main">
-      <h2 id="sec-intro">1. Introduction</h2>
+      <h2 id="sec-introduction">1. Introduction</h2>
       <p>
-        Quaternion Fourier analysis admits multiple conventions (left-, right-, and two-sided variants). This paper declares one stable public seam: fixed axis i, right-sided kernel placement, one-dimensional index, and lanewise application to quaternion-lifted multichannel data.
+        The first paper in this signal-processing series established a canonical quaternion lift for ordered multichannel RF and sensing captures. The present paper addresses the next layer: once a lane has the form x[n] in H, what Fourier convention should be treated as the stable public transform regime? Because quaternion Fourier analysis admits multiple legitimate conventions, this paper selects one narrow seam: one-dimensional, right-sided, fixed-axis, and lanewise.
       </p>
 
-      <h2 id="sec-definition">2. Stable transform definition</h2>
-      <blockquote class="paper-callout definition" id="def-forward">
-        <strong>Forward transform.</strong>
-        X[k] = &Sigma;<sub>n=0</sub><sup>N-1</sup> x[n] exp(-i2&pi;nk/N), for k=0,...,N-1.
-      </blockquote>
-      <blockquote class="paper-callout definition" id="def-inverse">
-        <strong>Inverse transform.</strong>
-        x[n] = (1/N)&Sigma;<sub>k=0</sub><sup>N-1</sup> X[k] exp(+i2&pi;nk/N), for n=0,...,N-1.
-      </blockquote>
-
-      <h2 id="sec-results">3. Core algebraic results</h2>
-      <ul>
-        <li>Additivity and right C<sub>i</sub>-linearity over commuting slice scalars.</li>
-        <li>Exact inversion using root-of-unity orthogonality in C<sub>i</sub>.</li>
-        <li>Spectral power P[k] = |X[k]|<sup>2</sup> is real and nonnegative.</li>
-        <li>Parseval identity: &Sigma;<sub>n</sub>|x[n]|<sup>2</sup> = (1/N)&Sigma;<sub>k</sub>|X[k]|<sup>2</sup>.</li>
-        <li>Lanewise multichannel Parseval extension by summing lane identities.</li>
-      </ul>
-
-      <h2 id="sec-scope">4. Scope and non-claims</h2>
+      <h2 id="sec-scope-model">2. Scope and signal model</h2>
       <p>
-        The paper does not claim universal superiority over other quaternion Fourier conventions and does not cover two-sided, higher-dimensional, or axis-adaptive transforms. It also defers cross-lane coherence/orientation metrics to the next paper.
+        A quaternion-valued lane is written as x = (x[n])<sub>n=0</sub><sup>N-1</sup>, with x[n] in H. In the intended application these lanes arise after canonical quaternion lifting of paired complex channels, but this paper studies the spectral transform on one lane first before extending it lanewise to grouped multichannel captures.
+      </p>
+
+      <h2 id="sec-preliminaries">3. Algebraic preliminaries</h2>
+      <p>
+        The transform kernel lives in the commuting slice C<sub>i</sub> = {a + bi}, which is isomorphic to the ordinary complex numbers and contains the phase factors exp(iθ) = cos θ + i sin θ.
+      </p>
+      <blockquote class="paper-callout definition">
+        <strong>Definition 3.1 (Fixed transform slice).</strong>
+        C<sub>i</sub> is the commutative subalgebra {a + bi : a,b ∈ R} inside H.
+      </blockquote>
+      <blockquote class="paper-callout theorem">
+        <strong>Lemma 3.2 (Discrete kernel orthogonality).</strong>
+        (1/N) Σ<sub>k=0</sub><sup>N-1</sup> exp(i2π(m-n)k/N) = δ<sub>mn</sub>.
+      </blockquote>
+
+      <h2 id="sec-transform">4. Definition of the stable right-sided transform</h2>
+      <blockquote class="paper-callout definition">
+        <strong>Definition 4.1 (Forward transform).</strong>
+        X[k] = Σ<sub>n=0</sub><sup>N-1</sup> x[n] exp(-i2πnk/N), for k = 0,...,N-1.
+      </blockquote>
+      <blockquote class="paper-callout definition">
+        <strong>Definition 4.2 (Inverse transform).</strong>
+        x[n] = (1/N) Σ<sub>k=0</sub><sup>N-1</sup> X[k] exp(+i2πnk/N), for n = 0,...,N-1.
+      </blockquote>
+      <p>
+        The kernel is placed on the right. Because quaternion multiplication is noncommutative, this is a genuine part of the transform convention rather than a cosmetic choice.
+      </p>
+
+      <h2 id="sec-properties">5. Algebraic properties</h2>
+      <blockquote class="paper-callout theorem">
+        <strong>Proposition 5.1 (Additivity).</strong>
+        F<sub>i</sub>{x+y}[k] = F<sub>i</sub>{x}[k] + F<sub>i</sub>{y}[k].
+      </blockquote>
+      <blockquote class="paper-callout theorem">
+        <strong>Proposition 5.2 (Right C<sub>i</sub>-linearity).</strong>
+        For a,b in C<sub>i</sub>, F<sub>i</sub>{xa+yb}[k] = F<sub>i</sub>{x}[k]a + F<sub>i</sub>{y}[k]b.
+      </blockquote>
+
+      <h2 id="sec-inversion">6. Exact inversion</h2>
+      <blockquote class="paper-callout theorem">
+        <strong>Theorem 6.1 (Exact inversion).</strong>
+        F<sub>i</sub><sup>-1</sup>(F<sub>i</sub>{x})[m] = x[m] for all m = 0,...,N-1.
+      </blockquote>
+      <p>
+        The proof substitutes the forward transform into the inverse and then collapses the inner exponential sum by discrete kernel orthogonality inside C<sub>i</sub>.
+      </p>
+
+      <h2 id="sec-parseval">7. Spectral power and Parseval invariance</h2>
+      <blockquote class="paper-callout definition">
+        <strong>Definition 7.1 (Spectral power).</strong>
+        P[k] = |X[k]|<sup>2</sup> = X[k]X[k]<sup>*</sup>.
+      </blockquote>
+      <blockquote class="paper-callout theorem">
+        <strong>Proposition 7.2.</strong>
+        P[k] is real and nonnegative for every k.
+      </blockquote>
+      <blockquote class="paper-callout theorem">
+        <strong>Theorem 7.3 (Parseval identity).</strong>
+        Σ<sub>n=0</sub><sup>N-1</sup>|x[n]|<sup>2</sup> = (1/N) Σ<sub>k=0</sub><sup>N-1</sup>|X[k]|<sup>2</sup>.
+      </blockquote>
+
+      <h2 id="sec-lanewise">8. Lanewise multichannel extension</h2>
+      <p>
+        For a grouped quaternion-lane capture Q[g,n], define X<sub>g</sub>[k] = F<sub>i</sub>{Q[g,·]}[k]. The single-lane Parseval identity extends immediately by summing over the lane index.
+      </p>
+      <blockquote class="paper-callout theorem">
+        <strong>Proposition 8.1 (Lanewise multichannel Parseval identity).</strong>
+        Σ<sub>g,n</sub>|Q[g,n]|<sup>2</sup> = (1/N) Σ<sub>g,k</sub>|X<sub>g</sub>[k]|<sup>2</sup>.
+      </blockquote>
+
+      <h2 id="sec-stability">9. Why this convention is stable</h2>
+      <p>
+        The chosen transform regime is stable in an operational sense: axis choice, kernel placement, inverse convention, and normalization do not change across lanes or across downstream uses. This keeps implementation, testing, and interpretation aligned and makes the transform a clean spectral seam for later coherence metrics.
+      </p>
+
+      <h2 id="sec-limitations">10. Scope, limitations, and non-claims</h2>
+      <p>
+        The paper does not claim universal superiority over other quaternion Fourier conventions, does not address left-sided, two-sided, higher-dimensional, or axis-adaptive transforms, and does not yet define the cross-lane coherence and orientation metrics that will build on the present spectral seam.
+      </p>
+
+      <h2 id="sec-conclusion">11. Conclusion</h2>
+      <p>
+        This paper establishes the spectral layer of the series. The first paper defined the canonical quaternion lift; the present paper defines the fixed-axis right-sided spectral transform on those lifted lanes. The next paper can therefore begin from spectra that are already deterministic, exactly invertible, and energy-controlled.
       </p>
 
       <h2 id="sec-references">References</h2>
       <ol class="references">
-        <li id="ref-1">Todd A. Ell and Stephen J. Sangwine, “Quaternion Fourier transforms for analysis of two-dimensional linear time-invariant partial-differential systems,” 2007.</li>
-        <li id="ref-2">Jack B. Kuipers, <em>Quaternions and Rotation Sequences</em>, 1999.</li>
+        <li id="ref-kuipers1999">Jack B. Kuipers, <em>Quaternions and Rotation Sequences: A Primer with Applications to Orbits, Aerospace, and Virtual Reality</em>, Princeton University Press, Princeton, NJ, 1999.</li>
+        <li id="ref-lebihan2004">Nicolas Le Bihan and J&eacute;r&ocirc;me Mars, “Singular Value Decomposition of Quaternion Matrices: A New Tool for Vector-Sensor Signal Processing,” <em>Signal Processing</em>, 84(7):1177&ndash;1199, 2004.</li>
+        <li id="ref-ell2007">Todd A. Ell and Stephen J. Sangwine, “Hypercomplex Fourier Transforms of Color Images,” <em>IEEE Transactions on Image Processing</em>, 16(1):22&ndash;35, 2007.</li>
       </ol>
     </main>
 
     <footer class="paper-footer">
-      <p>Draft manuscript aligned to the source-of-truth main.tex spine (version 0.1.0 dated 2026-04-23).</p>
+      <p>Draft manuscript aligned to the source-of-truth <code>main.tex</code> spine (version 0.1.0 dated 2026-04-23).</p>
     </footer>
   </div>
 </body>
