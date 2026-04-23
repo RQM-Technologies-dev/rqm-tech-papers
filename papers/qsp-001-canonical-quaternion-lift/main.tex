@@ -139,7 +139,7 @@ q^*=q_0-q_1\ii-q_2\jj-q_3\kk,
 \]
 
 \begin{remark}
-Only the basic coordinate structure of \(\HH\) is needed in this paper. No spectral transform convention, left/right module convention, or quaternionic filtering rule is required yet. Those belong to later layers in the series.
+Only the basic coordinate structure of \(\HH\) is needed in this paper \citep{kuipers1999}. No spectral transform convention, left/right module convention, or quaternionic filtering rule is required yet. Those belong to later layers in the series.
 \end{remark}
 
 \section{Canonical quaternion lift}
@@ -321,7 +321,7 @@ Determinism follows from the fixed grouping rule. Exact recoverability follows f
 
 \section{Why the lift matters for RF and sensing}
 
-The lift is useful because many real sensing systems already produce channel relationships in pairs or small grouped sets, even when those relationships are recorded as separate complex streams. The quaternion lane is therefore not an arbitrary algebraic rewrite; it is a compact carrier for four real degrees of freedom that often arrive together in practice.
+The lift is useful because many real sensing systems already produce channel relationships in pairs or small grouped sets, even when those relationships are recorded as separate complex streams. Quaternion matrix methods in multicomponent vector-sensor processing provide a concrete precedent for this kind of grouped representation viewpoint \citep{lebihan2004}. The quaternion lane is therefore not an arbitrary algebraic rewrite; it is a compact carrier for four real degrees of freedom that often arrive together in practice.
 
 Representative examples include:
 \begin{enumerate}[label=(\arabic*)]
@@ -331,7 +331,7 @@ Representative examples include:
     \item \textbf{archived multichannel replay data,} where a deterministic internal representation improves reproducibility across offline analysis runs.
 \end{enumerate}
 
-The representation-level value of the lift is therefore not a mysterious quaternionic effect. It is the practical fact that two complex channels can be stored in one quaternion lane without losing information, while retaining a form suited to later quaternionic processing.
+The representation-level value of the lift is therefore not a mysterious quaternionic effect. More broadly, quaternion and hypercomplex signal-processing pipelines have prior art in multicomponent contexts such as color-image processing, reinforcing the value of preserving structured components before premature flattening \citep{ell2007}. It is the practical fact that two complex channels can be stored in one quaternion lane without losing information, while retaining a form suited to later quaternionic processing.
 
 \begin{remark}
 This paper does not claim that every multichannel acquisition should be paired in exactly one way for every downstream task. The claim is narrower: once an ordered grouping convention is declared, the quaternion lift preserves that grouped structure exactly and reproducibly.

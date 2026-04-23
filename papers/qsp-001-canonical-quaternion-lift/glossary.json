@@ -2,16 +2,60 @@
   "paper_id": "qsp-001-canonical-quaternion-lift",
   "glossary": [
     {
-      "term": "draft scaffold",
-      "definition": "A package state where routing and companion files are present but technical manuscript content is still in preparation.",
-      "aliases": [
-        "layout-only release"
-      ],
+      "term": "quaternion lane",
+      "definition": "One grouped internal stream Q[g,n] in which up to two ordered complex channels are stored as one quaternion sequence.",
+      "aliases": [],
       "paper_specific": true,
-      "related_terms": [
-        "paper package"
-      ],
-      "see_also": []
+      "related_terms": ["canonical grouped lift", "ordered multichannel capture"],
+      "see_also": ["Section 4"]
+    },
+    {
+      "term": "canonical grouped lift",
+      "definition": "The fixed deterministic rule that maps ordered channel pairs (2g, 2g+1) into quaternion lanes, with explicit odd-tail handling.",
+      "aliases": ["grouped lift"],
+      "paper_specific": true,
+      "related_terms": ["deterministic grouping rule", "inverse unpacking map"],
+      "see_also": ["Section 4"]
+    },
+    {
+      "term": "inverse unpacking map",
+      "definition": "The reconstruction map that reads quaternion coordinates back into the original ordered complex channels exactly.",
+      "aliases": ["unpack map"],
+      "paper_specific": true,
+      "related_terms": ["canonical grouped lift", "representation layer"],
+      "see_also": ["Section 5"]
+    },
+    {
+      "term": "odd-tail channel",
+      "definition": "The final unpaired complex channel when C is odd, stored alone in the last quaternion lane with zero j and k components.",
+      "aliases": ["odd channel tail"],
+      "paper_specific": true,
+      "related_terms": ["quaternion lane", "deterministic grouping rule"],
+      "see_also": ["Section 4"]
+    },
+    {
+      "term": "ordered multichannel capture",
+      "definition": "The input dataset Z=(z_c[n]) where channel order is part of the contract and determines deterministic lane grouping.",
+      "aliases": ["ordered capture"],
+      "paper_specific": true,
+      "related_terms": ["deterministic grouping rule", "representation layer"],
+      "see_also": ["Section 2"]
+    },
+    {
+      "term": "representation layer",
+      "definition": "The paper's scoped contribution: a lossless internal format for grouped channels before transforms, coherence metrics, or downstream inference.",
+      "aliases": ["internal representation layer"],
+      "paper_specific": true,
+      "related_terms": ["canonical grouped lift", "inverse unpacking map"],
+      "see_also": ["Introduction", "Section 7"]
+    },
+    {
+      "term": "deterministic grouping rule",
+      "definition": "The declared non-adaptive pairing convention that guarantees reproducible lift outputs for fixed channel ordering.",
+      "aliases": ["fixed pairing rule"],
+      "paper_specific": true,
+      "related_terms": ["canonical grouped lift", "ordered multichannel capture"],
+      "see_also": ["Section 4", "Section 5"]
     }
   ]
 }
