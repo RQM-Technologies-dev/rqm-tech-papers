@@ -1,3 +1,7 @@
+% Source-of-truth draft for qsp-002-right-sided-quaternion-fourier-transform.
+% Keep the title, abstract, and core claims synchronized with paper.html,
+% metadata.json, claims.json, and paper.jats.xml.
+
 \documentclass[11pt]{article}
 
 \usepackage[margin=1in]{geometry}
@@ -5,28 +9,497 @@
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \usepackage{microtype}
-\usepackage{amsmath,amssymb,amsthm}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
 
+\newtheorem{definition}{Definition}[section]
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{corollary}[definition]{Corollary}
+\newtheorem{lemma}[definition]{Lemma}
+\theoremstyle{remark}
+\newtheorem{remark}[definition]{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\Ci}{\C_{\mathbf{i}}}
+\newcommand{\ii}{\mathbf{i}}
+\newcommand{\jj}{\mathbf{j}}
+\newcommand{\kk}{\mathbf{k}}
+\newcommand{\F}{\mathcal{F}_{\ii}}
+\newcommand{\Finv}{\mathcal{F}_{\ii}^{-1}}
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\inner}[2]{\left\langle #1, #2 \right\rangle_R}
+
 \title{\textbf{A Stable Right-Sided Quaternion Fourier Regime for Multichannel Spectral Analysis}}
-\author{John G. Van Geem\\RQM Technologies}
-\date{Version 0.1.0 \ Draft dated 2026-04-23}
+
+\author{John G. Van Geem\\
+RQM Technologies}
+
+\date{Version 0.1.0 \\ Draft dated 2026-04-23}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-This draft package prepares the structural publication surfaces for a right-sided quaternion Fourier analysis paper focused on multichannel spectral workflows. The current revision captures machine-readable metadata, claims placeholders, notation placeholders, and exchange files so the series can be indexed consistently while technical derivations are still in progress. It is explicitly a scaffolding release and does not present completed proofs, experimental measurements, or finalized publication details such as DOI, venue, or page range.
+This paper defines a stable right-sided discrete quaternion Fourier regime for multichannel spectral analysis. Building on a canonical quaternion lane representation of paired complex channels, it treats each lifted lane as a quaternion-valued sequence \(x[n]\in\HH\) and adopts a fixed transform axis \(\ii\). The forward transform is
+\[
+X[k]=\sum_{n=0}^{N-1} x[n]\exp\!\left(-\ii\frac{2\pi nk}{N}\right),
+\]
+with inverse
+\[
+x[n]=\frac{1}{N}\sum_{k=0}^{N-1} X[k]\exp\!\left(+\ii\frac{2\pi nk}{N}\right).
+\]
+The contribution is not to survey every quaternion Fourier convention, but to make one public, reproducible choice for downstream WaveEngine-style processing. The paper proves exact inversion, right-linearity over the commuting slice subalgebra \(\C_{\ii}\), nonnegativity of spectral power, and a Parseval identity
+\[
+\sum_{n=0}^{N-1} \abs{x[n]}^2=\frac{1}{N}\sum_{k=0}^{N-1}\abs{X[k]}^2.
+\]
+These results justify the fixed-axis right-sided transform as a deterministic spectral seam for quaternion-lifted multichannel data. The paper does not claim universal superiority over other quaternion Fourier conventions, does not address two-sided or higher-dimensional transforms, and does not yet develop the coherence metrics that sit on top of this spectral regime.
 \end{abstract}
 
-\noindent\textbf{Authoring note:} This file is the source of truth for this draft paper package.
+\noindent\textbf{Keywords:} quaternion Fourier transform; right-sided transform; multichannel spectra; quaternionic signal processing; spectral invariants; Parseval identity; fixed-axis transform
 
-\section{Draft scaffold notice}
-This manuscript is intentionally in scaffold form only.
+\section{Introduction}
 
-\section{Planned content}
-Full technical sections will be authored in a future revision.
+The first paper in this signal-processing series established a canonical quaternion lift for ordered multichannel RF and sensing captures. That lift addressed the representation layer: paired complex channels are grouped into quaternion lanes without loss of information. The next question is spectral. Once a lane has the form
+\[
+x[n]\in\HH,\qquad n=0,\dots,N-1,
+\]
+what Fourier convention should be treated as the stable public transform regime?
+
+That question matters because quaternion Fourier analysis is not unique. In the literature one encounters left-sided, right-sided, two-sided, and higher-dimensional variants, as well as transforms defined with different imaginary axes or multiple axis choices \citep{ell2007}. Such variety is mathematically legitimate, but a deployable signal-processing stack cannot expose all variants simultaneously as one public seam without sacrificing clarity and reproducibility.
+
+This paper therefore takes a narrower approach. It selects one explicit convention and proves its core invariants. The chosen regime is:
+\begin{enumerate}[label=(\roman*)]
+    \item one-dimensional in the sample index;
+    \item right-sided in kernel placement;
+    \item fixed-axis with transform axis \(\ii\); and
+    \item applied lanewise to quaternion-lifted multichannel data.
+\end{enumerate}
+The aim is not to say that all other quaternion Fourier conventions are wrong. The aim is to make one convention precise, exact, and stable enough to serve as the public spectral foundation for the series.
+
+The mathematical benefits of this choice are concrete. Because the transform kernel lies in the commutative slice subalgebra
+\[
+\Ci=\set{a+b\ii:\ a,b\in\R}\subset\HH,
+\]
+the resulting right-sided transform admits a clean inversion theorem and a straightforward Parseval identity. These facts are exactly what one wants from a canonical spectral regime.
+
+\medskip
+\noindent\textbf{Contributions.}
+This paper makes four concrete contributions:
+\begin{enumerate}[label=(\arabic*)]
+    \item it defines a fixed-axis right-sided discrete quaternion Fourier transform on quaternion lanes;
+    \item it proves exact inversion and right-linearity over the commuting slice \(\Ci\);
+    \item it proves spectral power nonnegativity and a Parseval identity; and
+    \item it extends these invariants lanewise to multichannel quaternion-lifted captures.
+\end{enumerate}
+
+The scope is intentionally limited. This paper defines the spectral seam. The next paper in the series can then use the resulting spectra to define cross-lane coherence and orientation-aware diagnostics.
+
+\section{Scope and signal model}
+
+Let
+\[
+x=(x[n])_{n=0}^{N-1},\qquad x[n]\in\HH,
+\]
+be a quaternion-valued lane of finite length \(N\). In the intended application, such lanes come from the canonical quaternion lift of paired complex channels introduced in the previous paper. This paper, however, studies the spectral transform on one lane first and only then extends it lanewise to grouped multichannel captures.
+
+\begin{remark}
+The external intake contract of the broader system remains ordinary complex-channel data. Quaternion-valued lanes appear only after canonical internal lift. This paper addresses the transform on those internal lanes, not the external acquisition interface.
+\end{remark}
+
+\begin{remark}
+This paper is about a \emph{stable transform regime}, not about an exhaustive taxonomy of all quaternion Fourier variants. Left-sided, two-sided, axis-adaptive, and higher-dimensional transforms are outside the stable seam defined here.
+\end{remark}
+
+\section{Algebraic preliminaries}
+
+\subsection{Quaternion coordinates and the slice subalgebra}
+
+We use the quaternion algebra
+\[
+\HH=\set{q_0+q_1\ii+q_2\jj+q_3\kk:\ q_0,q_1,q_2,q_3\in\R}
+\]
+with
+\[
+\ii^2=\jj^2=\kk^2=\ii\jj\kk=-1.
+\]
+For
+\[
+q=q_0+q_1\ii+q_2\jj+q_3\kk,
+\]
+the conjugate and squared norm are
+\[
+q^*=q_0-q_1\ii-q_2\jj-q_3\kk,
+\qquad
+\abs{q}^2=qq^*=q_0^2+q_1^2+q_2^2+q_3^2
+\]
+\citep{kuipers1999}.
+
+\begin{definition}
+The fixed transform slice is the commutative subalgebra
+\[
+\Ci=\set{a+b\ii:\ a,b\in\R}\subset\HH.
+\]
+\end{definition}
+
+\begin{remark}
+As a real algebra, \(\Ci\) is isomorphic to the ordinary complex numbers. The point of fixing \(\ii\) is therefore not to make the kernel exotic, but to embed an ordinary complex Fourier phase factor into the quaternionic setting while keeping a declared public convention.
+\end{remark}
+
+\subsection{Kernel exponentials}
+
+For \(\theta\in\R\), define
+\[
+e^{\ii\theta}=\cos\theta+\ii\sin\theta.
+\]
+All such exponentials lie in \(\Ci\), so they commute with each other. This is the key algebraic simplification used throughout the paper.
+
+\begin{lemma}[Discrete kernel orthogonality]
+For integers \(m,n\in\set{0,\dots,N-1}\),
+\[
+\frac1N\sum_{k=0}^{N-1} e^{\ii \frac{2\pi (m-n)k}{N}}
+=
+\delta_{mn},
+\]
+where \(\delta_{mn}\) is the Kronecker delta.
+\end{lemma}
+
+\begin{proof}
+This is the standard discrete orthogonality identity for \(N\)-th roots of unity, now viewed inside the commuting slice \(\Ci\). If \(m=n\), every summand equals \(1\). If \(m\neq n\), the sum is a finite geometric series with ratio different from \(1\), hence sums to \(0\).
+\end{proof}
+
+\section{Definition of the stable right-sided transform}
+
+\begin{definition}[Forward transform]
+Let \(x[n]\in\HH\) for \(n=0,\dots,N-1\). The fixed-axis right-sided discrete quaternion Fourier transform is
+\[
+X[k]=\F\{x\}[k]
+=
+\sum_{n=0}^{N-1} x[n]\exp\!\left(-\ii\frac{2\pi nk}{N}\right),
+\qquad
+k=0,\dots,N-1.
+\]
+\end{definition}
+
+\begin{definition}[Inverse transform]
+Given \(X[k]\in\HH\) for \(k=0,\dots,N-1\), define
+\[
+x[n]=\Finv\{X\}[n]
+=
+\frac1N\sum_{k=0}^{N-1} X[k]\exp\!\left(+\ii\frac{2\pi nk}{N}\right),
+\qquad
+n=0,\dots,N-1.
+\]
+\end{definition}
+
+\begin{remark}
+The kernel is placed on the \emph{right}. This is part of the transform definition, not a cosmetic notational choice. Because the samples are quaternion-valued and multiplication in \(\HH\) is noncommutative, left- and right-sided transforms are genuinely different conventions.
+\end{remark}
+
+\begin{remark}
+The chosen fixed axis is \(\ii\). This paper does not treat variable-axis or mixed-axis kernels. The purpose of fixing the axis is convention stability and reproducible downstream interpretation.
+\end{remark}
+
+\section{Algebraic properties}
+
+\begin{proposition}[Additivity]
+For quaternion-valued lanes \(x[n]\) and \(y[n]\),
+\[
+\F\{x+y\}[k]=\F\{x\}[k]+\F\{y\}[k].
+\]
+\end{proposition}
+
+\begin{proof}
+This follows immediately from termwise addition inside the defining sum.
+\end{proof}
+
+\begin{proposition}[Right \texorpdfstring{$\Ci$}{Ci}-linearity]
+Let \(a,b\in\Ci\). Then
+\[
+\F\{xa+yb\}[k]=\F\{x\}[k]\\,a+\F\{y\}[k]\\,b.
+\]
+\end{proposition}
+
+\begin{proof}
+Using the definition of the transform,
+\[
+\F\{xa+yb\}[k]
+=
+\sum_{n=0}^{N-1}\bigl(x[n]a+y[n]b\bigr)e^{-\ii 2\pi nk/N}.
+\]
+Because \(a,b\in\Ci\) and the kernel also lies in \(\Ci\), these scalars commute with the kernel. Hence
+\[
+x[n]a\\,e^{-\ii 2\pi nk/N}=x[n]e^{-\ii 2\pi nk/N}a,
+\]
+and similarly for \(b\). Pulling \(a\) and \(b\) to the right after summation gives the stated formula.
+\end{proof}
+
+\begin{remark}
+The transform is right-linear over the commuting slice \(\Ci\), but not over all of \(\HH\). This distinction is one reason the transform convention must be stated carefully in quaternionic signal processing.
+\end{remark}
+
+\section{Exact inversion}
+
+\begin{theorem}[Exact inversion]
+For every quaternion-valued lane \(x[n]\),
+\[
+\Finv(\F\{x\})[m]=x[m]
+\qquad
+\text{for all } m=0,\dots,N-1.
+\]
+\end{theorem}
+
+\begin{proof}
+Substitute the forward transform into the inverse:
+\[
+\Finv(\F\{x\})[m]
+=
+\frac1N\sum_{k=0}^{N-1}
+\left(
+\sum_{n=0}^{N-1} x[n]e^{-\ii 2\pi nk/N}
+\right)
+e^{+\ii 2\pi mk/N}.
+\]
+Because both exponentials lie in the commuting slice \(\Ci\), their product is
+\[
+e^{-\ii 2\pi nk/N}e^{+\ii 2\pi mk/N}
+=
+e^{\ii 2\pi (m-n)k/N}.
+\]
+Thus
+\[
+\Finv(\F\{x\})[m]
+=
+\sum_{n=0}^{N-1}
+x[n]
+\left(
+\frac1N\sum_{k=0}^{N-1} e^{\ii 2\pi (m-n)k/N}
+\right).
+\]
+By the orthogonality lemma, the bracketed term is \(\delta_{mn}\). Therefore
+\[
+\Finv(\F\{x\})[m]
+=
+\sum_{n=0}^{N-1} x[n]\delta_{mn}
+=
+x[m].
+\]
+\end{proof}
+
+\begin{corollary}
+The forward transform \(\F\) is bijective on \(\HH^N\), with inverse \(\Finv\).
+\end{corollary}
+
+\begin{proof}
+This is immediate from the inversion theorem.
+\end{proof}
+
+\section{Spectral power and Parseval invariance}
+
+\begin{definition}[Spectral power]
+For each frequency bin \(k\), define the spectral power by
+\[
+P[k]=\abs{X[k]}^2=X[k]X[k]^*.
+\]
+\end{definition}
+
+\begin{proposition}[Spectral power is real and nonnegative]
+For every \(k\),
+\[
+P[k]\in\R_{\ge 0}.
+\]
+\end{proposition}
+
+\begin{proof}
+For any quaternion \(q\), one has
+\[
+qq^*=q^*q=\abs{q}^2\in\R_{\ge 0}.
+\]
+Apply this with \(q=X[k]\).
+\end{proof}
+
+\begin{theorem}[Parseval identity]
+Let \(x[n]\in\HH\) and let \(X[k]=\F\{x\}[k]\). Then
+\[
+\sum_{n=0}^{N-1}\abs{x[n]}^2
+=
+\frac1N\sum_{k=0}^{N-1}\abs{X[k]}^2.
+\]
+\end{theorem}
+
+\begin{proof}
+Starting from the forward transform,
+\[
+X[k]X[k]^*
+=
+\left(
+\sum_{n=0}^{N-1}x[n]e^{-\ii 2\pi nk/N}
+\right)
+\left(
+\sum_{m=0}^{N-1}e^{+\ii 2\pi mk/N}x[m]^*
+\right).
+\]
+Expanding gives
+\[
+X[k]X[k]^*
+=
+\sum_{n=0}^{N-1}\sum_{m=0}^{N-1}
+x[n]e^{\ii 2\pi (m-n)k/N}x[m]^*.
+\]
+Now sum over \(k\):
+\[
+\sum_{k=0}^{N-1}X[k]X[k]^*
+=
+\sum_{n=0}^{N-1}\sum_{m=0}^{N-1}
+x[n]
+\left(
+\sum_{k=0}^{N-1}e^{\ii 2\pi (m-n)k/N}
+\right)
+x[m]^*.
+\]
+By the orthogonality lemma, the inner sum is \(N\delta_{mn}\). Hence
+\[
+\sum_{k=0}^{N-1}\abs{X[k]}^2
+=
+N\sum_{n=0}^{N-1}x[n]x[n]^*
+=
+N\sum_{n=0}^{N-1}\abs{x[n]}^2.
+\]
+Dividing by \(N\) yields the claim.
+\end{proof}
+
+\begin{remark}
+This Parseval identity is one of the central reasons for choosing the fixed-axis right-sided regime as the stable spectral seam. It makes total lane energy invariant under passage to the spectral domain up to the standard \(1/N\) normalization factor.
+\end{remark}
+
+\section{Lanewise multichannel extension}
+
+Suppose now that a multichannel capture has already been lifted into quaternion lanes
+\[
+Q[g,n]\in\HH,
+\qquad
+g=0,\dots,G-1,\quad n=0,\dots,N-1.
+\]
+Define the lanewise spectrum by
+\[
+X_g[k]=\F\{Q[g,\cdot]\}[k].
+\]
+
+\begin{proposition}[Lanewise multichannel Parseval identity]
+For a grouped quaternion-lane capture,
+\[
+\sum_{g=0}^{G-1}\sum_{n=0}^{N-1}\abs{Q[g,n]}^2
+=
+\frac1N
+\sum_{g=0}^{G-1}\sum_{k=0}^{N-1}\abs{X_g[k]}^2.
+\]
+\end{proposition}
+
+\begin{proof}
+Apply the single-lane Parseval identity to each lane \(g\), then sum over \(g\).
+\end{proof}
+
+\begin{remark}
+This lanewise extension is the direct bridge from the spectral regime in this paper to the multichannel coherence regime of the next paper. Once lane spectra \(X_g[k]\) are available, one may define cross-spectral quantities such as \(X_p[k]X_q[k]^*\) and their derived diagnostics. Those constructions are intentionally deferred to the next paper.
+\end{remark}
+
+\section{Why this convention is stable}
+
+The word \emph{stable} in this paper is used in a specific operational sense. The chosen transform regime is stable because the public seam does not change from one stage of the stack to another:
+\begin{enumerate}[label=(\arabic*)]
+    \item quaternion lanes enter the spectral layer in a deterministic form;
+    \item every lane is transformed with the same fixed axis \(\ii\);
+    \item every kernel phase factor is placed on the right;
+    \item the inverse formula has the same convention with opposite phase sign; and
+    \item energy invariants are preserved by a single declared normalization rule.
+\end{enumerate}
+
+This stability matters for engineering even before one speaks about advanced diagnostics. It keeps implementation, testing, and interpretation aligned. It also avoids the ambiguity that would arise if left-sided and right-sided transforms, or multiple axis conventions, were mixed inside one nominal API or publication claim.
+
+\begin{remark}
+This paper does not claim that right-sided fixed-axis transforms are the only worthwhile quaternion Fourier transforms. It claims that, for the present multichannel spectral workflow, they provide a clean and reproducible convention whose core algebraic properties are easy to prove and easy to test.
+\end{remark}
+
+\section{Scope, limitations, and non-claims}
+
+This paper is intentionally limited. In particular, it makes the following non-claims explicit:
+\begin{enumerate}[label=(\arabic*)]
+    \item It does \emph{not} claim universal superiority over other quaternion Fourier conventions.
+    \item It does \emph{not} treat left-sided, two-sided, or higher-dimensional transforms.
+    \item It does \emph{not} claim that the fixed axis \(\ii\) is uniquely privileged by physics.
+    \item It does \emph{not} resolve ordinary DFT issues such as windowing, leakage, or finite-record effects.
+    \item It does \emph{not} yet define cross-lane coherence, drift, or orientation metrics.
+    \item It does \emph{not} introduce application-specific filtering heuristics or hardware claims.
+\end{enumerate}
+
+The contribution is therefore spectral and foundational. It provides one exact transform regime on top of the canonical quaternion lift, but it stops before coherence diagnostics and downstream decision logic.
+
+\section{Conclusion}
+
+This paper defined a fixed-axis right-sided discrete quaternion Fourier transform regime for quaternion-lifted multichannel spectral analysis. The choice was intentionally narrow: one-dimensional, right-sided, axis-fixed, and lanewise. Within that regime, the paper proved exact inversion, right-linearity over the commuting slice \(\Ci\), nonnegativity of spectral power, and a Parseval identity.
+
+These results are sufficient to treat the transform as a stable spectral seam for the series. The first paper established the canonical quaternion lift. The present paper establishes the spectral transform on those lifted lanes. The next paper can therefore begin from lane spectra that are already deterministic, exactly invertible, and energy-controlled, and build the coherence and orientation metrics that sit on top of them.
+
+\appendix
+
+\section{Notation used repeatedly}
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Symbol & Meaning & Role \\
+\midrule
+\(x[n]\) & quaternion-valued lane sample & transform input \\
+\(X[k]\) & quaternion-valued spectral coefficient & transform output \\
+\(\HH\) & quaternion algebra & signal codomain \\
+\(\Ci\) & fixed commuting slice \(\set{a+b\ii}\) & kernel subalgebra \\
+\(\ii\) & fixed transform axis & phase direction \\
+\(\F\) & forward right-sided quaternion Fourier transform & spectral map \\
+\(\Finv\) & inverse transform & reconstruction map \\
+\(P[k]\) & spectral power \(\abs{X[k]}^2\) & nonnegative real invariant \\
+\(Q[g,n]\) & lifted quaternion lane array & multichannel internal representation \\
+\(X_g[k]\) & lanewise spectrum of lane \(g\) & multichannel spectral data \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Minimal sanity examples}
+
+\subsection*{Example 1: impulse lane}
+
+Let
+\[
+x[n]=
+\begin{cases}
+q_0, & n=n_0,\\
+0, & n\neq n_0,
+\end{cases}
+\qquad q_0\in\HH.
+\]
+Then
+\[
+X[k]=q_0 e^{-\ii 2\pi n_0 k/N}.
+\]
+Thus a single-sample quaternion impulse becomes a right-phase-rotated constant-magnitude spectrum.
+
+\subsection*{Example 2: constant lane}
+
+If \(x[n]=q_0\) for all \(n\), then
+\[
+X[0]=Nq_0,
+\qquad
+X[k]=0\quad \text{for } k\neq 0,
+\]
+because the nonzero-frequency kernel sums vanish by orthogonality.
 
 \bibliographystyle{plainnat}
 \bibliography{references}

@@ -2,15 +2,94 @@
   "paper_id": "qsp-002-right-sided-quaternion-fourier-transform",
   "claims": [
     {
-      "claim_id": "draft-scope-1",
-      "label": "Draft scope note",
-      "type": "statement",
-      "statement": "This release is a layout scaffold and does not present finalized technical claims.",
+      "claim_id": "def-1",
+      "label": "Definition (Fixed-axis right-sided DQFT)",
+      "type": "definition",
+      "statement": "For x[n] in H, define X[k]=sum_{n=0}^{N-1} x[n] exp(-i 2πnk/N) with right-sided kernel placement and fixed axis i.",
       "status": "informal",
       "proof_sketch": null,
       "dependencies": [],
-      "evidence_location": "README.md / paper.html draft notice",
-      "notes": "Placeholder until full manuscript claims are available."
+      "evidence_location": "Section 4",
+      "notes": "Core forward transform convention for the paper."
+    },
+    {
+      "claim_id": "def-2",
+      "label": "Definition (Inverse transform)",
+      "type": "definition",
+      "statement": "The inverse convention is x[n]=(1/N)sum_{k=0}^{N-1} X[k] exp(+i 2πnk/N), matching the fixed-axis right-sided kernel placement.",
+      "status": "informal",
+      "proof_sketch": null,
+      "dependencies": [
+        "def-1"
+      ],
+      "evidence_location": "Section 4",
+      "notes": "Normalization and sign convention align with the public transform seam."
+    },
+    {
+      "claim_id": "prop-3",
+      "label": "Proposition (Right C_i-linearity)",
+      "type": "proposition",
+      "statement": "For a,b in C_i, F{xa+yb}[k]=F{x}[k]a+F{y}[k]b.",
+      "status": "proved",
+      "proof_sketch": "Commutation of C_i scalars with the fixed-axis kernel allows right factors to be pulled through sums.",
+      "dependencies": [
+        "def-1"
+      ],
+      "evidence_location": "Section 5",
+      "notes": "Linearity is restricted to the commuting slice, not all of H."
+    },
+    {
+      "claim_id": "thm-4",
+      "label": "Theorem (Exact inversion)",
+      "type": "theorem",
+      "statement": "For every quaternion lane x, F_i^{-1}(F_i{x})[m]=x[m] for all m=0,...,N-1.",
+      "status": "proved",
+      "proof_sketch": "Substitute forward into inverse and apply discrete kernel orthogonality within C_i.",
+      "dependencies": [
+        "def-1",
+        "def-2"
+      ],
+      "evidence_location": "Section 6",
+      "notes": "Establishes bijectivity of the fixed-axis right-sided transform on H^N."
+    },
+    {
+      "claim_id": "prop-5",
+      "label": "Proposition (Spectral power nonnegativity)",
+      "type": "proposition",
+      "statement": "For each k, P[k]=|X[k]|^2=X[k]X[k]^* lies in R_{>=0}.",
+      "status": "proved",
+      "proof_sketch": "Quaternion norm identity qq^*=|q|^2 is always real and nonnegative.",
+      "dependencies": [
+        "def-1"
+      ],
+      "evidence_location": "Section 7",
+      "notes": "Defines a real-valued binwise power invariant."
+    },
+    {
+      "claim_id": "thm-6",
+      "label": "Theorem (Parseval identity)",
+      "type": "theorem",
+      "statement": "sum_{n=0}^{N-1}|x[n]|^2=(1/N)sum_{k=0}^{N-1}|X[k]|^2.",
+      "status": "proved",
+      "proof_sketch": "Expand X[k]X[k]^*, sum over k, and collapse cross terms using kernel orthogonality.",
+      "dependencies": [
+        "def-1"
+      ],
+      "evidence_location": "Section 7",
+      "notes": "Energy invariance under the declared normalization."
+    },
+    {
+      "claim_id": "prop-7",
+      "label": "Proposition (Lanewise multichannel Parseval)",
+      "type": "proposition",
+      "statement": "For lifted lanes Q[g,n], sum_{g,n}|Q[g,n]|^2=(1/N)sum_{g,k}|X_g[k]|^2 where X_g is the lane-wise spectrum.",
+      "status": "proved",
+      "proof_sketch": "Apply single-lane Parseval identity independently to each lane and sum over g.",
+      "dependencies": [
+        "thm-6"
+      ],
+      "evidence_location": "Section 8",
+      "notes": "Extends energy invariance to grouped multichannel captures."
     }
   ]
 }

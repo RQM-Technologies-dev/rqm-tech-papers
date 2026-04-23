@@ -2,15 +2,43 @@
   "paper_id": "qsp-002-right-sided-quaternion-fourier-transform",
   "glossary": [
     {
-      "term": "draft scaffold",
-      "definition": "A package state where routing and companion files are present but technical manuscript content is still in preparation.",
-      "aliases": [
-        "layout-only release"
-      ],
+      "term": "right-sided quaternion Fourier transform",
+      "definition": "A DQFT convention where the exponential kernel multiplies each quaternion sample on the right.",
+      "aliases": ["right-kernel DQFT"],
       "paper_specific": true,
-      "related_terms": [
-        "paper package"
-      ],
+      "related_terms": ["fixed-axis transform", "kernel placement"],
+      "see_also": ["commuting slice"]
+    },
+    {
+      "term": "fixed-axis transform",
+      "definition": "A transform convention that uses a single declared imaginary axis (here i) for all kernel phases.",
+      "aliases": ["axis-fixed DQFT"],
+      "paper_specific": true,
+      "related_terms": ["right-sided quaternion Fourier transform", "commuting slice"],
+      "see_also": []
+    },
+    {
+      "term": "commuting slice",
+      "definition": "The subalgebra C_i={a+b i} inside H in which kernel exponentials commute.",
+      "aliases": ["C_i slice"],
+      "paper_specific": true,
+      "related_terms": ["fixed-axis transform", "right C_i-linearity"],
+      "see_also": []
+    },
+    {
+      "term": "Parseval invariance",
+      "definition": "The energy identity sum_n |x[n]|^2 = (1/N) sum_k |X[k]|^2 under the declared normalization.",
+      "aliases": ["Parseval identity"],
+      "paper_specific": true,
+      "related_terms": ["spectral power", "energy preservation"],
+      "see_also": []
+    },
+    {
+      "term": "lanewise extension",
+      "definition": "Applying the single-lane transform and invariants independently to each quaternion lane in grouped multichannel data.",
+      "aliases": ["lane-wise extension"],
+      "paper_specific": true,
+      "related_terms": ["multichannel spectral analysis", "Parseval invariance"],
       "see_also": []
     }
   ]
