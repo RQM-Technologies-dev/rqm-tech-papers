@@ -77,6 +77,8 @@ what Fourier convention should be treated as the stable public transform regime?
 
 That question matters because quaternion Fourier analysis is not unique. In the literature one encounters left-sided, right-sided, two-sided, and higher-dimensional variants, as well as transforms defined with different imaginary axes or multiple axis choices \citep{ell2007}. Such variety is mathematically legitimate, but a deployable signal-processing stack cannot expose all variants simultaneously as one public seam without sacrificing clarity and reproducibility.
 
+Quaternion-based multicomponent signal-processing constructions already appear in the broader literature on vector-sensor and hypercomplex signal analysis, which helps motivate treating the present choice as an engineering convention rather than an isolated formalism \citep{lebihan2004,ell2007}.
+
 This paper therefore takes a narrower approach. It selects one explicit convention and proves its core invariants. The chosen regime is:
 \begin{enumerate}[label=(\roman*)]
     \item one-dimensional in the sample index;
