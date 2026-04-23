@@ -59,5 +59,6 @@
     "artifacts/code/README.md"
   ],
   "license": "CC-BY-4.0",
-  "notes": "Draft trust-layer paper defining verification and canonical equivalence procedures for quaternionic single-qubit compilation. The shipped verifier computes both authoritative canonical-quaternion checks and matrix-based diagnostics on a small reference corpus."
+  "notes": "Draft trust-layer paper defining verification and canonical equivalence procedures for quaternionic single-qubit compilation. The shipped verifier computes both authoritative canonical-quaternion checks and matrix-based diagnostics on a small reference corpus.",
+  "domain": "quantum_computing"
 }

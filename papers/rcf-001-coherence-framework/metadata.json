@@ -52,5 +52,6 @@
   ],
   "license": "CC-BY-4.0",
   "funding": [],
-  "notes": "Draft technical foundation for operator-theoretic coherence metrics on S^3 x R in Resonant Quantum Mechanics. This version formalizes definitions and spectral constructions without claiming full empirical derivation across deployed systems."
+  "notes": "Draft technical foundation for operator-theoretic coherence metrics on S^3 x R in Resonant Quantum Mechanics. This version formalizes definitions and spectral constructions without claiming full empirical derivation across deployed systems.",
+  "domain": "quantum_computing"
 }

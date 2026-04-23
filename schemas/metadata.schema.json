@@ -46,6 +46,11 @@
       "description": "Current publication status",
       "enum": ["draft", "preprint", "submitted", "published", "retracted", "superseded"]
     },
+    "domain": {
+      "type": "string",
+      "description": "Top-level publication domain used for landing-page grouping and filtering.",
+      "enum": ["quantum_computing", "signal_processing"]
+    },
     "publication_date": {
       "type": ["string", "null"],
       "description": "ISO 8601 date of first publication or preprint posting",

@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this draft package, please cite it as below."
+type: article
+title: "A Stable Right-Sided Quaternion Fourier Regime for Multichannel Spectral Analysis"
+version: "0.1.0"
+date-released: "2026-04-23"
+abstract: "This draft package prepares the structural publication surfaces for a right-sided quaternion Fourier analysis paper focused on multichannel spectral workflows. The current revision captures machine-readable metadata, claims placeholders, notation placeholders, and exchange files so the series can be indexed consistently while technical derivations are still in progress. It is explicitly a scaffolding release and does not present completed proofs, experimental measurements, or finalized publication details such as DOI, venue, or page range."
+authors:
+  - given-names: "John G."
+    family-names: "Van Geem"
+    affiliation: "RQM Technologies"
+repository-code: "https://github.com/RQM-Technologies-dev/rqm-tech-papers"
+license: CC-BY-4.0
+keywords:
+  - quaternion Fourier transform
+  - multichannel spectra
+  - right-sided operators
+  - draft scaffold
+  - signal processing
+preferred-citation:
+  type: article
+  title: "A Stable Right-Sided Quaternion Fourier Regime for Multichannel Spectral Analysis"
+  authors:
+    - given-names: "John G."
+      family-names: "Van Geem"
+      affiliation: "RQM Technologies"
+  year: 2026
+  version: "0.1.0"
+  notes: "Draft scaffold package in rqm-tech-papers; no DOI assigned."

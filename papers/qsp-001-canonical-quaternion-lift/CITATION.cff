@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this draft package, please cite it as below."
+type: article
+title: "Canonical Quaternion Lifting for Multichannel RF and Sensing Signals"
+version: "0.1.0"
+date-released: "2026-04-23"
+abstract: "This draft paper defines a canonical quaternion lifting scaffold for multichannel RF and sensing signals, with an emphasis on publication-safe package structure rather than finalized technical claims. It outlines how aligned channel tuples may be lifted into quaternion-valued representations, specifies placeholder conventions for orientation and sign choices, and records interoperability surfaces needed for reproducible downstream indexing. The package is intentionally layout-only at this stage and does not report benchmark results, empirical performance figures, or publication metadata beyond draft status."
+authors:
+  - given-names: "John G."
+    family-names: "Van Geem"
+    affiliation: "RQM Technologies"
+repository-code: "https://github.com/RQM-Technologies-dev/rqm-tech-papers"
+license: CC-BY-4.0
+keywords:
+  - quaternion signal processing
+  - multichannel RF
+  - sensor fusion
+  - draft scaffold
+  - canonical lifting
+preferred-citation:
+  type: article
+  title: "Canonical Quaternion Lifting for Multichannel RF and Sensing Signals"
+  authors:
+    - given-names: "John G."
+      family-names: "Van Geem"
+      affiliation: "RQM Technologies"
+  year: 2026
+  version: "0.1.0"
+  notes: "Draft scaffold package in rqm-tech-papers; no DOI assigned."

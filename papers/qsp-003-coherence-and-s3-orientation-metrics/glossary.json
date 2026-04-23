@@ -1,0 +1,17 @@
+{
+  "paper_id": "qsp-003-coherence-and-s3-orientation-metrics",
+  "glossary": [
+    {
+      "term": "draft scaffold",
+      "definition": "A package state where routing and companion files are present but technical manuscript content is still in preparation.",
+      "aliases": [
+        "layout-only release"
+      ],
+      "paper_specific": true,
+      "related_terms": [
+        "paper package"
+      ],
+      "see_also": []
+    }
+  ]
+}

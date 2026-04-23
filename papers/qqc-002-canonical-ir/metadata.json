@@ -54,5 +54,6 @@
     "artifacts/code/README.md"
   ],
   "license": "CC-BY-4.0",
-  "notes": "Draft representation paper defining a canonical quaternionic IR for single-qubit circuit segments. This paper depends conceptually on qqc-001-foundations for the fixed quaternion-SU(2) convention and stays explicitly within the single-qubit scope."
+  "notes": "Draft representation paper defining a canonical quaternionic IR for single-qubit circuit segments. This paper depends conceptually on qqc-001-foundations for the fixed quaternion-SU(2) convention and stays explicitly within the single-qubit scope.",
+  "domain": "quantum_computing"
 }

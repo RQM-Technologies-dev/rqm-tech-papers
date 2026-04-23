@@ -15,7 +15,7 @@
       "corresponding": true
     }
   ],
-  "abstract": "This paper gives a direct derivation of Bell and Clauser-Horne-Shimony-Holt (CHSH) correlations using the fixed quaternion-SU(2) convention established in qqc-001-foundations. The analyzer settings are represented by pure unit quaternions u_a and u_b in the imaginary subspace of H, so that their product decomposes as u_a u_b = -a·b + u_{a×b}. In the singlet sector, that scalar-vector decomposition yields the standard joint probabilities P(s,t|a,b) = 1/4(1 - st a·b), the correlation law E(a,b) = -a·b = Sc(u_a u_b), and the CHSH operator bound |S| <= 2 sqrt(2). The paper also records one optimal analyzer configuration that saturates the bound. The mathematical predictions are the standard quantum-mechanical ones; the project-specific contribution is the geometric organization. In this framing, Bell's theorem excludes local hidden-variable reductions of the singlet state, but it does not exclude quaternionic spin geometry itself. The paper is intentionally conservative: it does not introduce a new physical theory, does not claim a local hidden-variable completion, and does not define a full general quaternionic tensor-product formalism beyond the singlet-sector derivations used here.",
+  "abstract": "This paper gives a direct derivation of Bell and Clauser-Horne-Shimony-Holt (CHSH) correlations using the fixed quaternion-SU(2) convention established in qqc-001-foundations. The analyzer settings are represented by pure unit quaternions u_a and u_b in the imaginary subspace of H, so that their product decomposes as u_a u_b = -a\u00b7b + u_{a\u00d7b}. In the singlet sector, that scalar-vector decomposition yields the standard joint probabilities P(s,t|a,b) = 1/4(1 - st a\u00b7b), the correlation law E(a,b) = -a\u00b7b = Sc(u_a u_b), and the CHSH operator bound |S| <= 2 sqrt(2). The paper also records one optimal analyzer configuration that saturates the bound. The mathematical predictions are the standard quantum-mechanical ones; the project-specific contribution is the geometric organization. In this framing, Bell's theorem excludes local hidden-variable reductions of the singlet state, but it does not exclude quaternionic spin geometry itself. The paper is intentionally conservative: it does not introduce a new physical theory, does not claim a local hidden-variable completion, and does not define a full general quaternionic tensor-product formalism beyond the singlet-sector derivations used here.",
   "keywords": [
     "Bell correlation",
     "CHSH inequality",
@@ -54,5 +54,6 @@
     "artifacts/code/README.md"
   ],
   "license": "CC-BY-4.0",
-  "notes": "Draft Bell/CHSH paper expressing singlet-sector correlations in the fixed quaternion-SU(2) convention of the series. The package includes a small reference script that reproduces the Bell, joint-probability, and CHSH values used in the text."
+  "notes": "Draft Bell/CHSH paper expressing singlet-sector correlations in the fixed quaternion-SU(2) convention of the series. The package includes a small reference script that reproduces the Bell, joint-probability, and CHSH values used in the text.",
+  "domain": "quantum_computing"
 }

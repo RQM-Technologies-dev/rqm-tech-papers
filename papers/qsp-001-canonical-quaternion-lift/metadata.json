@@ -1,0 +1,49 @@
+{
+  "paper_id": "qsp-001-canonical-quaternion-lift",
+  "title": "Canonical Quaternion Lifting for Multichannel RF and Sensing Signals",
+  "slug": "canonical-quaternion-lift",
+  "version": "0.1.0",
+  "status": "draft",
+  "domain": "signal_processing",
+  "publication_date": null,
+  "last_updated": "2026-04-23",
+  "authors": [
+    {
+      "name": "John G. Van Geem",
+      "affiliation": "RQM Technologies",
+      "orcid": null,
+      "email": null,
+      "corresponding": true
+    }
+  ],
+  "abstract": "This draft paper defines a canonical quaternion lifting scaffold for multichannel RF and sensing signals, with an emphasis on publication-safe package structure rather than finalized technical claims. It outlines how aligned channel tuples may be lifted into quaternion-valued representations, specifies placeholder conventions for orientation and sign choices, and records interoperability surfaces needed for reproducible downstream indexing. The package is intentionally layout-only at this stage and does not report benchmark results, empirical performance figures, or publication metadata beyond draft status.",
+  "keywords": [
+    "quaternion signal processing",
+    "multichannel RF",
+    "sensor fusion",
+    "draft scaffold",
+    "canonical lifting"
+  ],
+  "series": "RQM Quaternionic Signal Processing Series",
+  "series_number": 1,
+  "depends_on": [],
+  "canonical_url": null,
+  "pdf_url": null,
+  "html_url": null,
+  "jats_url": null,
+  "doi": null,
+  "journal": null,
+  "volume": null,
+  "issue": null,
+  "pages": null,
+  "citations": [],
+  "related_artifacts": [
+    "main.tex",
+    "artifacts/figures/README.md",
+    "artifacts/notebooks/README.md",
+    "artifacts/code/README.md"
+  ],
+  "license": "CC-BY-4.0",
+  "funding": [],
+  "notes": "Draft scaffold package for the RQM Quaternionic Signal Processing Series. Layout and companion files are in place; full manuscript content is pending."
+}
