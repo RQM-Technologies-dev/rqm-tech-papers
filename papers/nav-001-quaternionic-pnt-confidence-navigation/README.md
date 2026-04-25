@@ -1,13 +1,13 @@
-# qsp-004-quaternionic-pnt-confidence-navigation
+# nav-001-quaternionic-pnt-confidence-navigation
 
 This folder is a semantic paper package for:
 
-**Quaternionic Frame Residuals and Coherence Metrics for Lunar and Cislunar PNT Confidence Scoring**
+**Quaternionic Frame Residuals and Coherence Metrics for Lunar and Cislunar Navigation Software Confidence Scoring**
 
 ## Source of truth
 
 - Authoritative paper text source: `main.tex`
-- `index.html` is the clean package landing page for `/papers/qsp-004-quaternionic-pnt-confidence-navigation/`.
+- `index.html` is the clean package landing page for `/papers/nav-001-quaternionic-pnt-confidence-navigation/`.
 - `paper.html` is the full browsable paper page and mirrors the authored source.
 
 ## Package status

@@ -9,9 +9,9 @@
       <publisher><publisher-name>RQM Technologies</publisher-name></publisher>
     </journal-meta>
     <article-meta>
-      <article-id pub-id-type="publisher-id">qsp-004-quaternionic-pnt-confidence-navigation</article-id>
+      <article-id pub-id-type="publisher-id">nav-001-quaternionic-pnt-confidence-navigation</article-id>
       <title-group>
-        <article-title>Quaternionic Frame Residuals and Coherence Metrics for Lunar and Cislunar PNT Confidence Scoring</article-title>
+        <article-title>Quaternionic Frame Residuals and Coherence Metrics for Lunar and Cislunar Navigation Software Confidence Scoring</article-title>
       </title-group>
       <contrib-group>
         <contrib contrib-type="author" corresp="yes">

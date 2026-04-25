@@ -9,12 +9,12 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
 endobj
 4 0 obj
-<< /Length 157 >>
+<< /Length 158 >>
 stream
 BT
 /F1 12 Tf
 72 720 Td
-(Placeholder PDF for qsp-004-quaternionic-pnt-confidence-navigation.) Tj
+(Placeholder PDF for nav-001-quaternionic-pnt-confidence-navigation.) Tj
 0 -16 Td
 (Build main.tex with a LaTeX toolchain to generate full typeset output.) Tj
 ET
@@ -30,9 +30,9 @@ xref
 0000000058 00000 n 
 0000000115 00000 n 
 0000000241 00000 n 
-0000000450 00000 n 
+0000000451 00000 n 
 trailer
 << /Size 6 /Root 1 0 R >>
 startxref
-520
+521
 %%EOF

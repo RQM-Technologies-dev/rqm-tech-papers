@@ -1,5 +1,5 @@
 {
-  "paper_id": "qsp-004-quaternionic-pnt-confidence-navigation",
+  "paper_id": "nav-001-quaternionic-pnt-confidence-navigation",
   "notation": [
     {"symbol":"r_k","name":"position state","latex":"\\mathbf{r}_k","meaning":"Estimated position vector at epoch k.","domain":"navigation state estimation","type":"vector","standard_or_project_specific":"standard","first_use":"Section 3","related_symbols":["v_k","x_k"]},
     {"symbol":"v_k","name":"velocity state","latex":"\\mathbf{v}_k","meaning":"Estimated velocity vector at epoch k.","domain":"navigation state estimation","type":"vector","standard_or_project_specific":"standard","first_use":"Section 3","related_symbols":["r_k","x_k"]},
