@@ -1,0 +1,93 @@
+{
+  "paper_id": "qsp-004-quaternionic-pnt-confidence-navigation",
+  "glossary": [
+    {
+      "term": "cislunar navigation",
+      "definition": "Navigation in the Earth-Moon system, including trajectories between Earth orbit, translunar transfer, lunar orbit, and related operational regions.",
+      "aliases": [],
+      "paper_specific": false,
+      "related_terms": ["PNT", "observability conditioning"],
+      "see_also": ["Section 1"]
+    },
+    {
+      "term": "clock bias",
+      "definition": "Offset between a local onboard clock and reference system time that appears as a range-equivalent measurement error term.",
+      "aliases": [],
+      "paper_specific": false,
+      "related_terms": ["clock drift", "PNT"],
+      "see_also": ["Section 3"]
+    },
+    {
+      "term": "clock drift",
+      "definition": "Rate of change of clock bias, often modeled as a state term that contributes to Doppler-like timing errors.",
+      "aliases": [],
+      "paper_specific": false,
+      "related_terms": ["clock bias", "PNT"],
+      "see_also": ["Section 3"]
+    },
+    {
+      "term": "GPS-denied navigation",
+      "definition": "Operational navigation mode where direct GNSS support is unavailable or unreliable, requiring alternative sensing and estimation strategies.",
+      "aliases": [],
+      "paper_specific": false,
+      "related_terms": ["cislunar navigation", "PNT"],
+      "see_also": ["Section 1"]
+    },
+    {
+      "term": "line-of-sight geometry",
+      "definition": "Spatial relationship among observer, target, and reference assets that determines directional measurement sensitivity and observability.",
+      "aliases": ["LOS geometry"],
+      "paper_specific": false,
+      "related_terms": ["observability conditioning", "quaternionic frame residual"],
+      "see_also": ["Section 4", "Section 6"]
+    },
+    {
+      "term": "normalized innovation",
+      "definition": "Covariance-weighted measurement residual metric, typically expressed as e^T S^{-1} e, used to score consistency between predicted and observed measurements.",
+      "aliases": ["NIS"],
+      "paper_specific": false,
+      "related_terms": ["PNT", "observability conditioning"],
+      "see_also": ["Section 5"]
+    },
+    {
+      "term": "observability conditioning",
+      "definition": "Assessment of how well available measurements constrain the navigation state, often quantified with matrix conditioning or singular-value diagnostics.",
+      "aliases": [],
+      "paper_specific": false,
+      "related_terms": ["line-of-sight geometry", "normalized innovation"],
+      "see_also": ["Section 6"]
+    },
+    {
+      "term": "PNT",
+      "definition": "Positioning, Navigation, and Timing functions that together provide state estimation and time alignment for mission operations.",
+      "aliases": ["positioning, navigation, and timing"],
+      "paper_specific": false,
+      "related_terms": ["clock bias", "clock drift", "cislunar navigation"],
+      "see_also": ["Section 1"]
+    },
+    {
+      "term": "quaternionic frame residual",
+      "definition": "Geodesic angular mismatch between observation-derived and estimated frame orientation represented with unit quaternions.",
+      "aliases": [],
+      "paper_specific": true,
+      "related_terms": ["line-of-sight geometry", "WaveEngine Nav"],
+      "see_also": ["Section 4"]
+    },
+    {
+      "term": "terrain-relative navigation",
+      "definition": "Navigation approach using comparison of sensed surface features against terrain maps to estimate pose or position when external references are sparse.",
+      "aliases": ["TRN"],
+      "paper_specific": false,
+      "related_terms": ["cislunar navigation", "GPS-denied navigation"],
+      "see_also": ["Section 9"]
+    },
+    {
+      "term": "WaveEngine Nav",
+      "definition": "Proposed confidence-scoring layer that evaluates residual, frame, timing, observability, and dynamics coherence alongside existing navigation estimators.",
+      "aliases": [],
+      "paper_specific": true,
+      "related_terms": ["PNT", "quaternionic frame residual", "observability conditioning"],
+      "see_also": ["Section 7", "Section 8"]
+    }
+  ]
+}

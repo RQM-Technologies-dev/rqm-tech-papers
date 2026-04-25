@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: "If you use this draft package, please cite it as below."
+type: article
+title: "Quaternionic Frame Residuals and Coherence Metrics for Lunar and Cislunar PNT Confidence Scoring"
+version: "0.1.0"
+date-released: "2026-04-25"
+abstract: "Autonomous lunar and cislunar missions must sustain navigation performance under sparse measurements, delayed communications, GPS-denied operations, intermittent relay geometry, clock drift, and degraded optical or terrain-relative sensing. This paper defines a quaternionic confidence framework for evaluating the internal consistency of position, velocity, attitude, timing, and measurement geometry in such regimes. The proposed WaveEngine Nav layer computes normalized measurement innovations, quaternionic frame residuals, observability conditioning indicators, clock-drift consistency terms, and dynamics consistency terms, then combines them into an interpretable PNT confidence score. The framework is intended to augment, not replace, conventional navigation filters and orbit-determination workflows. Its contribution is a structured diagnostic method for identifying under-observed, frame-inconsistent, timing-degraded, or dynamically implausible navigation states before those states evolve into an obvious loss-of-confidence event."
+authors:
+  - given-names: "John G."
+    family-names: "Van Geem"
+    affiliation: "RQM Technologies"
+    orcid: "https://orcid.org/0009-0002-4003-8452"
+repository-code: "https://github.com/RQM-Technologies-dev/rqm-tech-papers"
+license: CC-BY-4.0
+keywords:
+  - quaternionic navigation
+  - PNT confidence
+  - cislunar navigation
+  - lunar navigation
+  - quaternion residuals
+  - observability
+  - autonomous navigation
+  - WaveEngine Nav
+preferred-citation:
+  type: article
+  title: "Quaternionic Frame Residuals and Coherence Metrics for Lunar and Cislunar PNT Confidence Scoring"
+  authors:
+    - given-names: "John G."
+      family-names: "Van Geem"
+      affiliation: "RQM Technologies"
+      orcid: "https://orcid.org/0009-0002-4003-8452"
+  year: 2026
+  version: "0.1.0"
+  notes: "Draft technical paper package in rqm-tech-papers; no DOI assigned."

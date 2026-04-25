@@ -1,0 +1,61 @@
+{
+  "paper_id": "qsp-004-quaternionic-pnt-confidence-navigation",
+  "title": "Quaternionic Frame Residuals and Coherence Metrics for Lunar and Cislunar PNT Confidence Scoring",
+  "slug": "quaternionic-pnt-confidence-navigation",
+  "version": "0.1.0",
+  "status": "draft",
+  "domain": "signal_processing",
+  "publication_date": null,
+  "last_updated": "2026-04-25",
+  "authors": [
+    {
+      "name": "John G. Van Geem",
+      "affiliation": "RQM Technologies",
+      "orcid": "0009-0002-4003-8452",
+      "email": null,
+      "corresponding": true
+    }
+  ],
+  "abstract": "Autonomous lunar and cislunar missions must sustain navigation performance under sparse measurements, delayed communications, GPS-denied operations, intermittent relay geometry, clock drift, and degraded optical or terrain-relative sensing. This paper defines a quaternionic confidence framework for evaluating the internal consistency of position, velocity, attitude, timing, and measurement geometry in such regimes. The proposed WaveEngine Nav layer computes normalized measurement innovations, quaternionic frame residuals, observability conditioning indicators, clock-drift consistency terms, and dynamics consistency terms, then combines them into an interpretable PNT confidence score. The framework is intended to augment, not replace, conventional navigation filters and orbit-determination workflows. Its contribution is a structured diagnostic method for identifying under-observed, frame-inconsistent, timing-degraded, or dynamically implausible navigation states before those states evolve into an obvious loss-of-confidence event.",
+  "keywords": [
+    "quaternionic navigation",
+    "PNT confidence",
+    "cislunar navigation",
+    "lunar navigation",
+    "quaternion residuals",
+    "observability",
+    "autonomous navigation",
+    "WaveEngine Nav"
+  ],
+  "series": "RQM Quaternionic Signal Processing Series",
+  "series_number": 4,
+  "depends_on": [
+    "qsp-001-canonical-quaternion-lift",
+    "qsp-002-right-sided-quaternion-fourier-transform",
+    "qsp-003-coherence-and-s3-orientation-metrics"
+  ],
+  "canonical_url": null,
+  "pdf_url": null,
+  "html_url": null,
+  "jats_url": null,
+  "doi": null,
+  "journal": null,
+  "volume": null,
+  "issue": null,
+  "pages": null,
+  "citations": [
+    "kuipers1999",
+    "markley2014",
+    "grewal2020",
+    "tapley2004"
+  ],
+  "related_artifacts": [
+    "main.tex",
+    "artifacts/figures/README.md",
+    "artifacts/notebooks/README.md",
+    "artifacts/code/README.md"
+  ],
+  "license": "CC-BY-4.0",
+  "funding": [],
+  "notes": "Draft technical paper package for the RQM Quaternionic Signal Processing Series, focused on a navigation confidence layer for lunar and cislunar PNT assessment."
+}

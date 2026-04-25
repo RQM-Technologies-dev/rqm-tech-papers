@@ -1,0 +1,198 @@
+% Source-of-truth draft for qsp-004-quaternionic-pnt-confidence-navigation.
+% Keep title, abstract, and core definitions synchronized with paper.html,
+% metadata.json, claims.json, and paper.jats.xml.
+
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{proposition}[definition]{Proposition}
+\theoremstyle{remark}
+\newtheorem{remark}[definition]{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Sthree}{\mathbb{S}^3}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+
+\title{\textbf{Quaternionic Frame Residuals and Coherence Metrics for Lunar and Cislunar PNT Confidence Scoring}}
+
+\author{John G. Van Geem\\
+RQM Technologies\\
+ORCID: 0009-0002-4003-8452}
+
+\date{Version 0.1.0 \\ Draft dated 2026-04-25}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Autonomous lunar and cislunar missions must sustain navigation performance under sparse measurements, delayed communications, GPS-denied operations, intermittent relay geometry, clock drift, and degraded optical or terrain-relative sensing. This paper defines a quaternionic confidence framework for evaluating the internal consistency of position, velocity, attitude, timing, and measurement geometry in such regimes. The proposed WaveEngine Nav layer computes normalized measurement innovations, quaternionic frame residuals, observability conditioning indicators, clock-drift consistency terms, and dynamics consistency terms, then combines them into an interpretable PNT confidence score. The framework is intended to augment, not replace, conventional navigation filters and orbit-determination workflows. Its contribution is a structured diagnostic method for identifying under-observed, frame-inconsistent, timing-degraded, or dynamically implausible navigation states before those states evolve into an obvious loss-of-confidence event.
+\end{abstract}
+
+\noindent\textbf{Keywords:} quaternionic navigation; PNT confidence; cislunar navigation; lunar navigation; quaternion residuals; observability conditioning; autonomous navigation; WaveEngine Nav
+
+\section{Introduction}
+
+Lunar and cislunar mission operations impose navigation conditions that differ materially from low-Earth orbit assumptions. Measurement cadence can become sparse, relay geometry can vary substantially over short windows, communication latency can limit ground-assisted correction, and GNSS support may be unavailable. In these regimes, navigation quality depends not only on residual magnitude, but also on geometry, timing integrity, and frame consistency.
+
+This paper introduces a \emph{confidence-scoring layer} for these conditions. The layer is designed to run alongside existing navigation estimators and flight dynamics tools. It does not replace Kalman filtering, batch orbit determination, factor-graph navigation, terrain-relative navigation, optical navigation, or mission operations frameworks. Instead, it supplies interpretable confidence diagnostics about whether available observables remain mutually coherent.
+
+Quaternions are adopted here because spacecraft attitude, line-of-sight transforms, sensor pointing, and body/inertial frame consistency are naturally represented on unit-quaternion manifolds. The emphasis is geometric consistency and singularity-robust frame representation, not a claim of universal computational superiority.
+
+\section{Scope, limitations, and non-claims}
+
+The scope of this draft is deliberately limited.
+\begin{itemize}[leftmargin=1.5em]
+    \item It is not a new orbit-determination system.
+    \item It is not a replacement for EKF, UKF, smoothing, or factor-graph estimators.
+    \item It does not claim that quaternion formulations are superior to matrix formulations in all contexts.
+    \item It is not a flight-qualified implementation.
+    \item It defines a mathematical and software framework plus a proposed Phase I validation plan.
+\end{itemize}
+
+\section{Navigation state and measurement model}
+
+Define the state at epoch $k$ as
+\[
+\mathbf{x}_k = [\mathbf{r}_k,\, \mathbf{v}_k,\, \mathbf{q}_k,\, b_k,\, \dot{b}_k]^T,
+\]
+where $\mathbf{r}_k\in\R^3$ is position, $\mathbf{v}_k\in\R^3$ is velocity, $\mathbf{q}_k\in\Sthree$ is attitude quaternion, $b_k$ is clock bias, and $\dot{b}_k$ is clock drift.
+
+Measurements follow
+\[
+\mathbf{z}_k = h(\mathbf{x}_k) + \boldsymbol{\eta}_k.
+\]
+For representative range and Doppler terms,
+\[
+\rho_{\text{pred}} = \norm{\mathbf{r}_{\text{asset}}-\mathbf{r}_{\text{ref}}} + c\,b,
+\]
+\[
+\dot{\rho}_{\text{pred}} =
+\frac{(\mathbf{r}_{\text{asset}}-\mathbf{r}_{\text{ref}})\cdot(\mathbf{v}_{\text{asset}}-\mathbf{v}_{\text{ref}})}
+{\norm{\mathbf{r}_{\text{asset}}-\mathbf{r}_{\text{ref}}}} + c\,\dot{b}.
+\]
+
+\section{Quaternionic frame residuals}
+
+Given an inertial line-of-sight direction $\ell_{\text{inertial}}$, the body-frame mapping is
+\[
+\ell_{\text{body}} = q^{-1}\,\ell_{\text{inertial}}\,q.
+\]
+If an observation-derived orientation quaternion $q_{\text{obs}}$ is available, define
+\[
+q_{\Delta} = q_{\text{obs}}\,q_{\text{est}}^{-1},
+\qquad
+\theta_{\Delta}=2\arccos\!\left(|w_{\Delta}|\right),
+\]
+where $w_{\Delta}$ is the scalar part of $q_{\Delta}$.
+
+\begin{definition}[Quaternionic frame residual]
+The quaternionic frame residual is the geodesic mismatch angle $\theta_{\Delta}$ on the unit-quaternion manifold, evaluated using $|w_{\Delta}|$ so antipodal quaternion representatives map to the same physical attitude discrepancy.
+\end{definition}
+
+\section{Normalized innovation and residual structure}
+
+Define innovation and normalized innovation squared as
+\[
+\mathbf{e}_k = \mathbf{z}_k - h(\mathbf{x}_k),
+\qquad
+d_k^2 = \mathbf{e}_k^T S_k^{-1}\mathbf{e}_k.
+\]
+The term $d_k^2$ is Mahalanobis-style and supports channel-aware residual scoring. However, residual magnitude alone is incomplete: low residuals can occur under weak geometry, while high residuals can arise from transient outliers.
+
+\section{Observability and geometry conditioning}
+
+Let $H_k = \partial h / \partial x$ and
+\[
+O_k = H_k^T R_k^{-1} H_k.
+\]
+Condition number growth, singular value collapse, or rank deficiency in $O_k$ indicate degraded geometry even when residual magnitudes appear acceptable. This is relevant for intermittent lunar relay passes and cislunar sparse tracking windows.
+
+\section{Navigation coherence score}
+
+Define component scores:
+\[
+C_{\text{residual}},\ C_{\text{frame}},\ C_{\text{clock}},\ C_{\text{observability}},\ C_{\text{dynamics}}.
+\]
+Combine them as
+\[
+C_{\text{nav}} = w_1C_{\text{residual}} + w_2C_{\text{frame}} + w_3C_{\text{clock}} + w_4C_{\text{observability}} + w_5C_{\text{dynamics}},
+\]
+with mission-configured weights $w_i$.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+Pattern & Typical interpretation \\
+\midrule
+High residual + good observability & likely bad measurement or transient sensor issue \\
+Low residual + poor observability & fragile navigation state \\
+Growing frame mismatch & attitude/frame/pointing inconsistency \\
+Timing residual aligned with drift & timing-driven PNT degradation \\
+Residual aligned with dynamics term & force-model or trajectory mismatch \\
+\bottomrule
+\end{tabular}
+\caption{Representative diagnostic interpretations for coherence component patterns.}
+\end{table}
+
+\section{Candidate WaveEngine Nav algorithm}
+
+\begin{verbatim}
+Inputs:
+  x_hat, P, z_pred, z_meas, R, q_est, q_obs(optional), b, b_dot, dynamics_model
+Steps:
+  1) Ingest or propagate state estimate
+  2) Compute predicted measurements h(x_hat)
+  3) Compute innovations e_k and normalized score d_k^2
+  4) Compute quaternionic frame residual theta_delta when q_obs is available
+  5) Compute observability indicators from H_k and O_k
+  6) Compute clock-consistency and dynamics-consistency terms
+  7) Fuse component scores into C_nav and emit diagnostic labels
+Outputs:
+  C_nav, degradation mode label, recommended next measurement class
+\end{verbatim}
+
+\section{Lunar and cislunar use cases}
+
+\textbf{Use case A:} lunar surface asset with intermittent relay observations. The score tracks confidence between relay windows and distinguishes sparse-geometry effects from sensor anomalies.
+
+\textbf{Use case B:} cislunar spacecraft with sparse Earth tracking and autonomous measurement scheduling. The score supports prioritization of the next observation class when tracking opportunities are limited.
+
+\textbf{Use case C:} terrain-relative or optical navigation in low-light, shadowed south-pole conditions. The score helps separate optical degradation from broader state inconsistency.
+
+These use cases are conceptual and do not report completed experimental results in this draft.
+
+\section{Phase I validation path (proposed)}
+
+Proposed simulation campaigns include nominal navigation, injected clock drift, injected attitude misalignment, weak relay geometry, Doppler outliers, optical or terrain-relative outliers, and delayed measurement updates.
+
+Evaluation criteria are also proposed: earlier degradation detection versus residual-threshold-only baselines, separation of observability weakness from sensor faults, identification of quaternionic frame mismatch, detection of timing-driven degradation, and usefulness of recommended next measurement class.
+
+\begin{proposition}[Diagnostic utility claim]
+Given calibrated component mappings, a composite score combining residual, frame, timing, observability, and dynamics terms can classify multiple degradation modes more specifically than residual magnitude alone.
+\end{proposition}
+
+\begin{remark}
+The proposition is a method claim for planned validation and is not presented as a completed empirical result.
+\end{remark}
+
+\section{Conclusion}
+
+WaveEngine Nav is framed as a quaternionic navigation-confidence layer for lunar and cislunar PNT operations. It complements existing filters and flight dynamics pipelines by assessing coherence among residuals, geometry, timing, frame alignment, and dynamics consistency. The current draft establishes definitions and a candidate algorithmic structure suitable for Phase I simulation-based validation.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

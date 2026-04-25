@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quaternionic Frame Residuals and Coherence Metrics for Lunar and Cislunar PNT Confidence Scoring - RQM Technologies</title>
+  <meta name="description" content="WaveEngine Nav draft framework for quaternionic navigation confidence scoring in lunar and cislunar PNT operations." />
+  <meta name="author" content="John G. Van Geem" />
+  <meta name="keywords" content="quaternionic navigation, PNT confidence, cislunar navigation, lunar navigation, quaternion residuals, observability, autonomous navigation, WaveEngine Nav" />
+  <meta name="citation_title" content="Quaternionic Frame Residuals and Coherence Metrics for Lunar and Cislunar PNT Confidence Scoring" />
+  <meta name="citation_author" content="John G. Van Geem" />
+  <meta name="citation_publication_date" content="2026/04/25" />
+  <meta name="citation_pdf_url" content="paper.pdf" />
+
+  <link rel="alternate" type="application/json" href="metadata.json" title="Paper metadata" />
+  <link rel="alternate" type="application/xml" href="paper.jats.xml" title="JATS XML" />
+  <link rel="stylesheet" href="../../styles/site.css" />
+</head>
+<body class="paper-shell">
+  <div class="paper-page">
+    <header class="paper-header">
+      <div class="page-bar">
+        <a href="../../index.html">RQM Technologies Technical Papers</a>
+        <span>qsp-004-quaternionic-pnt-confidence-navigation</span>
+      </div>
+
+      <div class="hero-panel">
+        <div class="eyebrow">Series paper - browsable publication page</div>
+        <h1>Quaternionic Frame Residuals and Coherence Metrics for Lunar and Cislunar PNT Confidence Scoring</h1>
+        <p class="hero-copy">
+          Technical first draft of WaveEngine Nav as a diagnostic confidence layer for autonomous lunar and cislunar navigation pipelines.
+        </p>
+        <p class="byline">
+          John G. Van Geem<br />
+          RQM Technologies<br />
+          ORCID: 0009-0002-4003-8452
+        </p>
+      </div>
+
+      <div class="paper-panel">
+        <strong>Abstract</strong>
+        <p>Autonomous lunar and cislunar missions must sustain navigation performance under sparse measurements, delayed communications, GPS-denied operations, intermittent relay geometry, clock drift, and degraded optical or terrain-relative sensing. This paper defines a quaternionic confidence framework for evaluating the internal consistency of position, velocity, attitude, timing, and measurement geometry in such regimes. The proposed WaveEngine Nav layer computes normalized measurement innovations, quaternionic frame residuals, observability conditioning indicators, clock-drift consistency terms, and dynamics consistency terms, then combines them into an interpretable PNT confidence score. The framework is intended to augment, not replace, conventional navigation filters and orbit-determination workflows. Its contribution is a structured diagnostic method for identifying under-observed, frame-inconsistent, timing-degraded, or dynamically implausible navigation states before those states evolve into an obvious loss-of-confidence event.</p>
+      </div>
+
+      <div class="paper-panel compact">
+        <strong>Paper metadata</strong>
+        <p><strong>Paper ID:</strong> qsp-004-quaternionic-pnt-confidence-navigation · <strong>Version:</strong> 0.1.0 · <strong>Status:</strong> Draft · <strong>Date:</strong> 2026-04-25</p>
+        <p>
+          <strong>Companion files:</strong>
+          <a href="index.html">package index</a>,
+          <a href="paper.pdf">paper.pdf</a>,
+          <a href="metadata.json">metadata.json</a>,
+          <a href="paper.jats.xml">paper.jats.xml</a>,
+          <a href="claims.json">claims.json</a>,
+          <a href="notation.json">notation.json</a>,
+          <a href="glossary.json">glossary.json</a>,
+          <a href="references.bib">references.bib</a>,
+          <a href="CITATION.cff">CITATION.cff</a>
+        </p>
+      </div>
+    </header>
+
+    <main class="paper-main">
+      <h2 id="sec-1">1. Introduction</h2>
+      <p>WaveEngine Nav is scoped as a navigation confidence layer for lunar and cislunar missions where sparse observability, delayed communication, and variable relay geometry can mask pending state-quality degradation. The framework is designed to run beside existing estimator pipelines rather than replacing them.</p>
+
+      <h2 id="sec-2">2. Scope, limitations, and non-claims</h2>
+      <p>This draft does not claim a new orbit-determination method, does not replace EKF/UKF/factor-graph workflows, does not claim universal quaternion superiority, and does not present flight-qualified implementation results.</p>
+
+      <h2 id="sec-3">3. Navigation state and measurement model</h2>
+      <p>State form: <code>x_k = [r_k, v_k, q_k, b_k, dot{b}_k]^T</code>. Measurement form: <code>z_k = h(x_k) + eta_k</code>. Representative predictions include range and Doppler terms augmented by clock bias and drift.</p>
+
+      <h2 id="sec-4">4. Quaternionic frame residuals</h2>
+      <p>Line-of-sight mapping uses <code>l_body = q^{-1} l_inertial q</code>. With observation-derived quaternion <code>q_obs</code>, mismatch is <code>q_delta = q_obs q_est^{-1}</code> and <code>theta_delta = 2 arccos(|w_delta|)</code>, interpreted as a geodesic mismatch on S^3/SU(2).</p>
+
+      <h2 id="sec-5">5. Normalized innovation and residual structure</h2>
+      <p>Innovation is <code>e_k = z_k - h(x_k)</code> and covariance-normalized score is <code>d_k^2 = e_k^T S_k^{-1} e_k</code>. Residual magnitude is treated as one diagnostic component rather than a complete confidence indicator.</p>
+
+      <h2 id="sec-6">6. Observability and geometry conditioning</h2>
+      <p>With <code>H_k = partial h / partial x</code> and <code>O_k = H_k^T R_k^{-1} H_k</code>, condition-number and singular-value trends indicate geometry weakness, including sparse cislunar tracking and intermittent lunar relay cases.</p>
+
+      <h2 id="sec-7">7. Coherence score</h2>
+      <p>Component scores <code>C_residual</code>, <code>C_frame</code>, <code>C_clock</code>, <code>C_observability</code>, and <code>C_dynamics</code> combine as <code>C_nav = Σ w_i C_i</code> with mission-configured weights.</p>
+      <table>
+        <thead><tr><th>Pattern</th><th>Likely interpretation</th></tr></thead>
+        <tbody>
+          <tr><td>high residual + good observability</td><td>bad measurement or transient sensor issue</td></tr>
+          <tr><td>low residual + poor observability</td><td>fragile navigation state</td></tr>
+          <tr><td>growing frame mismatch</td><td>attitude/frame/pointing inconsistency</td></tr>
+          <tr><td>timing residual aligned with drift</td><td>PNT timing degradation</td></tr>
+          <tr><td>dynamics-aligned residual trend</td><td>force-model or trajectory mismatch</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="sec-8">8. Candidate algorithm</h2>
+      <p>The candidate algorithm ingests filter state and measurements, computes normalized innovations and frame residuals, evaluates observability and timing consistency, then emits <code>C_nav</code>, degradation mode labels, and a suggested next measurement class.</p>
+
+      <h2 id="sec-9">9. Lunar and cislunar use cases</h2>
+      <p>Conceptual use cases include (A) intermittent lunar relay support for a surface asset, (B) sparse Earth-tracking for cislunar autonomy and scheduling, and (C) low-light terrain-relative or optical navigation near the lunar south pole.</p>
+
+      <h2 id="sec-10">10. Phase I validation path</h2>
+      <p>Proposed simulations include injected clock drift, attitude misalignment, weak relay geometry, Doppler outliers, optical/TRN outliers, and delayed updates. Success criteria are framed as proposed validation targets, not completed results.</p>
+
+      <h2 id="sec-11">11. Conclusion</h2>
+      <p>This draft defines a quaternionic coherence framework to monitor confidence in navigation solutions before overt estimator failure. The layer is intended as a complement to existing flight-dynamics and navigation software stacks.</p>
+
+      <h2 id="sec-references">References</h2>
+      <ol class="references">
+        <li id="ref-kuipers">J. B. Kuipers. <em>Quaternions and Rotation Sequences</em>. Princeton University Press, 1999.</li>
+        <li id="ref-markley">F. L. Markley and J. L. Crassidis. <em>Fundamentals of Spacecraft Attitude Determination and Control</em>. Springer, 2014.</li>
+        <li id="ref-grewal">M. S. Grewal, L. R. Weill, and A. P. Andrews. <em>Global Navigation Satellite Systems, Inertial Navigation, and Integration</em>, 4th ed. Wiley, 2020.</li>
+        <li id="ref-tapley">B. D. Tapley, B. E. Schutz, and G. H. Born. <em>Statistical Orbit Determination</em>. Elsevier Academic Press, 2004.</li>
+      </ol>
+    </main>
+
+    <footer class="paper-footer">
+      <p>Draft technical paper package for the RQM Quaternionic Signal Processing Series. No DOI or venue metadata is assigned in this version.</p>
+    </footer>
+  </div>
+</body>
+</html>
